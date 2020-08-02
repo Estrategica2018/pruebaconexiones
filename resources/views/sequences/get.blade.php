@@ -82,9 +82,9 @@
                        <div class="col-lg-4 col-md-6" ng-repeat="kit_element in elementsKits" style="border: 6px solid white;">
                           <div class="card-body bg-light text-center p-1 row">
                              <div class="col-6">
-                                <img class="p-0" ng-src="/@{{kit_element.url_image}}" width="100%" height="auto" />
+                                <img class="p-0" ng-src="/@{{kit_element.url_image}}" width="100%" height="auto" style="margin-top: 17px;"/>
                             </div>
-                             <div class="col-auto">
+                             <div class="col-6">
                                  <div class="mt-3 kit-description" id="sequence-description-@{{kit_element.id}}">
                                     <h6 class="boder-header p-1 text-left fs-1">
                                        @{{kit_element.name}}
