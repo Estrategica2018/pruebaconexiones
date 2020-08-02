@@ -59,7 +59,7 @@
                    <div class="col-sm-7 m-auto col-md-4 col-lg-3 text-center">
                         <img src="/@{{sequence.url_image}}" width="70%" height="auto" class="mr-auto ml-auto">
                    </div>
-                   <div class="col-sm-7  m-auto col-md-4  col-lg-5 mt-3 mt-md-0">
+                   <div class="col-sm-7  ml-auto mr-auto col-md-4  col-lg-5 mt-3 mt-md-0">
                           <iframe src="sequence.url_vimeo" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                    </div>
