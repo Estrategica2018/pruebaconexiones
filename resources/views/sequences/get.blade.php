@@ -56,14 +56,14 @@
                     </h5>
                  </div>
                  <div class="col-12 row mt-2">
-                   <div class="col-12 col-lg-3 text-center">
+                   <div class="col-5 col-md-4 col-lg-3 text-center">
                         <img src="/@{{sequence.url_image}}" width="70%" height="auto" class="mr-auto ml-auto">
                    </div>
-                   <div class="col-12 col-lg-5 mt-3 mt-md-0">
+                   <div class="col-6 col-md-4  col-lg-5 mt-3 mt-md-0">
                           <iframe src="sequence.url_vimeo" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                    </div>
-                   <div class="col-12 col-lg-4">
+                   <div class="col-12 mt-3 mt-md-0 col-md-4  col-lg-4">
                      <strong>Punto de encuentro: </strong>@{{sequence.description}}
                      <p>
                         <a ng-click="showMash(sequence)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
@@ -86,7 +86,7 @@
                             </div>
                              <div class="col-6">
                                  <div class="mt-3 kit-description" id="sequence-description-@{{kit_element.id}}">
-                                    <h6 class="boder-header p-1 text-left fs-1">
+                                    <h6 class="boder-header p-1 text-left fs-0">
                                        @{{kit_element.name}}
                                     </h6>
                                     @{{kit_element.description}}
