@@ -64,7 +64,7 @@
                                <div class="mt-3 pr-2 pl-2 fs--1" style="min-height: 110px;">@{{sequenceForAdd.description}}</div>
                                <div class="col-12">
                                 <a ng-click="showMash(sequenceForAdd)" class="ml-3 mt-3 btn btn-outline-primary fs--2" href="#" class="col-6">
-                                     <i class="fas fa-search"></i> Ver contenido
+                                     <i class="fas fa-search"></i> Ver detalle
                                  </a>
                                  <a ng-click="showVideo(sequenceForAdd)" class="ml-3 mt-3 btn btn-outline-primary fs--2" href="#" class="col-6">
                                      <i class="fas fa-search"></i> Ver video
@@ -107,7 +107,7 @@
                                  <div class="mt-3 pr-2 pl-2 fs--1" style="min-height: 110px;">@{{sequence.description}}</div>
                                  <div class="col-12">
                                      <a ng-click="showMash(sequence)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
-                                         <i class="fas fa-search"></i> Ver contenido
+                                         <i class="fas fa-search"></i> Ver detalle
                                      </a>
                                      <a ng-click="showVideo(sequence)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
                                          <i class="fas fa-search"></i> Ver video

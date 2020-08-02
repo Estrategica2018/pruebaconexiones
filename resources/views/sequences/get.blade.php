@@ -67,7 +67,7 @@
                      <strong>Punto de encuentro: </strong>@{{sequence.description}}
                      <p>
                         <a ng-click="showMash(sequence)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
-                            <i class="fas fa-search"></i> Ver contenido
+                            <i class="fas fa-search"></i> Ver detalle
                         </a>                     
                         <a ng-click="onSequenceBuy(sequence)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
                             <i class="fas fa-shopping-cart"></i> Comprar
