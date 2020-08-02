@@ -223,14 +223,18 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 var listItem = rt.description_items.split('|');
                 var items = '';
                 for(var j=0;j<listItem.length;j++) {
-                    items += '<li class="card-rating-plan-id-'+ i +'" fs-2><span class="color-gray-dark font-14px font-family ">' + listItem[j] + '</span></li>';
+                    items += '<li style="line-height: 17px;" class="card-rating-plan-id-'+ i +' fs-2 small pr-0 mt-4 ml-3"><span class="color-gray-dark font-14px font-family ">' + listItem[j] + '</span></li>';
                 }
                var name = rt.name ? rt.name.replace(/\s/g,'_').toLowerCase() : '';
                var href = '/plan_de_acceso/' + rt.id + '/' + name + '/' + sequence.id;
-               var button = '<a href="'+href+'" class="ml-auto mr-auto btn btn-sm btn-outline-primary w-50  card-rating-plan-id-'+ i  +' card-rating-button-id-'+i +' ">Adquirir</a>';    
-               ratingPlans += '<div class="mt-3 col-12 col-md-4 "><div class="p-4 card card-rating-button-id-'+i +' border-4px " style="border-radius: 13px; min-height:250px;">'+
-               '<h5 class="font-weight-bold card-rating-plan-id-'+ i +'">'+rt.name+'</h5>'+
-               '<ul class=" text-left fs-2 mb-auto">' + items + '</ul>'+button+'</div></div>';
+               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-75 trapecio-top position-absolute card-rating-button-id-'+ i  +'" style= "right: 12%;">'+
+               '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0 mt-2" style="position: absolute;top: -35px;color: white; ">Adquirir</span> </a> </div> ';
+
+               ratingPlans += '<div class="mt-3 col-12 col-md-4 "><div class="card-header card-rating-background-id-' + i + ' mt-3 fs--3 flex-100 box-shadow ">'+
+                '<h5 class="font-weight-bold card-rating-plan-id-'+ i +'" style="color: white;">'+rt.name+'</h5></div>'+
+                '<div class="card-body bg-light pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 220px  ;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
+                '   <div class="card-footer card-rating-background-id-' + i + ' font-weight-bold text-align box-shadow " style="color: white;">'+
+                '  $'+rt.price+'USD  </div></div>';
             }
         }
         var html = '<div class="row justify-content-center">' + ratingPlans + '</div>';
@@ -240,6 +244,26 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
             showConfirmButton: false, showCancelButton: false
         }).catch(swal.noop);
         $('.swal2-show').css('background-color','transparent');
+
+
+        setTimeout(function () {
+            marginLeftText();
+         }, 300);
+  
+         function marginLeftText() {
+            $('.trapecio-top').each(function(){ 
+                var width  = $(this).width(); 
+                $(this).find('a span').each(function(){ 
+                    var delta =  (width) - 46;
+                    $(this).css('margin-left',(delta/2)+'px');  
+                });
+            }); 
+         }
+  
+         $( window ).resize(function() {
+          marginLeftText();
+        });
+
     }
     
     $scope.setPositionScroll = function () {

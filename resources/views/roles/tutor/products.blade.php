@@ -49,25 +49,37 @@
         <div class="no-gutters" ng-show="ratingPlans && ratingPlans.length > 0">
           <h6 class="mt-3 mb-4"> Recuerda nuestros planes y beneﬁcios para ampliar las posibilidades de aprendizaje.</h6>
           <div class="row">
-              <div ng-hide="ratingPlan.is_free"class="mb-6 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-6" 
-                  ng-repeat="ratingPlan in ratingPlans track by $index">
-                  <div class="card card-body pr-2 pl-2 pb-0 h-100">
-                     <div class=" ml-2 fs--3 flex-100">
-                        <h6 class="font-weight-bold text-center fs--3 card-rating-plan-id-@{{$index}}"> <span class="ml-2 " style="font-size:15px;">@{{ratingPlan.name}} </span></h6>  
+              <div ng-hide="ratingPlan.is_free"class="mb-6 col-xl-3 col-6 col-md-4" 
+                  ng-repeat="ratingPlan in ratingPlans">
+                    <div class="card-header card-rating-background-id-@{{$index}} mt-3 fs--3 flex-100 box-shadow ">
+                        <h6 class="font-weight-bold text-center fs--3 card-rating-plan-id-@{{$index}}"> 
+                            <span class="ml-2 " style="font-size:15px;color: white;"> @{{ratingPlan.name}} </span>
+                        </h6>
+                    </div> 
+                    <div class="card-body bg-light pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 182px;">
                         <ul class="p-0 ml-2" ng-repeat="item in ratingPlan.description_items">
-                            <li class="fs-1 small pl-1 pr-2 mt-3 ml-3 card-rating-plan-id-@{{$parent.$index}}"> 
+                            <li class="fs-1 small pl-1 pr-2 mt-3 ml-3 card-rating-plan-id-@{{$parent.$index}}" style="line-height: 17px;"> 
                             <span class="color-gray-dark font-family font-14px ">
                             @{{item}}
                             </span></li>
                         </ul>
-                     </div>
-                  </div>
-                  <div class="trapecio-top position-absolute ml-4 card-rating-button-id-@{{$index}} " style="bottom: -25px;">
-                    <a class=""
-                        ng-href="{{route('/')}}/plan_de_acceso/@{{ratingPlan.id}}/@{{ratingPlan.name_url_value}}" class="col-auto">
-                        <span class="fs--3 ml-1 mt-2" style="position: absolute;top: -31px;color: white;">Adquirir</span>
-                    </a>
-                </div>
+                    </div> 
+                    <div ng-hide="ratingPlan.is_free" class="card-footer card-rating-background-id-@{{$index}} font-weight-bold text-align box-shadow " style="color: white;">
+                            $@{{ratingPlan.price}} USD
+                        </div>
+                        <div ng-show="ratingPlan.is_free" class="card-footer card-rating-background-id-@{{$index}} font-weight-bold text-align box-shadow " style="color: white;">
+                            Gratis
+                        </div>
+                        <div ng-hide="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style="right: 12%;box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0);">
+                              <a  ng-href="{{route('/')}}/plan_de_acceso/@{{ratingPlan.id}}/@{{ratingPlan.name_url_value}}" class="col-auto" >
+                                    <span class="fs--3  mt-2" style="position: absolute;top: -31px;color: white;">Adquirir</span>
+                              </a>
+                        </div>
+                        <div ng-show="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style= "right: 12%;box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0);">
+                              <a ng-click="onRatingPlanFree(ratingPlan.id)"class="col-auto" >
+                                    <span class="fs--3  mt-2" style="position: absolute;top: -31px;color: white; ">Adquirir</span>
+                              </a>
+                        </div> 
                </div>
            </div>
         </div>

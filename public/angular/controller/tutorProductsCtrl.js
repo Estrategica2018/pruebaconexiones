@@ -1,4 +1,4 @@
-MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http) {
+MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http,$timeout) {
 
     $scope.errorMessage = '';
     $scope.products = null;
@@ -13,8 +13,7 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
             method: "GET",
         }).
         then(function (response) {
-            $scope.products = response.data;
-			console.log($scope.products);
+            $scope.products = response.data; 
             $('.d-none-result.d-none').removeClass('d-none');
             
         }).catch(function (e) {
@@ -32,7 +31,30 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
 				value.description_items = value.description_items ?value.description_items.split('|'):[];
 				value.name_url_value = value.name.replace(/\s/g,'_').toLowerCase();
 			  return value;
-			});
+            });
+            
+        
+            setTimeout(function () {
+                marginLeftText();
+             }, 300);
+      
+             function marginLeftText() {
+                $('.trapecio-top').each(function(){ 
+                    var width  = $(this).width(); 
+                    $(this).find('a span').each(function(){ 
+                        var delta =  (width) - 46;
+                        $(this).css('margin-left',(delta/2)+'px');  
+                    });
+                }); 
+             }
+      
+             $( window ).resize(function() {
+              marginLeftText();
+            });
+
+
+          
+
         }).catch(function (e) {
             $scope.errorMessageFilter = 'Error consultando las secuencias, compruebe su conexión a internet';
         });
