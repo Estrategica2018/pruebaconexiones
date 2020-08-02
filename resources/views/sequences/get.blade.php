@@ -77,11 +77,11 @@
                  </div>
                  
                  <div class="col-12 ml-2 mt-3" ng-show="elementsKits.length > 0">
-                   <h5 class="pl-3 mt-4 boder-header">Esta guía requiere instrumentos y materiales de laboratorio </h5>
+                   <h5 class="pl-3 mt-4 mb-3 boder-header">Esta guía requiere instrumentos y materiales de laboratorio </h5>
                    <div class="row">
                        <div class="col-lg-4 col-md-6" ng-repeat="kit_element in elementsKits" style="border: 6px solid white;">
                           <div class="card-body bg-light text-center p-1 row">
-                             <div class="col-4">
+                             <div class="col-6">
                                 <img class="p-0" ng-src="/@{{kit_element.url_image}}" width="100%" height="auto" />
                             </div>
                              <div class="col-auto">
