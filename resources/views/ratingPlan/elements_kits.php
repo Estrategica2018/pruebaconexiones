@@ -16,7 +16,7 @@
                              <input type="checkbox" ng-model="elementsKit.isSelected" name="check_elementsKit_@{{elementsKit.id}}_@{{elementsKit.type}}"/> 
                          </div>
                          <div class="col-5">
-                            <img ng-src="{{asset('/')}}@{{elementsKit.url_image}}" width="auto" height="auto" class="col-12 p-0"/> 
+                            <img ng-src="/@{{elementsKit.url_image}}" width="auto" height="auto" class="col-12 p-0"/> 
                          </div>
                          <div class="col-7 pl-0 ml-2 text-justify fs--1 flex-100" style="margin-top: -27px;">
                             <h5 class="pl-3 boder-header"> <span class="ml-2">@{{elementsKit.name}} </span></h5>  
