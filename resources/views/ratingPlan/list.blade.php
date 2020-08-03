@@ -44,12 +44,12 @@
                            <span class="color-gray-dark font-14px font-family ">@{{item}}</span>
                         </li>
                      </ul>
-                     <div ng-hide="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style="right: 12%;">
+                     <div ng-hide="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style="right: 12%;box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0);">
                               <a  ng-href="{{route('/')}}/plan_de_acceso/@{{ratingPlan.id}}/@{{ratingPlan.name_url_value}}" class="col-auto" style="margin-left: -14px;">
                                     <span class="fs--3 mt-2" style="position: absolute;top: -31px;color: white;">Adquirir</span>
                               </a>
                         </div>
-                        <div ng-show="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style= "right: 12%;">
+                        <div ng-show="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style= "right: 12%;box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0);">
                               <a   ng-click="onRatingPlanFree(ratingPlan.id)"class="col-auto" style="margin-left: -14px;">
                                     <span class="fs--3 mt-2" style="position: absolute;top: -31px;color: white; ">Adquirir</span>
                               </a>

@@ -102,7 +102,7 @@
                                             <a class="avatar avatar-3xl tutor-button-head @if(\Route::current()->getName() == 'tutor.history' ) selected @endif"                                                
                                                 href="{{route('tutor.history','conexiones')}}">
                                                 <img src="{{asset('images/icons/portal-padres/historialPagos-01.png')}}" class="ml-auto mr-auto" width="36px" height="auto"  style="width: 36px;height: auto;"/>
-                                                <div class="fs--2 mb-1 text-700 font-weight-bold" style="font-size: .55444rem!important;line-height: 1.2;margin-top: 6px;"> Historial de pagos</div>
+                                                <div class="fs--2 mb-1 text-700 font-weight-bold" style="line-height: 1.2;margin-top: 6px;"> Historial de pagos</div>
                                             </a>
                                         </li>
                                         <li class="nav-item nav-item-tutor">

@@ -27,11 +27,12 @@ class FrequentQuestionController extends Controller
 
         try {
             $var = $request->all();        
-            Mail::to([env('EMAIL_OPERATION')])->send(new SendFrequentQuestions($var));            
+            Mail::to([env('MAIL_USERNAME')])
+            ->cc($request->email)
+            ->send(new SendFrequentQuestions($var));            
             return response()->json([
-                ['message' => 'El mensaje ha sido enviado satisfactoriamente, la respuesta se enviará al correo'],
+                ['message' => 'El mensaje ha sido enviado satisfactoriamente al correo <'.env('MAIL_USERNAME').'>'],
                 ['status' => 'success']
-
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
