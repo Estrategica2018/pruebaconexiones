@@ -77,28 +77,28 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                     }
                     $('.swiper-wrapper').html(slideImages);
 
-               $timeout(function() {
-                    
-                    //create swiper-image in html and refresh this
-                    new Swiper('.swiper-container', {
-                        hashNavigation: true,
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
-                    });
-                    $( window ).resize(function() {
-                       resizable();
-                    });
-                    
-                       function resizable() {
-                          var height = $( window ).width() * 300 / 1291;
-                          $('.swiper-slide').css('height',height);
-                          $('.swiper-slide').css('background-size','100% '+height+'px');
-                       }
+                    $timeout(function() {
+                            
+                            //create swiper-image in html and refresh this
+                            new Swiper('.swiper-container', {
+                                hashNavigation: true,
+                                navigation: {
+                                    nextEl: '.swiper-button-next',
+                                    prevEl: '.swiper-button-prev',
+                                },
+                            });
+                            $( window ).resize(function() {
+                            resizable();
+                            });
+                            
+                            function resizable() {
+                                var height = $( window ).width() * 300 / 1291;
+                                $('.swiper-slide').css('height',height);
+                                $('.swiper-slide').css('background-size','100% '+height+'px');
+                            }
 
-                     resizable();
-              },100);
+                            resizable();
+                    },100);
                     
                 },function(e){
                     var message = 'Error consultando el directorio';
@@ -136,7 +136,56 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         }).
         then(function (response) {
             $scope.element = response.data[0];
-            $scope.element.type = 'kit';
+            $scope.element.type = 'element';
+
+
+            if($scope.element.url_slider_images) {
+                $http.post('/conexiones/admin/get_folder_image', { 'dir': $scope.element.url_slider_images }).then(function (response) {
+                    $scope.element.images = [];
+                    var slideImages = '';
+                    for(var dir in response.data.scanned_directory) {
+                        if(response.data.scanned_directory[dir]!=='..') {
+                            var src = '/' + response.data.directory + '/' + response.data.scanned_directory[dir];
+                            slideImages += '<div class="swiper-slide" style="background-image:url('+src+');"></div>';
+                            console.log(src);
+                        }
+                    }
+                    $('.swiper-wrapper').html(slideImages);
+
+                    $timeout(function() {
+                            
+                            //create swiper-image in html and refresh this
+                            new Swiper('.swiper-container', {
+                                hashNavigation: true,
+                                navigation: {
+                                    nextEl: '.swiper-button-next',
+                                    prevEl: '.swiper-button-prev',
+                                },
+                            });
+                            $( window ).resize(function() {
+                            resizable();
+                            });
+                            
+                            function resizable() {
+                                var height = $( window ).width() * 300 / 1291;
+                                $('.swiper-slide').css('height',height);
+                                $('.swiper-slide').css('background-size','100% '+height+'px');
+                            }
+
+                            resizable();
+                    },100);
+                    
+                },function(e){
+                    var message = 'Error consultando el directorio';
+                    if(e.message) {
+                        message += e.message;
+                    }
+                    $scope.errorMessage = angular.toJson(message);
+                    $scope.directoryPath = null;
+                });
+            }
+
+
             $('#loading').removeClass('show');
             $('.d-none-result').removeClass('d-none');
         }).catch(function (e) {
