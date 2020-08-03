@@ -39,7 +39,7 @@
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
    </div>
 
-   <div class="mb-3 card"> 
+   <div class="mb-3 card w-100" style="min-width:500px"> 
       <div class="card-body">
          <div class="no-gutters row">
             <div class="d-none-result d-none row w-100">
@@ -71,7 +71,7 @@
                     </h5>
                     @{{kit.description}} 
                     <div class="col-12 " >
-                      <a ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'" class="ml-3 mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</a>
+                      <button ng-click="onAddShoppingCart(kit)" ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'" class="ml-3 mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
                      </div>
                  </div>
                
@@ -98,14 +98,7 @@
                           </div>
                        </div>
                    </div>
-                 </div>
-
-                 <div class="col-12 mt-4 mt-md-0" ng-show="listSequence.length > 0">
-                   <h5 class="p-1 fs-0 boder-header"> </h5>
-                   <div class="row  mt-4">
-                        
-                   </div>
-                 </div>
+                 </div> 
             </div>
          </div>
       </div>

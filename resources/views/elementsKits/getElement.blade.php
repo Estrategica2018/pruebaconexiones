@@ -71,7 +71,7 @@
                     </h5>
                     @{{element.description}} 
                     <div class="col-12 " >
-                      <a ng-disabled="element.status === 'sold-out' || element.status === 'no-available'" class="ml-3 mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</a>
+                      <button ng-click="onAddShoppingCart(element)" ng-disabled="element.status === 'sold-out' || element.status === 'no-available'" class="ml-3 mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
                      </div>
                  </div>
                

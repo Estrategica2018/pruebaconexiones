@@ -46,8 +46,8 @@
                      <div class="col-12 mt-3" style="text-align: left;">
                         <a ng-show="kit.type==='kit'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="/kit_de_laboratorio/@{{kit.id}}/@{{kit.name_url_value}}">Detalle</a>
                         <a ng-show="kit.type==='element'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="/elemento_de_laboratorio/@{{kit.id}}/@{{kit.name_url_value}}">Detalle</a>
-                        <a ng-hide="kit.status === 'sold-out' || kit.status === 'no-available'"
-                        ng-click="onAddShoppingCart(kit)" class="pl-3 ml-4 mt-1 btn btn-outline-primary fs--2" href="#" class="col-6">Comprar</a>
+                        <button ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'"
+                        ng-click="onAddShoppingCart(kit)" class="pl-3 ml-4 mt-1 btn btn-outline-primary fs--2">Comprar</button>
                      </div>
                   </div> 
                </div>

@@ -200,7 +200,9 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
           title: "Añadir elemento al carrito?",
           text: "Confirmas que deseas adicionar este kit de laboratorio al carrito",
           type: "warning",
-          buttons: true,
+          cancelButtonText: 'Cancelar',
+          showCancelButton: true,
+          showConfirmButton: true,
           dangerMode: false,
         })
         .then((willConfirm) => {
