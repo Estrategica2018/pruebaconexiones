@@ -298,6 +298,7 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
 
         });
         $scope.arraySequenceMoment = []
+        $scope.arraySequenceMomentEdit= []
         if(action === 'Crear'){
             $scope.actionKit = 'Crear'
             $('#exampleModalKit').modal('show');
