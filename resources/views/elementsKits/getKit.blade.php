@@ -47,18 +47,7 @@
                   <!-- Swiper -->
                   <div class="swiper-container mt-lg--2">
                      <div class="swiper-wrapper">
-                     <div class="swiper-slide"
-                        style="background-image:url(/images/sliderCarrucelHome/slide1.jpg);">
-                     </div>
-                     <div class="swiper-slide"
-                        style="background-image:url(/images/sliderCarrucelHome/slide2.jpg);">
-                     </div>
-                     <div class="swiper-slide"
-                        style="background-image:url(/images/sliderCarrucelHome/slide3.jpg);">
-                     </div>
-                     <div class="swiper-slide"
-                        style="background-image:url(/images/sliderCarrucelHome/slide4.jpg);">
-                     </div>
+                     
                      </div>
                      <!-- Add Arrows -->
                      <div class="swiper-button-next" style="color: white;"></div>
