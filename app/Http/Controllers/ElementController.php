@@ -6,6 +6,9 @@ use App\Models\Element;
 use App\Models\MomentKits;
 use Illuminate\Http\Request;
 
+
+use DB;
+
 /**
  * Class ElementController
  * @package App\Http\Controllers
