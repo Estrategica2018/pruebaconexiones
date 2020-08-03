@@ -118,8 +118,7 @@ $.fn.extend({
         // and put the imagedata back to the canvas
         ctx.putImageData(image, 0, 0);
       });
-
-      alert(base_image.length)
+ 
     } 
      
   }

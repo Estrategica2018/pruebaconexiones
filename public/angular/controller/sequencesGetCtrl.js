@@ -208,7 +208,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
             $('.trapecio-top').each(function(){ 
                 var width  = $(this).width(); 
                 $(this).find('a span').each(function(){ 
-                    var delta =  (width) - 46;
+                    var delta =  (width) - $(this).width();
                     $(this).css('margin-left',(delta/2)+'px');  
                 });
             }); 

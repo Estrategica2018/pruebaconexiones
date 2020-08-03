@@ -42,7 +42,7 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
                 $('.trapecio-top').each(function(){ 
                     var width  = $(this).width(); 
                     $(this).find('a span').each(function(){ 
-                        var delta =  (width) - 80;
+                        var delta =  (width) - $(this).width();
                         console.log(delta,width)
                         $(this).css('margin-left',(delta/2)+'px');  
                     });
