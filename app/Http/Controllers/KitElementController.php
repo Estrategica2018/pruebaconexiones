@@ -61,11 +61,9 @@ class KitElementController extends Controller
     public function get_element(Request $request, $element_id)
     {
 
-        $element = Element::where('id', $element_id)
+        return Element::where('id', $element_id)
         ->select('elements.*',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
         ->get();
-
-        return response()->json($element,200);
 
     }
 
