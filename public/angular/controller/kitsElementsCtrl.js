@@ -82,22 +82,23 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                             //create swiper-image in html and refresh this
                             new Swiper('.swiper-container', {
                                 hashNavigation: true,
+                                updateOnImagesReady: true,
                                 navigation: {
                                     nextEl: '.swiper-button-next',
                                     prevEl: '.swiper-button-prev',
                                 },
+                                on: {
+                                    init: function() {
+                                        resizable();
+                                    },
+                                    imagesReady: function() {
+                                        resizable();
+                                    }
+                                }
                             });
                             $( window ).resize(function() {
-                            resizable();
-                            });
-                            
-                            function resizable() {
-                                var height = $( window ).width() * 300 / 1291;
-                                $('.swiper-slide').css('height',height);
-                                $('.swiper-slide').css('background-size','100% '+height+'px');
-                            }
-
-                            resizable();
+                                resizable();
+                            }); 
                     },100);
                     
                 },function(e){
@@ -157,20 +158,23 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                             //create swiper-image in html and refresh this
                             new Swiper('.swiper-container', {
                                 hashNavigation: true,
+                                updateOnImagesReady: true,
                                 navigation: {
                                     nextEl: '.swiper-button-next',
                                     prevEl: '.swiper-button-prev',
                                 },
+                                on: {
+                                    init: function() {
+                                        resizable();
+                                    },
+                                    imagesReady: function() {
+                                        resizable();
+                                    }
+                                  }
                             });
                             $( window ).resize(function() {
-                            resizable();
-                            });
-                            
-                            function resizable() {
-                                var height = $( window ).width() * 300 / 1291;
-                                $('.swiper-slide').css('height',height);
-                                $('.swiper-slide').css('background-size','100% '+height+'px');
-                            }
+                                resizable();
+                            }); 
 
                             resizable();
                     },100);
@@ -243,3 +247,10 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         });
     }
 });
+
+
+function resizable() {
+    var height = $( window ).width() * 300 / 1250; 
+    $('.swiper-slide').css('height',height);
+    $('.swiper-slide').css('background-size','100% '+height+'px');
+}
