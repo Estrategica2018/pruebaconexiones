@@ -137,7 +137,7 @@ class ElementController extends Controller
         $element = Element::with(['element_in_moment' => function ($query){
             $query->with(['moment' => function ($query){
                 $query->with(['sequence'=>function($query){
-                    $query->select('id','name','sequence_company_id');
+                    $query->select('id','name');
                 }]);
                  
             }]);
