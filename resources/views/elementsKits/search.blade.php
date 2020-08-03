@@ -49,13 +49,7 @@
                         <a ng-hide="kit.status === 'sold-out' || kit.status === 'no-available'"
                         ng-click="onAddShoppingCart(kit)" class="pl-3 ml-4 mt-1 btn btn-outline-primary fs--2" href="#" class="col-6">Comprar</a>
                      </div>
-                  </div>
-                  <div class="product-label-sold-out" ng-show="kit.status==='sold-out'">
-                         Producto agotado
-                  </div>
-                  <div class="product-label-no-available" ng-show="kit.status==='no-available'">
-                         Producto no disponible
-                  </div>
+                  </div> 
                </div>
             </div>
 
