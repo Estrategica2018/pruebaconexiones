@@ -39,7 +39,7 @@
          <h5 class="mb-0">Detrás de Conexiones</h5>
       </div>
       <div class="about-body text-justify">
-         <p>Todas las guías de aprendizaje que hacen parte de &nbsp;<strong><span style="color:#002060;">Conexiones,</span></strong> 
+         <p>Todas las guías de aprendizaje que hacen parte de &nbsp;<strong><span>Conexiones,</span></strong> 
             han sido creadas por maestros y maestras con amplia experiencia en la enseñanza de las ciencias naturales.  
             El equipo profesional ha diseñado una propuesta educativa propia con la intención de aportar a los procesos de aprendizaje de las niñas, los niños y jóvenes.&nbsp;</p>
          <p>Este equipo se acompaña de un grupo experto en diseño, realización audiovisual y programación web, que han hecho posible el desarrollo de los contenidos y la plataforma que los integra, para ofrecer una experiencia de uso agradable e intuitiva.&nbsp;</p>

@@ -227,8 +227,8 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 }
                var name = rt.name ? rt.name.replace(/\s/g,'_').toLowerCase() : '';
                var href = '/plan_de_acceso/' + rt.id + '/' + name + '/' + sequence.id;
-               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-75 trapecio-top position-absolute card-rating-button-id-'+ i  +'" style= "right: 12%;">'+
-               '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0 mt-2" style="position: absolute;top: -35px;color: white; ">Adquirir</span> </a> </div> ';
+               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-75 trapecio-top position-absolute card-rating-button-id-'+ i  +'" style= "right: 12%;box-shadow: 0px 0px 0px 0px rgb(255 255 255), 0px -2px 0px rgba(255, 255, 255, 0.3);">'+
+               '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0 mt-2" style="position: absolute;top: -30px;color: white; ">Adquirir</span> </a> </div> ';
 
                ratingPlans += '<div class="mt-3 col-12 col-md-4 "><div class="card-header card-rating-background-id-' + i + ' mt-3 fs--3 flex-100 box-shadow ">'+
                 '<h5 class="font-weight-bold card-rating-plan-id-'+ i +'" style="color: white;">'+rt.name+'</h5></div>'+

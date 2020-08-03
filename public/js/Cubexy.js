@@ -64,8 +64,8 @@ $.fn.extend({
     function IniciarPintadoAvatar() {
       var base_image = [];
       cimgContext = 0;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      var elementLength = $('#' + id + ' > div').length;
+      ctx.clearRect(0, 0, canvas.width, canvas.height); 
+
       $('#' + id + ' > div').each(function () {
         idParte = $(this).attr('id');
         $('#' + idParte + ' >img').each(function () {
@@ -89,17 +89,20 @@ $.fn.extend({
               base_image[cimgContext].enabled = true;
             }
             
-            var top = 0;
-            var left = 0;
-            var width = 318;
-            var height = 357;
+          
 
               base_image[cimgContext].onload = function () { 
+                var top = 0;
+                var left = 0;
+                var width = 318;
+                var height = 357; 
                 ctx.drawImage(this, left, top, width, height);
-              } 
+              }
+
             cimgContext++;
           }
-        }); 
+        });  
+   
         
         // get the image data object
         var image = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -115,27 +118,9 @@ $.fn.extend({
         // and put the imagedata back to the canvas
         ctx.putImageData(image, 0, 0);
       });
-    }
 
-    function alterImage(imageObj, left, top, width, height, r, g, b) {
-      cvstmp = document.getElementById("tmpCanvas");
-      var ctxTmp = cvstmp.getContext("2d");
-      
-      ctxTmp.drawImage(imageObj, left, top);
-      ctxTmp.clearRect(0,0, canvas.width, canvas.height);
-      var id = ctxTmp.getImageData(left, top, width, height);
-      for (var i = 0; i < id.data.length; i += 4) {
-        id.data[i] = r;// red
-        id.data[i + 1] = g;// Green
-        id.data[i + 2] = b; //blue
-      }
-      ctxTmp.putImageData(id, 0, 0);
-      ctx.drawImage(cvstmp, left, top, width, height);
-    }
-    
-    $('#colors li').click(function () { 
-        $('.' + cssCambioColor).attr("data-rgb", $(this).attr('data-rgb'));
-        IniciarPintadoAvatar();
-    }); 
+      alert(base_image.length)
+    } 
+     
   }
 });

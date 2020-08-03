@@ -138,6 +138,14 @@
                         </div>
                      </div>
                 </div>
+                <div class="d-none">
+                   <img id="rostro1fac9b7" scr="/images/avatars/resources/rostro1/fac9b7.png"/>
+                   <img id="rostro1ffefcf" scr="/images/avatars/resources/rostro1/ffefcf.png"/>
+                   <img id="rostro1cca39a" scr="/images/avatars/resources/rostro1/cca39a.png"/>
+                   <img id="rostro1c69a7b" scr="/images/avatars/resources/rostro1/c69a7b.png"/>
+                   <img id="rostro15b4031" scr="/images/avatars/resources/rostro1/5b4031.png"/>
+
+               </div>
                 <style>
                     .avatar-default {
                         max-width: 85px;

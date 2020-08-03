@@ -12,7 +12,7 @@
     <div class="mt-3 ml-3 row">
         <img class="col-lg-4 col-6 mb-3" src="{{ asset('images/acercaConexiones/tituloMomento.jpg') }}" alt="">
         <div class="col-lg-8 col-12 pr-5">
-            <div class="font-weight-bold fs-md-0 fs-sm--1">Aprendizaje por indagación y desarrollo de pensamiento científicos</div>
+            <div class="font-weight-bold fs-md-0 fs-sm--1"><strong>Aprendizaje por indagación y desarrollo de pensamiento científicos</strong></div>
             <div class="text-justify fs-0 mt-3">
                 <p>La propuesta educativa de Conexiones se sustenta en un enfoque pedagógico de aprendizaje por indagación,
                     que tiene la intención de promover en los niños, las niñas y los jóvenes, el desarrollo de pensamiento
@@ -148,10 +148,10 @@
                     acciones de pensamiento y producción que constituyen las evidencias de aprendizaje, y se reconocen por la
                     presencia de los
                     siguientes íconos:</p>
-                <p><span class="font-weight-bold">Saber qué:</span> Manejo de conocimientos propios de las ciencias</p>
-                <p><span class="font-weight-bold">Saber cómo:</span> Aproximación al conocimiento como lo hacen quienes se
+                <p><strong>Saber qué:</strong> Manejo de conocimientos propios de las ciencias</p>
+                <p><strong>Saber cómo:</strong> Aproximación al conocimiento como lo hacen quienes se
                     dedican a las ciencias (Saber cómo)</p>
-                <p><span class="font-weight-bold">Saber ser:</span> Desarrollo de compromisos personales y sociales.</p>
+                <p><strong  >Saber ser:</strong> Desarrollo de compromisos personales y sociales.</p>
             </div>
             <div class="col-md-6 col-12 ml-lg-4">
                 <img class="" width="580" height="340" src="{{ asset('images/acercaConexiones/Guias_de_saberes.png') }}"
@@ -181,8 +181,8 @@
 					  <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #77A3A3 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -6px;">
 					  </div>
 				    </div>				
-                    <div class="header">
-                      <span>Pregunta central</span>
+                    <div class="header ">
+                      <span class="central_question_color">Pregunta central</span>
                     </div>
                     <div class="body">
                         <p>Una pregunta puede motivarnos a viajar… para responderla podemos recorrer diferentes caminos </p>
@@ -205,7 +205,7 @@
 					  </div>
 				    </div>
                     <div class="header">
-                      <span>Experiencia científica</span>
+                      <span class="scientific_experience_color">Experiencia científica</span>
                     </div>
                     <div class="body">
                         <p>Un viaje es un conjunto de experiencias, pues más allá de los destinos y lugares que se visitan es lo que se vive en ellos lo que permanece.</p>
@@ -221,13 +221,13 @@
             <div class="col-2-3  text-align">
                 <img class="mb-3 cursor-pointer" ng-mouseover="icon_pedagogy = 'everyday_science'" ng-click="icon_pedagogy === 'everyday_science'" width="74px" height="auto" src="{{ asset('images/icons/cienciaCotidiana.png') }}">
 				<span class="justify-content-center font-weight-bold d-flex mt-1 ml-auto mr-auto w-75"> Ciencia Cotidiana </span>
-				  <div class="d-result d-none panel-icon-pedagogy fs--3" ng-show="icon_pedagogy==='everyday_science'">
+				  <div class="d-result d-none panel-icon-pedagogy fs--3 everyday_science_color" ng-show="icon_pedagogy==='everyday_science'">
 					<div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
 					  <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #77A3A3 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -6px;">
 					  </div>
 				    </div>				
                     <div class="header">
-                      <span>Ciencia cotidiana</span>
+                      <span class="everyday_science_color"> Ciencia cotidiana</span>
                     </div>
                     <div class="body">
                         <p>Uno de los hechos más valiosos de un viaje, es vivir por si mismos aquello que se ha oído, imaginado o escuchado  </p>
@@ -248,7 +248,7 @@
 					  </div>
 				    </div>				
                     <div class="header">
-                      <span>+ Conexiones</span>
+                      <span class="more_conextion_color">+ Conexiones</span>
                     </div>
                     <div class="body">
                         <p>Durante un viaje o después de este, se conocen nuevas personas, olores, sabores y lugares, en otras palabras se abren puertas a nuevos conocimientos que puede incitar la realización de un nuevo viaje</p>

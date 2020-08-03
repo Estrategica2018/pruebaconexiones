@@ -22,13 +22,12 @@ MyApp.controller("ratingPlanListCtrl", ["$scope", "$http", function ($scope, $ht
           marginLeftText();
        }, 300);
 
-       function marginLeftText() {
+       function marginLeftText() { 
           $('.trapecio-top').each(function(){ 
-              var width  = $(this).width(); 
+              var width  = $(this).width();  
               $(this).find('a span').each(function(){ 
                   var delta =  (width) - 46;
-                  $(this).css('margin-left',(delta/2)+'px');  
-                  console.log(delta/2,width,$(this).width());
+                  $(this).css('margin-left',(delta/2)+'px'); 
               });
           }); 
        }

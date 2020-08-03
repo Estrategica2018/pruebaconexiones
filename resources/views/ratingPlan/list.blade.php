@@ -38,7 +38,7 @@
                   <div class="card-header card-rating-background-id-@{{$index}} mt-3 fs--3 flex-100 box-shadow ">
                      <h5 class="alingTextPlan font-weight-bold text-center fs-0"> <span class="ml-2" style="color: white;">@{{ratingPlan.name}} </span></h5>  
                   </div>   
-                  <div class="card-body bg-light pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 264px;">
+                  <div class="card-body bg-light pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 282px;">
                      <ul class="p-0 ml-2">
                         <li class="fs-2 small pr-0 mt-4 ml-3 card-rating-plan-id-@{{$parent.$index}}" style="line-height: 17px;    min-height: 70px;" ng-repeat="item in ratingPlan.description_items">
                            <span class="color-gray-dark font-14px font-family ">@{{item}}</span>
