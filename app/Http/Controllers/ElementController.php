@@ -138,10 +138,12 @@ class ElementController extends Controller
             $query->with(['moment' => function ($query){
                 $query->with(['sequence'=>function($query){
                     $query->select('id','name');
-                }])->select('id','name','sequence_company_id',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'));
+                }]);
                  
             }]);
-        }])->find($id);
+        }])
+        ->select('id','name','sequence_company_id',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
+        ->find($id);
         return response()->json([
             'status' => 'successfull',
             'message' => 'El elemento ha sido consultado',
