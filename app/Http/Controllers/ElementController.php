@@ -131,11 +131,12 @@ class ElementController extends Controller
 
     public function get_element (Request $request,$id) {
 
-        $element = Element::has('element_in_moment')->with(['element_in_moment' => function ($query){
+        $element = Element::with(['element_in_moment' => function ($query){
             $query->with(['moment' => function ($query){
                 $query->with(['sequence'=>function($query){
                     $query->select('id','name');
-                }])->select('id','name','sequence_company_id');
+                }])->select('id','name','sequence_company_id',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'));
+                 
             }]);
         }])->find($id);
         return response()->json([
