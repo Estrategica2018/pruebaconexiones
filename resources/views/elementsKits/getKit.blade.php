@@ -99,6 +99,13 @@
                        </div>
                    </div>
                  </div>
+
+                 <div class="col-12 mt-4 mt-md-0" ng-show="listSequence.length > 0">
+                   <h5 class="p-1 fs-0 boder-header"> </h5>
+                   <div class="row  mt-4">
+                        
+                   </div>
+                 </div>
             </div>
          </div>
       </div>
