@@ -71,14 +71,12 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                     for(var dir in response.data.scanned_directory) {
                         if(response.data.scanned_directory[dir]!=='..') {
                             var src = '/' + response.data.directory + '/' + response.data.scanned_directory[dir];
-                            slideImages += '<div class="swiper-slide" style="background-image:url('+src+');"></div>';
-                            console.log(src);
+                            slideImages += '<div class="swiper-slide" style="background-image:url('+src+');"></div>'; 
                         }
                     }
                     $('.swiper-wrapper').html(slideImages);
 
-                    $timeout(function() {
-                            
+                    $timeout(function() { 
                             //create swiper-image in html and refresh this
                             new Swiper('.swiper-container', {
                                 hashNavigation: true,
@@ -250,7 +248,15 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
 
 
 function resizable() {
-    var height = $( window ).width() * 300 / 1250; 
+/*     var height = $( window ).width() * 220 / 850; 
     $('.swiper-slide').css('height',height);
-    $('.swiper-slide').css('background-size','100% '+height+'px');
+    $('.swiper-slide').css('background-size','100% '+height+'px'); */
+
+    var width = $('.swiper-wrapper').width();
+    //if($( window ).width()<490) width = 490;
+    height = width * 350 / 550
+    
+    $('.swiper-slide').css('height',height);   
+    $('.swiper-slide').css('width',width);
+    $('.swiper-slide').css('background-size', width+'px '+height+'px');
 }

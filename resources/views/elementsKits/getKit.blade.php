@@ -39,15 +39,26 @@
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
    </div>
 
-   <div class="mb-3 card w-100" style="min-width:500px"> 
+   <div class="mb-3 card w-100"  > 
       <div class="card-body">
          <div class="no-gutters row">
             <div class="d-none-result d-none row w-100">
-               <div class="col-6 p-3">
-                  <!-- Swiper -->
-                  <div class="swiper-container mt-lg--2">
+               <div class="col-6 p-3" >
+                   <!-- Swiper -->
+                   <div class="swiper-container mt-lg--2">
                      <div class="swiper-wrapper">
-                     
+                        <div class="swiper-slide"
+                           style="background-image:url(/images/sliderCarrucelHome/slide1.jpg);">
+                        </div>
+                        <div class="swiper-slide"
+                           style="background-image:url(/images/sliderCarrucelHome/slide2.jpg);">
+                        </div>
+                        <div class="swiper-slide"
+                           style="background-image:url(/images/sliderCarrucelHome/slide3.jpg);">
+                        </div>
+                        <div class="swiper-slide"
+                           style="background-image:url(/images/sliderCarrucelHome/slide4.jpg);">
+                        </div>
                      </div>
                      <!-- Add Arrows -->
                      <div class="swiper-button-next" style="color: white;"></div>
