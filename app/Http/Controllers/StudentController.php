@@ -192,7 +192,7 @@ class StudentController extends Controller
                 'section_2' => ['name' => $section_2['section']['name'],'title' => isset($section_2['title']) ? $section_2['title'] : '', 'section' => $section_2],
                 'section_3' => ['name' => $section_3['section']['name'],'title' => isset($section_3['title']) ? $section_3['title'] : '', 'section' => $section_3],
                 'section_4' => ['name' => $section_4['section']['name'],'title' => isset($section_4['title']) ? $section_4['title'] : '', 'section' => $section_4],
-            ];
+            ]; 
 
             foreach($sections as &$section) {
               
@@ -218,12 +218,17 @@ class StudentController extends Controller
                     ['student_id',$student->id],
                     ['company_id', $sequence->company_id],
                     ['sequence_id',$sequence->id],
-                    ['moment_id',$moment->id]
+                    ['moment_id',$moment->id],
+                    ['section',($sectionIndex-1)]
                 ])->get();
                 
                 if(count($ratings) > 0) {
-                    $performance = $ratings->avg('weighted'); 
-                    $section['performance'] = $performance;
+                    $quantity = $ratings->avg('weighted'); 
+                    $section['performance'] = 'B';
+                    if($quantity > 90) {
+                        $section['performance'] = 'A';
+                    }
+                    $section['quantity'] = $quantity; 
                 }
 
                 
@@ -237,7 +242,7 @@ class StudentController extends Controller
    
         return view('roles.student.achievements.moment', ['student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
     }
-  
+ 
     /**
      * @param Request $request
      * @param $empresa
