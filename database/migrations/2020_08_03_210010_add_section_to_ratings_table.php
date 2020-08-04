@@ -13,10 +13,7 @@ class AddSectionToRatingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('ratings', function (Blueprint $table) {
-            //
-            $table->renameColumn('color', 'section');
-        });
+        \Illuminate\Support\Facades\DB::statement('ALTER TABLE `ratings` CHANGE `color` `section` VARCHAR(15)'); 
     }
 
     /**
@@ -26,8 +23,6 @@ class AddSectionToRatingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('ratings', function (Blueprint $table) {
-            $table->renameColumn('section', 'color');
-        });
+         
     }
 }
