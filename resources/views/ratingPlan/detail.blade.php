@@ -91,7 +91,7 @@
                </div>
                <div class="p-0 col-md-6 col-sm-12" style="border: 10px solid white;" ng-repeat="sequence in sequences" ng-hide="sequenceForAdd" >
                    <div class="row w-100 p-0">
-                      <div class="ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex" >
+                      <div class="ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex" style="min-height: 297px;">
                         <div class="view" id="sequence-description-@{{sequence.id}}">
                           <div class="media">
                             <div class="row col-5">
@@ -105,7 +105,7 @@
                                  <div class="media-body pl-2 pr-3">
                                  <h5 class="pl-2 fs-0 boder-header text-align-left">@{{sequence.name}}</h5>
                                  <div class="mt-3 pr-2 pl-2 fs--1" style="min-height: 110px;">@{{sequence.description}}</div>
-                                 <div class="col-12">
+                                 <div class="col-12 p-0">
                                      <a ng-click="showMash(sequence)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
                                          <i class="fas fa-search"></i> Ver detalle
                                      </a>

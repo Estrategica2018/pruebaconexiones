@@ -17,6 +17,6 @@ class Rating extends Model
         'moment_id',
         'weighted',
         'letter',
-        'color'
+        'section'
     ];
 }

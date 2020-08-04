@@ -1,7 +1,7 @@
 @extends('roles.student.achievements.layout')
 
 @section('achievements_layout')
-<div class="row p-2 pl-md-4 pr-md-3" ng-controller="achievementsStudentSequenceCtrl" ng-init="initSequences(1)" >
+<div class="row p-2 pl-md-4 pr-md-3" ng-controller="achievementsStudentCtrl" ng-init="initSequences(1)" >
     @if(isset($sequence))
         <div class="col-12 mt-sm-2 pr-sm-0">
             <div class="oval-line"></div>

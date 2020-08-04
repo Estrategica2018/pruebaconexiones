@@ -102,31 +102,31 @@ class AnswerController extends Controller
             switch ($performance) {
                 case ($performance >= 90):
                     $color_performance = 'green';
-                    $performance_comment = $performance_comment_array[0];
+                    $performance_comment = count($performance_comment_array)>0 ? $performance_comment_array[0] : '';  
                     $level = "nivel superior (S) 90 – 100%.";
                     $qualification = '(S)';
                 break;
                 case ($performance >= 70 && $performance <= 89):
                     $color_performance = 'green';
-                    $performance_comment = $performance_comment_array[1];
+                    $performance_comment = count($performance_comment_array)>1 ? $performance_comment_array[1] : '';  
                     $level = "nivel alto (A) 70 – 89%.";
                     $qualification = '(A)';
                 break;
                 case ($performance >= 60 && $performance <= 69):
                     $color_performance = '#FFF824';
-                    $performance_comment = $performance_comment_array[2];
+                    $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';  
                     $level = "nivel básico (B) 60 – 69%.";
                     $qualification = '(B)';
                 break;
                 case ($performance >= 40 && $performance <= 59):
-                    $color_performance = 'red';
-                    $performance_comment = $performance_comment_array[2];
+                    $color_performance = 'red'; 
+                    $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';  
                     $level = "nivel bajo (B) 40 – 59%.";
                     $qualification = '(B)';
                 break;
                 case ($performance < 40):
                     $color_performance = 'red';
-                    $performance_comment = $performance_comment_array[2];
+                    $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';  
                     $level = "nivel bajo (B) 0 – 39%.";
                     $qualification = '(B)';
                     break;
@@ -139,18 +139,18 @@ class AnswerController extends Controller
                     'student_id' => $student->id,
                     'company_id' => $request->company_id,
                     'sequence_id' => $request->sequence_id,
-                    'moment_id' => $request->moment_id
+                    'moment_id' => $request->moment_id,
+                    'section' => $request->section
                 ] ,
                 [
                     'weighted' => $performance, 
-                    'letter' => $qualification,
-                    'color' => $color_performance 
+                    'letter' => $qualification
                 ]
             );
 
 
             Mail::to($tutor->email)->send(new SendReportAnswerTutor($tutor, $student, $reportAnswers, $sequence, $moment, $level, $performance_comment,$color_performance,$performance,$place_advance_line));
-            return response()->json(['data' => ['performance' => $performance, 'performance_comment' => $performance_comment, 'level' => $level, 'qualification' => $qualification], 'message' => 'Respuestas registradas o actualizadas, se ha notificado al familiar las respuestas'], 200);
+            return response()->json(['data' => ['section'=>$request->section,'performance' => $performance, 'performance_comment' => $performance_comment, 'level' => $level, 'qualification' => $qualification], 'message' => 'Respuestas registradas o actualizadas, se ha notificado al familiar las respuestas'], 200);
         }
         return response()->json(['data' => '', 'message' => 'El formato para registrar o actualizar los datos de respuesta no es el correcto'], 401);
 

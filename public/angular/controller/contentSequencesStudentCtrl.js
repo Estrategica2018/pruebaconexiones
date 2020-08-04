@@ -19,7 +19,8 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         getAvailableSequences(companyId, sequenceId);
     }
 
-    $scope.onClickEvidence = function(sequenceId,momentId,experienceId,icon,subtitle) {
+    $scope.onClickEvidence = function(sequenceId,momentId,experienceId,icon,subtitle,partId) {
+ 
         $scope.evidenceOpened = {};
         $scope.evidenceOpened.icon = icon || 'images/icons/evidenciasAprendizajeIcono-01.png';
         $scope.evidenceOpened.subtitle = subtitle || 'Evidencias de aprendizaje';
@@ -28,6 +29,7 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         $scope.indexQuestion = 0;
         $scope.sequenceId = sequenceId;
         $scope.momentId = momentId;
+        $scope.partId = partId;
         $scope.experienceId = experienceId;
         $scope.optionSelected = false;
         $('#' + $scope.experienceId + ' img').addClass('d-none');
@@ -80,7 +82,8 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
             "affiliated_account_service_id": $scope.accountServiceId,
             "sequence_id": $scope.sequenceId,
             "moment_id": $scope.momentId,
-            "experience_id": $scope.experienceId
+            "experience_id": $scope.experienceId,
+            "section": $scope.partId
         };
         $http({
             url: "/register_update_answer/",
