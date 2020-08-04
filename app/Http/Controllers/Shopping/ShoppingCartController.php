@@ -28,20 +28,20 @@ class ShoppingCartController extends Controller
         if ($request->user('afiliadoempresa')) {
             $shoppingCarts = ShoppingCart::
             with('rating_plan', 'shopping_cart_product')
-            ->where([
-                ['company_affiliated_id', $request->user('afiliadoempresa')->id],
-                ['payment_status_id', 1],
-            ])->get();
+                ->where([
+                    ['company_affiliated_id', $request->user('afiliadoempresa')->id],
+                    ['payment_status_id', 1],
+                ])->get();
         } else {
             if (session_id() == "") {
                 session_start();
             }
             $shoppingCarts = ShoppingCart::
             with('rating_plan', 'shopping_cart_product')
-            ->where([
-                ['session_id', session_id()],
-                ['payment_status_id', 1],
-            ])->get();
+                ->where([
+                    ['session_id', session_id()],
+                    ['payment_status_id', 1],
+                ])->get();
         }
 
         $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
@@ -95,8 +95,8 @@ class ShoppingCartController extends Controller
             //$shipping_price = $shoppingCart->shipping_price;
 
             //if (!$shoppingCart) {
-                $shoppingCart = new ShoppingCart();
-                $shoppingCart->company_affiliated_id = $request->user('afiliadoempresa')->id;
+            $shoppingCart = new ShoppingCart();
+            $shoppingCart->company_affiliated_id = $request->user('afiliadoempresa')->id;
             //}
         } else {
             if (session_id() == "") {
@@ -110,8 +110,8 @@ class ShoppingCartController extends Controller
             // ])->first();
 
             //if (!$shoppingCart) {
-                $shoppingCart = new ShoppingCart();
-                $shoppingCart->session_id = session_id();
+            $shoppingCart = new ShoppingCart();
+            $shoppingCart->session_id = session_id();
             //}
         }
         // if ($shoppingCart->type_product_id != 4 && $shoppingCart->type_product_id != 5) {
@@ -221,7 +221,7 @@ class ShoppingCartController extends Controller
                         $item->description = $kit->description;
                         $item->quantity = 1;
                         $item->unit_price = $kit->price;
-                        $item->currency_id = 'COP';
+                        $item->currency_id = 'USD';
                         array_push($items,$item);
                     }
                 }else{
@@ -233,7 +233,7 @@ class ShoppingCartController extends Controller
                         $item->description = $element->description;
                         $item->quantity = 1;
                         $item->unit_price = $element->price;
-                        $item->currency_id = 'COP';
+                        $item->currency_id = 'USD';
                         array_push($items,$item);
                     }
                 }
@@ -245,7 +245,7 @@ class ShoppingCartController extends Controller
                 $item->description = $ratingPlanf->description;
                 $item->quantity = 1;
                 $item->unit_price = $ratingPlanf->price;
-                $item->currency_id = 'COP';
+                $item->currency_id = 'USD';
                 array_push($items,$item);
             }
         }
