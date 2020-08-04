@@ -23,11 +23,6 @@
        </h5>
        @endauth
      </div>
-       <br>
-       <button class="btn btn-sm btn-outline-primary" href="{{route('paypal_pay')}}">PAYPAL</button>
-       <div id="paypal-button-container"></div>
-
-
    </div>
    <div class="bg-200 d-none-result d-none text-900 px-1 fs--1 font-weight-semi-bold no-gutters row">
      <div class="p-2 px-md-3 col-8">Nombre</div>
@@ -199,10 +194,3 @@
    </div>
 </div>
 <script src="{{ asset('/../angular/controller/ShoppingCartController.js') }}" defer></script>
-<script
-        src="https://www.paypal.com/sdk/js?client-id=AcdvNeyKfOUkAvS3xqQtbabHo3HfG80I5PzbhbVHMRTDmfe3_0wmmOC3u-wjK9nX07XGv9pLt2JSZDvt"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
-</script>
-<script>
-    paypal.Buttons().render('#paypal-button-container');
-    // This function displays Smart Payment Buttons on your web page.
-</script>

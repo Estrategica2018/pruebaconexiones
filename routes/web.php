@@ -247,13 +247,3 @@ Route::get('get_frequent_questions', 'FrequentQuestionController@get_frequent_qu
 
 Route::post('/send_frequent_question', 'FrequentQuestionController@send_email_frequent_questions')->name('send_email_frequent_questions');
 
-
-Route::get('/paypal/approved', 'PayPalController@approved')->name('approved');
-Route::get('/paypal/rejected', 'PayPalController@rejected')->name('rejected');
-Route::get('/paypal/cancel', 'PayPalController@cancel')->name('cancel');
-
-//Route::get('/paypal/status', 'PayPalController@status')->name('status');
-
-Route::get('/paypal/pay', 'PaymentController@payWithPayPal')->name('paypal_pay');
-Route::get('/paypal/status', 'PaymentController@payPalStatus');
-
