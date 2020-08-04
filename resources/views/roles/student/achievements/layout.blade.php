@@ -3,13 +3,13 @@
 @section('content')
     <div class="container" ng-controller="achievementsStudentCtrl" ng-init="initProfile()">
         <div class="content row">
-            <div class="col-md-3 ml-md-0 ml-sm-7 col-sm-9 text-align">
+            <div class="col-md-3 ml-md-0 ml-sm-7 col-sm-9 text-align mt-5">
                 <div class="col-12">
                     <h6>{{$student->name}} {{$student->last_name}}</h6>
                     @if(isset($student->url_image)) 
-                        <img src="{{asset($student->url_image)}}" width="80px" height="auto" style="margin-left: 10px;">
+                        <img class="rounded-circle" src="{{asset($student->url_image)}}" width="100px" height="auto" style="margin-left: 10px;">
                     @else 
-                        <img src="{{asset('images/icons/default-avatar.png')}}" width="80px" height="auto" style="margin-left: 10px;">
+                        <img class="rounded-circle" src="{{asset('images/icons/default-avatar.png')}}" width="100px" height="auto" style="margin-left: 10px;">
                     @endif
                 </div>
                 <div class="col-12 mb-3">
