@@ -215,6 +215,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     $scope.dataJstree.type = 'openMomentSectionPart';
 
                     $scope.momentSectionPart = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex];
+                    if(!$scope.momentSectionPart) $scope.momentSectionPart = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] = {};
                     $scope.momentSectionPart.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
                     $scope.elementParentEdit = $scope.momentSectionPart;
 
@@ -275,10 +276,11 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 if (!$scope.sequence['section_2']) $scope.sequence['section_2'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
                 if (!$scope.sequence['section_3']) $scope.sequence['section_3'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
                 if (!$scope.sequence['section_4']) $scope.sequence['section_4'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
+                if (!$scope.sequence['section_5']) $scope.sequence['section_5'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
 
                 $scope.moments = $scope.sequence.moments;
                 var moment = section1 = section2 = section3 = section4 = null;
-                var partsDefault = { 'part_1': {}, 'part_2': {}, 'part_3': {}, 'part_4': {} };
+                var partsDefault = { 'part_1': {}, 'part_2': {}, 'part_3': {}, 'part_4': {} , 'part_5': {}};
                 for (var i = 0; i < $scope.moments.length; i++) {
                     moment = $scope.moments[i];
                     section1 = JSON.parse(moment['section_1']);

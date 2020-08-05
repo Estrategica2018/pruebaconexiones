@@ -35,6 +35,14 @@
                                     "partId": "part_3",
                                     "selected" : @{{sequenceSection && sequenceSection.section.id === jsSectionSeq.id && sequenceSection.sequenceSectionPartIndex === "part_3" ? true : false}}, 
                                     "icon": "jstree-file"}'>Parte 3</li>
+                                 <li data-jstree='{ "type":"openSequenceSectionPart", "sequenceSectionIndex":"section_@{{jsSectionSeq.id}}", 
+                                    "partId": "part_4",
+                                    "selected" : @{{sequenceSection && sequenceSection.section.id === jsSectionSeq.id && sequenceSection.sequenceSectionPartIndex === "part_4" ? true : false}}, 
+                                    "icon": "jstree-file"}'>Parte 4</li>
+                                 <li data-jstree='{ "type":"openSequenceSectionPart", "sequenceSectionIndex":"section_@{{jsSectionSeq.id}}", 
+                                    "partId": "part_5",
+                                    "selected" : @{{sequenceSection && sequenceSection.section.id === jsSectionSeq.id && sequenceSection.sequenceSectionPartIndex === "part_5" ? true : false}}, 
+                                    "icon": "jstree-file"}'>Parte 5</li>                                                                        
                               </ul>
                            </li>
                            <li ng-repeat="jsMoment in moments" data-jstree='{ "type":"openMoment", "momentIndex": "@{{jsMoment.order}}", 
@@ -60,6 +68,14 @@
                                           "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_3",
                                           "selected" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type && momentSectionPart.momentSectionPartIndex === "part_3" ? true : false}}, 
                                           "icon": "jstree-file"}'>Parte 3</li>
+                                       <li data-jstree='{ "type":"openMomentSectionPart", 
+                                          "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_4",
+                                          "selected" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type && momentSectionPart.momentSectionPartIndex === "part_4" ? true : false}}, 
+                                          "icon": "jstree-file"}'>Parte 4</li>
+                                       <li data-jstree='{ "type":"openMomentSectionPart", 
+                                          "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_5",
+                                          "selected" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type && momentSectionPart.momentSectionPartIndex === "part_5" ? true : false}}, 
+                                          "icon": "jstree-file"}'>Parte 5</li>
                                     </ul>
                                  </li>
                               </ul>
