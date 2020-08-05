@@ -87,17 +87,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                             } 
                         }
                     }
-                    $('.swiper-wrapper').html(slideImages);
-                    resizable();    
-
-                    $timeout(function() { 
-                        $( window ).resize(function() {
-                            resizable();
-                        }); 
-
-                        resizable();
-                    },100);
-                    
+                    $('.swiper-wrapper').html(slideImages); 
                 },function(e){
                     var message = 'Error consultando el directorio';
                     if(e.message) {
@@ -244,22 +234,4 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         });
     }
 });
-
-
-function resizable() {
-/*     var height = $( window ).width() * 220 / 850; 
-    $('.swiper-slide').css('height',height);
-    $('.swiper-slide').css('background-size','100% '+height+'px'); */
-
-    var width = $('.swiper-wrapper').width();
-    //if($( window ).width()<490) width = 490;
-    height = width * 350 / 550;
-    
-   
-    height = 380; 
-    if($( window ).width() < 522) { 
-        height = 380;
-    }
-    $('.swiper-slide').css('height',height); 
-    $('.swiper-slide').css('background-size','100% '+height+'px');
-}
+ 

@@ -94,13 +94,11 @@
                                     @endif
                                 </div> 
                                 <div class="col-3 p-0 fs--1">  
-                                    <strong> Desempeño: </strong>
-                                    @if(isset($section['performance']))
+                                  
+                                    @if(isset($section['performance'] ))
+                                        <strong> Desempeño: </strong>
                                         <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> 
-                                        {{ $section['performance']}} {{ $section['quantity']}}
-                                    @else 
-                                        <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i> 
-                                        Sin iniciar
+                                        {{ $section['performance']}} {{ $section['quantity']}} % 
                                     @endif  
                                 </div>
                             </div>

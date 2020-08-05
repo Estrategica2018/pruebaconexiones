@@ -6,13 +6,14 @@
     
 
     .swiper-container {
-      width: 100%;
-      height: 100%;
+      width: 677px;
+      height: 350px;
     }
 
     .swiper-slide {
       text-align: center;
       font-size: 18px; 
+      background-size:675px 350px;
       /* Center slide text vertically */
       display: -webkit-box;
       display: -ms-flexbox;
@@ -27,6 +28,18 @@
       -webkit-align-items: center;
       align-items: center;
     }
+
+    @media(max-width:768px) {
+      .swiper-container {
+         width: 562px;
+         height: 350px;
+      }
+
+      .swiper-slide {  
+         background-size:562px 350px; 
+      }
+    }
+
   </style>
 <div ng-controller="kitsElementsCtrl" ng-init="getKits()">
 
@@ -40,38 +53,32 @@
       <div class="card-body"> 
          <div class="no-gutters row">
             <div class="d-none-result d-none row w-100">
-               <div class="col-12 col-md-6 p-3">
+               <div class="p-3">
                   <div class="swiper-container">
                      <div class="swiper-wrapper">
                         <div class="swiper-slide"
-                           style="background-image:url(images/sliderCarrucelHome/slide1.jpg?v.1);">
+                           style="">
                         </div>
                         <div class="swiper-slide"
-                           style="background-image:url(images/sliderCarrucelHome/slide2.jpg?v.1);">
-                        </div>
-                        <div class="swiper-slide"
-                           style="background-image:url(images/sliderCarrucelHome/slide3.jpg?v.1);">
-                        </div>
-                        <div class="swiper-slide"
-                           style="background-image:url(images/sliderCarrucelHome/slide4.jpg?v.1);">
-                        </div>
+                           style="background-image:url();">
+                        </div> 
                      </div>
                      <!-- Add Arrows -->
                      <div class="swiper-button-next" style="color: #007aff;"></div>
                      <div class="swiper-button-prev" style="color: #007aff;"></div>
                   </div>
                </div>
-               <div class="pr-0 col-12 col-md-5">
+               <div class="pr-0 col-12 col-md-4">
                   <h5 class="boder-header p-1 mt-4 mb-3 pl-3">
-                     @{{kit.name}}
+                  @{{kit.name}}
                   </h5>
                   @{{kit.description}} 
                   <div class="col-12 " >
                      <button ng-click="onAddShoppingCart(kit)" ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'" class="ml-3 mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
                   </div>
                </div>
-               <div class="col-12 mt-4 mt-md-0" ng-show="listSequence.length > 0">
-                  <h5 class="p-1 fs-0 boder-header">Guías de aprendizaje que te pueden interesar</h5>
+               <div class="col-12 mt-4 mt-md-3" ng-show="listSequence.length > 0">
+                  <h5 class="p-1 fs-1 pl-2 boder-header">Guías de aprendizaje que te pueden interesar</h5>
                   <div class="row  mt-4">
                      <div class="col-lg-4 col-md-6" ng-repeat="sequence in listSequence" style="border: 6px solid white;">
                         <div class="card-body bg-light p-1 row">
