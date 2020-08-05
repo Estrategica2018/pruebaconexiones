@@ -70,7 +70,7 @@
                      <button ng-click="onAddShoppingCart(kit)" ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'" class="ml-3 mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
                   </div>
                </div>
-               <div class="col-12 mt-4 mt-md-0" ng-show="   .length > 0">
+               <div class="col-12 mt-4 mt-md-0" ng-show="listSequence.length > 0">
                   <h5 class="p-1 fs-0 boder-header">Guías de aprendizaje que te pueden interesar</h5>
                   <div class="row  mt-4">
                      <div class="col-lg-4 col-md-6" ng-repeat="sequence in listSequence" style="border: 6px solid white;">
