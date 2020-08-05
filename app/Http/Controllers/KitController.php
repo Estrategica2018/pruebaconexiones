@@ -14,6 +14,18 @@ use Illuminate\Http\Request;
  */
 class KitController extends Controller
 {
+
+   //
+    /**
+     * @param Request $request
+     * @return Kit[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function showKitDetail(Request $request, $kit_id)
+    {
+        $kit = Kit::find($kit_id);
+        return view('elementsKits.getKit', [ 'kit' => $kit  ]);
+    }
+
     //
     /**
      * @param Request $request

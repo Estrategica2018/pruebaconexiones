@@ -44,9 +44,8 @@ Route::get('/implementos_de_laboratorio', function () {
     return view('elementsKits.search');
 })->name('elementsKits.search');
 
-Route::get('/kit_de_laboratorio/{kit_id}/{kit_name}', function () {
-    return view('elementsKits.getKit');
-})->name('elementsKits.getKit');
+
+Route::get('/kit_de_laboratorio/{kit_id}/{kit_name}', 'KitController@showKitDetail')->name('elementsKits.getKit');
 
 Route::get('/elemento_de_laboratorio/{element_id}/{element_name}', function () {
     return view('elementsKits.getElement');
@@ -130,6 +129,7 @@ Route::group(['middleware' =>['auth:afiliadoempresa', 'companyaffiliated', 'comp
     Route::get('{empresa}/student/logros', 'StudentController@show_achievements')->middleware('role:student')->name('student.achievements');
     Route::get('{empresa}/student/logros_por_secuencia/{affiliated_account_service_id}/{sequence_id}', 'StudentController@show_achievements_sequence')->middleware('role:student')->name('student.achievements.sequence');
     Route::get('{empresa}/student/logros_por_momento/{affiliated_account_service_id}/{sequence_id}', 'StudentController@show_achievements_moment')->middleware('role:student')->name('student.achievements.moment');
+    Route::get('{empresa}/student/logros_por_pregunta/{affiliated_account_service_id}/{sequence_id}', 'StudentController@show_achievements_question')->middleware('role:student')->name('student.achievements.question');
     Route::get('{empresa}/student/secuencia/{sequence_id}/situacion_generadora/{account_service_id}/{part_id?}', 'StudentController@show_sequences_section_1')->middleware('role:student')->name('student.sequences_section_1');
     Route::get('{empresa}/student/secuencia/{sequence_id}/Mapa_de_ruta/{account_service_id}/{part_id?}', 'StudentController@show_sequences_section_2')->middleware('role:student')->name('student.sequences_section_2');
     Route::get('{empresa}/student/secuencia/{sequence_id}/Guia_de_saberes/{account_service_id}/{part_id?}', 'StudentController@show_sequences_section_3')->middleware('role:student')->name('student.sequences_section_3');

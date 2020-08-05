@@ -21,8 +21,8 @@
           </div>
        </div>
        <!-- Add Arrows -->
-       <div class="swiper-button-next" style="color: white;"></div>
-       <div class="swiper-button-prev" style="color: white;"></div>
+       <div class="swiper-button-next" style="color: #007aff;"></div>
+       <div class="swiper-button-prev" style="color: #007aff;"></div>
     </div>
     <!-- Demo styles -->
     <style type="text/css">
@@ -47,7 +47,8 @@
     </style>
 
     <div class="text-center fs--1 no-gutters row w-100">
-       <div class="mb-1 col-6 col-md-4 col-lg-3">
+    <div class="mb-1 col-xxl-1 col-6 col-md-4 col-lg-1 bg-white"></div>
+       <div class="mb-1 col-6 col-md-4 col-lg-2">
           <div class="thumbnail bg-white p-3 h-100">
              <a href="{{route('pedagogy')}}">
                 <img class="welcome-thumbnail img-fluid rounded-circle mb-3 shadow-sm"
@@ -59,7 +60,7 @@
              <p class="fs--2 mb-1 ">
                 <div class="fs--1 text-aling">
                    Se basa en el diseño de experiencias de aprendizaje que generan <strong>Conexiones</strong> entre teoría y práctica, orientadas al desarrollo de pensamiento científico, a través de la indagación 
-                   <a href="{{route('pedagogy')}}" class="font-weight-bold"> (Ver +).</a>
+                   <a href="{{route('pedagogy')}}" class="font-weight-bold"> (Ver+).</a>
                  </div>
              </p>
           </div>
@@ -75,7 +76,7 @@
              <p class="fs--2 mb-1">
                 <div class="fs--1 text-aling">
                    <strong>Conexiones</strong> cuenta  con una completa serie de guías para el aprendizaje de las ciencias naturales, en formato multimedia que permite la interactividad
-                   <a href="{{route('sequences.search')}}" class="font-weight-bold"> (Ver +).</a>
+                   <a href="{{route('sequences.search')}}" class="font-weight-bold"> (Ver+).</a>
                 </div>
              </p>
           </div>
@@ -91,7 +92,7 @@
                    Ofrecemos implementos de laboratorio para la realización de las prácticas experimentales propuestas por
                    <strong> Conexiones </strong>,
                    y de otras que surjan de la indagación científica 
-                   <a href="{{route('elementsKits.search')}}" class="font-weight-bold"> (Ver +).</a>
+                   <a href="{{route('elementsKits.search')}}" class="font-weight-bold"> (Ver+).</a>
                 </div>
              </p>
           </div>
@@ -106,7 +107,7 @@
              <p class="fs--2 mb-1">
                 <div class="fs--1 text-aling">
                    Tenemos diferentes planes para acceder a los contenidos educativos de <strong>Conexiones</strong>, de manera que pueden elegir guías de aprendizaje completas, o seleccionar las partes de estas que les interesan 
-                   <a href="{{route('ratingPlan.list')}}" class="font-weight-bold"> (Ver +).</a>
+                   <a href="{{route('ratingPlan.list')}}" class="font-weight-bold"> (Ver+).</a>
                 </div>
              </p>
           </div>
@@ -120,7 +121,7 @@
              <h6 class="mb-1 font-weight-bold"><a href="#" onclick="onRatingPlanFree()">Prueba Gratuita</a></h6>
              <div class="fs--1 text-aling">
                 Ponemos a disposición el acceso a la plataforma <strong>Conexiones</strong> por 15 días, para que conozcan la propuesta educativa y las posibilidades de aprendizaje que pueden tener con esta 
-                <a href="#" onclick="onRatingPlanFree()" class="font-weight-bold"> (Ver +).</a>
+                <a href="#" onclick="onRatingPlanFree()" class="font-weight-bold"> (Ver+).</a>
              </div>
           </div>
        </div>

@@ -34,6 +34,17 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     };
     
     $scope.getKits = function() {
+
+        //create swiper-image in html and refresh this
+        new Swiper('.swiper-container', {
+            hashNavigation: true,
+            updateOnImagesReady: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+        });
+
         var params = window.location.href.split('/');
         var kidName = window.location.href.split('/')[params.length - 1];
         var kidId = window.location.href.split('/')[params.length - 2];
@@ -71,32 +82,20 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                     for(var dir in response.data.scanned_directory) {
                         if(response.data.scanned_directory[dir]!=='..') {
                             var src = '/' + response.data.directory + '/' + response.data.scanned_directory[dir];
-                            slideImages += '<div class="swiper-slide" style="background-image:url('+src+');"></div>'; 
+                            if(src.indexOf('.png')>0 || src.indexOf('.jpge')>0 || src.indexOf('.jpg')>0) {
+                                slideImages += '<div class="swiper-slide" style="background-image:url('+src+');"></div>'; 
+                            } 
                         }
                     }
                     $('.swiper-wrapper').html(slideImages);
+                    resizable();    
 
                     $timeout(function() { 
-                            //create swiper-image in html and refresh this
-                            new Swiper('.swiper-container', {
-                                hashNavigation: true,
-                                updateOnImagesReady: true,
-                                navigation: {
-                                    nextEl: '.swiper-button-next',
-                                    prevEl: '.swiper-button-prev',
-                                },
-                                on: {
-                                    init: function() {
-                                        resizable();
-                                    },
-                                    imagesReady: function() {
-                                        resizable();
-                                    }
-                                }
-                            });
-                            $( window ).resize(function() {
-                                resizable();
-                            }); 
+                        $( window ).resize(function() {
+                            resizable();
+                        }); 
+
+                        resizable();
                     },100);
                     
                 },function(e){
@@ -171,7 +170,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                                   }
                             });
                             $( window ).resize(function() {
-                                resizable();
+                               // resizable();
                             }); 
 
                             resizable();
@@ -254,9 +253,13 @@ function resizable() {
 
     var width = $('.swiper-wrapper').width();
     //if($( window ).width()<490) width = 490;
-    height = width * 350 / 550
+    height = width * 350 / 550;
     
-    $('.swiper-slide').css('height',height);   
-    $('.swiper-slide').css('width',width);
-    $('.swiper-slide').css('background-size', width+'px '+height+'px');
+   
+    height = 380; 
+    if($( window ).width() < 522) { 
+        height = 380;
+    }
+    $('.swiper-slide').css('height',height); 
+    $('.swiper-slide').css('background-size','100% '+height+'px');
 }
