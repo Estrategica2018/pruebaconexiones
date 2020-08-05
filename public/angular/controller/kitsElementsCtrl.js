@@ -75,28 +75,28 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
             }
             
             
-            if($scope.kit.url_slider_images) {
-                $http.post('/conexiones/admin/get_folder_image', { 'dir': $scope.kit.url_slider_images }).then(function (response) {
-                    $scope.kit.images = [];
-                    var slideImages = '';
-                    for(var dir in response.data.scanned_directory) {
-                        if(response.data.scanned_directory[dir]!=='..') {
-                            var src = '/' + response.data.directory + '/' + response.data.scanned_directory[dir];
-                            if(src.indexOf('.png')>0 || src.indexOf('.jpge')>0 || src.indexOf('.jpg')>0) {
-                                slideImages += '<div class="swiper-slide" style="background-image:url('+src+');"></div>'; 
-                            } 
-                        }
-                    }
-                    $('.swiper-wrapper').html(slideImages); 
-                },function(e){
-                    var message = 'Error consultando el directorio';
-                    if(e.message) {
-                        message += e.message;
-                    }
-                    $scope.errorMessage = angular.toJson(message);
-                    $scope.directoryPath = null;
-                });
-            }
+            // if($scope.kit.url_slider_images) {
+            //     $http.post('/conexiones/admin/get_folder_image', { 'dir': $scope.kit.url_slider_images }).then(function (response) {
+            //         $scope.kit.images = [];
+            //         var slideImages = '';
+            //         for(var dir in response.data.scanned_directory) {
+            //             if(response.data.scanned_directory[dir]!=='..') {
+            //                 var src = '/' + response.data.directory + '/' + response.data.scanned_directory[dir];
+            //                 if(src.indexOf('.png')>0 || src.indexOf('.jpge')>0 || src.indexOf('.jpg')>0) {
+            //                     slideImages += '<div class="swiper-slide" style="background-image:url('+src+');"></div>'; 
+            //                 } 
+            //             }
+            //         }
+            //        // $('.swiper-wrapper').html(slideImages);  
+            //     },function(e){
+            //         var message = 'Error consultando el directorio';
+            //         if(e.message) {
+            //             message += e.message;
+            //         }
+            //         $scope.errorMessage = angular.toJson(message);
+            //         $scope.directoryPath = null;
+            //     });
+            // }
             
             $scope.kit.type = 'kit';
             
@@ -125,57 +125,6 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         then(function (response) {
             $scope.element = response.data[0];
             $scope.element.type = 'element';
-
-
-            if($scope.element.url_slider_images) {
-                $http.post('/conexiones/admin/get_folder_image', { 'dir': $scope.element.url_slider_images }).then(function (response) {
-                    $scope.element.images = [];
-                    var slideImages = '';
-                    for(var dir in response.data.scanned_directory) {
-                        if(response.data.scanned_directory[dir]!=='..') {
-                            var src = '/' + response.data.directory + '/' + response.data.scanned_directory[dir];
-                            slideImages += '<div class="swiper-slide" style="background-image:url('+src+');"></div>';
-                            console.log(src);
-                        }
-                    }
-                    $('.swiper-wrapper').html(slideImages);
-
-                    $timeout(function() {
-                            
-                            //create swiper-image in html and refresh this
-                            new Swiper('.swiper-container', {
-                                hashNavigation: true,
-                                updateOnImagesReady: true,
-                                navigation: {
-                                    nextEl: '.swiper-button-next',
-                                    prevEl: '.swiper-button-prev',
-                                },
-                                on: {
-                                    init: function() {
-                                        resizable();
-                                    },
-                                    imagesReady: function() {
-                                        resizable();
-                                    }
-                                  }
-                            });
-                            $( window ).resize(function() {
-                               // resizable();
-                            }); 
-
-                            resizable();
-                    },100);
-                    
-                },function(e){
-                    var message = 'Error consultando el directorio';
-                    if(e.message) {
-                        message += e.message;
-                    }
-                    $scope.errorMessage = angular.toJson(message);
-                    $scope.directoryPath = null;
-                });
-            }
-
 
             $('#loading').removeClass('show');
             $('.d-none-result').removeClass('d-none');

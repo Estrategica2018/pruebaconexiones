@@ -54,19 +54,18 @@
          <div class="no-gutters row">
             <div class="d-none-result d-none row w-100">
                <div class="p-3">
+               @if(isset($files))
                   <div class="swiper-container">
                      <div class="swiper-wrapper">
-                        <div class="swiper-slide"
-                           style="">
-                        </div>
-                        <div class="swiper-slide"
-                           style="background-image:url();">
-                        </div> 
+                     @foreach($files as $file)
+                        <div class="swiper-slide" style="background-image:url(/{{ $directory }}/{{$file}});"></div> 
+                     @endforeach   
                      </div>
                      <!-- Add Arrows -->
                      <div class="swiper-button-next" style="color: #007aff;"></div>
                      <div class="swiper-button-prev" style="color: #007aff;"></div>
                   </div>
+               @endif
                </div>
                <div class="pr-0 col-12 col-lg-4">
                   <h5 class="boder-header p-1 mt-4 mb-3 pl-3">
