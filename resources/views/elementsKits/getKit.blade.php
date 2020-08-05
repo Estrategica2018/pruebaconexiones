@@ -29,6 +29,7 @@
       align-items: center;
     }
 
+
     @media(max-width:768px) {
       .swiper-container {
          width: 562px;
@@ -37,6 +38,18 @@
 
       .swiper-slide {  
          background-size:562px 350px; 
+      }
+    }    
+
+
+    @media(max-width:618px) {
+      .swiper-container {
+         width: 481px;
+         height: 292px;
+      }
+
+      .swiper-slide {  
+         background-size: 481px 292px; 
       }
     }
 
@@ -67,13 +80,13 @@
                   </div>
                @endif
                </div>
-               <div class="pr-0 col-12 col-lg-4">
+               <div class="pl-lg-6 col-12 col-lg-4">
                   <h5 class="boder-header p-1 mt-4 mb-3 pl-3">
                   @{{kit.name}}
                   </h5>
                   @{{kit.description}} 
-                  <div class="col-12 " >
-                     <button ng-click="onAddShoppingCart(kit)" ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'" class="ml-3 mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                  <div class="col-12 pl-0 mt-3" >
+                     <button ng-click="onAddShoppingCart(kit)" ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'" class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
                   </div>
                </div>
                <div class="col-12 mt-4 mt-md-3" ng-show="listSequence.length > 0">

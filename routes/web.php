@@ -46,10 +46,7 @@ Route::get('/implementos_de_laboratorio', function () {
 
 
 Route::get('/kit_de_laboratorio/{kit_id}/{kit_name}', 'KitController@showKitDetail')->name('elementsKits.getKit');
-
-Route::get('/elemento_de_laboratorio/{element_id}/{element_name}', function () {
-    return view('elementsKits.getElement');
-})->name('elementsKits.getElement');
+Route::get('/elemento_de_laboratorio/{element_id}/{element_name}', 'ElementController@showElementDetail')->name('elementsKits.getElement');
 
 Route::get('/planes_de_acceso', function () {
     return view('ratingPlan.list');

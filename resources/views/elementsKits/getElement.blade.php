@@ -10,10 +10,15 @@
 
 <!-- Demo styles -->
 <style type="text/css">
-   .swiper-slide {
+    .swiper-container {
+      width: 677px;
+      height: 350px;
+    }
+
+    .swiper-slide {
       text-align: center;
-      font-size: 18px;
-      background: #fff;
+      font-size: 18px; 
+      background-size:675px 350px;
       /* Center slide text vertically */
       display: -webkit-box;
       display: -ms-flexbox;
@@ -27,7 +32,30 @@
       -ms-flex-align: center;
       -webkit-align-items: center;
       align-items: center;
-   }
+    }
+
+    @media(max-width:768px) {
+      .swiper-container {
+         width: 562px;
+         height: 292px;
+      }
+
+      .swiper-slide {  
+         background-size:562px 292px; 
+      }
+    }
+
+
+    @media(max-width:618px) {
+      .swiper-container {
+         width: 481px;
+         height: 300px;
+      }
+
+      .swiper-slide {  
+         background-size: 481px 300px; 
+      }
+    }
    
 </style>
 
@@ -39,43 +67,35 @@
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
    </div>
 
-   <div class="mb-3 card">
+   <div class="mb-3 card w-100" style="min-width:400px; min-height:400px">
       <div class="card-body">
       <div class="no-gutters row">
             <div class="d-none-result d-none row w-100">
-               <div class="col-6 p-3">
-                  <!-- Swiper -->
-                  <div class="swiper-container mt-lg--2">
+               <div class="p-3">
+               @if(isset($files))
+                  <div class="swiper-container">
                      <div class="swiper-wrapper">
-                        <div class="swiper-slide"
-                           style="background-image:url(/images/sliderCarrucelHome/slide1.jpg);">
-                        </div>
-                        <div class="swiper-slide"
-                           style="background-image:url(/images/sliderCarrucelHome/slide2.jpg);">
-                        </div>
-                        <div class="swiper-slide"
-                           style="background-image:url(/images/sliderCarrucelHome/slide3.jpg);">
-                        </div>
-                        <div class="swiper-slide"
-                           style="background-image:url(/images/sliderCarrucelHome/slide4.jpg);">
-                        </div>
+                     @foreach($files as $file)
+                        <div class="swiper-slide" style="background-image:url(/{{ $directory }}/{{$file}});"></div> 
+                     @endforeach   
                      </div>
                      <!-- Add Arrows -->
-                     <div class="swiper-button-next" style="color: white;"></div>
-                     <div class="swiper-button-prev" style="color: white;"></div>
+                     <div class="swiper-button-next" style="color: #007aff;"></div>
+                     <div class="swiper-button-prev" style="color: #007aff;"></div>
                   </div>
+               @endif
                </div>
-               <div class="pr-0 col-12 col-md-5">
+               <div class="pl-lg-6 col-12 col-lg-4">
 				    <h5 class="boder-header p-1 mt-4 mb-3 pl-3">
                        @{{element.name}}
                     </h5>
                     @{{element.description}} 
-                    <div class="col-12 " >
-                      <button ng-click="onAddShoppingCart(element)" ng-disabled="element.status === 'sold-out' || element.status === 'no-available'" class="ml-3 mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                    <div class="col-12 pl-0 mt-3" >
+                      <button ng-click="onAddShoppingCart(element)" ng-disabled="element.status === 'sold-out' || element.status === 'no-available'" class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
                      </div>
                  </div>
                
-                 <div class="col-12 mt-4 mt-md-0" ng-show="listSequence.length > 0">
+                 <div class="col-12 mt-4 mt-md-3" ng-show="listSequence.length > 0">∫
                    <h5 class="p-1 fs-0 boder-header">Guías de aprendizaje que te pueden interesar</h5>
                    <div class="row  mt-4">
                        <div class="col-lg-4 col-md-6" ng-repeat="sequence in listSequence" style="border: 6px solid white;">

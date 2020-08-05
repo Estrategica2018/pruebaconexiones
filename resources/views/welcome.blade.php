@@ -47,7 +47,7 @@
     </style>
 
     <div class="text-center fs--1 no-gutters row w-100">
-    <div class="mb-1 col-xxl-1 col-6 col-md-4 col-lg-1 bg-white"></div>
+       <div class="mb-1 col-xxl-1 col-md-4 col-lg-1 bg-white"></div>
        <div class="mb-1 col-6 col-md-4 col-lg-2">
           <div class="thumbnail bg-white p-3 h-100">
              <a href="{{route('pedagogy')}}">

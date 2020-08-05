@@ -33,18 +33,8 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         });
     };
     
-    $scope.getKits = function() {
-
-        //create swiper-image in html and refresh this
-        new Swiper('.swiper-container', {
-            hashNavigation: true,
-            updateOnImagesReady: true,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            }
-        });
-
+    $scope.getKits = function() { 
+        
         var params = window.location.href.split('/');
         var kidName = window.location.href.split('/')[params.length - 1];
         var kidId = window.location.href.split('/')[params.length - 2];

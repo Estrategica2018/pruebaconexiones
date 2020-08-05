@@ -26,15 +26,13 @@
                         ng-model="searchText" name="searchText" id="searchText" ng-keyup="complete($event, searchText)"
                         ng-blur="fillTextbox($event,searchText)" class="mr-2 rounded-pill search-input form-control"
                         style="font-size: 0.85rem;">
-
-
                   </div>
                </div>
             </div>
             <div class="d-none-result d-none row w-100">
                <div class="col-lg-4 col-md-6" ng-repeat="kit in kit_elements | filter: searchText"
                   style="border: 6px solid white;">
-                  <div class="card-body bg-light text-center p-4 row">
+                  <div class="card-body bg-light text-center p-4 row h-100">
                      <img class="kit-imagen col-12 p-0" ng-src="{{asset('/')}}@{{kit.url_image}}" width="62px" height="62px" />
                      
                      <div class="col-12 mt-3 kit-description" id="sequence-description-@{{kit.id}}">
@@ -43,7 +41,7 @@
                         </h6>
                         @{{kit.description}}
                      </div>
-                     <div class="col-12 mt-3" style="text-align: left;">
+                     <div class="col-12 mt-auto" style="text-align: left;">
                         <a ng-show="kit.type==='kit'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="/kit_de_laboratorio/@{{kit.id}}/@{{kit.name_url_value}}">Detalle</a>
                         <a ng-show="kit.type==='element'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="/elemento_de_laboratorio/@{{kit.id}}/@{{kit.name_url_value}}">Detalle</a>
                         <button ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'"
