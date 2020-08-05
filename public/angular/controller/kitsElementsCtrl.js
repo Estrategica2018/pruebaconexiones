@@ -87,7 +87,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                             } 
                         }
                     }
-                    $('.swiper-wrapper').html(slideImages); 
+                   // $('.swiper-wrapper').html(slideImages); 
                 },function(e){
                     var message = 'Error consultando el directorio';
                     if(e.message) {
