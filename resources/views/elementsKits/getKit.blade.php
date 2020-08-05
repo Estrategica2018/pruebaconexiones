@@ -55,13 +55,14 @@
             <div class="d-none-result d-none row w-100">
                <div class="p-3">
                   <div class="swiper-container">
-                  <div class="swiper-wrapper">
-                     <div class="swiper-slide" style="background-image:url(/images/designerAdmin/kits-elements/kit_canicas//kit1.png);"></div>
-                     <div class="swiper-slide" style="background-image:url(/images/designerAdmin/kits-elements/kit_canicas//kit2.png);"></div>
-                     <div class="swiper-slide" style="background-image:url(/images/designerAdmin/kits-elements/kit_canicas//kit3.png);"></div>
-                     <div class="swiper-slide" style="background-image:url(/images/designerAdmin/kits-elements/kit_canicas//kit4.png);"></div>
-                     <div class="swiper-slide" style="background-image:url(/images/designerAdmin/kits-elements/kit_canicas//kit5.png);"></div>
-                  </div> 
+                     <div class="swiper-wrapper">
+                        <div class="swiper-slide"
+                           style="">
+                        </div>
+                        <div class="swiper-slide"
+                           style="background-image:url();">
+                        </div> 
+                     </div>
                      <!-- Add Arrows -->
                      <div class="swiper-button-next" style="color: #007aff;"></div>
                      <div class="swiper-button-prev" style="color: #007aff;"></div>
