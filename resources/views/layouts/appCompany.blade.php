@@ -22,7 +22,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title> | Plataforma de aprendizaje</title>
-    <link rel="shortcut icon" href="https://falcon.technext.it/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('images/icons/educonexiones.ico') }}">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#2c7be5">
     <link rel="stylesheet" type="text/css" href="{{ asset('falcon/css/falcon.css') }}">
