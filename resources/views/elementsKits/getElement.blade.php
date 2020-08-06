@@ -46,6 +46,15 @@
     }
 
 
+    @media(max-width:1161px) and (max-width:1161px) {
+      .div-name {
+         padding-left: 15px!important; 
+         max-width: 100%;
+         flex: 0 0 100%;
+      } 
+    }   
+
+
     @media(max-width:618px) {
       .swiper-container {
          width: 481px;
@@ -85,18 +94,18 @@
                   </div>
                @endif
                </div>
-               <div class="pl-lg-6 col-12 col-lg-4">
-				    <h5 class="boder-header p-1 mt-4 mb-3 pl-3">
+               <div class="pl-lg-6 col-12 col-lg-4 div-name">
+                    <h5 class="boder-header p-1 mt-4 mb-3 pl-3">
                        @{{element.name}}
                     </h5>
-                    @{{element.description}} 
+                    @{{element.description}}
                     <div class="col-12 pl-0 mt-3" >
                       <button ng-click="onAddShoppingCart(element)" ng-disabled="element.status === 'sold-out' || element.status === 'no-available'" class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
                      </div>
                  </div>
                
-                 <div class="col-12 mt-4 mt-md-3" ng-show="listSequence.length > 0">∫
-                   <h5 class="p-1 fs-0 boder-header">Guías de aprendizaje que te pueden interesar</h5>
+                 <div class="col-12 mt-4 mt-3" ng-show="listSequence.length > 0">
+                   <h5 class="fs-1 pl-3 boder-header">Guías de aprendizaje que te pueden interesar</h5>
                    <div class="row  mt-4">
                        <div class="col-lg-4 col-md-6" ng-repeat="sequence in listSequence" style="border: 6px solid white;">
                           <div class="card-body bg-light p-1 row">
@@ -105,14 +114,14 @@
                              </div>
                              <div class="col-8">
                                  <div class="col-12 mt-3 kit-description">
-                                    <h6 class="boder-header p-1  fs-0 text-left ">
+                                    <h6 class="boder-header pl-3 fs-0 text-left ">
                                        @{{sequence.name}}
                                     </h6>
                                     @{{sequence.description}}
                                  </div>
-								         <div class="col-12 p-0 mt-3 text-aling-left">
-                                    <a class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="../../kit_de_laboratorio/@{{kit_element.id}}/@{{kit_element.name_url_value}}">Detalle</a>
-                                    <a class="pl-3 mt-1 btn btn-outline-primary fs--2" href="#" class="col-6">Agregar</a>
+								         <div class="col-12 p-0 mt-3 mb-3 text-aling-left">
+                                    <a class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="/guia_de_aprendizaje/@{{sequence.id}}/@{{sequence.name_url_value}}">Detalle</a>
+                                    <a class="pl-3 mt-1 btn btn-outline-primary fs--2" href="#" ng-click="onSequenceBuy(sequence)" class="col-6">Comprar</a>
                                  </div>
                               </div>
                           </div>

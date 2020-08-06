@@ -60,11 +60,19 @@ class KitElementController extends Controller
      */
     public function get_element(Request $request, $element_id)
     {
-
-        return Element::where('id', $element_id)
+        
+        return Element::
+        with(['element_in_moment' => function($query) {
+            $query->with(['moment' => function($detail) {
+                $detail->with(['sequence' => function($seq) {
+                    $seq->select(['company_sequences.id','company_sequences.name','company_sequences.description','company_sequences.url_image','company_sequences.url_slider_images']);
+                }]);
+                $detail->select(['id','sequence_moments.id','sequence_moments.sequence_company_id','sequence_moments.order']);
+            }]);
+            $query->select(['moment_kits.id','moment_kits.*']);
+        }])
         ->select('elements.*',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
-        ->get();
-
+        ->find($element_id);
     }
 
     public function get_kit_element_dt (){

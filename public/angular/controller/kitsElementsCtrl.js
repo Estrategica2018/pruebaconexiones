@@ -2,6 +2,26 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     $scope.kits = [];
     $scope.errorMessageFilter = '';
     $scope.searchText = '';
+
+    $scope.ratingPlans = [];
+
+    //retrive plan
+    $http({
+        url: '/get_rating_plans/',
+        method: "GET",
+    }).
+    then(function (response) {
+        var data = response.data.data || response.data;
+        // $scope.ratingPlans = data.filter(function(value){
+        //         return !value.is_free && ( (value.type_plan.id === 1 && value.count === 1) || value.type_plan.id === 2 || value.type_plan.id === 3    );
+        // })
+        $scope.ratingPlans = data;
+
+    }).catch(function (e) {
+        $('.d-none-result').removeClass('d-none');
+        $('#loading').removeClass('show');
+        $scope.errorMessageFilter = 'Error consultando las secuencias, compruebe su conexión a internet';
+    });  
     
     $scope.allKits = function() {
         $('.d-none-result').removeClass('d-none');
@@ -34,7 +54,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     };
     
     $scope.getKits = function() { 
-        
+
         var params = window.location.href.split('/');
         var kidName = window.location.href.split('/')[params.length - 1];
         var kidId = window.location.href.split('/')[params.length - 2];
@@ -60,6 +80,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                     }
                 }
                 if(!mbSeq) {
+                    moment.sequence.name_url_value = moment.sequence.name.replace(/\s/g,'_').toLowerCase();
                     $scope.listSequence.push(moment.sequence);
                 }
             }
@@ -113,8 +134,26 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
             method: "GET",
         }).
         then(function (response) {
-            $scope.element = response.data[0];
+            $scope.element = response.data;
             $scope.element.type = 'element';
+            var moment = null;
+            var mbSeq = null;
+            $scope.listSequence = []; 
+            if($scope.element.element_in_moment)
+            for(var i=0;i<$scope.element.element_in_moment.length;i++) {
+                moment = $scope.element.element_in_moment[i].moment;
+                mbSeq = false; 
+                for(var j=0;j<$scope.listSequence.length;j++) {
+                    if($scope.listSequence[j].id === moment.sequence.id) {
+                        mbSeq = true;
+                        break;
+                    }
+                }
+                if(!mbSeq) {
+                    moment.sequence.name_url_value = moment.sequence.name.replace(/\s/g,'_').toLowerCase();
+                    $scope.listSequence.push(moment.sequence);
+                }
+            }
 
             $('#loading').removeClass('show');
             $('.d-none-result').removeClass('d-none');
@@ -171,6 +210,57 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
             swal('Conexiones',$scope.errorMessageFilter,'error');
             $('#move').next().removeClass('d-none');
         });
+    }
+
+    $scope.onSequenceBuy = function (sequence) {
+        var ratingPlans = '';
+        for(var i = 0; i < $scope.ratingPlans.length; i++) {
+            var rt = $scope.ratingPlans[i];
+            if(!rt.is_free) {
+                var listItem = rt.description_items.split('|');
+                var items = '';
+                for(var j=0;j<listItem.length;j++) {
+                    items += '<li style="line-height: 17px;" class="card-rating-plan-id-'+ i +' fs-2 small pr-0 mt-4 ml-3"><span class="color-gray-dark font-14px font-family ">' + listItem[j] + '</span></li>';
+                }
+               var name = rt.name ? rt.name.replace(/\s/g,'_').toLowerCase() : '';
+               var href = '/plan_de_acceso/' + rt.id + '/' + name + '/' + sequence.id;
+               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-75 trapecio-top position-absolute card-rating-button-id-'+ i  +'" style= "right: 12%;box-shadow: 0px 0px 0px 0px rgb(255 255 255), 0px -2px 0px rgba(255, 255, 255, 0.3);">'+
+               '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0 mt-2" style="position: absolute;top: -30px;color: white; ">Adquirir</span> </a> </div> ';
+
+               ratingPlans += '<div class="mt-3 col-12 col-md-4 "><div class="card-header card-rating-background-id-' + i + ' mt-3 fs--3 flex-100 box-shadow ">'+
+                '<h5 class="font-weight-bold card-rating-plan-id-'+ i +'" style="color: white;">'+rt.name+'</h5></div>'+
+                '<div class="card-body bg-light pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 220px  ;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
+                '   <div class="card-footer card-rating-background-id-' + i + ' font-weight-bold text-align box-shadow " style="color: white;">'+
+                '  $'+rt.price+'USD  </div></div>';
+            }
+        }
+        var html = '<div class="row justify-content-center">' + ratingPlans + '</div>';
+        swal({
+            html: html,
+            width: '75%',
+            showConfirmButton: false, showCancelButton: false
+        }).catch(swal.noop);
+        $('.swal2-show').css('background-color','transparent');
+
+
+        setTimeout(function () {
+            marginLeftText();
+         }, 300);
+  
+         function marginLeftText() {
+            $('.trapecio-top').each(function(){ 
+                var width  = $(this).width(); 
+                $(this).find('a span').each(function(){ 
+                    var delta =  (width) - $(this).width();
+                    $(this).css('margin-left',(delta/2)+'px');  
+                });
+            }); 
+         }
+  
+         $( window ).resize(function() {
+          marginLeftText();
+        });
+
     }
 });
  
