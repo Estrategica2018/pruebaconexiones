@@ -209,15 +209,23 @@ class AfiliadoEmpresa extends Model
         return '';
     }
 
-    public function retiveParent()
+    public function emailForContact()
     {
         $user_id = $this->id;
-        $rol_id = AffiliatedCompanyRole::select('id')->where([
-            ['affiliated_company_id', $user_id],
-            ['rol_id', 1]//estudiante
-        ])->first()->id;
+        if ($this->hasRole('student')) {
 
-        $parent_family = ConectionAffiliatedStudents::with(['parent_family.retrive_tutor'])->where('student_company_id', $rol_id)->get()->first();
-        return $parent_family;
+            $rol_id = AffiliatedCompanyRole::select('id')->where([
+                ['affiliated_company_id', $user_id],
+                ['rol_id', 1]//estudiante
+            ])->first()->id;
+    
+            $parent_family = ConectionAffiliatedStudents::with(['parent_family.retrive_tutor'])->where('student_company_id', $rol_id)->get()->first();
+            return $parent_family->parent_family->retrive_tutor->email;
+        }
+        else {
+            return $this->email;
+        }
+   
+
     }
 }
