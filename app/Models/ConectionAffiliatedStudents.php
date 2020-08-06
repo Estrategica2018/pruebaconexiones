@@ -19,4 +19,10 @@ class ConectionAffiliatedStudents extends Model
         return $this->belongsTo(AffiliatedCompanyRole::class, 'student_company_id', 'id');
     }
 
+    public function parent_family()
+    {
+        return $this->belongsTo(AffiliatedCompanyRole::class, 'tutor_company_id', 'id');
+    }
+ 
+
 }

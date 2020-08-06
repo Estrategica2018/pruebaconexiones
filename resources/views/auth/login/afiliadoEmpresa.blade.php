@@ -114,9 +114,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Entrar') }}
                                     </button>
-                                    <a class="btn btn-secondary" href="{{route('registerForm')}}">
+                                    <button class="btn btn-secondary" onclick="location='{{route('registerForm')}}'" >
                                         {{ __('Registro') }}
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                             

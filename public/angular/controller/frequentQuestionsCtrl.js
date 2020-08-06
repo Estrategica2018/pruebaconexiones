@@ -1,8 +1,12 @@
 MyApp.controller("frequentQuestionCtrl", function ($scope, $http, $timeout) {
-    $scope.toogleChatPanel = false
-    $scope.frequentQuestions = []
-    $scope.init = function () {    
-    
+    $scope.toogleChatPanel = false;
+    $scope.frequentQuestions = [];
+    $scope.email = null;
+
+    $scope.init = function (email) {    
+        
+        $scope.email = email;
+        
         $('.result-finish-done').removeClass('d-none');
          
         $http({

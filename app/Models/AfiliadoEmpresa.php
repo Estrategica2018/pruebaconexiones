@@ -207,6 +207,17 @@ class AfiliadoEmpresa extends Model
         if( $kidSelected !== null)
             return $kidSelected['age_stage'];
         return '';
+    }
 
+    public function retiveParent()
+    {
+        $user_id = $this->id;
+        $rol_id = AffiliatedCompanyRole::select('id')->where([
+            ['affiliated_company_id', $user_id],
+            ['rol_id', 1]//estudiante
+        ])->first()->id;
+
+        $parent_family = ConectionAffiliatedStudents::with(['parent_family.retrive_tutor'])->where('student_company_id', $rol_id)->get()->first();
+        return $parent_family;
     }
 }
