@@ -27,7 +27,7 @@ class FrequentQuestionController extends Controller
 
         try {
             $var = $request->all();        
-            Mail::to([env('MAIL_USERNAME')])
+            Mail::to([env('EMAIL_OPERATION')])
             ->cc($request->email)
             ->send(new SendFrequentQuestions($var));            
             return response()->json([

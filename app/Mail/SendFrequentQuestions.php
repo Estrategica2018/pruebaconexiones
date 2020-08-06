@@ -30,9 +30,9 @@ class SendFrequentQuestions extends Mailable
      * @return $this
      */
     public function build()
-    { 
+    {
          return
-                 $this->from(env('MAIL_USERNAME'))
+                 $this->from(env('EMAIL_OPERATION'))
                 ->markdown('vendor.notifications.registerFrequentsQuestions', ['data' => $this->data])
                 ->subject('Conexiones - Notificación contactenos');
     }
