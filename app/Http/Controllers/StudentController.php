@@ -258,18 +258,20 @@ class StudentController extends Controller
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         if ($sequence->section_1) {
-            $section = json_decode($sequence->section_1, true);
-            $section = $section['part_' . $part_id];
+            $sections = json_decode($sequence->section_1, true); 
+            $section = $sections['part_' . $part_id];
             $buttonBack = 'none';
             if ($part_id > 1) {
                 $buttonBack = route('student.sequences_section_1', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id, 'part_id' => ($part_id - 1)]);
-            }
+            } 
             if (isset(json_decode($sequence->section_1, true)['part_' . ($part_id + 1)])) {
+                
                 $buttonNext = route('student.sequences_section_1', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id, 'part_id' => ($part_id + 1)]);
             } else {
                 $buttonNext = route('student.sequences_section_2', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
             }
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext], $section);
+            //dd($sectionParts['part_'.($part_id + 1)]['elements']);
+            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
     }
