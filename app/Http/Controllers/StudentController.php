@@ -508,8 +508,8 @@ class StudentController extends Controller
 					}
 				}
             }
-			
-			if ($section['part_' . ($part_id + 1)] && isset($section['part_' . ($part_id + 1)]['elements']) ) {
+           
+			if (isset($section['part_' . ($part_id + 1)]) && isset($section['part_' . ($part_id + 1)]['elements']) ) {
 				$buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                     'sequence_id' => $sequence_id,
                     'moment_id' => $moment_id,
@@ -543,7 +543,7 @@ class StudentController extends Controller
 					}
 				}
             }
-			
+		
             $data = array_merge(['sequence' => $moment->sequence, 'sequence_id' => $sequence_id,'section_id'=>$section_id,'part_id' => $part_id,
                 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext, 'moment' => $moment, 'sections' => [$section_1, $section_2, $section_3, $section_4]], $section, $part);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('order_moment_id', $order_moment_id);
