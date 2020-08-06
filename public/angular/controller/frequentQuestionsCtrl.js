@@ -21,6 +21,7 @@ MyApp.controller("frequentQuestionCtrl", function ($scope, $http, $timeout) {
     $scope.onSendEmail=function(){
         if ($scope.comment && $scope.comment.length > 0) {
             if ($scope.email && $scope.email.length > 0 ){
+                $('#sendButton').addClass('fa fa-spinner fa-spin'); 
                 $http.post('/send_frequent_question',
                 {                            
                     'email':$scope.email,
@@ -28,9 +29,13 @@ MyApp.controller("frequentQuestionCtrl", function ($scope, $http, $timeout) {
                 }).
                 then(function onSuccess(response) {
                     $scope.email = "";
-                    $scope.comment = "";            
+                    $scope.comment = "";   
+                    $('#sendButton').removeClass('fa fa-spinner fa-spin'); 
+                    $('#sendButton').addClass('fas fa-paper-plane');          
                     swal('Conexiones','Tu consulta ha sido enviada a nuentro grupo de operaciones.','success');
                 }, function onError(response) {
+                    $('#sendButton').removeClass('fa fa-spinner fa-spin'); 
+                    $('#sendButton').addClass('fas fa-paper-plane');
                     swal('Conexiones','Lo sentimos, en estos momentos no podemos procesar tu solicitud, por favor intenta más tarde','error');
                 });
 

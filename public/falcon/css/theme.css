@@ -22562,3 +22562,15 @@ footer .navbar-light {
 .box-shadow {
     box-shadow: 0 7px 14px 0 rgba(59, 65, 94, .1), 0 3px 6px 0 rgba(0, 0, 0, .07);
 }
+
+@media(min-width: 1200px) and (max-width:1338px) { 
+
+    .ratinPlanCard-name {
+        font-size: 16px;
+        max-height: 38px;
+    }
+
+    .ratinPlanCard-body{
+        min-height: 299px;
+    }
+}

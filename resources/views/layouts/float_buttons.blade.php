@@ -1,5 +1,5 @@
 <a class="float result-finish-done d-none"  ng-controller="frequentQuestionCtrl" ng-init="init()">
-    <img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/chat.png')}}" width="60px" height="auto" ng-click="toogleChatPanel=true">
+    <img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/chat.png')}}" width="80px" height="auto" ng-click="toogleChatPanel=true">
     <div class="card" ng-show="toogleChatPanel" style="width: 435px;">
 		<div class="card-header fs--1 pr-5">
 			<div ng-click="toogleChatPanel= false" class="position-absolute fs-2 cursor-pointer" style="top: 3px;right: 16px;text-align: right;"> 
@@ -19,10 +19,10 @@
 					<label>@{{items.answer}}</label> 
 				</div>
 			</div>	
-			<div class="">
-				<input ng-model="email" placeholder="Correo" type="text" class="w-100"/>
-				<input ng-model="comment" placeholder="Comentario" type="text" class="w-80"/>
-				<button ng-click="onSendEmail()" class="btn btn-sm btn-primary" style=" height: 22px; padding-top: 0;"> &gt;</button>
+			<div class="position-absolute" style="bottom: 15px;  width: 92%;">
+				<input ng-model="email" placeholder="Correo" type="text" class="w-100" style="height:35px"/>
+				<input ng-model="comment" placeholder="Comentario" type="text" class="w-75 mt-1" style="height:35px"/>
+				<button ng-click="onSendEmail()" class="btn btn-sm btn-primary" style=" height: 35px; padding-top: 0;"> <i id="sendButton" class="fas fa-paper-plane"></i> Enviar</button>
 			</div>
 		</div>
 	</div>
