@@ -218,9 +218,12 @@ class AfiliadoEmpresa extends Model
                 ['affiliated_company_id', $user_id],
                 ['rol_id', 1]//estudiante
             ])->first()->id;
-    
+ 
             $parent_family = ConectionAffiliatedStudents::with(['parent_family.retrive_tutor'])->where('student_company_id', $rol_id)->get()->first();
-            return $parent_family->parent_family->retrive_tutor->email;
+            if(count($parent_family )>0) {
+                return $parent_family->parent_family->retrive_tutor->email;
+            }
+            else return '';
         }
         else {
             return $this->email;

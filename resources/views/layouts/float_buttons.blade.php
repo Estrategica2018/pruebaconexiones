@@ -22,13 +22,13 @@
 			</div>	
 			<div class="position-absolute" style="bottom: 15px;  width: 92%;">
 				@auth('afiliadoempresa')	
-					<input ng-model="email" placeholder="Correo" type="text" class="w-100" style="height:35px" disabled/>
+					<input ng-model="email" placeholder="Correo" type="email" class="w-100" style="height:35px" disabled/>
 				@else
-					<input ng-model="email" placeholder="Correo" type="text" class="w-100" style="height:35px"/>
+					<input ng-model="email" placeholder="Correo" type="email" class="w-100" style="height:35px"/>
 				@endauth
 				
 				<input ng-model="comment" placeholder="Comentario" type="text" class="w-75 mt-1" style="height:35px"/>
-				<button ng-click="onSendEmail()" class="btn btn-sm btn-primary" style=" height: 35px; padding-top: 0;">
+				<button ng-click="onSendEmail()" ng-disabled="!email || !comment" class="btn btn-sm btn-primary" style=" height: 35px; padding-top: 0;">
 				<i id="sendButton" class="fas fa-paper-plane"></i> Enviar</button>
 			</div>
 		</div>

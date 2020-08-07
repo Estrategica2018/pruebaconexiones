@@ -13,6 +13,7 @@ class Question extends Model
         'sequence_id',
         'moment_id',
         'experience_id',
+        'section',
         'options',
         'review',
         'objective',

@@ -638,6 +638,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     
     function saveEvidence(sectionPart,callback){
         var countElements = sectionPart.elements? sectionPart.elements.length : 0;
+       
         var countElementsError = [];
         if($scope.applyChangeEvidence) {
             var data = { 
@@ -677,6 +678,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                                     "title": element.questions[j].title,
                                     "sequence_id": $scope.sequence.id,
                                     "moment_id":  $scope.moment ? $scope.moment.id : '',
+                                    "section":  sectionPart.momentSectionPartIndex, 
                                     "objective":  element.questions[j].objective,
                                     "concept":  element.questions[j].concept,
                                     "isHtml":  element.questions[j].isHtml,
