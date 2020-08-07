@@ -20835,7 +20835,7 @@ button.bg-soft-dark:focus {
     }
 
     .fs-md--1 {
-        font-size: .58333rem;
+        font-size: .8rem;
     }
 
     .fs-md-0 {
@@ -20923,7 +20923,7 @@ button.bg-soft-dark:focus {
 
 @media(min-width:1200px) {
     .fs-xl--2 {
-        font-size: .69444rem
+        font-size: .64rem;
     }
 
     .fs-xl--1 {
