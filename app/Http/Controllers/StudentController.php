@@ -81,11 +81,38 @@ class StudentController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
-        $sequences = $this->get_available_sequences($request, $empresa, $company_id);
-        $countSequences = count($sequences);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company_id);
+        $countSequences = count($accountServices);
+  
+        foreach($accountServices as $accountService) {
+            //calculando el progreso de la linea de avance
+            $advanceLine = AdvanceLine::where([
+                ['affiliated_company_id',$student->id],
+                ['affiliated_account_service_id',$accountService->affiliated_account_service_id],
+                ['sequence_id',$accountService->sequence->id]]
+            )->get(); 
+            $accountService->sequence['progress'] = 100 * count($advanceLine) / (8*4); 
+
+            //calculando los porcentajes de desempeño
+            $ratings = Rating::where([
+                ['affiliated_account_service_id',$accountService->affiliated_account_service_id],
+                ['student_id', $student->id],
+                ['company_id', $accountService->sequence->company_id],
+                ['sequence_id',$accountService->sequence->id ] 
+            ]);
+            if(count($ratings)>0) {
+                $performance = $ratings->avg('weighted');
+                $accountService->sequence['performance'] = number_format($performance,0);
+            }
+            else {
+                $accountService->sequence['performance'] = 0;
+            }
+        }
+
         $firstAccess = $student->first_last_access()['first'];
         $lastAccess = $student->first_last_access()['last'];
-        return view('roles.student.achievements.index', ['student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess]);
+
+        return view('roles.student.achievements.index', ['accountServices'=> $accountServices, 'student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess]);
     }
 
     /**
@@ -131,7 +158,7 @@ class StudentController extends Controller
 
             if(count($ratings)>0) {
                 $performance = $ratings->avg('weighted');
-                $moment['performance'] = $performance;
+                $moment['performance'] = number_format($performance,0);
             } 
 
             array_push($moments,$moment);
@@ -141,7 +168,7 @@ class StudentController extends Controller
         return view('roles.student.achievements.sequence', ['student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id] );
     }
 
-    /**
+    /**   
      * @param Request $request
      * @param $empresa
      * @param int $affiliated_account_service_id
@@ -221,18 +248,16 @@ class StudentController extends Controller
                     ['moment_id',$moment->id],
                     ['section',($sectionIndex-1)]
                 ])->get();
-                
-                if(count($ratings) > 0) {
-                    $quantity = $ratings->avg('weighted'); 
-                    $section['performance'] = 'B';
-                    if($quantity > 90) {
-                        $section['performance'] = 'A';
-                    }
-                    $section['quantity'] = $quantity; 
-                }
 
+                $questions = Question::where([
+                    ['sequence_id',$sequence->id],
+                    ['moment_id',$moment->id],
+                    ['section',($sectionIndex-1)]
+                ])->get();
                 
-                
+                if(count($ratings) > 0 || count($questions) > 0 ) { 
+                    $section['performance'] = $ratings->avg('weighted') ? $ratings->avg('weighted') : 0;  
+                } 
                 $sectionIndex ++;
             }
 

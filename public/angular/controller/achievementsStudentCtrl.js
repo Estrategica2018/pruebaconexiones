@@ -7,19 +7,18 @@ MyApp.controller("achievementsStudentCtrl", ["$scope", "$http", "$timeout", func
     }
     
     $scope.initSequences = function(companyId) {
-        $('.d-none-result').removeClass('d-none');
-        $scope.mbSearchSequences = true;
+        $('.d-none-result').removeClass('d-none'); 
             
-        $http({
-            url:"/conexiones/get_available_sequences/" + companyId,
-            method: "GET",
-        }).
-        then(function (response) {
-            $scope.sequences = response.data;
-        }).catch(function (e) {
-            $scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
-            swal('Conexiones',$scope.errorMessage,'error');
-        });
+        // $http({
+        //     url:"/conexiones/get_available_sequences/" + companyId,
+        //     method: "GET",
+        // }).
+        // then(function (response) {
+        //     $scope.sequences = response.data;
+        // }).catch(function (e) {
+        //     $scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
+        //     swal('Conexiones',$scope.errorMessage,'error');
+        // });
     }
   
 }]);
