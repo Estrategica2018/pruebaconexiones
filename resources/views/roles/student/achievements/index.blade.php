@@ -30,8 +30,8 @@
                 @endif                 
                  
                 @if(isset($accountService->sequence['performance'] ))
-                    @if($accountService->sequence['performance']>=0)   
-                        <label  style="margin-left: -35px;"> <strong> Desempeño</strong></label>
+                    <label  style="margin-left: -35px;"> <strong> Desempeño</strong></label>
+                    @if($accountService->sequence['performance']>=0) 
                         @if($accountService->sequence['performance']>=90)
                         <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (S) 
                         @endif
