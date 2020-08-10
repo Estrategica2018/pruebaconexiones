@@ -46,6 +46,7 @@
                         @endif
                         @if($accountService->sequence['performance']<40)
                         <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B)  
+                        @endif
                         {{$accountService->sequence['performance']}} %
                     @else  
                         <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
