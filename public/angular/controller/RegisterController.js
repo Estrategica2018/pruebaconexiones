@@ -36,6 +36,10 @@ MyApp.controller("registerController", ["$scope", "$http", "$templateCache", fun
                 $scope.countryId = "42";
                 $scope.showCitySelect = true;
                 $scope.$apply();
+            }else{
+                $scope.showCitySelect =  false;
+                $scope.city_id = null;
+                $scope.departmentId = null;
             }
             }, 100);
 
