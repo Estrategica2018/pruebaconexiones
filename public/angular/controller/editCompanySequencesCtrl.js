@@ -662,7 +662,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                         }
 					}
                 }
-				
+				 
                 for(var i=0;i<sectionPart.elements.length;i++) {
                     element = sectionPart.elements[i];
                     if(element.type === 'evidence-element') {
@@ -678,7 +678,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                                     "title": element.questions[j].title,
                                     "sequence_id": $scope.sequence.id,
                                     "moment_id":  $scope.moment ? $scope.moment.id : '',
-                                    "section":  sectionPart.momentSectionPartIndex, 
+                                    "section":  Number($scope.momentSection.momentSectionIndex)+ 1, 
                                     "objective":  element.questions[j].objective,
                                     "concept":  element.questions[j].concept,
                                     "isHtml":  element.questions[j].isHtml,

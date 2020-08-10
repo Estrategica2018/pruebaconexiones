@@ -30,7 +30,12 @@
            <i class="fas fa-book-open fs-1" style="color:#26b7c4;"></i>
         </li>
         <li class="nav-item ml-lg-14 col-auto d-flex">
-           <a href="{{ route('student.achievements',auth('afiliadoempresa')->user()->company_name()) }}" class="nav-link  mr-2 p-0 pb-1 @if(\Route::current()->getName() == 'student.achievements') selected @endif">
+           <a href="{{ route('student.achievements',auth('afiliadoempresa')->user()->company_name()) }}" 
+           class="nav-link  mr-2 p-0 pb-1 
+           @if(\Route::current()->getName() == 'student.achievements') selected @endif
+           @if(\Route::current()->getName() == 'student.achievements.sequence') selected @endif
+           @if(\Route::current()->getName() == 'student.achievements.moment') selected @endif
+           @if(\Route::current()->getName() == 'student.achievements.question') selected @endif">
            Logros
            </a>
            <i class="fas fa-star fs-1" style="color:#5f347c;"></i>

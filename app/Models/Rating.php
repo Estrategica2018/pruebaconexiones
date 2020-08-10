@@ -15,8 +15,15 @@ class Rating extends Model
         'affiliated_account_service_id',
         'sequence_id',
         'moment_id',
+        'experience_id',
         'weighted',
         'letter',
         'section'
     ];
+
+    public function answers()
+    {
+        return $this->belongsTo(Answer::class, 'experience_id', 'experience_id');
+
+    }
 }

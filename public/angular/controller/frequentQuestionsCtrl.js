@@ -23,17 +23,18 @@ MyApp.controller("frequentQuestionCtrl", function ($scope, $http, $timeout) {
     
     }
     $scope.onSendEmail=function(){
-        if ($scope.comment && $scope.comment.length > 0) {
+        if ($scope.message && $scope.message.length > 0) {
             if ($scope.email && $scope.email.length > 0 ){
                 $('#sendButton').addClass('fa fa-spinner fa-spin'); 
-                $http.post('/send_frequent_question',
+                $http.post('/send_email_contactus',
                 {                            
+                    'name':$scope.name,
                     'email':$scope.email,
-                    'comment':$scope.comment                            
+                    'affair':$scope.affair,
+                    'message':$scope.message,                           
                 }).
                 then(function onSuccess(response) {
-                    $scope.email = "";
-                    $scope.comment = "";   
+                    $scope.message = "";   
                     $('#sendButton').removeClass('fa fa-spinner fa-spin'); 
                     $('#sendButton').addClass('fas fa-paper-plane');          
                     swal('Conexiones','Tu consulta ha sido enviada a nuentro grupo de operaciones.','success');

@@ -17,6 +17,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\Models\CompanySequence;
 use App\Models\SequenceMoment;
+use App\Models\Achievement;
 
 /**
  * Class StudentController
@@ -83,32 +84,11 @@ class StudentController extends Controller
         $student = $request->user('afiliadoempresa');
         $accountServices = $this->get_available_sequences($request, $empresa, $company_id);
         $countSequences = count($accountServices);
-  
-        foreach($accountServices as $accountService) {
-            //calculando el progreso de la linea de avance
-            $advanceLine = AdvanceLine::where([
-                ['affiliated_company_id',$student->id],
-                ['affiliated_account_service_id',$accountService->affiliated_account_service_id],
-                ['sequence_id',$accountService->sequence->id]]
-            )->get(); 
-            $accountService->sequence['progress'] = 100 * count($advanceLine) / (8*4); 
-
-            //calculando los porcentajes de desempeño
-            $ratings = Rating::where([
-                ['affiliated_account_service_id',$accountService->affiliated_account_service_id],
-                ['student_id', $student->id],
-                ['company_id', $accountService->sequence->company_id],
-                ['sequence_id',$accountService->sequence->id ] 
-            ]);
-            if(count($ratings)>0) {
-                $performance = $ratings->avg('weighted');
-                $accountService->sequence['performance'] = number_format($performance,0);
-            }
-            else {
-                $accountService->sequence['performance'] = 0;
-            }
-        }
-
+        foreach($accountServices as $accountService) { 
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService->affiliated_account_service_id, $student->id, $accountService->sequence->id);
+            $accountService->sequence['progress'] = $result['sequence']['progress'];
+            $accountService->sequence['performance'] = $result['sequence']['performance'];
+        } 
         $firstAccess = $student->first_last_access()['first'];
         $lastAccess = $student->first_last_access()['last'];
 
@@ -133,38 +113,19 @@ class StudentController extends Controller
         $lastAccess = $student->first_last_access()['last'];
        
         $sequence = CompanySequence::with('moments')->find($sequence_id);
-       
+ 
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
+        $sequence['progress'] = $result['sequence']['progress'];
+        $sequence['performance'] = $result['sequence']['performance'];
+
         $moments = [];
         foreach($sequence->moments as $moment) {
-           
-            //calculando el progreso de la linea de avance        
-            $advanceLine = AdvanceLine::where([
-                ['affiliated_company_id',$student->id],
-                ['affiliated_account_service_id',$request->affiliated_account_service_id],
-                ['sequence_id',$sequence_id],
-                ['moment_order',$moment->order]
-            ])->orderBy('moment_order', 'ASC')->orderBy('moment_section_id', 'ASC')->get();
-            
-            $moment['advance'] = (count($advanceLine) / 4) * 100;; 
-
-            //calculando los porcentajes de desempeño
-            $ratings = Rating::where([
-                ['affiliated_account_service_id',$affiliated_account_service_id],
-                ['student_id',$student->id],
-                ['company_id', $sequence->company_id],
-                ['sequence_id',$sequence->id],
-                ['moment_id',$moment->id]
-            ]);
-
-            if(count($ratings)>0) {
-                $performance = $ratings->avg('weighted');
-                $moment['performance'] = number_format($performance,0);
-            } 
-
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order);
+            $moment['progress'] = $result['moment']['progress'];
+            $moment['performance'] = $result['moment']['performance'];
             array_push($moments,$moment);
         }
- 
-
+       
         return view('roles.student.achievements.sequence', ['student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id] );
     }
 
@@ -186,86 +147,87 @@ class StudentController extends Controller
         $lastAccess = $student->first_last_access()['last'];
         
         $sequence = CompanySequence::with('moments')->find($sequence_id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
+        $sequence['progress'] = $result['sequence']['progress'];
+        $sequence['performance'] = $result['sequence']['performance'];
+        
         $moments = [];
-
-        // $answers = Answer::with('question')
-        //     ->where([['student_affiliated_company_id',$student->id], 
-        //           ['affiliated_account_service_id',$affiliated_account_service_id]
-        //     ])
-        //     ->get();
-
         foreach($sequence->moments as $moment) {
+            
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order);
+            $moment['progress'] = $result['moment']['progress'];
+            $moment['performance'] = $result['moment']['performance'];
+            $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            
+
             $section_1 = json_decode($moment->section_1,true);
             $section_2 = json_decode($moment->section_2,true);
             $section_3 = json_decode($moment->section_3,true);
             $section_4 = json_decode($moment->section_4,true);
- 
-            
-            $advanceLine = AdvanceLine::where([
-                ['affiliated_company_id',$student->id],
-                ['affiliated_account_service_id',$request->affiliated_account_service_id],
-                ['sequence_id',$sequence_id],
-                ['moment_order',$moment->order]
-            ])->orderBy('moment_order', 'ASC')->orderBy('moment_section_id', 'ASC')->get();
-
-            $moment['advance'] = (count($advanceLine) / 4) * 100;;
-            $moment['performance'] = (count($advanceLine) / 4) * 100;
-            $moment['lastAccessInMoment'] = $advanceLine->max('updated_at');
- 
-            $sectionIndex=1;
-
             $sections = [
                 'section_1' => ['name' => $section_1['section']['name'],'title' => isset($section_1['title']) ? $section_1['title'] : '', 'section' => $section_1],
                 'section_2' => ['name' => $section_2['section']['name'],'title' => isset($section_2['title']) ? $section_2['title'] : '', 'section' => $section_2],
                 'section_3' => ['name' => $section_3['section']['name'],'title' => isset($section_3['title']) ? $section_3['title'] : '', 'section' => $section_3],
                 'section_4' => ['name' => $section_4['section']['name'],'title' => isset($section_4['title']) ? $section_4['title'] : '', 'section' => $section_4],
             ]; 
-
+            $section_id=1; 
             foreach($sections as &$section) {
-              
-                //calcula el Progreso según la línea de avance
-
-                $progress =  $advanceLine = AdvanceLine::where([
-                    ['affiliated_company_id',$student->id],
-                    ['affiliated_account_service_id',$request->affiliated_account_service_id],
-                    ['sequence_id',$sequence_id],
-                    ['moment_order',$moment->order],
-                    ['moment_order',$moment->order],
-                    ['moment_section_id',$sectionIndex]
-                ])->get();
-
-                if(count($progress) > 0) { 
-                    $section['progress'] = 100; 
-                }
-
-                //calcula el desempeño según las evaluaciones
- 
-                $ratings = Rating::where([
-                    ['affiliated_account_service_id',$affiliated_account_service_id],
-                    ['student_id',$student->id],
-                    ['company_id', $sequence->company_id],
-                    ['sequence_id',$sequence->id],
-                    ['moment_id',$moment->id],
-                    ['section',($sectionIndex-1)]
-                ])->get();
-
-                $questions = Question::where([
-                    ['sequence_id',$sequence->id],
-                    ['moment_id',$moment->id],
-                    ['section',($sectionIndex-1)]
-                ])->get();
-                
-                if(count($ratings) > 0 || count($questions) > 0 ) { 
-                    $section['performance'] = $ratings->avg('weighted') ? $ratings->avg('weighted') : 0;  
-                } 
-                $sectionIndex ++;
+                $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order, $section_id);
+                $section['progress'] = $result['section']['progress'];
+                $section['performance'] = $result['section']['performance'];
+                $section_id ++;
             }
 
-            $moment['sections'] = $sections;    
+            $moment['sections'] = $sections;
             array_push($moments,$moment);
         }
-   
+        
         return view('roles.student.achievements.moment', ['student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
+    }
+
+    /**   
+     * @param Request $request
+     * @param $empresa
+     * @param int $affiliated_account_service_id
+     * @param int $sequence_id
+     * @param int $company_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_achievements_question(Request $request, $empresa, $affiliated_account_service_id, $sequence_id, $company_id = 1)
+    {
+        $request->user('afiliadoempresa')->authorizeRoles(['student']);
+        $student = $request->user('afiliadoempresa');
+        $sequences = $this->get_available_sequences($request, $empresa, $company_id);
+        $countSequences = count($sequences);
+        $firstAccess = $student->first_last_access()['first'];
+        $lastAccess = $student->first_last_access()['last'];
+        
+        $sequence = CompanySequence::with('moments')->find($sequence_id);
+
+        $sequence = CompanySequence::with('moments')->find($sequence_id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
+        $sequence['progress'] = $result['sequence']['progress'];
+        $sequence['performance'] = $result['sequence']['performance'];
+        
+        $moments = [];
+ 
+        foreach($sequence->moments as $moment) {
+            
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order);
+            $moment['progress'] = $result['moment']['progress'];
+            $moment['performance'] = $result['moment']['performance'];
+            $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+
+            $rating = Rating::with('answers')
+            ->where([
+                ['sequence_id',$sequence->id],
+                ['moment_id',$moment->order]
+            ])->get();
+ 
+            $moment['ratings'] = $rating;    
+            array_push($moments,$moment);
+        }
+        return view('roles.student.achievements.questions', ['student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
     }
  
     /**
@@ -295,7 +257,7 @@ class StudentController extends Controller
             } else {
                 $buttonNext = route('student.sequences_section_2', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
             }
-            //dd($sectionParts['part_'.($part_id + 1)]['elements']);
+    
             $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }

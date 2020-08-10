@@ -9,6 +9,7 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
     $scope.accountServiceId = null;
     $scope.sequenceId = null;
     $scope.momentId = null;
+    $scope.sectionId = null;
     $scope.onFinishEvidenceLoad = false;
     
 
@@ -19,7 +20,7 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         getAvailableSequences(companyId, sequenceId);
     }
 
-    $scope.onClickEvidence = function(sequenceId,momentId,experienceId,icon,subtitle,partId) {
+    $scope.onClickEvidence = function(sequenceId,momentId,sectionId,experience_id,icon,subtitle,partId) {
  
         $scope.evidenceOpened = {};
         $scope.evidenceOpened.icon = icon || 'images/icons/evidenciasAprendizajeIcono-01.png';
@@ -29,13 +30,14 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         $scope.indexQuestion = 0;
         $scope.sequenceId = sequenceId;
         $scope.momentId = momentId;
+        $scope.sectionId = sectionId;
         $scope.partId = partId;
-        $scope.experienceId = experienceId;
+        $scope.experience_id = experience_id;
         $scope.optionSelected = false;
-        $('#' + $scope.experienceId + ' img').addClass('d-none');
-        $('#' + $scope.experienceId + ' span').removeClass('d-none');
+        $('#' + $scope.experience_id + ' img').addClass('d-none');
+        $('#' + $scope.experience_id + ' span').removeClass('d-none');
         $http({
-            url: "/get_questions/"+sequenceId+"/"+momentId+"/"+experienceId,
+            url: "/get_questions/"+sequenceId+"/"+momentId+"/"+experience_id,
             method: "GET",
         }).
         then(function (response) {
@@ -45,20 +47,20 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
                 $scope.evidenceOpened.questions[i].options = JSON.parse($scope.evidenceOpened.questions[i].options);
                 $scope.evidenceOpened.questions[i].optionSelected = false;
             }
-            $('#' + $scope.experienceId + ' img').removeClass('d-none');
-            $('#' + $scope.experienceId + ' span').addClass('d-none');
+            $('#' + $scope.experience_id + ' img').removeClass('d-none');
+            $('#' + $scope.experience_id + ' span').addClass('d-none');
             
         }).catch(function (e) {
             $scope.errorMessage = 'Error consultando las preguntas';
             swal('Conexiones', $scope.errorMessage, 'error');
-            $('#' + $scope.experienceId + ' img').removeClass('d-none');
-            $('#' + $scope.experienceId + ' span').addClass('d-none');
+            $('#' + $scope.experience_id + ' img').removeClass('d-none');
+            $('#' + $scope.experience_id + ' span').addClass('d-none');
         });
     }
 
     $scope.closeEvidence = function() {
         $scope.evidenceOpened = null;
-        $scope.experienceId = null;
+        $scope.experience_id = null;
     }
     
     $scope.onSelectOption = function(question,option) {
@@ -82,8 +84,8 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
             "affiliated_account_service_id": $scope.accountServiceId,
             "sequence_id": $scope.sequenceId,
             "moment_id": $scope.momentId,
-            "experience_id": $scope.experienceId,
-            "section": $scope.partId
+            "experience_id": $scope.experience_id,
+            "section": $scope.sectionId
         };
         $http({
             url: "/register_update_answer/",
@@ -99,8 +101,8 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         }).catch(function (e) {
             $scope.errorMessage = e.data.message || 'Error guardando las respuestas';
             swal('Conexiones', $scope.errorMessage, 'error');
-            $('#' + $scope.experienceId + ' img').removeClass('d-none');
-            $('#' + $scope.experienceId + ' span').addClass('d-none');
+            $('#' + $scope.experience_id + ' img').removeClass('d-none');
+            $('#' + $scope.experience_id + ' span').addClass('d-none');
             $scope.onFinishEvidenceLoad = false;
         });
     }

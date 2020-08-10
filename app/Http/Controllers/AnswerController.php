@@ -43,6 +43,7 @@ class AnswerController extends Controller
                     ,
                     [
                         'answer' => $question_answer['answer'],
+                        'experience_id' => $request->experience_id,
                         //'feedback' => $request->feedback, v2
                         //'teacher_affiliated_company_id' => $request->teacher_affiliated_company_id, v2
                         'date_evaluation' => Carbon::now()
@@ -144,7 +145,8 @@ class AnswerController extends Controller
                 ] ,
                 [
                     'weighted' => $performance, 
-                    'letter' => $qualification
+                    'letter' => $qualification,
+                    'experience_id' => $request->experience_id,
                 ]
             );
 

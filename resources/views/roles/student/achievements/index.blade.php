@@ -31,7 +31,7 @@
                 
                 
                 @if($accountService->sequence['progress']>0)
-                    <p style="margin-left: -35px;">  <strong> Desempeño</strong>
+                   <label  style="margin-left: -35px;"> <strong> Desempeño</strong></label>
                     @if(isset($accountService->sequence['performance'] ))
                         @if($accountService->sequence['performance']>=90)
                         <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (S) {{$accountService->sequence['performance']}} %
@@ -56,27 +56,63 @@
             </div>
             <div class="col-12 col-xl-4 mt-4 mt-lg-0 mb-3 d-flex">
                 <div class="col-0 text-align">
-                    <a href="/{{auth('afiliadoempresa')->user()->company_name()}}/student/logros_por_secuencia/{{$accountService->affiliated_account_service_id}}/{{$accountService->sequence->id}}">
-                        <div class="col-12 border-left-mini">
-                            <img src="{{asset('images/icons/reporteSecuencias.png')}}" class="imagen-reports-type-mini ml-lg-2"  width="45px" height= "auto"/>
-                        </div>
-                        <div class="font-weight-bold m-auto w-50 pt-3 fs--1 fs-xl--2 ml-xl-2" style="min-width: 106px;" >Reporte por guía de aprendizaje</div>
+                    <div class="mb-2">
+                        <a href="{{
+                            route('student.achievements.sequence',
+                            ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                            'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                            'sequence_id'=>$accountService->sequence->id
+                            ])}}"> 
+                            <img src="{{asset('images/icons/reporteSecuencias.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
+                        </a>
+                    </div>
+                    <a href="{{
+                        route('student.achievements.sequence',
+                        ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                        'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                        'sequence_id'=>$accountService->sequence->id
+                        ])}}"> 
+                        <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por guía de aprendizaje</label>
                     </a>
                 </div>
                 <div class="col-0 text-align">
-                    <a href="/{{auth('afiliadoempresa')->user()->company_name()}}/student/logros_por_momento/{{$accountService->affiliated_account_service_id}}/{{$accountService->sequence->id}}">
-                        <div class="col-12 border-left-mini">
+                    <div class="mb-2">
+                        <a href="{{
+                            route('student.achievements.moment',
+                            ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                            'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                            'sequence_id'=>$accountService->sequence->id
+                            ])}}"> 
                             <img src="{{asset('images/icons/reporteMomentos.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
-                        </div>
-                        <div class="font-weight-bold m-auto w-25 pt-3 fs--1 fs-xl--2" style="min-width: 106px;" >Reporte por momento</div>
+                        </a>
+                    </div>
+                    <a href="{{
+                        route('student.achievements.moment',
+                        ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                        'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                        'sequence_id'=>$accountService->sequence->id
+                        ])}}"> 
+                        <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por momento</label>
                     </a>
                 </div>
                 <div class="col-0 text-align">
-                    <a href="/{{auth('afiliadoempresa')->user()->company_name()}}/student/logros_por_pregunta/{{$accountService->affiliated_account_service_id}}/{{$accountService->sequence->id}}">
-                        <div class="col-12 border-left-mini">
+                    <div class="mb-2">
+                        <a href="{{
+                            route('student.achievements.question',
+                            ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                            'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                            'sequence_id'=>$accountService->sequence->id
+                            ])}}"> 
                             <img src="{{asset('images/icons/reportePreguntas.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
-                        </div>
-                        <div class="font-weight-bold m-auto w-25 pt-3 fs--1 fs-xl--2" style="min-width: 106px;">Reporte por preguntas</div>
+                        </a>
+                    </div>
+                    <a href="{{
+                        route('student.achievements.question',
+                        ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                        'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                        'sequence_id'=>$accountService->sequence->id
+                        ])}}"> 
+                        <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por preguntas</label>
                     </a>
                 </div>
             </div>

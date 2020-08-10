@@ -22574,3 +22574,9 @@ footer .navbar-light {
         min-height: 299px;
     }
 }
+
+@media(min-width: 1200px) and (max-width:1494px) { 
+    .mt-xl-0 {
+        margin-top: 15px!important; 
+    }
+}

@@ -13,6 +13,7 @@ class Answer extends Model
         'company_id',
         'affiliated_account_service_id',
         'question_id',
+        'experience_id',
         'answer',
         'feedback',
         'teacher_affiliated_company_id',

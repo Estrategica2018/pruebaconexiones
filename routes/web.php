@@ -242,5 +242,3 @@ Route::group([],function (){
 //servcios preguntas frecuentes
 Route::get('get_frequent_questions', 'FrequentQuestionController@get_frequent_questions')->name('get_frequent_questions');
 
-Route::post('/send_frequent_question', 'FrequentQuestionController@send_email_frequent_questions')->name('send_email_frequent_questions');
-
