@@ -86,7 +86,7 @@
                </div>
             </div>
             <div ng-show="dataJstree.type === 'openSequenceSectionPart' || dataJstree.type === 'openMomentSectionPart'"
-               class="mb-3 card fade show d-none d-lg-block p-3 height_282 row" id="sidemenu-tools-content">
+               class="mb-3 card fade show d-none d-lg-block p-3 height_282 row" id="sidemenu-tools-content" style="overflow-y: auto;">
                <div class="row">
                   <div class="col-6">
                      <h6> Herramientas</h6>
@@ -341,7 +341,7 @@
                            <img id="@{{element.type==='image-element' ? element.id : ''}}"
                               src="@{{'/'+element.url_image || '/images/icons/NoImageAvailable.jpeg'}}"
                               class="@{{element.class}} conx-element" style="@{{element.style}}"
-							  ng-class="{'selected':element.selected}"
+							  ng-clas	s="{'selected':element.selected}"
                               ng-click="onClickElementWithDelete(sequenceSectionPart,element,$index)"
                               conx-draggable="element" w="@{{element.w}}" h="@{{element.h}}" />
                            <div class="delete-element" ng-click="deleteElement(sequenceSectionPart,$index,true)">
@@ -477,9 +477,10 @@
                            </div>
                         </div>
                         <div ng-show="element.type==='image-element'" mt="@{{element.mt}}" ml="@{{element.ml}}"
-                           class="font-text conx-element" ng-class="{'selected':element.selected}"
+                           class="font-text conx-element"
                            ng-click="onClickElementWithDelete(momentSectionPart,element,$index)">
-                           <img class="@{{element.class}}" style="@{{element.style}}"
+                           <img class="@{{element.class}} conx-element" style="@{{element.style}}"
+						      ng-class="{'selected':element.selected}"
                               id="@{{element.type==='image-element' ? element.id : ''}}"
                               src="@{{'/'+element.url_image || '/images/icons/NoImageAvailable.jpeg'}}"
                               w="@{{element.w}}" h="@{{element.h}}" />
