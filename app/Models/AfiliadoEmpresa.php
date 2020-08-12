@@ -220,7 +220,8 @@ class AfiliadoEmpresa extends Model
             ])->first()->id;
  
             $parent_family = ConectionAffiliatedStudents::with(['parent_family.retrive_tutor'])->where('student_company_id', $rol_id)->get()->first();
-            if(count($parent_family )>0) {
+           
+            if($parent_family) {
                 return $parent_family->parent_family->retrive_tutor->email;
             }
             else return '';
