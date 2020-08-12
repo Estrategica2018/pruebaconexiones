@@ -1,25 +1,25 @@
 @component('mail::message')
 <div>
-    <table style="width:700px;margin-left:auto;margin-right:auto">
+    <table style="margin-right:auto">
         <tbody>
-            <tr style="height:340.088px">
-                <td style="width:10.7244px;height:340.088px">
+            <tr style="">
+                <td>
                     <img src="https://educonexiones.com/images/sliderCarrucelHome/slide1.jpg"  data-skip-embed>
                 </td>
             </tr>
-            <tr style="height:235px">
-                <td style="width:10.7244px;height:235px">
-                    <table style="width:531.54px;margin-left:auto;margin-right:auto">
+            <tr style="">
+                <td style="">
+                    <table style="">
                         <tbody>
-                            <tr style="height:29px">
-                                <td style="text-align:center;width:526.54px;height:29px">
+                            <tr style="">
+                                <td style="text-align:center;">
                                     <span style="font-family:helvetica,arial,sans-serif;font-size:18pt;color:#105ea8;font-weight:bold">
                                         {{$afiliadoEmpresa->name}} {{$afiliadoEmpresa->last_name}}
                                     </span>
                                 </td>
                             </tr>
-                            <tr style="height:190.173px">
-                                <td style="width:526.54px;height:190.173px">
+                            <tr style="">
+                                <td style="">
                                 <br>
                                     <b style="color:#0059a4;font-family:Roboto,sans-serif;font-size:16px;text-align:center">
                                         <span color="#0059a4" face="Roboto, sans-serif">
@@ -53,7 +53,7 @@
                                             </span>
                                         </span>
                                         <span style="color:#999999">Compra Educonexiones<br>
-									        Valor de la Transacción: {{$price_callback}} COP<br>
+									        Valor de la Transacción: {{$price_callback}} USD<br>
                                             Fecha de Transacción: {{$transaction_date->payment_process_date}}<br>
                                         </span>
                                     </span>
@@ -66,3 +66,4 @@
         </tbody>
     </table>
 </div>
+@endcomponent
