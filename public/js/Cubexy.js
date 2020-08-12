@@ -13,7 +13,59 @@ $.fn.extend({
       cssParteUnica: 'seleccionado',
       cssColorPicker: 'colors'
     }
+	
+	
+	var resourcesImg = [];
+	
+	$('#' + id + ' > div > img').each(function(index, value) {
+		var src = $(value).attr('src');
+		var srcSplit = src.split('/');
+		var resource = srcSplit[srcSplit.length-1].replace('.png','');
+		var category = srcSplit[srcSplit.length-2];
 
+		if(category === 'rostro'  || category === 'cabello') {
+			
+		  var colors =  category === 'rostro'?  ['fac9b7','5b4031','c69a7b','cca39a','ffefcf'] : ['000000','2d1b13','e8d68b','3f1414'];
+		  
+		  for(var i=0; i<colors.length; i++) {
+			  var id = resource + '-' + colors[i];
+			  var obj = {'id':id};
+			  resourcesImg.push(obj);
+			  
+			  var img = new Image();
+			  img.src = '/images/avatars/resources/'+resource+'/'+colors[i]+'.png';
+			  img.onload = function() {
+				  loadImageFromServer(this);
+			  }
+		  }
+		  
+		}
+		else {
+		  var id = category + '-' + resource;
+		  var obj = {'id':id };
+		  resourcesImg.push(obj);
+		  var img = new Image();
+		  img.src = '/images/avatars/resources/'+category+'/'+resource+'.png';
+		  img.onload = function() {
+			  loadImageFromServer(this);
+		  }
+		}
+		
+	});
+
+	function loadImageFromServer(img) {
+		  var src = $(img).attr('src');
+		  var srcSplit = src.split('/');
+		  var resource = srcSplit[srcSplit.length-1].replace('.png','');
+		  var category = srcSplit[srcSplit.length-2];
+		  var obj = null;
+		  for(var j=0; j<resourcesImg.length; j++) {
+			  if(resourcesImg[j].id === category + '-' +resource ) {
+				  obj = resourcesImg[j];
+				  obj.imgLoaded = img;
+			  }
+		  }
+	}
     var opciones = $.extend({}, defaults, opciones);
 
     var idInputColor = opciones.idInputColor; 
@@ -88,35 +140,21 @@ $.fn.extend({
               base_image[cimgContext].src = src.replace('/mini/','/resources/');
               base_image[cimgContext].enabled = true;
             }
-            
-          
-
-              base_image[cimgContext].onload = function () { 
-                var top = 0;
-                var left = 0;
-                var width = 318;
-                var height = 357; 
-                ctx.drawImage(this, left, top, width, height);
-              }
+              
+			var top = 0;
+			var left = 0;
+			var width = 318;
+			var height = 357; 
+			if(resourcesImg[0] && resourcesImg[0].imgLoaded) {
+				ctx.drawImage(resourcesImg[0].imgLoaded, left, top, width, height);
+			}
+              
 
             cimgContext++;
           }
         });  
    
-        
-        // get the image data object
-        var image = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        // get the image data values 
-        var imageData = image.data,
-        length = imageData.length;
-        // set every fourth value to 50
-        for(var i=0; i < length; i+=1){  
-            imageData[i] = 255;
-        }
-        // after the manipulation, reset the data
-        image.data = imageData;
-        // and put the imagedata back to the canvas
-        ctx.putImageData(image, 0, 0);
+       
       });
  
     } 
