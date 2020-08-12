@@ -21992,6 +21992,7 @@ footer .navbar-light {
 
 .conx-element {}
 
+.conx-element.selected,
 .conx-element:hover {
     border: 1px solid blue;
     border-radius: 10px;
