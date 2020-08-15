@@ -73,6 +73,11 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         $scope.onFinishEvidenceLoad = true;
         
         for(var i=0;i<$scope.evidenceOpened.questions.length;i++) {
+            if ($scope.evidenceOpened.questions[i].optionSelected.id === undefined) {
+                swal('Respuestas', 'Por favor responda todas las preguntas antes de finalizar!!', 'error');
+                $scope.onFinishEvidenceLoad=false;
+                return
+            } 
             answer = { "question_id": $scope.evidenceOpened.questions[i].id,
                        "answer": $scope.evidenceOpened.questions[i].optionSelected.id
             };

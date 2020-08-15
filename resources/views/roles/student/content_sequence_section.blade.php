@@ -192,7 +192,7 @@
                                 ng-checked="@{{question.menu === $index}}"
                                 ng-change="onSelectOption(question,option)"
                                 value="@{{$index}}" class="mr-2">
-                            <div class="mt-n4 ml-4" ng-bind-html="option.option"></div>
+                            <div class="ml-4" style="margin-top:-25px" ng-bind-html="option.option"></div>
                         </div>
                     </div>
                     <div class="d-flex mt-6 ml-6">
