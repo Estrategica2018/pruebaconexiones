@@ -127,27 +127,27 @@ $.fn.extend({
             var srcSplit = src.split('/');
             var resource = srcSplit[srcSplit.length-1].replace('.png','');
             var category = srcSplit[srcSplit.length-2];
-
-            if(category === 'rostro' || category === 'cabello') {
-              base_image[cimgContext] = new Image();
-              var color = (category === 'rostro') ? $('#color-skin .seleccionado').attr('data-rgb') : $('#color-hair .seleccionado').attr('data-rgb'); 
-              var src  =  '/images/avatars/resources/' + resource + '/' +  color +  '.png';
-              base_image[cimgContext].src  = src;
-              base_image[cimgContext].enabled = true;
-            }
-            else {
-              base_image[cimgContext] = new Image();
-              base_image[cimgContext].src = src.replace('/mini/','/resources/');
-              base_image[cimgContext].enabled = true;
-            }
-              
 			var top = 0;
 			var left = 0;
 			var width = 318;
-			var height = 357; 
-			if(resourcesImg[0] && resourcesImg[0].imgLoaded) {
-				ctx.drawImage(resourcesImg[0].imgLoaded, left, top, width, height);
-			}
+			var height = 357;
+			
+			if(category === 'rostro' || category === 'cabello') {
+              var color = (category === 'rostro') ? $('#color-skin .seleccionado').attr('data-rgb') : $('#color-hair .seleccionado').attr('data-rgb'); 
+			  for(var i=0; i<resourcesImg.length;i++) {
+				if(resourcesImg[i].id === resource + '-' +  color && resourcesImg[i].imgLoaded) {
+					ctx.drawImage(resourcesImg[i].imgLoaded, left, top, width, height);
+				}
+			  }
+			  
+            }
+            else {
+				for(var i=0; i<resourcesImg.length;i++) {
+				  if(resourcesImg[i].id ===  category + '-' +  resource && resourcesImg[i].imgLoaded) {
+					ctx.drawImage(resourcesImg[i].imgLoaded, left, top, width, height);
+				  }
+				}
+            }
               
 
             cimgContext++;
