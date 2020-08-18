@@ -13,10 +13,21 @@ $.fn.extend({
       cssParteUnica: 'seleccionado',
       cssColorPicker: 'colors'
     }
+
+    var top = 0;
+	var left = 0;
+	var width = 318;
+	var height = 357;
 	
-	
+ 
 	var resourcesImg = [];
-	
+	var img = new Image();
+	img.src = '/images/avatars/resources/rostro1/fac9b7.png';
+	img.onload = function() {
+	  ctx.drawImage(this, left, top, width, height);
+	}
+
+
 	$('#' + id + ' > div > img').each(function(index, value) {
 		var src = $(value).attr('src');
 		var srcSplit = src.split('/');
@@ -65,7 +76,8 @@ $.fn.extend({
 				  obj.imgLoaded = img;
 			  }
 		  }
-	}
+	}	
+	
     var opciones = $.extend({}, defaults, opciones);
 
     var idInputColor = opciones.idInputColor; 
@@ -117,6 +129,24 @@ $.fn.extend({
       var base_image = [];
       cimgContext = 0;
       ctx.clearRect(0, 0, canvas.width, canvas.height); 
+	  
+	  
+	  
+	  				// get the image data object
+				var image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+				// get the image data values 
+				var imageData = image.data,
+				length = imageData.length;
+				// set every fourth value to 50
+				for(var i=0; i < length; i+=1){  
+					imageData[i] = 255;
+				}
+				// after the manipulation, reset the data
+				image.data = imageData;
+				// and put the imagedata back to the canvas
+				ctx.putImageData(image, 0, 0);
+	  
+	  
 
       $('#' + id + ' > div').each(function () {
         idParte = $(this).attr('id');
@@ -127,34 +157,27 @@ $.fn.extend({
             var srcSplit = src.split('/');
             var resource = srcSplit[srcSplit.length-1].replace('.png','');
             var category = srcSplit[srcSplit.length-2];
-			var top = 0;
-			var left = 0;
-			var width = 318;
-			var height = 357;
+			var id = category + '-' +  resource;
 			
-			if(category === 'rostro' || category === 'cabello') {
+            if(category === 'rostro' || category === 'cabello') {
               var color = (category === 'rostro') ? $('#color-skin .seleccionado').attr('data-rgb') : $('#color-hair .seleccionado').attr('data-rgb'); 
-			  for(var i=0; i<resourcesImg.length;i++) {
-				if(resourcesImg[i].id === resource + '-' +  color && resourcesImg[i].imgLoaded) {
-					ctx.drawImage(resourcesImg[i].imgLoaded, left, top, width, height);
-				}
-			  }
-			  
+              id = resource + '-' +  color;  
             }
             else {
-				for(var i=0; i<resourcesImg.length;i++) {
-				  if(resourcesImg[i].id ===  category + '-' +  resource && resourcesImg[i].imgLoaded) {
-					ctx.drawImage(resourcesImg[i].imgLoaded, left, top, width, height);
-				  }
-				}
-            }
               
-
-            cimgContext++;
+            }
+			for(var i=0; i < resourcesImg.length; i++) {
+				if(resourcesImg[i].id === id) {
+					if(resourcesImg[i].imgLoaded) {
+						ctx.drawImage(resourcesImg[i].imgLoaded, left, top, width, height);
+					}
+				}
+			}
+			
           }
         });  
    
-       
+        
       });
  
     } 
