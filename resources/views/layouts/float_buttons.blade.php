@@ -9,7 +9,7 @@
 		Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat ut wisi enim ad 
 		</div>
 		<div class="line-separator"></div>
-		<div class="card-body mb-7" style="height: 500px;overflow-y: auto;">
+		<div class="card-body mb-7" style="height: 200px;overflow-y: auto;">
 			<div ng-repeat="items in frequentQuestions"> 
 				<div ng-click="items.isShow=!items.isShow" class="cursor-pointer d-flex bg-secondary mt-1 mb-1 rounded bg-soft-dark-light p-3 ">
 					<label>@{{items.question}}</label> 
