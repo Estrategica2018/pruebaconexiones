@@ -195,7 +195,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
 			   
                ratingPlans += '<div class="mt-3 col-12 col-md-6 col-lg-4 "><div class="card-header card-rating-background-id-' + (i+1) + ' mt-3 fs--3 flex-100 box-shadow ">'+
                 '<h5 class="font-weight-bold card-rating-plan-id-'+ (i+1) +'" style="color: white;">'+rt.name+'</h5></div>'+
-                '<div class="card-body bg-light pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 220px  ;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
+                '<div class="card-body bg-light pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 192px;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
                 '<div class="row no-gutters card-footer card-rating-background-id-' + (i+1) + ' font-weight-bold text-align box-shadow " style="color: white;">'+
                 ' <div class="col-5"> $'+rt.price+' USD  </div> <div class="col-7"> '+ message +' </div></div></div>';
             }
