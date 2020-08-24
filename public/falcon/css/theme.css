@@ -22157,16 +22157,16 @@ footer .navbar-light {
 
 .oval-line {
     margin: 10px 10px 10px 0px;
-    border: 1px solid gray;
+    border: 1.5px solid #f08934;
 }
 
 .oval-line:before {
     content: "•";
-    color: gray;
+    color: #f08934;
     position: absolute;
-    top: -9px;
-    left: 12px;
-    font-size: 26px;
+    top: -11px;
+    left: 10px;
+    font-size: 29px;
 }
 
 .border-left-mini,
@@ -22581,3 +22581,17 @@ footer .navbar-light {
         margin-top: 15px!important; 
     }
 }
+
+
+@media(min-width: 768px) and (max-width:804px) { 
+  .mt-md-fix {
+      margin-top: 15px!important; 
+  }
+}
+
+@media(min-width: 1054px) and (max-width:1382px) { 
+  .mt-lg-fix {
+      margin-top: 15px!important; 
+  }
+}
+

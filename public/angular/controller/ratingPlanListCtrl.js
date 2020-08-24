@@ -4,9 +4,9 @@ MyApp.controller("ratingPlanListCtrl", ["$scope", "$http", function ($scope, $ht
     
     $scope.init = function(company_id) {
         $('.d-none-result').removeClass('d-none');
-        
     };
-    $http({
+	
+	$http({
         url:"/get_rating_plans",
         method: "GET",
     }).
@@ -23,6 +23,18 @@ MyApp.controller("ratingPlanListCtrl", ["$scope", "$http", function ($scope, $ht
        }, 300);
 
        function marginLeftText() { 
+	      var maxHeight = 0;
+		  $('.ratinPlanCard ul').each(function(){
+			var height =  Number($(this).css('height').replace('px',''));
+			if(maxHeight < height) {
+				maxHeight = height;
+			}
+		  });
+		  
+		  $('.ratinPlanCard ul').each(function(){
+			$(this).css('height',maxHeight);
+		  });
+		  
           $('.trapecio-top').each(function(){ 
               var width  = $(this).width();  
               $(this).find('a span').each(function(){ 

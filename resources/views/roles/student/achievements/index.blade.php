@@ -9,12 +9,12 @@
             <div class="col-auto col-md-2 col-xl-1">
                 <img class="imagen-sequence" src="{{asset($accountService->sequence->url_image)}}" width="80px" height= "100px"/>
             </div>
-            <div class="col-8 col-md-5 col-xl-4 pr-xl-0 d-block"> 
+            <div class="col-6 col-md-5 col-xl-4 pr-xl-0 d-block"> 
                 <p class="font-weight-bold mb-1">{{ 'Guía de aprendizaje ' . ($index + 1) }}</p>
                 <p class="">{{$accountService->sequence->name}}</p>
             </div>
-            <div class="col-12 col-lg-3 col-md-2 col-xl-2 mt-4 mt-lg-1 mt-xl-0 ml-5 p-xl-0 d-block fs-md--1" style="min-width: 161px;">
-                <label class="" style="margin-left: -21px;"><strong> Progreso</strong></label> 
+            <div class="col-3 col-lg-3 col-md-2 col-xl-2 mt-1 mt-md-1 mt-xl-0 ml-7 p-xl-0 d-block fs-md--1" style="min-width: 161px;">
+                <h6 class="" style="margin-left: -62px;"><strong> Progreso</strong> 
                 @if(isset($accountService->sequence['progress']))
                     @if($accountService->sequence['progress']==0)
                         <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
@@ -28,9 +28,11 @@
                 @else
                     <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                 @endif                 
+				</h6>
                  
                 @if(isset($accountService->sequence['performance'] ))
-                    <label  style="margin-left: -35px;"> <strong> Desempeño</strong></label>
+				
+                    <h6  style="margin-left: -82px;"> <strong class="ml-lg-0 ml-md-1 ml-3"> Desempeño</strong>
                     @if($accountService->sequence['performance']>=0) 
                         @if($accountService->sequence['performance']>=90)
                         <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (S) 
@@ -51,9 +53,11 @@
                     @else  
                         <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                     @endif
+					
+					</h6>
                 @endif 
             </div>
-            <div class="col-12 col-xl-4 mt-4 mt-lg-0 mb-3 d-flex">
+            <div class="mt-md-fix mt-lg-fix col-12 col-xl-4 mt-4 mt-lg-0 mb-3 d-flex">
                 <div class="col-0 text-align">
                     <div class="mb-2">
                         <a href="{{

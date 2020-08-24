@@ -18,7 +18,7 @@
                     <p class="fs-0" >{{$sequence['name']}}</p>
                 </div>
                 <div class="col-1 mt-3 mt-md-0 ml-5 ml-md-0" style="min-width: 186px;">
-                     <label class="" style="margin-left: -21px;"><strong> Progreso</strong></label> 
+                     <label class="mt-md-fix" style="margin-left: -21px;"><strong> Progreso</strong></label> 
                     @if(isset($sequence['progress']))
                         @if($sequence['progress']==0)
                         <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
