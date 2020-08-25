@@ -297,15 +297,13 @@ class TutorController extends Controller
 			list(, $data)      = explode(',', $data);
 			$data = base64_decode($data);
 			$extension = 'jpeg';
-			$fileName = auth('afiliadoempresa')->user()->id . '.' . $extension;
-			        $afiliadoempresa = AfiliadoEmpresa::find(auth('afiliadoempresa')->user()->id);
-                    $afiliadoempresa->url_image ='/images/users_images/' . $fileName;
-					file_put_contents( public_path(). $afiliadoempresa->url_image, $data);
-                    $afiliadoempresa->save();
-                    return response()->json(['valid' => true, 'imagenNueva' => $afiliadoempresa->url_image]);
-
-			
-			
+			$fileName = 'tutor-' . auth('afiliadoempresa')->user()->id . '.' . $extension;
+			$afiliadoempresa = AfiliadoEmpresa::find(auth('afiliadoempresa')->user()->id);
+			$afiliadoempresa->url_image ='/images/users_images/' . $fileName;
+			$directory = env('ADMIN_DESIGN_PATH') . '/../';
+			file_put_contents( $directory. $afiliadoempresa->url_image, $data);
+			$afiliadoempresa->save();
+			return response()->json(['valid' => true, 'imagenNueva' => $afiliadoempresa->url_image]);
             //return response()->json(['valid' => false,'message'=>'No fue posible cargar la imagen']);
         }
 
