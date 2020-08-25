@@ -137,14 +137,14 @@
                             class="col-12 mt-2"  style="height:43px">
                                 <button type="button" class="btn btn-primary btn-block d-flex h-100" ng-click="goToFacebook()">
                                     <i class="fab fa-facebook fs-3 mr-2"></i>
-                                    <span class="fs--1">Registrar con Facebook</span>
+                                    <span class="fs--1">Ingresar con Facebook</span>
                                 </button>
                             </div>
                             <div style="z-index:1041; height:43px"  id="formGmail" action="{{ route('user.redirectgmail',[encrypt(3),'register']) }}" class="col-12">
                                 <button type="button" class="btn btn-primary btn-block  d-flex mt-2 h-100" 
                                        style="background-color: #dd4b39;border-color: rgb(221, 75, 57);z-index:1041;" ng-click="goToGmail()">
                                   <i class="fab fa-google fs-2 mr-2"></i>
-                                  <span class="fs--1">Registrar con Gmail</span>
+                                  <span class="fs--1">Ingresar con Gmail</span>
                                 </button>
                             </div>
                         </div>

@@ -292,7 +292,21 @@ class TutorController extends Controller
             }
 
         } else {
-            return response()->json(['valid' => false,'message'=>'No fue posible cargar la imagen']);
+			$data = $request->image;
+			list($type, $data) = explode(';', $data);
+			list(, $data)      = explode(',', $data);
+			$data = base64_decode($data);
+			$extension = 'jpeg';
+			$fileName = auth('afiliadoempresa')->user()->id . '.' . $extension;
+			        $afiliadoempresa = AfiliadoEmpresa::find(auth('afiliadoempresa')->user()->id);
+                    $afiliadoempresa->url_image ='/images/users_images/' . $fileName;
+					file_put_contents( public_path(). $afiliadoempresa->url_image, $data);
+                    $afiliadoempresa->save();
+                    return response()->json(['valid' => true, 'imagenNueva' => $afiliadoempresa->url_image]);
+
+			
+			
+            //return response()->json(['valid' => false,'message'=>'No fue posible cargar la imagen']);
         }
 
 
