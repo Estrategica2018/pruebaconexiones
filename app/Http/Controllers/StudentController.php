@@ -386,17 +386,17 @@ class StudentController extends Controller
             if (isset(json_decode($sequence->section_4, true)['part_' . ($part_id + 1)])) {
                 $buttonNext = route('student.sequences_section_4', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id, 'part_id' => ($part_id + 1)]);
             } else {
-				foreach($sequence->moments as $next_moment) {
-					$has_moment = $this->validation_access_moment($account_service_id, $sequence->id, $next_moment->id);
-					if($has_moment){
-						$buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
-						'moment_id' => $next_moment->id,
-						'section' => 1,
-						'order_moment_id' => $next_moment->order,
-						'sequence_id' => $sequence_id]);
-						break;
-					}
-				}
+                foreach($sequence->moments as $next_moment) {
+                    $has_moment = $this->validation_access_moment($account_service_id, $sequence->id, $next_moment->id);
+                    if($has_moment){
+                        $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
+                        'moment_id' => $next_moment->id,
+                        'section' => 1,
+                        'order_moment_id' => $next_moment->order,
+                        'sequence_id' => $sequence_id]);
+                        break;
+                    }
+                }
             }
             $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
@@ -432,25 +432,25 @@ class StudentController extends Controller
                 'moment_order' => $order_moment_id,
                 'moment_section_id' => $section_id
             ],
-			[
-				'created_at' => ''
-			]
+            [
+                'created_at' => ''
+            ]
         );
         $item->save();
-		
-		$sequence = CompanySequence::where('id', $sequence_id)->get()->first();
-		
+        
+        $sequence = CompanySequence::where('id', $sequence_id)->get()->first();
+        
         if ($moment['section_' . $section_id]) {
             $section = json_decode($moment['section_' . $section_id], true);
             $section_1 = json_decode($moment->section_1, true);
             $section_2 = json_decode($moment->section_2, true);
             $section_3 = json_decode($moment->section_3, true);
             $section_4 = json_decode($moment->section_4, true);
-			$part = json_decode($moment['section_' . $section_id], true)['part_' . $part_id];
+            $part = json_decode($moment['section_' . $section_id], true)['part_' . $part_id];
             
-			$buttonBack = 'none';
+            $buttonBack = 'none';
             if ($part_id > 1) {
-				$buttonBack = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
+                $buttonBack = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                     'sequence_id' => $sequence_id,
                     'moment_id' => $moment_id,
                     'section_id' => $section_id,
@@ -458,48 +458,48 @@ class StudentController extends Controller
                     'order_moment_id' => $order_moment_id,
                     'part_id' => ($part_id - 1)]);
             } else {
-				if($section_id > 1) {
-					$last_part_id = 1;
-					foreach (json_decode($moment['section_'.($section_id - 1)], true) as $key => $value) {
-						if (strpos('_' . $key, 'part_') != false) {
-							$num = (int)str_replace('part_', '', $key);
-							if ($num > $last_part_id && $value) {
-								$last_part_id = $num;
-							}
-						}
-					}
-					$buttonBack = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
-						'sequence_id' => $sequence_id,
-						'moment_id' => $moment_id,
-						'section_id' => ( $section_id - 1 ),
-						'account_service_id' => $account_service_id,
-						'order_moment_id' => $order_moment_id,
-						'part_id' => $last_part_id]);
-				}
-				else {
-					if($order_moment_id == 1) {
-						$buttonBack = route('student.sequences_section_4', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
-					}
-					else {
-						for($i = $order_moment_id - 1; $i >= 1; $i--) {
-							$last_moment = $sequence->moments[$i-1];
-							$has_moment = $this->validation_access_moment($account_service_id, $sequence_id, $last_moment->id);
-							if($has_moment){
-								$buttonBack = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
-									'sequence_id' => $sequence_id,
-									'moment_id' => $last_moment->id,
-									'order_moment_id' => $last_moment->order,
-									'section_id' => 4,
-									'part_id' => 1]);
-								break;
-							}
-						}
-					}
-				}
+                if($section_id > 1) {
+                    $last_part_id = 1;
+                    foreach (json_decode($moment['section_'.($section_id - 1)], true) as $key => $value) {
+                        if (strpos('_' . $key, 'part_') != false) {
+                            $num = (int)str_replace('part_', '', $key);
+                            if ($num > $last_part_id && $value) {
+                                $last_part_id = $num;
+                            }
+                        }
+                    }
+                    $buttonBack = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
+                        'sequence_id' => $sequence_id,
+                        'moment_id' => $moment_id,
+                        'section_id' => ( $section_id - 1 ),
+                        'account_service_id' => $account_service_id,
+                        'order_moment_id' => $order_moment_id,
+                        'part_id' => $last_part_id]);
+                }
+                else {
+                    if($order_moment_id == 1) {
+                        $buttonBack = route('student.sequences_section_4', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
+                    }
+                    else {
+                        for($i = $order_moment_id - 1; $i >= 1; $i--) {
+                            $last_moment = $sequence->moments[$i-1];
+                            $has_moment = $this->validation_access_moment($account_service_id, $sequence_id, $last_moment->id);
+                            if($has_moment){
+                                $buttonBack = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
+                                    'sequence_id' => $sequence_id,
+                                    'moment_id' => $last_moment->id,
+                                    'order_moment_id' => $last_moment->order,
+                                    'section_id' => 4,
+                                    'part_id' => 1]);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
            
-			if (isset($section['part_' . ($part_id + 1)]) && isset($section['part_' . ($part_id + 1)]['elements']) ) {
-				$buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
+            if (isset($section['part_' . ($part_id + 1)]) && isset($section['part_' . ($part_id + 1)]['elements']) ) {
+                $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                     'sequence_id' => $sequence_id,
                     'moment_id' => $moment_id,
                     'section_id' => $section_id,
@@ -507,32 +507,32 @@ class StudentController extends Controller
                     'order_moment_id' => $order_moment_id,
                     'part_id' => $part_id + 1]);
             } else {
-				if($section_id < 4) {
-					$buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
-						'sequence_id' => $sequence_id,
-						'moment_id' => $moment_id,
-						'section_id' => $section_id + 1,
-						'account_service_id' => $account_service_id,
-						'order_moment_id' => $order_moment_id,
-						'part_id' => 1]);
-				}
-				else {
-					for($i = $order_moment_id + 1; $i <= count($sequence->moments); $i++) {
-						$next_moment = $sequence->moments[$i-1];
-						$has_moment = $this->validation_access_moment($account_service_id, $sequence_id, $next_moment->id);
-						if($has_moment){
-							$buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
-							'sequence_id' => $sequence_id,
-							'moment_id' => $next_moment->id,
-							'order_moment_id' => $next_moment->order,
-							'section_id' => 1,
-							'part_id' => 1]);
-							break;
-						}
-					}
-				}
+                if($section_id < 4) {
+                    $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
+                        'sequence_id' => $sequence_id,
+                        'moment_id' => $moment_id,
+                        'section_id' => $section_id + 1,
+                        'account_service_id' => $account_service_id,
+                        'order_moment_id' => $order_moment_id,
+                        'part_id' => 1]);
+                }
+                else {
+                    for($i = $order_moment_id + 1; $i <= count($sequence->moments); $i++) {
+                        $next_moment = $sequence->moments[$i-1];
+                        $has_moment = $this->validation_access_moment($account_service_id, $sequence_id, $next_moment->id);
+                        if($has_moment){
+                            $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
+                            'sequence_id' => $sequence_id,
+                            'moment_id' => $next_moment->id,
+                            'order_moment_id' => $next_moment->order,
+                            'section_id' => 1,
+                            'part_id' => 1]);
+                            break;
+                        }
+                    }
+                }
             }
-		
+        
             $data = array_merge(['sequence' => $moment->sequence, 'sequence_id' => $sequence_id,'section_id'=>$section_id,'part_id' => $part_id,
                 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext, 'moment' => $moment, 'sections' => [$section_1, $section_2, $section_3, $section_4]], $section, $part);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('order_moment_id', $order_moment_id);
@@ -586,7 +586,7 @@ class StudentController extends Controller
             ['company_id', 1],//conexiones
             ['rol_id', 1]//estudiante
         ])->first();
-		
+        
         if ($affiliatedAccountService->exists() && $AfiliadoEmpresaRolesId->exists()) {
             if ($affiliatedAccountService->rating_plan_type == 1 || $affiliatedAccountService->rating_plan_type == 2) {//tiene acceso a plan por secuencia o por momentos
                 $afiliadoEmpresa = AfiliadoEmpresa::whereHas('affiliated_company', function ($query) use ($AfiliadoEmpresaRolesId) {
@@ -624,14 +624,14 @@ class StudentController extends Controller
     public function validation_access_moment($account_service_id, $sequence_id, $moment_id)
     {
         $affiliatedAccountService = AffiliatedAccountService::with('affiliated_content_account_service')->
-		    where('init_date', '<=', Carbon::now())
+            where('init_date', '<=', Carbon::now())
             ->where('end_date', '>=', Carbon::now())->find($account_service_id);
-			if ($affiliatedAccountService->rating_plan_type == 1) { //Si es plan por secuencia tiene acceso a todos los momentos
-				return true;
-			}
-			else if ($affiliatedAccountService->rating_plan_type == 2 || $affiliatedAccountService->rating_plan_type == 3) { //Si es plan por momento o experiencia se valida el momento 
-				return count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id)->where('moment_id', $moment_id)) > 0;
-			}
+            if ($affiliatedAccountService->rating_plan_type == 1) { //Si es plan por secuencia tiene acceso a todos los momentos
+                return true;
+            }
+            else if ($affiliatedAccountService->rating_plan_type == 2 || $affiliatedAccountService->rating_plan_type == 3) { //Si es plan por momento o experiencia se valida el momento 
+                return count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id)->where('moment_id', $moment_id)) > 0;
+            }
     }
 
 }
