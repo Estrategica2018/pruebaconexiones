@@ -22348,6 +22348,475 @@ footer .navbar-light {
     width: 20px;
 }
 
+.panel-icon-pedagogy-purple {
+    border: 5px solid #77A3A3;
+    border-radius: 17px;
+    padding: 19px 25px;
+    width: 395px;
+    background-color: white;
+    border-color: purple;
+  }
+  
+  .panel-icon-pedagogy-purple:before {
+      
+  }
+  
+  
+  .panel-icon-pedagogy-purple .header {
+    margin-bottom: 23px;
+  }
+  
+  .panel-icon-pedagogy-purple .header span {
+    background-color: purple;
+    padding: 3px 21px 4px 21px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .panel-icon-pedagogy-purple .body {
+    text-align: justify;
+  }
+  
+  .panel-icon-up {
+    top: 712px;
+    left: 192px;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    /* width: 36px; */
+    /* height: 1rem; */
+    background: #000;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: inherit;
+    border-radius: .125rem;
+    border-width: 14px;
+    border-style: solid;
+    border-color: #77A3A3;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  }
+  
+  
+  .panel-icon-pedagogy-purple ul {
+      list-style: none;
+      padding: 0px;
+      margin-left: 10px;
+  }
+  
+  .panel-icon-pedagogy-purple ul li::before {
+      content: "\2022";
+      color: purple;
+      display: inline-block;
+      font-size: 31px;
+      line-height: 12px;
+      vertical-align: -8px;
+      width: 20px;
+  }
+
+  .panel-icon-pedagogy-yellow {
+    border: 5px solid #77A3A3;
+    border-radius: 17px;
+    padding: 19px 25px;
+    width: 395px;
+    background-color: white;
+    border-color: #D6CE2A;
+  }
+  
+  .panel-icon-pedagogy-yellow:before {
+      
+  }
+  
+  
+  .panel-icon-pedagogy-yellow .header {
+    margin-bottom: 23px;
+  }
+  
+  .panel-icon-pedagogy-yellow .header span {
+    background-color: #D6CE2A;
+    padding: 3px 21px 4px 21px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .panel-icon-pedagogy-yellow .body {
+    text-align: justify;
+  }
+  
+  .panel-icon-up {
+    top: 712px;
+    left: 192px;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    /* width: 36px; */
+    /* height: 1rem; */
+    background: #000;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: inherit;
+    border-radius: .125rem;
+    border-width: 14px;
+    border-style: solid;
+    border-color: #77A3A3;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  }
+  
+  
+  .panel-icon-pedagogy-yellow ul {
+      list-style: none;
+      padding: 0px;
+      margin-left: 10px;
+  }
+  
+  .panel-icon-pedagogy-yellow ul li::before {
+      content: "\2022";
+      color: #D6CE2A;
+      display: inline-block;
+      font-size: 31px;
+      line-height: 12px;
+      vertical-align: -8px;
+      width: 20px;
+  } 
+
+  .panel-icon-pedagogy-guava {
+    border: 5px solid #77A3A3;
+    border-radius: 17px;
+    padding: 19px 25px;
+    width: 395px;
+    background-color: white;
+    border-color: #E74C3C;
+  }
+  
+  .panel-icon-pedagogy-guava:before {
+      
+  }
+  
+  
+  .panel-icon-pedagogy-guava .header {
+    margin-bottom: 23px;
+  }
+  
+  .panel-icon-pedagogy-guava .header span {
+    background-color: #E74C3C;
+    padding: 3px 21px 4px 21px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .panel-icon-pedagogy-guava .body {
+    text-align: justify;
+  }
+  
+  .panel-icon-up {
+    top: 712px;
+    left: 192px;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    /* width: 36px; */
+    /* height: 1rem; */
+    background: #000;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: inherit;
+    border-radius: .125rem;
+    border-width: 14px;
+    border-style: solid;
+    border-color: #77A3A3;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  }
+  
+  
+  .panel-icon-pedagogy-guava ul {
+      list-style: none;
+      padding: 0px;
+      margin-left: 10px;
+  }
+  
+  .panel-icon-pedagogy-guava ul li::before {
+      content: "\2022";
+      color: #E74C3C;
+      display: inline-block;
+      font-size: 31px;
+      line-height: 12px;
+      vertical-align: -8px;
+      width: 20px;
+  }
+
+  .panel-icon-pedagogy-orange {
+    border: 5px solid #77A3A3;
+    border-radius: 17px;
+    padding: 19px 25px;
+    width: 395px;
+    background-color: white;
+    border-color: #E67E22;
+  }
+  
+  .panel-icon-pedagogy-orange:before {
+      
+  }
+  
+  
+  .panel-icon-pedagogy-orange .header {
+    margin-bottom: 23px;
+  }
+  
+  .panel-icon-pedagogy-orange .header span {
+    background-color: #E67E22;
+    padding: 3px 21px 4px 21px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .panel-icon-pedagogy-orange .body {
+    text-align: justify;
+  }
+  
+  .panel-icon-up {
+    top: 712px;
+    left: 192px;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    /* width: 36px; */
+    /* height: 1rem; */
+    background: #000;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: inherit;
+    border-radius: .125rem;
+    border-width: 14px;
+    border-style: solid;
+    border-color: #77A3A3;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  }
+  
+  
+  .panel-icon-pedagogy-orange ul {
+      list-style: none;
+      padding: 0px;
+      margin-left: 10px;
+  }
+  
+  .panel-icon-pedagogy-orange ul li::before {
+      content: "\2022";
+      color: #E67E22;
+      display: inline-block;
+      font-size: 31px;
+      line-height: 12px;
+      vertical-align: -8px;
+      width: 20px;
+  }
+
+  .panel-icon-pedagogy-green {
+    border: 5px solid #77A3A3;
+    border-radius: 17px;
+    padding: 19px 25px;
+    width: 395px;
+    background-color: white;
+    border-color: #A0D741;
+  }
+  
+  .panel-icon-pedagogy-green:before {
+      
+  }
+  
+  
+  .panel-icon-pedagogy-green .header {
+    margin-bottom: 23px;
+  }
+  
+  .panel-icon-pedagogy-green .header span {
+    background-color: #A0D741;
+    padding: 3px 21px 4px 21px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .panel-icon-pedagogy-green .body {
+    text-align: justify;
+  }
+  
+  .panel-icon-up {
+    top: 712px;
+    left: 192px;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    /* width: 36px; */
+    /* height: 1rem; */
+    background: #000;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: inherit;
+    border-radius: .125rem;
+    border-width: 14px;
+    border-style: solid;
+    border-color: #77A3A3;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  }
+  
+  
+  .panel-icon-pedagogy-green ul {
+      list-style: none;
+      padding: 0px;
+      margin-left: 10px;
+  }
+  
+  .panel-icon-pedagogy-green ul li::before {
+      content: "\2022";
+      color: #A0D741;
+      display: inline-block;
+      font-size: 31px;
+      line-height: 12px;
+      vertical-align: -8px;
+      width: 20px;
+  }
+
+  .panel-icon-pedagogy-blue {
+    border: 5px solid #77A3A3;
+    border-radius: 17px;
+    padding: 19px 25px;
+    width: 395px;
+    background-color: white;
+    border-color: #41CCD7;
+  }
+  
+  .panel-icon-pedagogy-blue:before {
+      
+  }
+  
+  
+  .panel-icon-pedagogy-blue .header {
+    margin-bottom: 23px;
+  }
+  
+  .panel-icon-pedagogy-blue .header span {
+    background-color: #41CCD7;
+    padding: 3px 21px 4px 21px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .panel-icon-pedagogy-blue .body {
+    text-align: justify;
+  }
+  
+  .panel-icon-up {
+    top: 712px;
+    left: 192px;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    /* width: 36px; */
+    /* height: 1rem; */
+    background: #000;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: inherit;
+    border-radius: .125rem;
+    border-width: 14px;
+    border-style: solid;
+    border-color: #77A3A3;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  }
+  
+  
+  .panel-icon-pedagogy-blue ul {
+      list-style: none;
+      padding: 0px;
+      margin-left: 10px;
+  }
+  
+  .panel-icon-pedagogy-blue ul li::before {
+      content: "\2022";
+      color: #41CCD7;
+      display: inline-block;
+      font-size: 31px;
+      line-height: 12px;
+      vertical-align: -8px;
+      width: 20px;
+  }
+
+  .panel-icon-pedagogy-beige {
+    border: 5px solid #77A3A3;
+    border-radius: 17px;
+    padding: 19px 25px;
+    width: 395px;
+    background-color: white;
+    border-color: #F0B27A;
+  }
+  
+  .panel-icon-pedagogy-beige:before {
+      
+  }
+  
+  
+  .panel-icon-pedagogy-beige .header {
+    margin-bottom: 23px;
+  }
+  
+  .panel-icon-pedagogy-beige .header span {
+    background-color: #F0B27A;
+    padding: 3px 21px 4px 21px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .panel-icon-pedagogy-beige .body {
+    text-align: justify;
+  }
+  
+  .panel-icon-up {
+    top: 712px;
+    left: 192px;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    /* width: 36px; */
+    /* height: 1rem; */
+    background: #000;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: inherit;
+    border-radius: .125rem;
+    border-width: 14px;
+    border-style: solid;
+    border-color: #77A3A3;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  }
+  
+  
+  .panel-icon-pedagogy-beige ul {
+      list-style: none;
+      padding: 0px;
+      margin-left: 10px;
+  }
+  
+  .panel-icon-pedagogy-beige ul li::before {
+      content: "\2022";
+      color: #F0B27A;
+      display: inline-block;
+      font-size: 31px;
+      line-height: 12px;
+      vertical-align: -8px;
+      width: 20px;
+  }
+
 .fs-14px {
    font-size: 14px;
 }
