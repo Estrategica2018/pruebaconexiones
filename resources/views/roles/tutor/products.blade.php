@@ -70,12 +70,12 @@
                         <div ng-show="ratingPlan.is_free" class="card-footer card-rating-background-id-@{{$index}} font-weight-bold text-align box-shadow " style="color: white;">
                             Gratis
                         </div>
-                        <div ng-hide="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style="right: 12%;box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0);">
+                        <div ng-hide="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style="right: 12%;box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0); bottom: -25px;">
                               <a  ng-href="{{route('/')}}/plan_de_acceso/@{{ratingPlan.id}}/@{{ratingPlan.name_url_value}}" class="col-auto" >
                                     <span class="fs--3  mt-2" style="position: absolute;top: -31px;color: white;">Adquirir</span>
                               </a>
                         </div>
-                        <div ng-show="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style= "right: 12%;box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0);">
+                        <div ng-show="ratingPlan.is_free" class="w-75 trapecio-top position-absolute card-rating-button-id-@{{$index}} " style= "right: 12%;box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0); bottom: -25px;">
                               <a ng-click="onRatingPlanFree(ratingPlan.id)"class="col-auto" >
                                     <span class="fs--3  mt-2" style="position: absolute;top: -31px;color: white; ">Adquirir</span>
                               </a>
