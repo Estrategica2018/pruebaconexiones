@@ -222,7 +222,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
               $('.ratinPlanCard ul').each(function(){
                 var height =  Number($(this).css('height').replace('px',''));
                 if(maxHeight < height) {
-                    maxHeight = height + 20;
+                    maxHeight = height ;
                 }
               });
               $('.card-footer').each(function(){
@@ -240,7 +240,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
               });
               
               $('.ratinPlanCard ul').each(function(){
-                $(this).css('min-height',maxHeight);
+                $(this).css('height',maxHeight);
               });
               
 			  $('.card-title').each(function(){
