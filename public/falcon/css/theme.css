@@ -22595,3 +22595,9 @@ footer .navbar-light {
   }
 }
 
+
+
+
+.ratinPlanCard ul {
+	min-height: 165px;
+}
