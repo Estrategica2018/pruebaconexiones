@@ -286,7 +286,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
               });
               
               $('.ratinPlanCard ul').each(function(){
-                $(this).css('height',maxHeight);
+                $(this).css('min-height',maxHeight);
               });
               
 			  $('.card-title').each(function(){

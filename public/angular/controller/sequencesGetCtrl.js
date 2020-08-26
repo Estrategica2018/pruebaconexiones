@@ -211,7 +211,8 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
         setTimeout(function () {
             marginLeftText();
          }, 300);
-  
+		 
+		 
          function marginLeftText() {
              
               var maxHeight = 0;
@@ -239,7 +240,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
               });
               
               $('.ratinPlanCard ul').each(function(){
-                $(this).css('height',maxHeight);
+                $(this).css('min-height',maxHeight);
               });
               
 			  $('.card-title').each(function(){
