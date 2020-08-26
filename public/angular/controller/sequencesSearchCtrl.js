@@ -268,7 +268,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
               $('.ratinPlanCard ul').each(function(){
                 var height =  Number($(this).css('height').replace('px',''));
                 if(maxHeight < height) {
-                    maxHeight = height;
+                    maxHeight = height + 20;
                 }
               });
               $('.card-footer').each(function(){
