@@ -193,7 +193,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                }
                
                ratingPlans += '<div class="mt-3 col-12 col-md-6 col-lg-4 p-4"><div class="card-header card-rating-background-id-' + (i+1) + ' mt-3 fs--3 flex-100 box-shadow ">'+
-                '<h5 class="pl-lg-3 pr-lg-3 font-weight-bold card-rating-plan-id-'+ (i+1) +'" style="color: white;">'+rt.name+'</h5></div>'+
+                '<h5 class="card-title pl-lg-3 pr-lg-3 font-weight-bold card-rating-plan-id-'+ (i+1) +'" style="color: white;">'+rt.name+'</h5></div>'+
                 '<div class="card-body bg-light ratinPlanCard pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 165px;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
                 '<div class="row no-gutters card-footer card-rating-background-id-' + (i+1) + ' font-weight-bold text-align box-shadow " style="color: white;">'+
                 ' <div class="col-5"> $'+rt.price+' USD  </div> <div class="pl-lg-1 pr-lg-1 col-7 font-14px" style="margin-top:-10px"> '+ message +' </div></div></div>';
@@ -215,6 +215,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
          function marginLeftText() {
              
               var maxHeight = 0;
+			  var maxHeightTitle = 0;
               var minHeight = 999;
               
               $('.ratinPlanCard ul').each(function(){
@@ -229,12 +230,23 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                     minHeight = height;
                 }
               });
+			  
+			  $('.card-title').each(function(){
+                var height =  Number($(this).css('height').replace('px',''));
+                if(maxHeightTitle < height) {
+                    maxHeightTitle = height;
+                }
+              });
               
               $('.ratinPlanCard ul').each(function(){
                 $(this).css('height',maxHeight);
               });
               
-              $('.card-footer').each(function(){
+			  $('.card-title').each(function(){
+                $(this).css('height',maxHeightTitle);
+              });
+			  
+			  $('.card-footer').each(function(){
                 $(this).css('height',minHeight);
               });
                  
