@@ -2,7 +2,7 @@
 
 @section('content-tutor-index')
     <script src="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.js"></script>
-	<link href="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.css" rel="stylesheet"/>
 
 <script>
          document.addEventListener('DOMContentLoaded', () => {
@@ -19,16 +19,16 @@
              let urlImage = undefined;
              // Evento disparado cuando se adjunte una imagen
              inputImage.addEventListener('change', abrirEditor, false);
-			 let imagenEn64 = '';
-			 
+             let imagenEn64 = '';
+             
 
              /**
               * Método que abre el editor con la imagen seleccionada
               */
              function abrirEditor(e) {
-				 
-				$('#result').addClass('show');
-				$('#result').removeClass('d-none');
+                 
+                $('#result').addClass('show');
+                $('#result').removeClass('d-none');
 
                  // Obtiene la imagen
                  urlImage = URL.createObjectURL(e.target.files[0]);
@@ -57,7 +57,7 @@
               * Método que recorta la imagen con las coordenadas proporcionadas con croppr.js
               */
              function recortarImagen(data) {
-				 
+                 
                  // Variables
                  const inicioX = data.x;
                  const inicioY = data.y;
@@ -68,7 +68,7 @@
                  // La imprimo
                  miCanvas.width = nuevoAncho;
                  miCanvas.height = nuevaAltura;
-				 
+                 
                  // La declaro
                  let miNuevaImagenTemp = new Image();
                  // Cuando la imagen se carge se procederá al recorte
@@ -85,66 +85,66 @@
                  // Proporciona la imagen cruda, sin editarla por ahora
                  miNuevaImagenTemp.src = urlImage;
              }
-			 
-			 
-			 $( "#saveBtnPicture" ).click(savePicture);
-			 
-			 function savePicture() {
-				 
-				 $('#result').removeClass('show');
-				 $('#result').addClass('d-none');
-				 //$('#preview').removeClass('d-none');
-				 
-				 $('#move').removeClass('d-none');
-				 
-				 var data = new FormData();
-					data.append('image', imagenEn64);
-					$.ajax({
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						},
-						url: "{{route('edit_image_perfil')}}",
-						data: data,
-						cache: false,
-						contentType: false,
-						processData: false,
-						method: 'POST',
-						type: 'POST',
-						success: function (response, xhr, request){
-							$('#move').addClass('d-none');
-							if(response.valid){
-								$('.rounded-pill,.rounded-circle ').attr("src",response.imagenNueva+"?timestamp=" + new Date().getTime());
-								swal({
-									text: 'Imagen editada exitósamente',
-									type: "success",
-									showCancelButton: false,
-									showConfirmButton: false
-								}).catch(swal.noop);
-							}else{
-								swal({
-									text: response.message,
-									type: "warning",
-									showCancelButton: false,
-									showConfirmButton: false
-								}).catch(swal.noop);
-							}
-						},
-						error: function (response, xhr, request) {
-							$('#move').addClass('d-none');
-							swal({
-								text: response.message,
-								type: "warning",
-								showCancelButton: false,
-								showConfirmButton: false
-							}).catch(swal.noop);
-						}
-					});
-					
-			 }
+             
+             
+             $( "#saveBtnPicture" ).click(savePicture);
+             
+             function savePicture() {
+                 
+                 $('#result').removeClass('show');
+                 $('#result').addClass('d-none');
+                 //$('#preview').removeClass('d-none');
+                 
+                 $('#move').removeClass('d-none');
+                 
+                 var data = new FormData();
+                    data.append('image', imagenEn64);
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{route('edit_image_perfil')}}",
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        method: 'POST',
+                        type: 'POST',
+                        success: function (response, xhr, request){
+                            $('#move').addClass('d-none');
+                            if(response.valid){
+                                $('.rounded-pill,.rounded-circle ').attr("src",response.imagenNueva+"?timestamp=" + new Date().getTime());
+                                swal({
+                                    text: 'Imagen editada exitósamente',
+                                    type: "success",
+                                    showCancelButton: false,
+                                    showConfirmButton: false
+                                }).catch(swal.noop);
+                            }else{
+                                swal({
+                                    text: response.message,
+                                    type: "warning",
+                                    showCancelButton: false,
+                                    showConfirmButton: false
+                                }).catch(swal.noop);
+                            }
+                        },
+                        error: function (response, xhr, request) {
+                            $('#move').addClass('d-none');
+                            swal({
+                                text: response.message,
+                                type: "warning",
+                                showCancelButton: false,
+                                showConfirmButton: false
+                            }).catch(swal.noop);
+                        }
+                    });
+                    
+             }
 
          });
         </script>
-		
+        
     <div class="" ng-controller="tutorProfileCtrl" ng-init="init({{$tutor}},{{$statusValidationFreePlan}})">
         <h5 class="mt-3">Mi perfíl</h5>
         <div class="row pl-4 pb-4 pt-4 pr-4">
@@ -155,14 +155,14 @@
             @else 
                 <img class="rounded-pill" src="{{asset('images/icons/default-avatar.png')}}" width="60px" height="60px" style="margin:-15px;">
             @endif
-			
-			    <canvas id="preview" class="d-none" style="width:300px;height:300px;"></canvas>
-			
+            
+                <canvas id="preview" class="d-none" style="width:300px;height:300px;"></canvas>
+            
             </div>
             <div class="col-3">
                 <div style="cursor: pointer" class="btn btn-sm btn-primary" id="yourBtn" ng-click="getFile()">Cambiar</div>
                 <div style='height: 0px;width: 0px; overflow:hidden;'>
-				<input id="upfile" type="file" value="upload" accept="image/*" /></div>
+                <input id="upfile" type="file" value="upload" accept="image/*" /></div>
             </div>
         </div>
         <div class="row pl-4 pb-4 pt-1 pr-4">
@@ -234,19 +234,19 @@
                 </div>
             </div>
         </div>
-		
-		<div id="result" class="fade show d-none" >
-		    <div class="modal-backdrop fade show"></div>
-			<div class="modal-menu position-absolute shadow-none card card-body d-flex" style="top: 0px;width: 100%;margin: auto; z-index:1989;">
-				<div id="editor" style="width: 458px;height: auto;margin: auto;"></div>
-				<button class="btn btn-sm btn-primary w-50 mr-auto ml-auto mt-4" id="saveBtnPicture">  <i id="move" class="d-none fa fa-spinner fa-spin"></i> Recortar </button>
-			</div>
-			
-		</div>
+        
+        <div id="result" class="fade show d-none" >
+            <div class="modal-backdrop fade show"></div>
+            <div class="modal-menu position-absolute shadow-none card card-body d-flex" style="top: 0px;width: 100%;margin: auto; z-index:1989;">
+                <div id="editor" style="width: 458px;height: auto;margin: auto;"></div>
+                <button class="btn btn-sm btn-primary w-50 mr-auto ml-auto mt-4" id="saveBtnPicture">  <i id="move" class="d-none fa fa-spinner fa-spin"></i> Recortar </button>
+            </div>
+            
+        </div>
     </div>
     
-	<script src="{{ asset('angular/controller/TutorProfileCtrl.js') }}" defer></script>
-	
-	
+    <script src="{{ asset('angular/controller/TutorProfileCtrl.js') }}" defer></script>
+    
+    
 @endsection
 

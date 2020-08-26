@@ -22089,7 +22089,7 @@ footer .navbar-light {
     border-left: 24px solid transparent;
     border-top: 25px solid #428bca;
     padding-left: 11px;
-    bottom: -25px;
+    bottom: 4px;
     right: 25%;
     text-align: left;
     font-weight: bold;
