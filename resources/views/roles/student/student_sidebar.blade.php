@@ -46,16 +46,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-expanded="false" href="{{ route('home') }}" >
-                               <div class="d-flex align-items-center">
-                                  <span class="ml-2 mr-2 nav-link-icon">
-                                     <i class="fas fa-calendar-alt fs-1" style="color:red;"></i>
-                                  </span>
-                                   Calendario
-                               </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                aria-expanded="false" href="{{ route('student.available_sequences',auth('afiliadoempresa')->user()->company_name()) }}" >
                                <div class="d-flex align-items-center">

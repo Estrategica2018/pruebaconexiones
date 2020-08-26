@@ -32,7 +32,6 @@
             <a class="ml-1 cursor-pointer" href="{{ route('student.achievements',auth('afiliadoempresa')->user()->company_name()) }}">
                 <img src="{{asset('images/icons/portal-estudiante/logros_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
             </a>
-            <!--a class="ml-1 cursor-pointer" href="{{route('student','conexiones')}}"><i class="fas fa-calendar-alt fs-1"></i></a-->
             <a class="ml-1 cursor-pointer" href="{{route('student','conexiones')}}">
                 <img src="{{asset('images/icons/portal-estudiante/perfil_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
             </a>

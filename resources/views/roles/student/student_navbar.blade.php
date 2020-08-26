@@ -40,12 +40,6 @@
            </a>
            <i class="fas fa-star fs-1" style="color:#5f347c;"></i>
         </li>
-        <li class="nav-item ml-lg-14 col-auto d-flex">
-           <a href="{{ route('home') }}" class="nav-link  mr-2 p-0 pb-1 @if(\Route::current()->getName() == 'home') selected @endif">
-              Calendario
-           </a>
-           <i class="fas fa-calendar-alt fs-1" style="color:red;"></i>
-        </li>
         <li class="nav-item ml-lg-14 col-2 d-flex">
            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link  mr-2 p-0 pb-1" >
               Salir
