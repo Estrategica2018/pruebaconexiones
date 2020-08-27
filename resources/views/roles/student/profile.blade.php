@@ -9,7 +9,7 @@
                         <div class="col-lg-5 p-0 text-align">
                         @if(isset($student->url_image)) 
                             <img src="{{asset($student->url_image)}}" width="264px" height="auto"/>
-                            <div ng-repeat="avatar in avatars" class="d-none-result d-non">
+                            <div ng-repeat="avatar in avatars" class="d-none-result d-none">
                                 <div ng-show="urlImage.includes(avatar.urlImage)">
                                     <h5 class="mt-3">@{{avatar.name}}</h5>
                                     <h6>@{{avatar.job}}</h6>
