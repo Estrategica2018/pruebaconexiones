@@ -29,9 +29,9 @@
                   <li class="ml-auto" >
                     <img icon-pedagogy src="{{asset('images/icons/situacionGeneradora.png')}}" width="74px" height="auto" ng-click="onIconPedagogy('pedagogy1')"  class="cursor-pointer">
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Situación generadora </span>
-                    <div class="panel-icon-pedagogy-purple d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy1'" style="background-color: white; z-index:102; border-color: purple;">
+                    <div class="panel-icon-pedagogy-purple d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy1'" style="background-color: white; z-index:102;">
                         <div style="margin-    left: 5vw;position: absolute;margin-top: -38px;">
-                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #800080 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: 43px;">
+                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #b92f7f transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: 43px;">
                           </div>
                         </div>  
                         <div class="header">
@@ -54,7 +54,7 @@
 
                     <div class="panel-icon-pedagogy-yellow d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy2'" style="background-color: white; z-index:102;">
                         <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
-                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #D6CE2A transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
+                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #eaa224 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
                         <div class="header">
@@ -72,7 +72,7 @@
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Punto de encuentro </span>
                     <div class="panel-icon-pedagogy-guava d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy3'" style="background-color: white; z-index:102;">
                         <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
-                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #E74C3C transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
+                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #f05e5b transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
                         <div class="header">
@@ -89,7 +89,7 @@
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Guía de saberes </span>
                     <div class="panel-icon-pedagogy-orange d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy4'" style="background-color: white; z-index:102;">
                         <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
-                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #E67E22 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
+                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #0ccbea transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
                         <div class="header">
@@ -113,7 +113,7 @@
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Pregunta Central </span>
                     <div class="panel-icon-pedagogy d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy5'" style="background-color: white; z-index:102;">
                         <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
-                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #77A3A3 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
+                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #ec6625 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
                         <div class="header">
@@ -135,7 +135,7 @@
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Experiencia Científica </span>
                     <div class="panel-icon-pedagogy-green d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy6'" style="background-color: white; z-index:102;">
                         <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
-                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #A0D741 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
+                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #95c11f transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
                         <div class="header">
@@ -157,7 +157,7 @@
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Ciencia cotidiana </span>
                     <div class="panel-icon-pedagogy-blue d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy7'" style="background-color: white; z-index:102;">
                         <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
-                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #41CCD7 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
+                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #00a4d6 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
                         <div class="header">
@@ -178,7 +178,7 @@
                     <span class="d-flex mt-1 ml-auto mr-auto w-100 font-weight-bold"> + Conexiones </span>
                     <div class="panel-icon-pedagogy-beige d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy8'" style="background-color: white; z-index:102;">
                         <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
-                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #F0B27A transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
+                          <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #702283 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
                         <div class="header">

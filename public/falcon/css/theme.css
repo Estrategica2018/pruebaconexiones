@@ -22288,6 +22288,7 @@ footer .navbar-light {
   padding: 19px 25px;
   width: 395px;
   background-color: white;
+  border-color: #ec6625;
 }
 
 .panel-icon-pedagogy:before {
@@ -22300,7 +22301,7 @@ footer .navbar-light {
 }
 
 .panel-icon-pedagogy .header span {
-  background-color: #77A3A3;
+  background-color: #ec6625;
   padding: 3px 21px 4px 21px;
   border-radius: 12px;
   color: white;
@@ -22340,7 +22341,7 @@ footer .navbar-light {
 
 .panel-icon-pedagogy ul li::before {
     content: "\2022";
-    color: #77A3A3;
+    color: #ec6625;
     display: inline-block;
     font-size: 31px;
     line-height: 12px;
@@ -22349,12 +22350,12 @@ footer .navbar-light {
 }
 
 .panel-icon-pedagogy-purple {
-    border: 5px solid #77A3A3;
+    border: 5px solid #b92f7f;
     border-radius: 17px;
     padding: 19px 25px;
     width: 395px;
     background-color: white;
-    border-color: purple;
+    border-color: #b92f7f;
   }
   
   .panel-icon-pedagogy-purple:before {
@@ -22367,7 +22368,7 @@ footer .navbar-light {
   }
   
   .panel-icon-pedagogy-purple .header span {
-    background-color: purple;
+    background-color: #b92f7f;
     padding: 3px 21px 4px 21px;
     border-radius: 12px;
     color: white;
@@ -22407,7 +22408,7 @@ footer .navbar-light {
   
   .panel-icon-pedagogy-purple ul li::before {
       content: "\2022";
-      color: purple;
+      color: #b92f7f;
       display: inline-block;
       font-size: 31px;
       line-height: 12px;
@@ -22421,7 +22422,7 @@ footer .navbar-light {
     padding: 19px 25px;
     width: 395px;
     background-color: white;
-    border-color: #D6CE2A;
+    border-color: #eaa224;
   }
   
   .panel-icon-pedagogy-yellow:before {
@@ -22434,7 +22435,7 @@ footer .navbar-light {
   }
   
   .panel-icon-pedagogy-yellow .header span {
-    background-color: #D6CE2A;
+    background-color: #eaa224;
     padding: 3px 21px 4px 21px;
     border-radius: 12px;
     color: white;
@@ -22474,7 +22475,7 @@ footer .navbar-light {
   
   .panel-icon-pedagogy-yellow ul li::before {
       content: "\2022";
-      color: #D6CE2A;
+      color: #eaa224;
       display: inline-block;
       font-size: 31px;
       line-height: 12px;
@@ -22488,7 +22489,7 @@ footer .navbar-light {
     padding: 19px 25px;
     width: 395px;
     background-color: white;
-    border-color: #E74C3C;
+    border-color: #f05e5b;
   }
   
   .panel-icon-pedagogy-guava:before {
@@ -22501,7 +22502,7 @@ footer .navbar-light {
   }
   
   .panel-icon-pedagogy-guava .header span {
-    background-color: #E74C3C;
+    background-color: #f05e5b;
     padding: 3px 21px 4px 21px;
     border-radius: 12px;
     color: white;
@@ -22541,7 +22542,7 @@ footer .navbar-light {
   
   .panel-icon-pedagogy-guava ul li::before {
       content: "\2022";
-      color: #E74C3C;
+      color: #f05e5b;
       display: inline-block;
       font-size: 31px;
       line-height: 12px;
@@ -22555,7 +22556,7 @@ footer .navbar-light {
     padding: 19px 25px;
     width: 395px;
     background-color: white;
-    border-color: #E67E22;
+    border-color: #0ccbea;
   }
   
   .panel-icon-pedagogy-orange:before {
@@ -22568,7 +22569,7 @@ footer .navbar-light {
   }
   
   .panel-icon-pedagogy-orange .header span {
-    background-color: #E67E22;
+    background-color: #0ccbea;
     padding: 3px 21px 4px 21px;
     border-radius: 12px;
     color: white;
@@ -22608,7 +22609,7 @@ footer .navbar-light {
   
   .panel-icon-pedagogy-orange ul li::before {
       content: "\2022";
-      color: #E67E22;
+      color: #0ccbea;
       display: inline-block;
       font-size: 31px;
       line-height: 12px;
@@ -22622,7 +22623,7 @@ footer .navbar-light {
     padding: 19px 25px;
     width: 395px;
     background-color: white;
-    border-color: #A0D741;
+    border-color: #95c11f;
   }
   
   .panel-icon-pedagogy-green:before {
@@ -22635,7 +22636,7 @@ footer .navbar-light {
   }
   
   .panel-icon-pedagogy-green .header span {
-    background-color: #A0D741;
+    background-color: #95c11f;
     padding: 3px 21px 4px 21px;
     border-radius: 12px;
     color: white;
@@ -22675,7 +22676,7 @@ footer .navbar-light {
   
   .panel-icon-pedagogy-green ul li::before {
       content: "\2022";
-      color: #A0D741;
+      color: #95c11f;
       display: inline-block;
       font-size: 31px;
       line-height: 12px;
@@ -22689,7 +22690,7 @@ footer .navbar-light {
     padding: 19px 25px;
     width: 395px;
     background-color: white;
-    border-color: #41CCD7;
+    border-color: #00a4d6;
   }
   
   .panel-icon-pedagogy-blue:before {
@@ -22702,7 +22703,7 @@ footer .navbar-light {
   }
   
   .panel-icon-pedagogy-blue .header span {
-    background-color: #41CCD7;
+    background-color: #00a4d6;
     padding: 3px 21px 4px 21px;
     border-radius: 12px;
     color: white;
@@ -22742,7 +22743,7 @@ footer .navbar-light {
   
   .panel-icon-pedagogy-blue ul li::before {
       content: "\2022";
-      color: #41CCD7;
+      color: #00a4d6;
       display: inline-block;
       font-size: 31px;
       line-height: 12px;
@@ -22756,7 +22757,7 @@ footer .navbar-light {
     padding: 19px 25px;
     width: 395px;
     background-color: white;
-    border-color: #F0B27A;
+    border-color: #702283;
   }
   
   .panel-icon-pedagogy-beige:before {
@@ -22769,7 +22770,7 @@ footer .navbar-light {
   }
   
   .panel-icon-pedagogy-beige .header span {
-    background-color: #F0B27A;
+    background-color: #702283;
     padding: 3px 21px 4px 21px;
     border-radius: 12px;
     color: white;
@@ -22809,7 +22810,7 @@ footer .navbar-light {
   
   .panel-icon-pedagogy-beige ul li::before {
       content: "\2022";
-      color: #F0B27A;
+      color: #702283;
       display: inline-block;
       font-size: 31px;
       line-height: 12px;
@@ -23063,9 +23064,6 @@ footer .navbar-light {
       margin-top: 15px!important; 
   }
 }
-
-
-
 
 .ratinPlanCard ul {
 	min-height: 165px;
