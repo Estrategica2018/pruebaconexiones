@@ -26,11 +26,11 @@ MyApp.controller("tutorInscriptionsCtrl", ["$scope", "$http", function($scope, $
     $scope.registerUserForm = function (){
         if($scope.students && $scope.students.length >= 3) {
             swal({
-                html: "<p style='text-align: justify;text-justify: inter-word;'><strong>¡Qué bueno que te guste nuestra propuesta educativa! A propósito, tienes posibilidad de\n" +
+                html: "<p style='text-align: justify;text-justify: inter-word;'>¡Qué bueno que te guste nuestra propuesta educativa! A propósito, tienes posibilidad de\n" +
                     "registrar hasta tres estudiantes con tu usuario. En caso de querer que más personas\n" +
                     "aprovechen la plataforma, puedes recomendarla y una vez hecha la subscrición en alguno\n" +
                     "de los planes que tenemos, podrá acceder a un bono de descuento.\n" +
-                    "Para más información, pueden escribirnos a través del formulario de contacto.</strong></p>",
+                    "Para más información, pueden escríbenos a través del formulario de contacto.</p>",
                 //html: true,
                 type: "warning",
                 showCancelButton: false,

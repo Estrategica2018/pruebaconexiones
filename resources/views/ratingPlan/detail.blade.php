@@ -32,7 +32,7 @@
              <div class="col-12 text-right r-0 w-md-50" id="div-continue" style="background-color: white; z-index: 10; ">
                 <span class="mt-1">@{{messageToast}}</span>
                 <span class="mt-1 d-block font-weight-bold" ng-show="messageToastPrice">@{{messageToastPrice}}</span>
-                <button ng-click="onContinueElements()" ng-disabled="!selectComplete" class="d-none-result d-none ml-3 mt-3 btn btn-outline-primary fs-0 confirm_rating" href="#" class="col-6">
+                <button ng-click="onContinueElements()" ng-class="{'disabled':!selectComplete}" class="d-none-result d-none ml-3 mt-3 btn btn-outline-primary fs-0 confirm_rating" href="#" class="col-6">
                    <i class="fas fa-arrow-right"></i> Continuar compra
                 </button>
              </div>
@@ -135,7 +135,7 @@
              
              <div class="col-12 text-right">
                 <span class="mt-1 font-weight-bold" ng-show="messageToastPrice">@{{messageToastPrice}}</span>
-                <button ng-click="onContinueElements()" ng-disabled="!selectComplete" class="d-none-result d-none ml-3 mt-3 btn btn-outline-primary fs-0 confirm_rating" href="#" class="col-6"><i class="fas fa-arrow-right"></i> 
+                <button ng-click="onContinueElements()" ng-class="{'disabled':!selectComplete}" class="d-none-result d-none ml-3 mt-3 btn btn-outline-primary fs-0 confirm_rating" href="#" class="col-6"><i class="fas fa-arrow-right"></i> 
                 Continuar compra
                 </button>
              </div>

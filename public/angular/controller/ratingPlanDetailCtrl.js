@@ -223,6 +223,20 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
     }
     
     $scope.onContinueElements = function() {
+		
+		if(!$scope.selectComplete){
+			
+			var message = 'Recuerda que debes seleccionar '+ $scope.ratingPlan.count +' guía(s) antes de continuar con la compra.';
+			if($scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
+				message = 'Recuerda que debes seleccionar algún momento antes de continuar con la compra.';
+			}
+			swal({
+				html: '<div class="fs-0 w-lg-50 m-auto">' + message + '</div>',
+				width: '50%',
+				showConfirmButton: false, showCancelButton: false
+			}).catch(swal.noop);
+			return;		
+		}
         
         window.scrollTo( 0, 0 );
         
