@@ -60,18 +60,20 @@ class AnswerController extends Controller
                     ['company_id', $request->company_id]
                 ]);
             })->first();
+            $sequenceMoment = SequenceMoment::find($request->moment_id);
             $advanceLine = AdvanceLine::where([
                 ['affiliated_company_id',$student->id],
                 ['affiliated_account_service_id',$request->affiliated_account_service_id],
                 ['sequence_id',$request->sequence_id],
-                ['moment_order',$request->moment_id]
+                ['moment_order',$sequenceMoment->order]
             ])->orderBy('moment_order', 'ASC')->orderBy('moment_section_id', 'ASC')->get();
             $place_advance_line = "";
             foreach ($advanceLine as $advanceLineSection){
+                /*
                 $sequenceMoment = SequenceMoment::where([
                     ['sequence_company_id',$request->sequence_id],
                     ['order',$request->moment_id]
-                ])->first();
+                ])->first();*/
                 switch ($advanceLineSection->moment_section_id){
                     case 1:
                         $section = json_decode($sequenceMoment->section_1, true);
