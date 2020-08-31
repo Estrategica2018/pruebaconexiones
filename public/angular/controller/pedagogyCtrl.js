@@ -1,8 +1,10 @@
 MyApp.controller("pedagogyCtrl", ["$scope", "$http", function ($scope, $http) {
+	$scope.loadFinished = false;
 
     resizeSequenceCard();
     $scope.init = function (companyId, sequenceId, accountServiceId) {
         $('.d-none-result').removeClass('d-none');
+		$scope.loadFinished = true;
     }
 
 }]);
