@@ -28,15 +28,17 @@
         font-size: 23px;
         font-weight: bolder;margin-bottom: 2px;margin-top: -16px;">x</span>
 @endif
-<br><strong>Respuesta esperada: </strong><span style="width: 10px;
+<br>
+<strong>Respuesta esperada: </strong><span style="width: 10px;
         height: 15px;
         oz-border-radius: 50%;
         -webkit-border-radius: 50%;
         border-radius: 50%;
         border-style: solid;
-    border-width: 1px;">&nbsp;{{strtoupper($questionAnswer['type_numeral'])}}&nbsp;</span><br>
-	{{ Illuminate\Mail\Markdown::parse($questionAnswer['answer_question']) }}
-        <br>
+    border-width: 1px;">&nbsp;{{strtoupper($questionAnswer['type_numeral'])}}&nbsp;</span>
+<br>
+{{ Illuminate\Mail\Markdown::parse($questionAnswer['answer_question']) }}
+<br>
 <strong>Concepto clave a tener en cuenta: </strong>{{$questionAnswer['concept']}}</p>
 <hr>
 @endforeach
