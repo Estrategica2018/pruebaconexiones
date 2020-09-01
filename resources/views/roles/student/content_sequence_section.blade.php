@@ -140,12 +140,12 @@
                             @endif
 
                             @if(isset($part_id) && isset($sectionParts['part_'.($part_id - 1)]))
-                            <a class="btn btn-sm btn-outline-primary" ml="9%" mt="{{$container['h'] - 50 }}"
-                               href="{{route('student.sequences_section_1',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id,  'account_service_id'=>$account_service_id, 'part_id'=>($part_id -  1)])}}"> Parte {{$part_id -1}}</a>
+                            <a class="btn btn-sm btn-outline-primary  z-index-2" ml="9%" mt="{{$container['h'] - 50 }}"
+                               href="{{route('student.sequences_section_'.$section_part_id,['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id,  'account_service_id'=>$account_service_id, 'part_id'=>($part_id -  1)])}}"> Parte {{$part_id -1}}</a>
                             @endif
                             @if(isset($part_id) && isset($sectionParts['part_'.($part_id + 1)]['elements']))
-                            <a class="btn btn-sm btn-outline-primary" ml="83%" mt="{{$container['h'] - 50 }}" 
-                               href="{{route('student.sequences_section_1',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id,  'account_service_id'=>$account_service_id, 'part_id'=>($part_id +  1)])}}"> Parte {{$part_id  + 1}}</a>
+                            <a class="btn btn-sm btn-outline-primary z-index-2" ml="83%" mt="{{$container['h'] - 50 }}"
+                               href="{{route('student.sequences_section_'.$section_part_id,['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id,  'account_service_id'=>$account_service_id, 'part_id'=>($part_id +  1)])}}"> Parte {{$part_id  + 1}}</a>
                             @endif
                         </div>
                     </div>

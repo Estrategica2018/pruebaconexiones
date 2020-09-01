@@ -244,6 +244,7 @@ class StudentController extends Controller
         $this->validation_access_sequence_content($account_service_id);
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
+		$section_part_id = 1;
         if ($sequence->section_1) {
             $sections = json_decode($sequence->section_1, true); 
             $section = $sections['part_' . $part_id];
@@ -258,7 +259,7 @@ class StudentController extends Controller
                 $buttonNext = route('student.sequences_section_2', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
             }
     
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id], $section);
+            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id,'section_part_id'=>$section_part_id], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
     }
@@ -276,10 +277,11 @@ class StudentController extends Controller
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $this->validation_access_sequence_content($account_service_id);
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
+		$section_part_id = 2;
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         if ($sequence->section_2) {
-            $section = json_decode($sequence->section_2, true);
-            $section = $section['part_' . $part_id];
+            $sections = json_decode($sequence->section_2, true);
+            $section = $sections['part_' . $part_id];
             $buttonBack = 'none';
             if ($part_id > 1) {
                 $buttonBack = route('student.sequences_section_2', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id, 'part_id' => ($part_id - 1)]);
@@ -301,7 +303,7 @@ class StudentController extends Controller
             } else {
                 $buttonNext = route('student.sequences_section_3', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
             }
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext], $section);
+            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
     }
@@ -319,10 +321,12 @@ class StudentController extends Controller
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
 
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
+		$section_part_id = 3;
+		
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         if ($sequence->section_3) {
-            $section = json_decode($sequence->section_3, true);
-            $section = $section['part_' . $part_id];
+            $sections = json_decode($sequence->section_3, true);
+            $section = $sections['part_' . $part_id];
             $buttonBack = 'none';
             if ($part_id > 1) {
                 $buttonBack = route('student.sequences_section_3', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id, 'part_id' => ($part_id - 1)]);
@@ -344,7 +348,7 @@ class StudentController extends Controller
             } else {
                 $buttonNext = route('student.sequences_section_4', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
             }
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext], $section);
+            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
 
@@ -363,10 +367,12 @@ class StudentController extends Controller
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
 
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
+		$section_part_id = 4;
+		
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         if ($sequence->section_4) {
-            $section = json_decode($sequence->section_4, true);
-            $section = $section['part_' . $part_id];
+            $sections = json_decode($sequence->section_4, true);
+            $section = $sections['part_' . $part_id];
             $buttonBack = 'none';
             if ($part_id > 1) {
                 $buttonBack = route('student.sequences_section_4', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id, 'part_id' => ($part_id - 1)]);
@@ -398,7 +404,7 @@ class StudentController extends Controller
                     }
                 }
             }
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext], $section);
+            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
 
