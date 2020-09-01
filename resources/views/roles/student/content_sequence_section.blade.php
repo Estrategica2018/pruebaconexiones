@@ -61,7 +61,7 @@
                                     @if($element['type'] == 'text-element' || $element['type'] == 'text-area-element')
                                        <div ng-style="{@if(isset($element['color'])) 'color': '{{$element['color']}}', @endif @if(isset($element['background_color'])) 'background-color': '{{$element['background_color']}}', @endif}" 
                                             style="@if(isset($element['style'])) {{$element['style']}} @endif"
-                                            class="@if(isset($element['class'])){{ $element['class']}} @endif p-0 font-text card-body col-7" w="{{$element['w']}}" h="{{$element['h']}}" mt="{{$element['mt']}}" ml="{{$element['ml']}}" fs="{{$element['fs']}}">
+                                            class="@if(isset($element['class'])){{ $element['class']}} @endif p-0 font-text card-body" w="{{$element['w']}}" h="{{$element['h']}}" mt="{{$element['mt']}}" ml="{{$element['ml']}}" fs="{{$element['fs']}}">
                                         {!! $element['text'] !!}
                                        </div>
                                     @endif
