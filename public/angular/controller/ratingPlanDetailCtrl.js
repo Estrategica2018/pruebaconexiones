@@ -73,8 +73,9 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
     }
 
     function getSequences(company_id,sequence_id) {
+        
         $http({
-            url:"/get_company_sequences/" + company_id + "/" + sequence_id,
+            url:"/get_company_sequences/" + company_id,
             method: "GET",
         }).
         then(function (response) {
@@ -82,19 +83,19 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             var listTemp = [];
             
             for(var i=0;i<$scope.sequences.length;i++) {
-                if(Number($scope.sequences[i].id) ===  Number(sequence_id) ) {
+                if(Number($scope.sequences[i].id) ===  Number(sequence_id)) {
                     $scope.sequenceForAdd = Object.assign({},$scope.sequences[i]) ;
                     $scope.sequenceForAdd.isSelected = true;
                     if( $scope.ratingPlan.type_rating_plan_id === type_sequence) {
                        clickSelected(1, $scope.ratingPlan.count);
                     }
                     else if( $scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
-						$('#moment_div_responsive_ForAdd').addClass('show');
+                        $('#moment_div_responsive_ForAdd').addClass('show');
                         $scope.messageToast = 'Seleccciona los momentos que deseas incluir';
                         $("#toast-name-1").fadeIn(400).delay(1000).fadeOut(400);
                         $("#toast-name-1").css('top',scrollOrig + $(window).scrollTop());                
                     }
-						
+                        
                     $scope.selectComplete =  Number($scope.ratingPlan.count) === 1;
                     if($scope.selectComplete) {
                         $('.confirm_rating').addClass("btn-primary");
@@ -107,7 +108,9 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
                     
                 }
                 else {
-                    listTemp.push($scope.sequences[i]);
+                    if((sequence_id && $scope.ratingPlan.count > 1) || !sequence_id) {
+                       listTemp.push($scope.sequences[i]); 
+                    }
                 }
             }
             $scope.sequences = listTemp;
@@ -223,20 +226,20 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
     }
     
     $scope.onContinueElements = function() {
-		
-		if(!$scope.selectComplete){
-			
-			var message = 'Recuerda que debes seleccionar '+ $scope.ratingPlan.count +' guía(s) antes de continuar con la compra.';
-			if($scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
-				message = 'Recuerda que debes seleccionar algún momento antes de continuar con la compra.';
-			}
-			swal({
-				html: '<div class="fs-0 w-lg-50 m-auto">' + message + '</div>',
-				width: '50%',
-				showConfirmButton: false, showCancelButton: false
-			}).catch(swal.noop);
-			return;		
-		}
+        
+        if(!$scope.selectComplete){
+            
+            var message = 'Recuerda que debes seleccionar '+ $scope.ratingPlan.count +' guía(s) antes de continuar con la compra.';
+            if($scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
+                message = 'Recuerda que debes seleccionar algún momento antes de continuar con la compra.';
+            }
+            swal({
+                html: '<div class="fs-0 w-lg-50 m-auto">' + message + '</div>',
+                width: '50%',
+                showConfirmButton: false, showCancelButton: false
+            }).catch(swal.noop);
+            return;        
+        }
         
         window.scrollTo( 0, 0 );
         
@@ -249,9 +252,9 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
         }
 
         $scope.elementsKits = [];
-		
-		
-		if($scope.sequenceForAdd && $scope.sequenceForAdd.isSelected && $scope.sequenceForAdd.moments ) {
+        
+        
+        if($scope.sequenceForAdd && $scope.sequenceForAdd.isSelected && $scope.sequenceForAdd.moments ) {
             var sequenceTmp = $scope.sequenceForAdd;
             if(sequenceTmp.isSelected && sequenceTmp.moments ) {
                 var mbAdd = true;
@@ -286,8 +289,8 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
                     }
                 }
             }
-		}
-		
+        }
+        
         for(var s=0;s<$scope.sequences.length;s++) {
             var sequenceTmp = $scope.sequences[s];
             if(sequenceTmp.isSelected && sequenceTmp.moments ) {

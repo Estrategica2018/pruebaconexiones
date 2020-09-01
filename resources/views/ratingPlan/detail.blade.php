@@ -10,21 +10,21 @@
       <span class="col">@{{ errorMessageFilter }}</span>
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></i></a></span>
     </div>
-	<div id="loading" class="fade show p-3 border-lg-y col-lg-2 w-100 card card-body" ng-hide="ratingPlan"
-	   style="min-height: 43vw; border: 0.4px solid grey; min-width: 100%">
-	   cargando...
-	</div>
+    <div id="loading" class="fade show p-3 border-lg-y col-lg-2 w-100 card card-body" ng-hide="ratingPlan"
+       style="min-height: 43vw; border: 0.4px solid grey; min-width: 100%">
+       cargando...
+    </div>
     <div class="mb-3 card col-12" ng-show="ratingPlan">
       <div class="card-body w-100">
         <div class="row d-none-result d-none">
              <div class="mb-3">
                 <h4 class=" boder-header p-1 pl-3">
-                   @{{ratingPlan.name}} <small> @{{ratingPlan.description}}</small>
+                   @{{ratingPlan.name}} 
                 </h4>
              </div>
                           
              <ul class="text-justify pr-4 pl-3 mb-0">
-                
+                <p> @{{ratingPlan.description}}</p>
                 <p>A continuación, te mostramos las <strong>guías de aprendizaje</strong> disponibles. Para conocer de qué se tratan y cuáles son sus contenidos pueden hacer clic en <strong>ver detalle</strong>, allí encontrarán un video introductorio y una <strong>malla curricular</strong> en la que se describen los <strong>propósitos de cada momento</strong>, la <strong>pregunta central</strong>, el eje temático de la <strong>explicación de ciencia en contexto</strong>, las <strong>experiencias científicas</strong> propuestas y los <strong>materiales</strong> que se requieren para esta.</p>
                 <p>Si tienes alguna pregunta puedes escribirnos a través del formulario de  <a target="_blank" href="{{route('contactus')}}">contacto</a>. </p>
              </ul>
@@ -89,7 +89,7 @@
                       </div>
                    </div>
                </div>
-               <div class="p-0 col-md-6 col-sm-12" style="border: 10px solid white;" ng-repeat="sequence in sequences" ng-hide="sequenceForAdd" >
+               <div class="p-0 col-md-6 col-sm-12" style="border: 10px solid white;" ng-repeat="sequence in sequences">
                    <div class="row w-100 p-0">
                       <div class="ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex" style="min-height: 297px;">
                         <div class="view" id="sequence-description-@{{sequence.id}}">

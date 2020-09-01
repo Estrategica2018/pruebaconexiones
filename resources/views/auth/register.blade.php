@@ -205,11 +205,11 @@
       </div>
    </div>
    
-    <div ng-hide="!registrer_ini || @if($errors->any()>0) true @else false @endif" class="container-fluid no-gutters card w-50vw">
+    <div ng-hide="!registrer_ini || @if($errors->any()>0) true @else false @endif" class="container-fluid no-gutters card w-50vw m-auto">
         <div class="p-4" style="padding-bottom: 0px!important;">
                <h6><i class="fa fas fa-arrow-right arrow-icon"></i>Crea tu cuenta</h6>
         </div>
-        <div class="mt-5 modal-menu" style="min-height:173px">
+        <div class="mt-5 modal-menu" style="min-height:264px;">
            
            <div style="z-index:1041;" class="col-12 col-md-6 ml-auto mr-auto mt-2"  style="height:43px">
                 <button type="button" class="btn btn-secondary btn-block d-flex h-100" ng-click="registrer_ini=false">
