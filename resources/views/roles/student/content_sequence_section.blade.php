@@ -131,11 +131,11 @@
                             </div>
 
                             @if(isset($part_id) && isset($section_id) && isset($sections[$section_id-1]['part_'.($part_id - 1)]))
-                            <a class="btn btn-sm btn-outline-primary" ml="9%" mt="{{$container['h'] - 50 }}"
+                            <a class="btn btn-sm btn-outline-primary z-index-2" ml="9%" mt="{{$container['h'] - 50 }}"
                                href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($section_id),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>($part_id -  1)])}}"> Parte {{$part_id -1}}</a>
                             @endif
                             @if(isset($part_id) && isset($section_id) && isset($sections[$section_id-1]['part_'.($part_id + 1)]['elements']))
-                            <a class="btn btn-sm btn-outline-primary" ml="83%" mt="{{$container['h'] - 50 }}" 
+                            <a class="btn btn-sm btn-outline-primary z-index-2" ml="83%" mt="{{$container['h'] - 50 }}" 
                                href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($section_id),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>($part_id +  1)])}}"> Parte {{$part_id  + 1}}</a>
                             @endif
 
