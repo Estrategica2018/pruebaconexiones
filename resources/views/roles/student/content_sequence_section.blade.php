@@ -131,20 +131,20 @@
                             </div>
 
                             @if(isset($part_id) && isset($section_id) && isset($sections[$section_id-1]['part_'.($part_id - 1)]))
-                            <a class="btn btn-sm btn-outline-primary z-index-2" ml="9%" mt="{{$container['h'] - 50 }}"
+                            <a class="btn btn-sm btn-primary z-index-2" ml="9%" mt="{{$container['h'] - 50 }}"
                                href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($section_id),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>($part_id -  1)])}}"> Parte {{$part_id -1}}</a>
                             @endif
                             @if(isset($part_id) && isset($section_id) && isset($sections[$section_id-1]['part_'.($part_id + 1)]['elements']))
-                            <a class="btn btn-sm btn-outline-primary z-index-2" ml="83%" mt="{{$container['h'] - 50 }}" 
+                            <a class="btn btn-sm btn-primary z-index-2" ml="83%" mt="{{$container['h'] - 50 }}" 
                                href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($section_id),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>($part_id +  1)])}}"> Parte {{$part_id  + 1}}</a>
                             @endif
 
                             @if(isset($part_id) && isset($sectionParts['part_'.($part_id - 1)]))
-                            <a class="btn btn-sm btn-outline-primary  z-index-2" ml="9%" mt="{{$container['h'] - 50 }}"
+                            <a class="btn btn-sm btn-primary  z-index-2" ml="9%" mt="{{$container['h'] - 50 }}"
                                href="{{route('student.sequences_section_'.$section_part_id,['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id,  'account_service_id'=>$account_service_id, 'part_id'=>($part_id -  1)])}}"> Parte {{$part_id -1}}</a>
                             @endif
                             @if(isset($part_id) && isset($sectionParts['part_'.($part_id + 1)]['elements']))
-                            <a class="btn btn-sm btn-outline-primary z-index-2" ml="83%" mt="{{$container['h'] - 50 }}"
+                            <a class="btn btn-sm btn-primary z-index-2" ml="83%" mt="{{$container['h'] - 50 }}"
                                href="{{route('student.sequences_section_'.$section_part_id,['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id,  'account_service_id'=>$account_service_id, 'part_id'=>($part_id +  1)])}}"> Parte {{$part_id  + 1}}</a>
                             @endif
                         </div>
@@ -165,11 +165,20 @@
                     </button>
                 </div>
                 <div class="card-body p-5" ng-show="evidenceOpened.type_answer===1">
-                    <div ng-repeat="question in evidenceOpened.questions track by $index" class="ml-auto mr-auto row">
-                        <div class="col-6"> <h6 ng-show="question.title" style="color:#E15433;">
-                        <img style="margin-left: -26px;margin-top: -3px;" width="21px" height="auto" src="{{asset('images/icons/icon-options-questions.png')}}" >
-                        <div class="mt-n3" ng-bind-html="question.title"></div></h6></div>
-                        <div class="col-6"> <h6 ng-show="question.objective" style="color:#402F73;"><img style="margin-left: -26px;margin-top: -3px;" width="21px" height="auto" src="{{asset('images/icons/icon-objectives-questions.png')}}" >@{{question.objective}}</h6></div>
+                    <div ng-repeat="question in evidenceOpened.questions track by $index" class="ml-auto mr-auto row mb-3">
+                        <div class="col-6"> 
+                            <h6 ng-show="question.title" style="color:#E15433;">
+                                <img style="margin-left: -26px;margin-top: -3px;" width="21px" height="auto" src="{{asset('images/icons/icon-options-questions.png')}}" >
+                                <div class="mt-n3" ng-bind-html="question.title"></div>
+                            </h6>
+                        </div>
+                        <div class="col-6"> 
+                            <h6 ng-show="question.objective" style="color:#402F73;">
+                                <img style="margin-left: -26px;margin-top: -3px;" width="21px" height="auto" src="{{asset('images/icons/icon-objectives-questions.png')}}" >
+                                <div class="mt-n3" ng-bind-html="question.objective"></div>
+                            </h6>
+                        </div>
+                        
                     </div>
                     <div class="d-flex mt-6 ml-6">
                         <button class="btn btn-sm btn-outline-success ml-2" style="right: 10%;" 

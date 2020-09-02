@@ -22181,7 +22181,7 @@ footer .navbar-light {
 }
 
 .border-left-mini:before {
-    border-left: 1px solid;
+    border-left: 2px solid #f08934;
     content: " ";
     left: 0px;
     position: absolute;
@@ -23059,12 +23059,32 @@ footer .navbar-light {
   }
 }
 
-@media(min-width: 1054px) and (max-width:1382px) { 
+@media(min-width: 1054px) and (max-width:1239px) { 
   .mt-lg-fix {
       margin-top: 15px!important; 
   }
 }
 
 .ratinPlanCard ul {
-	min-height: 165px;
+    min-height: 165px;
+}
+
+.image-tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  
+  top: 35px;
+}
+
+.image-tooltip:hover .tooltiptext {
+  visibility: visible;
 }

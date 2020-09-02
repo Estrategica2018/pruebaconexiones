@@ -11,32 +11,41 @@
         
         <span class="nameTimeLine fs--1">{{auth('afiliadoempresa')->user()->name}}</span>
         <div class="position-absolute d-flex" style="top: 12px;left: 220px;">
-            <a class="ml-8 cursor-pointer" href="{{route('student','conexiones')}}">
+
+            <a class="ml-8 cursor-pointer image-tooltip" href="{{route('student','conexiones')}}">
                 <img src="{{asset('images/icons/portal-estudiante/home_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                <span class="tooltiptext">inicio</span>
             </a>
             @if(isset($buttonBack) && $buttonBack != 'none')
-            <a class="ml-1 cursor-pointer" href="{{$buttonBack}}">
+            <a class="ml-1 cursor-pointer image-tooltip" href="{{$buttonBack}}">
                 <img src="{{asset('images/icons/portal-estudiante/atras_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                <span class="tooltiptext">atr&aacute;s</span>
             </a>
             @else
-            <a class="ml-1 cursor-not-allowed" disabled style="opacity: .5;">
+            <a class="ml-1 cursor-not-allowed image-tooltip" disabled style="opacity: .5;">
                 <img src="{{asset('images/icons/portal-estudiante/atras_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                <span class="tooltiptext">atr&aacute;s</span>
             </a>
             @endif
-            <a class="ml-1 cursor-pointer" href="@if(isset($buttonNext)) {{$buttonNext }} @endif">
+            <a class="ml-1 cursor-pointer image-tooltip" href="@if(isset($buttonNext)) {{$buttonNext }} @endif">
                 <img src="{{asset('images/icons/portal-estudiante/adelante_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                <span class="tooltiptext">adelante</span>
             </a>
-            <a class="ml-1 cursor-pointer" href="{{ route('student.available_sequences',auth('afiliadoempresa')->user()->company_name()) }}">
+            <a class="ml-1 cursor-pointer image-tooltip" href="{{ route('student.available_sequences',auth('afiliadoempresa')->user()->company_name()) }}">
                 <img src="{{asset('images/icons/portal-estudiante/guias_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                <span class="tooltiptext">gu&iacute;as de aprendizaje</span>
             </a>
-            <a class="ml-1 cursor-pointer" href="{{ route('student.achievements',auth('afiliadoempresa')->user()->company_name()) }}">
+            <a class="ml-1 cursor-pointer image-tooltip" href="{{ route('student.achievements',auth('afiliadoempresa')->user()->company_name()) }}">
                 <img src="{{asset('images/icons/portal-estudiante/logros_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                <span class="tooltiptext">logros</span>
             </a>
-            <a class="ml-1 cursor-pointer" href="{{route('student','conexiones')}}">
+            <a class="ml-1 cursor-pointer image-tooltip" href="{{route('student','conexiones')}}">
                 <img src="{{asset('images/icons/portal-estudiante/perfil_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                <span class="tooltiptext">perf&iacute;l</span>
             </a>
-            <a class="ml-1 cursor-pointer" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a class="ml-1 cursor-pointer image-tooltip" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <img src="{{asset('images/icons/portal-estudiante/salir_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                <span class="tooltiptext">salir</span>
             </a>
             <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
            @csrf

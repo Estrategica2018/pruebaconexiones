@@ -27,7 +27,7 @@
                                     <th class="sort">Nombres</th>
                                     <th class="sort">Apellidos</th>
                                     <th class="sort">Correo</th>
-                                    <th class="sort">Telefono</th>
+                                    <th class="sort">Teléfono</th>
                                     <th class="sort">Contenidos</th>
                                 </tr>
                                 </thead>
@@ -37,7 +37,7 @@
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Correo</th>
-                                    <th>Telefono</th>
+                                    <th>Teléfono</th>
                                     <th>Contenidos</th>
                                 </tr>
                                 </tfoot>
