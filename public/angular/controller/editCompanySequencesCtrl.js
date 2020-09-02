@@ -710,12 +710,13 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
        
         var countElementsError = [];
         if($scope.applyChangeEvidence) {
-            var data = { 
+            var data = {
                 "sequence_id": $scope.sequence.id,
                 "moment_id":  $scope.moment ? $scope.moment.id : ''
             }
-            $http.post('/remove_question/', data)
-            .then(function (response) {
+            /*$http.post('/remove_question/', data)
+            .then(function (response) {*/
+				
                 sectionPart.elements = sectionPart.elements || [];
                 var element = null;
 				
@@ -783,11 +784,11 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     finishCallback();
                 }
     
-            }, function (reason) {
+            /*}, function (reason) {
                 var message = (reason && reason.data) ? reason.data.message : '';
                 countElements = 0;
                 finishCallback('Error invocando el servicio register_update_question:['+message+']');
-            });
+            });*/
         }
         else {
             countElements = 0;
