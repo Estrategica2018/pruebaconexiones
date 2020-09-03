@@ -36,7 +36,7 @@
                         <label class="" style="margin-left: -35px;"><strong> Desempeño</strong></label> 
                         @if(isset($sequence['performance'] ))
                             @if($sequence['performance']>=90)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (S)<span class="fs-0">{{$sequence['performance']}} %</span>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (S)<span class="fs-0">{{$sequence['performance']}} %</span> 
                             @endif
                             @if($sequence['performance']>=70 && $sequence['performance']<=89)
                             <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (A)  <span class="fs-0">{{$sequence['performance']}} %</span>
@@ -47,7 +47,7 @@
                             @if($sequence['performance']>=40 && $sequence['performance']<=59)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B) <span class="fs-0">{{$sequence['performance']}} %</span>
                             @endif
-                            @if($sequence['performance']<40)
+                            @if($sequence['performance']>=0  && $sequence['performance']<40)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B) <span class="fs-0">{{$sequence['performance']}} %</span>
                             @endif
 							@if($sequence['performance']==-1)
