@@ -8,7 +8,7 @@ MyApp.controller("achievementsStudentCtrl", ["$scope", "$http", "$timeout", func
     
     $scope.initSequences = function(companyId) {
         $('.d-none-result').removeClass('d-none'); 
-		$scope.loadFinish = true;
+        $scope.loadFinish = true;
             
         // $http({
         //     url:"/conexiones/get_available_sequences/" + companyId,

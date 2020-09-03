@@ -124,8 +124,8 @@
                 </div> 
             </div> 
             <h5 class="mt-3  mb-3">Reporte por preguntas</h5>
-			
-			<div class="p-3 border-lg-y col-lg-2 w-100"
+            
+            <div class="p-3 border-lg-y col-lg-2 w-100"
                style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-hide="loadFinish">
                cargando...
             </div>
@@ -159,90 +159,90 @@
                             <div class="cursor-pointer" ng-show="!mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
                                 <i class="fa fa-angle-down fs-2" aria-hidden="true"></i>
                             </div>
-							<div class="cursor-pointer" ng-show="mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
+                            <div class="cursor-pointer" ng-show="mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
                                 <i class="fa fa-angle-up fs-2" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
                     
-					@foreach ($moment['ratings'] as $rating)
-					<div class="row mt-3 col-12 pr-0" ng-show="mbShowMoment{{$moment['id']}}">
-						<div class="{{$rating['element']['class']}} evidence-head d-flex" 
-						   ng-style="{@if(isset($rating['element']['color'])) 'color': '{{$rating['element']['color']}}', @endif 
-						   @if(isset($rating['element']['background_color'])) 'background-color': '{{$rating['element']['background_color']}}', @endif}" 
-						   style="@if(isset($rating['element']['style'])) {{$rating['element']['style']}} @endif; width:100%;height:auto;">
-						   <div class="col-1-5"> 
-						   @if(isset($rating['element']['icon']))
-							<img src="{{asset($rating['element']['icon'])}}" width="auto" height="40px"/>
-						   @else 
-						   <img src="{{asset('images/icons/evidenciasAprendizajeIcono-01.png')}}" width="auto" height="40px"/>
-						   @endif
-						   </div>
-						   <div class="col-7 col-md-6 p-0">  
-							<span>Preguntas de {{$rating['element']['subtitle']}}</span>
-						   </div>
-						   <div class="col-3 p-0 fs-0">  
-								@if(isset($rating['evidences'] ))
-									@if($rating['evidences']->weighted>=90)
-									<i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> Superior ( {{$rating['evidences']->weighted}}% )
-									@endif
-									@if($rating['evidences']->weighted>=70 && $rating['evidences']->weighted<=89)
-									<i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i>  Alto ( 70% - 89% )
-									@endif
-									@if($rating['evidences']->weighted>=60 && $rating['evidences']->weighted<=69)
-									<i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> Bajo ( 60% - 69% )
-									@endif
-									@if($rating['evidences']->weighted>=40 && $rating['evidences']->weighted<=59)
-									<i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> Bajo ( 40% - 59% )
-									@endif
-									@if($rating['evidences']->weighted<40)
-									<i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> Bajo ( < 40% )
-									@endif
-								@else 
-									<i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><span class="">Sin iniciar</span>
-								@endif
-							</div>
-						   @if(isset($rating['evidences']['answers']))
-						   <div class="ml-auto mr-3 fs-2">
-							   <div class="cursor-pointer" ng-show="!mbShowEvidence{{$rating['element']['id']}}" ng-click="mbShowEvidence{{$rating['element']['id']}} = !mbShowEvidence{{$rating['element']['id']}}">
-									<i class="fa fa-angle-down" aria-hidden="true"></i>
-							   </div>
-							   <div class="cursor-pointer" ng-show="mbShowEvidence{{$rating['element']['id']}}" ng-click="mbShowEvidence{{$rating['element']['id']}} = !mbShowEvidence{{$rating['element']['id']}}">
-									<i class="fa fa-angle-up" aria-hidden="true"></i>
-							   </div>
-						   </div>
-						   @endif
-						 </div>
-					</div>
-					@if(isset($rating['evidences']['answers']))
-					<div class="col-12 mt-3" ng-show="mbShowEvidence{{$rating['element']['id']}}">
-						<div class="row  bg-blue rounded-sm pl-3 pb-3 pt-3 text-center font-weight-bold" style="color:white">
-							<div class="col-3 p-0 border-left-white">Pregunta</div>
-							<div class="col-3 p-0 border-left-white">Respuesta</div>
-							<div class="col-3 p-0 border-left-white">Desempeño</div>
-							<div class="col-3 p-0">Comentario</div>
-						</div>
-						
-						
-						@foreach ($rating['evidences']['answers'] as $indexA=>$answer)
-						<div class="row mt-3 @if($indexA%2==0) bg-soft-dark @endif rounded-sm pl-3 pb-3 pt-3 fs--1">
-							<div class="col-3 p-0 border-left-blue">{{$answer['question']['title']}}</div>
-							<div class="col-3 pl-3 border-left-blue">{{$answer['answer']}}</div>
-							<div class="col-3 p-0 border-left-blue text-center">
-								@if($answer['feedback'] == 0)
-								<span style="color:red;font-size: 23px;font-weight: bolder;margin-bottom: 2px;margin-top: -16px;">x</span>
-								@endif
-								@if($answer['feedback'] == 100)
-									<span style="color:green;font-size: 23px;font-weight: bolder;margin-top: -16px;">✓</span>
-								@endif
-							</div>
-							<div class="col-3 pl-3">{{$answer['concept']}}</div>
-						</div>
-						@endforeach
-					</div>
-					@endif
-					
-					@endforeach
+                    @foreach ($moment['ratings'] as $rating)
+                    <div class="row mt-3 col-12 pr-0" ng-show="mbShowMoment{{$moment['id']}}">
+                        <div class="{{$rating['element']['class']}} evidence-head d-flex" 
+                           ng-style="{@if(isset($rating['element']['color'])) 'color': '{{$rating['element']['color']}}', @endif 
+                           @if(isset($rating['element']['background_color'])) 'background-color': '{{$rating['element']['background_color']}}', @endif}" 
+                           style="@if(isset($rating['element']['style'])) {{$rating['element']['style']}} @endif; width:100%;height:auto;">
+                           <div class="col-1-5"> 
+                           @if(isset($rating['element']['icon']))
+                            <img src="{{asset($rating['element']['icon'])}}" width="auto" height="40px"/>
+                           @else 
+                           <img src="{{asset('images/icons/evidenciasAprendizajeIcono-01.png')}}" width="auto" height="40px"/>
+                           @endif
+                           </div>
+                           <div class="col-7 col-md-6 p-0">  
+                            <span>Preguntas de {{$rating['element']['subtitle']}}</span>
+                           </div>
+                           <div class="col-3 p-0 fs-0">  
+                                @if(isset($rating['evidences'] ))
+                                    @if($rating['evidences']->weighted>=90)
+                                    <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> Superior ( {{$rating['evidences']->weighted}}% )
+                                    @endif
+                                    @if($rating['evidences']->weighted>=70 && $rating['evidences']->weighted<=89)
+                                    <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i>  Alto ( 70% - 89% )
+                                    @endif
+                                    @if($rating['evidences']->weighted>=60 && $rating['evidences']->weighted<=69)
+                                    <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> Bajo ( 60% - 69% )
+                                    @endif
+                                    @if($rating['evidences']->weighted>=40 && $rating['evidences']->weighted<=59)
+                                    <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> Bajo ( 40% - 59% )
+                                    @endif
+                                    @if($rating['evidences']->weighted<40)
+                                    <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> Bajo ( < 40% )
+                                    @endif
+                                @else 
+                                    <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><span class="">Sin iniciar</span>
+                                @endif
+                            </div>
+                           @if(isset($rating['evidences']['answers']))
+                           <div class="ml-auto mr-3 fs-2">
+                               <div class="cursor-pointer" ng-show="!mbShowEvidence{{$rating['element']['id']}}" ng-click="mbShowEvidence{{$rating['element']['id']}} = !mbShowEvidence{{$rating['element']['id']}}">
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                               </div>
+                               <div class="cursor-pointer" ng-show="mbShowEvidence{{$rating['element']['id']}}" ng-click="mbShowEvidence{{$rating['element']['id']}} = !mbShowEvidence{{$rating['element']['id']}}">
+                                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                               </div>
+                           </div>
+                           @endif
+                         </div>
+                    </div>
+                    @if(isset($rating['evidences']['answers']))
+                    <div class="col-12 mt-3" ng-show="mbShowEvidence{{$rating['element']['id']}}">
+                        <div class="row  bg-blue rounded-sm pl-3 pb-3 pt-3 text-center font-weight-bold" style="color:white">
+                            <div class="col-3 p-0 border-left-white">Pregunta</div>
+                            <div class="col-3 p-0 border-left-white">Respuesta</div>
+                            <div class="col-3 p-0 border-left-white">Desempeño</div>
+                            <div class="col-3 p-0">Comentario</div>
+                        </div>
+                        
+                        
+                        @foreach ($rating['evidences']['answers'] as $indexA=>$answer)
+                        <div class="row mt-3 @if($indexA%2==0) bg-soft-dark @endif rounded-sm pl-3 pb-3 pt-3 fs--1">
+                            <div class="col-3 p-0 border-left-blue">{{$answer['question']['title']}}</div>
+                            <div class="col-3 pl-3 border-left-blue">{{$answer['answer']}}</div>
+                            <div class="col-3 p-0 border-left-blue text-center">
+                                @if($answer['feedback'] == 0)
+                                <span style="color:red;font-size: 23px;font-weight: bolder;margin-bottom: 2px;margin-top: -16px;">x</span>
+                                @endif
+                                @if($answer['feedback'] == 100)
+                                    <span style="color:green;font-size: 23px;font-weight: bolder;margin-top: -16px;">✓</span>
+                                @endif
+                            </div>
+                            <div class="col-3 pl-3">{{$answer['concept']}}</div>
+                        </div>
+                        @endforeach
+                    </div>
+                    @endif
+                    
+                    @endforeach
                </div>
             @endforeach
     

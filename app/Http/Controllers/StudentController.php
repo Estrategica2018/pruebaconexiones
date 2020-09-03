@@ -218,8 +218,8 @@ class StudentController extends Controller
             ['student_id',$student->id],
             ['affiliated_account_service_id',$affiliated_account_service_id],
         ])->get();
-		
-		foreach($sequence->moments as $moment) {
+        
+        foreach($sequence->moments as $moment) {
             $rating = [];
             
             foreach([1,2,3,4] as $section_id) {
@@ -233,9 +233,9 @@ class StudentController extends Controller
                                 if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
                                     $rating[$element['id']] = ['element'=>$element];
                                     $rating[$element['id']]['evidences'] = $evidences->where('experience_id',$element['id'])->first();
-									if($rating[$element['id']]['evidences']) {
-										//dd($rating[$element['id']]['evidences']);
-									}
+                                    if($rating[$element['id']]['evidences']) {
+                                        //dd($rating[$element['id']]['evidences']);
+                                    }
                                 }
                             }
                         }
@@ -249,7 +249,7 @@ class StudentController extends Controller
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
-			
+            
             $moment['ratings'] = $rating;
             array_push($moments,$moment);
         }
