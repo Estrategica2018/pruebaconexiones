@@ -102,39 +102,40 @@ class AnswerController extends Controller
             $sequence = CompanySequence::select('name')->where('id', $request->sequence_id)->first();
             $moment = SequenceMoment::select('name','performances')->where('id', $request->moment_id)->first();
             $performance_comment_array = explode('|',$moment->performances) ;
-            switch ($performance) {
-                case ($performance >= 90):
+
+            if ($performance >= 90){
+                $color_performance = 'green';
+                $performance_comment = count($performance_comment_array)>0 ? $performance_comment_array[0] : '';
+                $level = "nivel superior (S) 90 – 100%.";
+                $qualification = '(S)';
+            }else{
+                if($performance >= 70 && $performance <= 89){
                     $color_performance = 'green';
-                    $performance_comment = count($performance_comment_array)>0 ? $performance_comment_array[0] : '';  
-                    $level = "nivel superior (S) 90 – 100%.";
-                    $qualification = '(S)';
-                break;
-                case ($performance >= 70 && $performance <= 89):
-                    $color_performance = 'green';
-                    $performance_comment = count($performance_comment_array)>1 ? $performance_comment_array[1] : '';  
+                    $performance_comment = count($performance_comment_array)>1 ? $performance_comment_array[1] : '';
                     $level = "nivel alto (A) 70 – 89%.";
                     $qualification = '(A)';
-                break;
-                case ($performance >= 60 && $performance <= 69):
-                    $color_performance = '#FFF824';
-                    $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';  
-                    $level = "nivel básico (B) 60 – 69%.";
-                    $qualification = '(B)';
-                break;
-                case ($performance >= 40 && $performance <= 59):
-                    $color_performance = 'red'; 
-                    $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';  
-                    $level = "nivel bajo (B) 40 – 59%.";
-                    $qualification = '(B)';
-                break;
-                case ($performance < 40):
-                    $color_performance = 'red';
-                    $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';  
-                    $level = "nivel bajo (B) 0 – 39%.";
-                    $qualification = '(B)';
-                    break;
+                }else{
+                    if($performance >= 60 && $performance <= 69){
+                        $color_performance = '#FFF824';
+                        $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';
+                        $level = "nivel básico (B) 60 – 69%.";
+                        $qualification = '(B)';
+                    }else{
+                        if($performance >= 40 && $performance <= 59){
+                            $color_performance = 'red';
+                            $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';
+                            $level = "nivel bajo (B) 40 – 59%.";
+                            $qualification = '(B)';
+                        }else{
+                                $color_performance = 'red';
+                                $performance_comment = count($performance_comment_array)>2 ? $performance_comment_array[2] : '';
+                                $level = "nivel bajo (B) 0 – 39%.";
+                                $qualification = '(B)';
+                        }
+                    }
+                }
             }
-            
+
             //registra el resumen de la evaluzación para la posterior generación de reportes
             Rating::updateOrCreate(
                 [
