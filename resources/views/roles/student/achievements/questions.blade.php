@@ -53,7 +53,6 @@
 							@if($sequence['performance']==-1)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                             @endif
-                            
                         @endif
                     @endif
                 </div>
@@ -225,7 +224,9 @@
                         @foreach ($rating['evidences']['answers'] as $indexA=>$answer)
                         <div class="row mt-3 @if($indexA%2==0) bg-soft-dark @endif rounded-sm pl-3 pb-3 pt-3 fs--1">
                             <div class="col-3 p-0 border-left-blue">{{$answer['question']['title']}}</div>
-                            <div class="col-3 pl-3 border-left-blue">{{$answer['answer']}}</div>
+                            <div class="col-3 pl-3 border-left-blue">
+                            {{App\Http\Controllers\AchievementController::retriveAnswer($answer['question'],$answer['answer'])}}
+                            </div>
                             <div class="col-3 p-0 border-left-blue text-center">
                                 @if($answer['feedback'] == 0)
                                 <span style="color:red;font-size: 23px;font-weight: bolder;margin-bottom: 2px;margin-top: -16px;">x</span>

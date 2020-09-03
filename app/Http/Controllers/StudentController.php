@@ -243,8 +243,6 @@ class StudentController extends Controller
                 }
             }
             
-            
-            
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order);
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];

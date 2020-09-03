@@ -215,5 +215,26 @@ class AchievementController extends Controller
         }
         return [ 'section' => $section];
     }
+    
+    /**
+     * Function for retrive answer in array question
+     * @param $question
+     * @param $answer_id answer from student
+     * @return string
+     */
+    public static function retriveAnswer($question, $answer_id) 
+    {   $options = json_decode($question['options'],true);
+        if(isset($options) && count($options) >0) {
+            foreach($options as $option) {
+                if(isset($option['id'])) {
+                    if($option['id'] == $answer_id) {
+                        return strtoupper($option['id']) . '. ' . $option['option'];
+                    }
+                }
+            }
+        }
+        return '';
+        
+    }
 
 }
