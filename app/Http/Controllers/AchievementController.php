@@ -115,13 +115,13 @@ class AchievementController extends Controller
             ['affiliated_account_service_id',$affiliated_account_service_id],
             ['student_id', $student_id],
             ['sequence_id',$sequence_id ],
-            ['moment_id',$moment_order]
+            ['moment_id',$moment_id]
         ])->select('sequence_id','moment_id', DB::raw('count(1) as total'))
         ->groupBy('sequence_id','moment_id')
         ->get();
         
         $moment = [];
-        $moment['progress'] = (count($advanceLine) / 4) * 100;   
+        $moment['progress'] = (count($advanceLine) / 4) * 100;
         if( count($questions) > 0 && $moment['progress'] == 100) { 
             if(count($ratings) == count($questions) ) {
                 $moment['progress'] = 100; 
@@ -137,10 +137,11 @@ class AchievementController extends Controller
             ['affiliated_account_service_id',$affiliated_account_service_id],
             ['student_id',$student_id],
             ['sequence_id',$sequence_id],
-            ['moment_id',$moment_order]
+            ['moment_id',$moment_id]
         ])->get();
 
         if(count($ratings)>0) {
+			
             $performance = $ratings->avg('weighted');
             $moment['performance'] = number_format($performance,0); 
         } 
@@ -181,7 +182,7 @@ class AchievementController extends Controller
             ['affiliated_account_service_id',$affiliated_account_service_id],
             ['student_id',$student_id], 
             ['sequence_id',$sequence_id],
-            ['moment_id',$moment_order],
+            ['moment_id',$moment_id],
             ['section',$section_id]
         ])->get();
 

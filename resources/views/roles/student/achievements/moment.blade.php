@@ -156,47 +156,47 @@
                     
                     <div class="row mt-3 ml-auto mr-auto w-md-90 ml-auto mr-auto">
                         @foreach ($moment['sections'] as $section)
-                        <div class="col-12 row p-3">
-                            <div class="col-12 row border-1000 border-bottom p-0">
-                                <div class="col-5 p-0 fs-0">
-                                    <span class="fs--1"><strong>{{$section['name']}} : </strong> {{$section['title']}}</span>
-                                </div>
-                                <div class="col-3 p-0 fs-0"> 
-                                    <label class=""><strong>Progreso</strong></label> 
-                                    @if($section['progress'] > 0 )
-                                        @if($section['progress']==100)
-                                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
-                                        @else
-                                        <i class="fa fa-circle  mr-2" style="color:#F9E538" aria-hidden="true"></i> <label class="">En proceso</label>
-                                        @endif
+                        <div class="col-12 row border-1000 border-bottom p-0">
+                            <div class="col-6 p-0 fs-0">
+                                <span class="fs--1"><strong>{{$section['name']}} : </strong> {{$section['title']}}</span>
+                            </div>
+                            <div class="col-3 p-0 fs-0"> 
+                                <label class=""><strong>Progreso</strong></label> 
+                                @if($section['progress'] > 0 )
+                                    @if($section['progress']==100)
+                                    <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
                                     @else
-                                        <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                                    <i class="fa fa-circle  mr-2" style="color:#F9E538" aria-hidden="true"></i> <label class="">En proceso</label>
                                     @endif
-                                </div> 
-                                <div class="col-3 p-0 fs-0">  
-                                    @if(isset($section['performance'])) 
-                                        <label class=""><strong>Desempeño</strong></label>
-                                        @if($section['performance'] >= 0 )                                                                 
-                                            @if($section['performance']>=90)
-                                            <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$section['performance']}} %
-                                            @endif
-                                            @if($section['performance']>=70 && $section['performance']<=89)
-                                            <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A) {{$section['performance']}} %
-                                            @endif
-                                            @if($section['performance']>=60 && $section['performance']<=69)
-                                            <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B) {{$section['performance']}} %
-                                            @endif
-                                            @if($section['performance']>=40 && $section['performance']<=59)
-                                            <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$section['performance']}} %
-                                            @endif
-                                            @if($section['performance']<40)
-                                            <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$section['performance']}} %
-                                            @endif
-                                        @else 
-                                            <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                                @else
+                                    <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                                @endif
+                            </div> 
+                            <div class="col-3 p-0 fs-0">  
+                                @if(isset($section['performance']))
+                                    <label class=""><strong>Desempeño</strong></label>
+                                    @if($section['performance'] >= 0 )                                                                 
+                                        @if($section['performance']>=90)
+                                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$section['performance']}} %
                                         @endif
+                                        @if($section['performance']>=70 && $section['performance']<=89)
+                                        <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A) {{$section['performance']}} %
+                                        @endif
+                                        @if($section['performance']>=60 && $section['performance']<=69)
+                                        <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B) {{$section['performance']}} %
+                                        @endif
+                                        @if($section['performance']>=40 && $section['performance']<=59)
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$section['performance']}} %
+                                        @endif
+                                        @if($section['performance']<40)
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$section['performance']}} %
+                                        @endif
+                                    @else 
+                                        <!--i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label-->
                                     @endif
-                                </div>
+                                @else 
+                                    <!--i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label-->
+                                @endif
                             </div>
                         </div>
                         @endforeach
