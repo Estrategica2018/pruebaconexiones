@@ -156,11 +156,11 @@
                     
                     
                     <div class="row mt-3 ml-auto mr-auto w-md-90 ml-auto mr-auto">
-                        @foreach ($moment['ratings'] as $rating)
+                        @foreach ($moment['ratings'] as $index=>$rating)
                         <div class="col-12 row p-3">
                             <div class="col-12 row border-1000 border-bottom p-0">
                                 <div class="col-5 p-0 fs-0">
-                                    <span class="fs--1"><strong>{{$rating['updated_at']}} : </strong> {{$rating['experience_id']}}</span>
+                                    
                                 </div>
                                 
                                 <div class="col-3 p-0 fs-0">  

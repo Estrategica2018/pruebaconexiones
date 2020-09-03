@@ -31,12 +31,7 @@
            </div>
         </div>
    </div>
-   
-   <div ng-show="showHelpModal"> 
-    @include('roles/tutor/help-platform')
-   </div>
 @endsection
 @section('js')
     <script src="{{asset('/../angular/controller/tutorInscriptionsCtrl.js')}}"></script>
-    <script src="{{asset('/../angular/controller/helpPlatformCtrl.js')}}"></script>
 @endsection
