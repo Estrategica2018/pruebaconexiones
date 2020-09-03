@@ -210,21 +210,47 @@ class StudentController extends Controller
         $sequence['performance'] = $result['sequence']['performance'];
         
         $moments = [];
- 
-        foreach($sequence->moments as $moment) {
+        
+        
+        $evidences = Rating::with('answers.question')
+        ->where([
+            ['sequence_id',$sequence->id],
+            ['student_id',$student->id],
+            ['affiliated_account_service_id',$affiliated_account_service_id],
+        ])->get();
+		
+		foreach($sequence->moments as $moment) {
+            $rating = [];
+            
+            foreach([1,2,3,4] as $section_id) {
+                
+                $section = json_decode($moment['section_'.$section_id], true);
+                foreach([1,2,3,4,5] as $part_id) {
+                    if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
+                        if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
+                            $elements = $section['part_'.$part_id]['elements'];
+                            foreach($elements as $element) {
+                                if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
+                                    $rating[$element['id']] = ['element'=>$element];
+                                    $rating[$element['id']]['evidences'] = $evidences->where('experience_id',$element['id'])->first();
+									if($rating[$element['id']]['evidences']) {
+										//dd($rating[$element['id']]['evidences']);
+									}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
             
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order);
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
-
-            $rating = Rating::with('answers')
-            ->where([
-                ['sequence_id',$sequence->id],
-                ['moment_id',$moment->order]
-            ])->get();
- 
-            $moment['ratings'] = $rating;    
+			
+            $moment['ratings'] = $rating;
             array_push($moments,$moment);
         }
         return view('roles.student.achievements.questions', ['student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
@@ -244,7 +270,7 @@ class StudentController extends Controller
         $this->validation_access_sequence_content($account_service_id);
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
-		$section_part_id = 1;
+        $section_part_id = 1;
         if ($sequence->section_1) {
             $sections = json_decode($sequence->section_1, true); 
             $section = $sections['part_' . $part_id];
@@ -277,7 +303,7 @@ class StudentController extends Controller
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $this->validation_access_sequence_content($account_service_id);
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
-		$section_part_id = 2;
+        $section_part_id = 2;
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         if ($sequence->section_2) {
             $sections = json_decode($sequence->section_2, true);
@@ -321,8 +347,8 @@ class StudentController extends Controller
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
 
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
-		$section_part_id = 3;
-		
+        $section_part_id = 3;
+        
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         if ($sequence->section_3) {
             $sections = json_decode($sequence->section_3, true);
@@ -367,8 +393,8 @@ class StudentController extends Controller
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
 
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
-		$section_part_id = 4;
-		
+        $section_part_id = 4;
+        
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         if ($sequence->section_4) {
             $sections = json_decode($sequence->section_4, true);

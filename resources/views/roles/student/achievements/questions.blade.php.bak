@@ -164,24 +164,24 @@
                                 </div>
                                 
                                 <div class="col-3 p-0 fs-0">  
-                                    @if(isset($rating['evidences'] ))
+                                    @if(isset($rating['weighted'] ))
                                         <label class=""><strong>Desempeño</strong></label>                                     
-                                        @if($rating['evidences']>=90)
-                                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$rating['evidences']}} %
+                                        @if($rating['weighted']>=90)
+                                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$rating['weighted']}} %
                                         @endif
-                                        @if($rating['evidences']>=70 && $rating['evidences']<=89)
-                                        <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A) {{$rating['evidences']}} %
+                                        @if($rating['weighted']>=70 && $rating['weighted']<=89)
+                                        <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A) {{$rating['weighted']}} %
                                         @endif
-                                        @if($rating['evidences']>=60 && $rating['evidences']<=69)
-                                        <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B) {{$rating['evidences']}} %
+                                        @if($rating['weighted']>=60 && $rating['weighted']<=69)
+                                        <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B) {{$rating['weighted']}} %
                                         @endif
-                                        @if($rating['evidences']>=40 && $rating['evidences']<=59)
-                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['evidences']}} %
+                                        @if($rating['weighted']>=40 && $rating['weighted']<=59)
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['weighted']}} %
                                         @endif
-                                        @if($rating['evidences']> 0  && $rating['evidences']<40)
-                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['evidences']}} %
+                                        @if($rating['weighted']> 0  && $rating['weighted']<40)
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['weighted']}} %
                                         @endif
-                                        @if($rating['evidences']==0)
+                                        @if($rating['weighted']==0)
                                         <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                                         @endif
                                     @endif

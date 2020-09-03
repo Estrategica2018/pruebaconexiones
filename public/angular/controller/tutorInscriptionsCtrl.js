@@ -2,6 +2,8 @@ MyApp.controller("tutorInscriptionsCtrl", ["$scope", "$http", function($scope, $
 
     $scope.initInscriptions = function() {
         
+        $scope.showHelpModal = true;
+        
         $scope.students = [];
         $scope.newStudent = {};
         $scope.loadingRegistry = false;

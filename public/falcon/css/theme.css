@@ -23072,19 +23072,50 @@ footer .navbar-light {
 .image-tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
+  background-color: #748194;
   color: #fff;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  
 
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  
   top: 35px;
+  font-size: 14px;
+  margin-left: -72px;
 }
 
 .image-tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.bg-blue {
+    background-color: #6F9AC5 !important
+}
+
+.border-left-white {
+	
+}
+
+.border-left-white:before {
+    border-left: 2px solid #ddd;
+    content: " ";
+    position: absolute;
+    height: 46px;
+    margin-top: -11px;
+    right: 0px;
+}
+
+.border-left-blue {
+	
+}
+
+.border-left-blue:before {
+    border-left: 2px solid #78A0C8;
+    content: " ";
+    position: absolute;
+    height: 46px;
+    margin-top: -11px;
+    right: 0px;
 }

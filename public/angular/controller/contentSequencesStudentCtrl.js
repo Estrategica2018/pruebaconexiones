@@ -21,11 +21,13 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
     }
 
     $scope.onClickEvidence = function(sequenceId,momentId,sectionId,experience_id,icon,subtitle,partId) {
- 
+
+        window.scrollTo( 0, 0 );
+
         $scope.evidenceOpened = {};
         $scope.evidenceOpened.icon = icon || 'images/icons/evidenciasAprendizajeIcono-01.png';
         $scope.evidenceOpened.subtitle = subtitle || 'Evidencias de aprendizaje';
-		
+        
         
         $scope.indexQuestion = 0;
         $scope.sequenceId = sequenceId;
@@ -43,7 +45,7 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         then(function (response) {
             $scope.evidenceOpened.questions = response.data.data || [];
             for(var i=0; i<$scope.evidenceOpened.questions.length;i++) {
-				$scope.evidenceOpened.type_answer = $scope.evidenceOpened.questions[i].type_answer;
+                $scope.evidenceOpened.type_answer = $scope.evidenceOpened.questions[i].type_answer;
                 $scope.evidenceOpened.questions[i].options = JSON.parse($scope.evidenceOpened.questions[i].options);
                 $scope.evidenceOpened.questions[i].optionSelected = false;
             }

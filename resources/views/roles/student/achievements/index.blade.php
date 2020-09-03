@@ -6,10 +6,10 @@
     <div class="col-12 mt-sm-2 pr-sm-0 ">
         <div class="oval-line"></div>
         <div class="row mt-3"> 
-            <div class="col-auto col-md-2 col-xl-1">
+            <div class="col-2 col-md-auto">
                 <img class="imagen-sequence" src="{{asset($accountService->sequence->url_image)}}" width="80px" height= "100px"/>
             </div>
-            <div class="col-6 col-md-5 col-xl-4 pr-xl-0 d-block"> 
+            <div class="col-6 col-md-4 col-xl-3 pr-xl-0 d-block"> 
                 <p class="font-weight-bold mb-1">{{ 'Guía de aprendizaje ' . ($index + 1) }}</p>
                 <p class="">{{$accountService->sequence->name}}</p>
             </div>

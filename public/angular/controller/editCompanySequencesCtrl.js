@@ -31,9 +31,9 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     $scope.heightOriginal = null;
     $scope.mbDelete = null;
     $scope.showEvidenceModal = false;
-	
-	$scope.showCopyButton = false;
-	$scope.copyCache = false;
+    
+    $scope.showCopyButton = false;
+    $scope.copyCache = false;
 
     var card = $('.background-sequence-card');
     $scope.container.h = Math.round(Number(card.css('height').replace('px', '')));
@@ -433,80 +433,80 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
     $scope.onClickElementWithDelete = function (parent, element, $index) {
         $scope.indexElement = $index;
-		
-		var title = (element.type === 'text-element') ? 'Texto' :
+        
+        var title = (element.type === 'text-element') ? 'Texto' :
             (element.type === 'text-area-element') ? 'Párrafo' :
                 (element.type === 'image-element') ? 'Imágen' :
                     (element.type === 'video-element') ? 'Video' :
                         (element.type === 'button-element') ? 'Botón' : ''
         $scope.onClickElement(parent, element, title, element.type);
     }
-	
-	$scope.copyElements = function(indexElement) {
-		
-		var elementsSelected = 
-		typeof indexElement !== 'undefined' ? [$scope.elementParentEdit.elements[indexElement]] :
-			$scope.elementParentEdit.elements.filter(function(value){
-				return value.selected;
-			});
-		
-		$scope.copyCache  = [];
-		
-		for(var i=0, copyElement= null; i< elementsSelected.length; i++) {
-			copyElement = elementsSelected[i];
-			$scope.copyCache.push(Object.assign({},copyElement));
-		}
-		
-		if(typeof indexElement !== 'undefined' ) { 
-			$scope.typeEdit='';
-			for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
-				elem = $scope.elementParentEdit.elements[i];
-				elem.selected = false;
-			}
-		}
-		
-		$scope.showCopyButton = false;
-	}
-	
-	$scope.pasteElements = function() {
-		
-		for(var i=0, copyElement= null; i< $scope.copyCache.length; i++) {
-			copyElement = $scope.copyCache[i];
-			copyElement.id = moment().format('YYYYMMDDHHmmssSSS');
-			for(var j=0, elm; j<$scope.elementParentEdit.elements.length; j++) {
-				elm = $scope.elementParentEdit.elements[j];
-				if(copyElement.ml === elm.ml && copyElement.mt == elm.mt	) {
-					copyElement.ml += 20;
-					copyElement.mt += 20;
- 				}
-			}
-			
-			$scope.elementParentEdit.elements.push(copyElement);
-		}
-		
-		for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
-			elem = $scope.elementParentEdit.elements[i];
-			elem.selected = false;
-		}
-		
-		$scope.showCopyButton = false;
-		
-		$scope.copyCache = [];
-		$timeout(function () {
+    
+    $scope.copyElements = function(indexElement) {
+        
+        var elementsSelected = 
+        typeof indexElement !== 'undefined' ? [$scope.elementParentEdit.elements[indexElement]] :
+            $scope.elementParentEdit.elements.filter(function(value){
+                return value.selected;
+            });
+        
+        $scope.copyCache  = [];
+        
+        for(var i=0, copyElement= null; i< elementsSelected.length; i++) {
+            copyElement = elementsSelected[i];
+            $scope.copyCache.push(Object.assign({},copyElement));
+        }
+        
+        if(typeof indexElement !== 'undefined' ) { 
+            $scope.typeEdit='';
+            for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
+                elem = $scope.elementParentEdit.elements[i];
+                elem.selected = false;
+            }
+        }
+        
+        $scope.showCopyButton = false;
+    }
+    
+    $scope.pasteElements = function() {
+        
+        for(var i=0, copyElement= null; i< $scope.copyCache.length; i++) {
+            copyElement = $scope.copyCache[i];
+            copyElement.id = moment().format('YYYYMMDDHHmmssSSS');
+            for(var j=0, elm; j<$scope.elementParentEdit.elements.length; j++) {
+                elm = $scope.elementParentEdit.elements[j];
+                if(copyElement.ml === elm.ml && copyElement.mt == elm.mt    ) {
+                    copyElement.ml += 20;
+                    copyElement.mt += 20;
+                 }
+            }
+            
+            $scope.elementParentEdit.elements.push(copyElement);
+        }
+        
+        for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
+            elem = $scope.elementParentEdit.elements[i];
+            elem.selected = false;
+        }
+        
+        $scope.showCopyButton = false;
+        
+        $scope.copyCache = [];
+        $timeout(function () {
             $scope.resizeSequenceCard();
         }, 10);
 
-	}
+    }
 
-	$scope.onChangeElementSelected = function() {
-		var elementsSelected = 
-			$scope.elementParentEdit.elements.filter(function(value){
-				return value.selected;
-			});
-			
-		$scope.showCopyButton = elementsSelected && elementsSelected.length > 0;	
-	}
-	
+    $scope.onChangeElementSelected = function() {
+        var elementsSelected = 
+            $scope.elementParentEdit.elements.filter(function(value){
+                return value.selected;
+            });
+            
+        $scope.showCopyButton = elementsSelected && elementsSelected.length > 0;    
+    }
+    
     $scope.changeFormatDate = function (elementParentEdit, elementEdit, format) {
         try {
             $scope.elementParentEdit[elementEdit] = moment($scope.elementParentEdit[elementEdit], "YYYY-MM-DD").format(format);
@@ -716,23 +716,23 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             }
             /*$http.post('/remove_question/', data)
             .then(function (response) {*/
-				
+                
                 sectionPart.elements = sectionPart.elements || [];
                 var element = null;
-				
+                
                 function refreshQuestion(question) {
-					for(var i=0;i<sectionPart.elements.length;i++) {
-						element = sectionPart.elements[i];
-						if(element.type === 'evidence-element') {
-							for(var j=0;j<element.questions.length;j++) {
-								if(element.questions[j].id === question.id || element.questions[j].title === question.title) {
-									element.questions[j].id = question.id;
-								}
-							}
+                    for(var i=0;i<sectionPart.elements.length;i++) {
+                        element = sectionPart.elements[i];
+                        if(element.type === 'evidence-element') {
+                            for(var j=0;j<element.questions.length;j++) {
+                                if(element.questions[j].id === question.id || element.questions[j].title === question.title) {
+                                    element.questions[j].id = question.id;
+                                }
+                            }
                         }
-					}
+                    }
                 }
-				 
+                 
                 for(var i=0;i<sectionPart.elements.length;i++) {
                     element = sectionPart.elements[i];
                     if(element.type === 'evidence-element') {

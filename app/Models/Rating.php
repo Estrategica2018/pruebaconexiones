@@ -23,7 +23,7 @@ class Rating extends Model
 
     public function answers()
     {
-        return $this->belongsTo(Answer::class, 'experience_id', 'experience_id');
+        return $this->hasMany(Answer::class, 'experience_id', 'experience_id');
 
     }
 }

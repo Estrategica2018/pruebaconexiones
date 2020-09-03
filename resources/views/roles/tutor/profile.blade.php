@@ -176,7 +176,7 @@
             <div class="col-3"><button class="btn btn-sm btn-primary" ng-click="registerUserForm(2)">Cambiar</button></div>
         </div>
         <div class="row pl-4 pb-4 pt-1 pr-4">
-            <div class="col-3">Telefono</div>
+            <div class="col-3">Teléfono</div>
             <div class="col-6" id="div_phone">@{{tutor.phone}}</div>
             <div class="col-3"><button class="btn btn-sm btn-primary" ng-click="registerUserForm(3)">Cambiar</button></div>
         </div>
