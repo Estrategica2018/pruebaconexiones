@@ -184,19 +184,19 @@
 						   <div class="col-3 p-0 fs-0">  
 								@if(isset($rating['evidences'] ))
 									@if($rating['evidences']->weighted>=90)
-									<i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$rating['evidences']->weighted}} %
+									<i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> Superior ( {{$rating['evidences']->weighted}}% )
 									@endif
 									@if($rating['evidences']->weighted>=70 && $rating['evidences']->weighted<=89)
-									<i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A) {{$rating['evidences']->weighted}} %
+									<i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i>  Alto ( 70% - 89% )
 									@endif
 									@if($rating['evidences']->weighted>=60 && $rating['evidences']->weighted<=69)
-									<i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B) {{$rating['evidences']->weighted}} %
+									<i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> Bajo ( 60% - 69% )
 									@endif
 									@if($rating['evidences']->weighted>=40 && $rating['evidences']->weighted<=59)
-									<i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['evidences']->weighted}} %
+									<i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> Bajo ( 40% - 59% )
 									@endif
 									@if($rating['evidences']->weighted<40)
-									<i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['evidences']->weighted}} %
+									<i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> Bajo ( < 40% )
 									@endif
 								@else 
 									<i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><span class="">Sin iniciar</span>
@@ -227,8 +227,15 @@
 						@foreach ($rating['evidences']['answers'] as $indexA=>$answer)
 						<div class="row mt-3 @if($indexA%2==0) bg-soft-dark @endif rounded-sm pl-3 pb-3 pt-3 fs--1">
 							<div class="col-3 p-0 border-left-blue">{{$answer['question']['title']}}</div>
-							<div class="col-3 pl-3 border-left-blue">Respuesta</div>
-							<div class="col-3 p-0 border-left-blue text-center">Desempeño</div>
+							<div class="col-3 pl-3 border-left-blue">{{$answer['answer']}}</div>
+							<div class="col-3 p-0 border-left-blue text-center">
+								@if($answer['feedback'] == 0)
+								<span style="color:red;font-size: 23px;font-weight: bolder;margin-bottom: 2px;margin-top: -16px;">x</span>
+								@endif
+								@if($answer['feedback'] == 100)
+									<span style="color:green;font-size: 23px;font-weight: bolder;margin-top: -16px;">✓</span>
+								@endif
+							</div>
 							<div class="col-3 pl-3">{{$answer['concept']}}</div>
 						</div>
 						@endforeach
