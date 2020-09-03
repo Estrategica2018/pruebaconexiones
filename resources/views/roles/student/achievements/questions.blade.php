@@ -129,8 +129,8 @@
                <div class="row p-3 rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif">
 
                     <div class="col-12 d-flex fs-0">
-                        <span class=""> Momento {{$moment['order']}} <small>{{$moment['name']}}</small></span>
-                        <div class="ml-4">
+                        <span class="col-4"> Momento {{$moment['order']}} <small>{{$moment['name']}}</small></span>
+                        <div class="col-4">
                             @if($moment['progress']==0)
                             <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                             @endif
@@ -142,8 +142,8 @@
                             @endif
                             </span>
                         </div>
-                        <div class="ml-auto">
-                            <span class="font-weight-bold fs-0" style="font-size: 14px;">
+                        <div class="ml-auto d-flex">
+                            <span class="font-weight-bold fs-0 mr-2" style="font-size: 14px;">
                                 Última conexión:
                                 @if($moment['lastAccessInMoment'] != null)
                                      {{$moment['lastAccessInMoment']}}
@@ -151,37 +151,54 @@
                                     Sin iniciar
                                 @endif
                             </span>
+                            <div class="cursor-pointer" ng-show="!mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+							<div class="cursor-pointer" ng-show="mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
+                                <i class="fa fa-angle-up" aria-hidden="true"></i>
+                            </div>
                         </div>
                     </div>
                     
                     
                     <div class="row mt-3 ml-auto mr-auto w-md-90 ml-auto mr-auto">
-                        @foreach ($moment['ratings'] as $index=>$rating)
+                        @foreach ($moment['ratings'] as $rating)
                         <div class="col-12 row p-3">
+							<div class="{{$rating['element']['class']}} evidence-head " 
+							   ng-style="{@if(isset($rating['element']['color'])) 'color': '{{$rating['element']['color']}}', @endif 
+							   @if(isset($rating['element']['background_color'])) 'background-color': '{{$rating['element']['background_color']}}', @endif}" 
+							   style="@if(isset($rating['element']['style'])) {{$rating['element']['style']}} @endif; width:100%;height:100%;">
+							   @if(isset($rating['element']['icon']))
+								<img src="{{asset($rating['element']['icon'])}}" width="auto" height="40px"/>
+							   @else 
+							   <img src="{{asset('images/icons/evidenciasAprendizajeIcono-01.png')}}" width="auto" height="40px"/>
+							   @endif
+							   <span class="ml-3">Preguntas de {{$rating['element']['subtitle']}}</span>
+							 </div>
+							 
+						
                             <div class="col-12 row border-1000 border-bottom p-0">
                                 <div class="col-5 p-0 fs-0">
-                                    
                                 </div>
-                                
                                 <div class="col-3 p-0 fs-0">  
                                     @if(isset($rating['evidences'] ))
                                         <label class=""><strong>Desempeño</strong></label>                                     
-                                        @if($rating['evidences']>=90)
-                                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$rating['evidences']}} %
+                                        @if($rating['evidences']->weighted>=90)
+                                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$rating['evidences']->weighted}} %
                                         @endif
-                                        @if($rating['evidences']>=70 && $rating['evidences']<=89)
-                                        <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A) {{$rating['evidences']}} %
+                                        @if($rating['evidences']->weighted>=70 && $rating['evidences']->weighted<=89)
+                                        <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A) {{$rating['evidences']->weighted}} %
                                         @endif
-                                        @if($rating['evidences']>=60 && $rating['evidences']<=69)
-                                        <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B) {{$rating['evidences']}} %
+                                        @if($rating['evidences']->weighted>=60 && $rating['evidences']->weighted<=69)
+                                        <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B) {{$rating['evidences']->weighted}} %
                                         @endif
-                                        @if($rating['evidences']>=40 && $rating['evidences']<=59)
-                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['evidences']}} %
+                                        @if($rating['evidences']->weighted>=40 && $rating['evidences']->weighted<=59)
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['evidences']->weighted}} %
                                         @endif
-                                        @if($rating['evidences']> 0  && $rating['evidences']<40)
-                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['evidences']}} %
+                                        @if($rating['evidences']->weighted> 0  && $rating['evidences']->weighted<40)
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$rating['evidences']->weighted}} %
                                         @endif
-                                        @if($rating['evidences']==0)
+                                        @if($rating['evidences']->weighted==0)
                                         <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                                         @endif
                                     @endif

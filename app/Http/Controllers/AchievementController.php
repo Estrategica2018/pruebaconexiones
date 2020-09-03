@@ -11,6 +11,7 @@ use App\Models\CompanySequence;
 use App\Models\SequenceMoment;
 use DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 /**
  * Class AchievementController
@@ -146,8 +147,9 @@ class AchievementController extends Controller
         else { 
             $moment['performance'] = -1;
         }
-
-        $moment['lastAccessInMoment'] = $advanceLine->max('updated_at');
+        $created_at = $advanceLine->max('updated_at');
+        $date =  Carbon::parse($created_at);
+        $moment['lastAccessInMoment'] = $date->format("Y-m-d H:i");
 
         return [ 'moment' => $moment];
     }
