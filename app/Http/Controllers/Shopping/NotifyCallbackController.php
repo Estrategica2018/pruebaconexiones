@@ -13,12 +13,37 @@ use App\Models\ShoppingCartProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use MercadoPago;
+use File;
 
 class NotifyCallbackController extends Controller
 {
     public function notificacion_callback(Request $request)
     {
+        ///LOG
+        $log_path = public_path(). '/payments-logs/';
+        File::isDirectory($log_path) or File::makeDirectory($log_path, 0777, true, true);
+        $file = 'payment-'.date('Ymd His').'.txt';
+        if(isset($request->isSimulador)) {
+            $file = 'simulator-'.$file;
+        }
         
+        
+        ///LOG
+        
+        $this->writeLog($log_path.'/'.$file,'--------------User-------------------');    
+        if(auth("afiliadoempresa") != null ) {
+            $this->writeLog($log_path.'/'.$file,auth("afiliadoempresa")->user());    
+        }
+        else {
+            $this->writeLog($log_path.'/'.$file,'User Anonimous');    
+        }
+        $this->writeLog($log_path.'/'.$file,'--------------User-------------------');    
+        $this->writeLog($log_path.'/'.$file,'--------------Request-------------------');    
+        $this->writeLog($log_path.'/'.$file,$request);
+        
+        ///LOG
+
+
         $price_callback = $request->session()->pull('shopping_cart_notify_price'); //remove cache to session
         if(!isset($request->isSimulador))
         MercadoPago\SDK::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
@@ -109,11 +134,22 @@ class NotifyCallbackController extends Controller
 
             // Flujo PSE
             //dd('Entra a flujo PSE');
+            
+            ///LOG
+            $this->writeLog($log_path.'/'.$file,'--------------PSE-------------------');
+            $this->writeLog($log_path.'/'.$file, request()->headers);
+            ///LOG
+            
 
             //obtiene el referer
             $referer = request()->headers->get('referer');
             //Se realiza proceso de split para obtener el paymentId
             parse_str(parse_url($referer, PHP_URL_QUERY), $queries);
+            
+            ///LOG
+            $this->writeLog($log_path.'/'.$file, $queries);
+            ///LOG
+            
             $payment_id = $queries['payment_id'];
             $request->request->add(['variable' => 'value']);
             $request->request->add(['collection_id' => $payment_id]);
@@ -130,6 +166,12 @@ class NotifyCallbackController extends Controller
 
             );
             $data = json_decode($res->getBody()->getContents());
+            
+            
+            ///LOG
+            $this->writeLog($log_path.'/'.$file, $data);
+            ///LOG
+            
             //Logica diferencial entre respuesta de pagos PSE
             if ($data->status === 'approved') {
                 // Pago exitoso
@@ -248,5 +290,14 @@ class NotifyCallbackController extends Controller
                 $affiliatedContentAccountService->save();
             }
         }
+    }
+
+    public function writeLog($filename, $string) {
+
+        if (!file_exists($filename)) {
+            touch($filename, strtotime('-1 days'));
+        }
+        //file_put_contents($filename, file_get_contents($filename) .'\n' . $string);        
+        file_put_contents($filename, $string . PHP_EOL, FILE_APPEND);
     }
 }
