@@ -11,7 +11,7 @@
 
 <p>A continuación, presentamos el reporte detallado de desempeño en las preguntas:</p>
 <hr>
-<p>
+<>
 @foreach($data as $questionAnswer)
 <strong>Pregunta: </strong>
 {{ Illuminate\Mail\Markdown::parse($questionAnswer['title']) }}
@@ -39,7 +39,7 @@
 <br>
 {{ Illuminate\Mail\Markdown::parse($questionAnswer['answer_question']) }}
 <br>
-<strong>Concepto clave a tener en cuenta: </strong>{{$questionAnswer['concept']}}</p>
+<p><strong>Concepto clave a tener en cuenta: </strong>{{$questionAnswer['concept']}}</p>
 <hr>
 @endforeach
 <br>
