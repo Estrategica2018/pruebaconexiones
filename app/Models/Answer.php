@@ -20,6 +20,8 @@ class Answer extends Model
         'date_evaluation',
         'concept',
     ];
+	
+	use \Awobaz\Compoships\Compoships;
 
 
     public function question()

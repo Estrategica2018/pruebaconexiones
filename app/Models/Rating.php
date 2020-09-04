@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Rating extends Model
 {
     //
@@ -20,10 +21,13 @@ class Rating extends Model
         'letter',
         'section'
     ];
+	
+	use \Awobaz\Compoships\Compoships;
 
     public function answers()
     {
-        return $this->hasMany(Answer::class, 'experience_id', 'experience_id');
+        //return $this->hasMany(Answer::class, 'experience_id', 'experience_id');
+		return $this->hasMany(Answer::class, ['experience_id', 'student_affiliated_company_id','affiliated_account_service_id'], ['experience_id', 'student_id', 'affiliated_account_service_id']);
 
     }
 }
