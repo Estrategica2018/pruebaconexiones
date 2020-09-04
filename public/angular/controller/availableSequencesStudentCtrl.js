@@ -18,6 +18,11 @@ MyApp.controller("availableSequencesStudentCtrl", ["$scope", "$http", function (
             $scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
             swal('Conexiones',$scope.errorMessage,'error');
         });
-    };    
+    };
+
+    $(".guidetype").click(function(){
+        $(".guidetype").removeClass("active");
+        $(this).addClass("active");
+     });
     
 }]);

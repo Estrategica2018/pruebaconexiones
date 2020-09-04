@@ -72,6 +72,13 @@ class StudentController extends Controller
         return view('roles.student.available_sequences');
     }
 
+    public function show_available_experiences(Request $request)
+    {
+        $request->user('afiliadoempresa')->authorizeRoles(['student']);
+        return view('roles.student.available_experiences');
+    }
+    
+
     /**
      * @param Request $request
      * @param $empresa
