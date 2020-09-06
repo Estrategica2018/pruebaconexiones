@@ -22198,14 +22198,14 @@ footer .navbar-light {
 
 .oval-line {
     margin: 10px 10px 10px 0px;
-    border: 1.5px solid #f08934;
+    border: 1.9px solid #f08934;
 }
 
 .oval-line:before {
     content: "•";
     color: #f08934;
     position: absolute;
-    top: -11px;
+    top: -10.3px;
     left: 10px;
     font-size: 29px;
 }
@@ -23094,7 +23094,7 @@ footer .navbar-light {
 }
 
 
-@media(min-width: 768px) and (max-width:804px) { 
+@media(min-width: 768px) and (max-width:854px) { 
   .mt-md-fix {
       margin-top: 15px!important; 
   }

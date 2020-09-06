@@ -1,4 +1,4 @@
-MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($scope, $http) {
+MyApp.controller("seqContentCtrl", ["$scope", "$http", function ($scope, $http) {
     
     $scope.errorMessage = null;
     

@@ -14,6 +14,12 @@ use App\Models\ShoppingCartProduct;
 use App\Traits\RelationRatingPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use App\Models\AdvanceLine;
+use App\Models\CompanySequence;
+use App\Models\Answer;
+use App\Models\Rating;
+use App\Models\Question;
 
 /**
  * Class TutorController
@@ -306,7 +312,239 @@ class TutorController extends Controller
             return response()->json(['valid' => true, 'imagenNueva' => $afiliadoempresa->url_image]);
             //return response()->json(['valid' => false,'message'=>'No fue posible cargar la imagen']);
         }
+    }
+    
+    /**
+     * @param Request $request
+     * @param $empresa
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_achievements(Request $request, $empresa)
+    {	$company = Companies::where('nick_name', $empresa)->first();
+		$students = $this->get_students_tutor($request);
+        foreach($students as $student) {
+            $user_id = $student->id;
+            $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
+                $query->where('init_date', '>=', date('Y-m-d'))
+                    ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
+            }])->where('affiliated_company_id', $user_id)->get();
+            
+            $updated_at = $advanceLine->min('updated_at');
+			if($updated_at) {
+				$date =  Carbon::parse($updated_at);
+				$student['first'] = $date->format("Y-m-d H:i");
+			}
+            
+            $updated_at = $advanceLine->max('updated_at');
+			if($updated_at) {
+				$date =  Carbon::parse($updated_at);
+				$student['last'] = $date->format("Y-m-d H:i");
+			}
+        }
+        return view('roles.tutor.achievements.index', ['students'=>$students]);
+    }
+	
+	/**
+     * @param Request $request
+     * @param $empresa
+     * @param int $affiliated_account_service_id
+     * @param int $sequence_id
+	 * @param int $student_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_achievements_student(Request $request, $empresa, $student_id )
+    {
+		
+        $company = Companies::where('nick_name', $empresa)->first();
+		$student = AfiliadoEmpresa::find($student_id);
+		$accountServices = $this->get_available_sequences($request, $empresa, $company->id);
+		
+		foreach($accountServices as $accountService) { 
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService->affiliated_account_service_id, $student->id, $accountService->sequence->id);
+            $accountService->sequence['progress'] = $result['sequence']['progress'];
+            $accountService->sequence['performance'] = $result['sequence']['performance'];
+        } 
+        
+        return view('roles.tutor.achievements.student', ['student'=>$student, 'accountServices'=>$accountServices]);
+    }
+	
+    /**
+     * @param Request $request
+     * @param $empresa
+     * @param int $affiliated_account_service_id
+     * @param int $sequence_id
+	 * @param int $student_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_achievements_sequence(Request $request, $empresa, $affiliated_account_service_id, $sequence_id, $student_id )
+    {
+		
+        $tutor = $request->user('afiliadoempresa');
+		$company = Companies::where('nick_name', $empresa)->first();
+        $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
+        $student = AfiliadoEmpresa::find($student_id);
+        $sequence = CompanySequence::with('moments')->find($sequence_id);
+ 
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
+        $sequence['progress'] = $result['sequence']['progress'];
+        $sequence['performance'] = $result['sequence']['performance'];
 
+        $moments = [];
+        foreach($sequence->moments as $moment) {
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student_id, $sequence->id, $moment->id, $moment->order);
+            $moment['progress'] = $result['moment']['progress'];
+            $moment['performance'] = $result['moment']['performance'];
+            array_push($moments,$moment);
+        }
+       
+        return view('roles.tutor.achievements.sequence', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id] );
+    }
+	
+    /**   
+     * @param Request $request
+     * @param $empresa
+     * @param int $affiliated_account_service_id
+     * @param int $sequence_id
+	 * @param int $student_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_achievements_moment(Request $request, $empresa, $affiliated_account_service_id, $sequence_id, $student_id)
+    {
+        
+        $tutor = $request->user('afiliadoempresa');
+		$company = Companies::where('nick_name', $empresa)->first();
+		$student = AfiliadoEmpresa::find($student_id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
+        
+        $sequence = CompanySequence::with('moments')->find($sequence_id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student_id, $sequence->id);
+        $sequence['progress'] = $result['sequence']['progress'];
+        $sequence['performance'] = $result['sequence']['performance'];
+        
+        $moments = [];
+        foreach($sequence->moments as $moment) {
+            
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student_id, $sequence->id, $moment->id, $moment->order);
+            $moment['progress'] = $result['moment']['progress'];
+            $moment['performance'] = $result['moment']['performance'];
+            $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            
+
+            $section_1 = json_decode($moment->section_1,true);
+            $section_2 = json_decode($moment->section_2,true);
+            $section_3 = json_decode($moment->section_3,true);
+            $section_4 = json_decode($moment->section_4,true);
+            $sections = [
+                'section_1' => ['name' => $section_1['section']['name'],'title' => isset($section_1['title']) ? $section_1['title'] : '', 'section' => $section_1],
+                'section_2' => ['name' => $section_2['section']['name'],'title' => isset($section_2['title']) ? $section_2['title'] : '', 'section' => $section_2],
+                'section_3' => ['name' => $section_3['section']['name'],'title' => isset($section_3['title']) ? $section_3['title'] : '', 'section' => $section_3],
+                'section_4' => ['name' => $section_4['section']['name'],'title' => isset($section_4['title']) ? $section_4['title'] : '', 'section' => $section_4],
+            ]; 
+            $section_id=1; 
+            foreach($sections as &$section) {
+                $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($affiliated_account_service_id, $student_id, $sequence->id, $moment->id, $moment->order, $section_id);
+                $section['progress'] = $result['section']['progress'];
+                $section['performance'] = $result['section']['performance'];
+                $section_id ++;
+            }
+
+            $moment['sections'] = $sections;
+            array_push($moments,$moment);
+        }
+        
+        return view('roles.tutor.achievements.moment', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
+    }
+	
+    /**   
+     * @param Request $request
+     * @param $empresa
+     * @param int $affiliated_account_service_id
+     * @param int $sequence_id
+	 * @param int $student_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_achievements_question(Request $request, $empresa, $affiliated_account_service_id, $sequence_id, $student_id )
+    {
+        $tutor = $request->user('afiliadoempresa');
+		$student = AfiliadoEmpresa::find($student_id);
+		$company = Companies::where('nick_name', $empresa)->first();
+        $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
+        $sequence = CompanySequence::with('moments')->find($sequence_id);
+
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
+        $sequence['progress'] = $result['sequence']['progress'];
+        $sequence['performance'] = $result['sequence']['performance'];
+        
+        $moments = [];
+        
+        
+        $evidences = Rating::with('answers.question')
+        ->where([
+            ['sequence_id',$sequence->id],
+            ['student_id',$student->id],
+            ['affiliated_account_service_id',$affiliated_account_service_id],
+        ])->get();
+        
+		
+		
+        foreach($sequence->moments as $moment) {
+            $rating = [];
+            
+            foreach([1,2,3,4] as $section_id) {
+                
+                $section = json_decode($moment['section_'.$section_id], true);
+                foreach([1,2,3,4,5] as $part_id) {
+                    if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
+                        if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
+                            $elements = $section['part_'.$part_id]['elements'];
+                            foreach($elements as $element) {
+                                if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
+                                    $rating[$element['id']] = ['element'=>$element];
+                                    $rating[$element['id']]['evidences'] = $evidences->where('experience_id',$element['id'])->first();
+                                    if($rating[$element['id']]['evidences']) {
+                                        //dd($rating[$element['id']]['evidences']);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order);
+            $moment['progress'] = $result['moment']['progress'];
+            $moment['performance'] = $result['moment']['performance'];
+            $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            
+            $moment['ratings'] = $rating;
+            array_push($moments,$moment);
+        }
+        return view('roles.tutor.achievements.questions', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
+    }
+
+    
+    /**
+     * @param Request $request
+     * @param $empresa
+     * @param $company_id
+     * @return AffiliatedContentAccountService[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function get_available_sequences(Request $request, $empresa, $company_id)
+    {
+
+        $tutor = $request->user('afiliadoempresa');
+        $tutor_id = $tutor->id;
+		$ids = AffiliatedAccountService::
+        with('rating_plan')
+		/*whereHas('company_affiliated', function ($query) use ($tutor_id) {
+            $query->where('id', $tutor_id);
+        })*/->where([
+		    ['company_affiliated_id', '=', $tutor_id],
+            ['init_date', '<=', Carbon::now()],
+            ['end_date', '>=', Carbon::now()]
+        ])->pluck('id');
+
+        return AffiliatedContentAccountService::with('sequence')->whereIn('affiliated_account_service_id', $ids)->groupBy('sequence_id')->get();
 
     }
 

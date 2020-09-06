@@ -142,6 +142,11 @@ Route::group(['middleware' =>['auth:afiliadoempresa', 'companyaffiliated', 'comp
     Route::post('{empresa}/update_password', 'TutorController@update_password')->name('update_password')->middleware('role:tutor');
     Route::post('{empresa}/edit_column_tutor', 'TutorController@edit_column_tutor')->name('edit_column_tutor')->middleware('role:tutor');
 
+    Route::get('{empresa}/tutor/logros', 'TutorController@show_achievements')->middleware('role:tutor')->name('tutor.achievements');
+    Route::get('{empresa}/tutor/logros_por_estudiante/{student_id}', 'TutorController@show_achievements_student')->middleware('role:tutor')->name('tutor.achievements.student');
+    Route::get('{empresa}/tutor/logros_por_secuencia/{affiliated_account_service_id}/{sequence_id}/{student_id}', 'TutorController@show_achievements_sequence')->middleware('role:tutor')->name('tutor.achievements.sequence');
+    Route::get('{empresa}/tutor/logros_por_momento/{affiliated_account_service_id}/{sequence_id}/{student_id}', 'TutorController@show_achievements_moment')->middleware('role:tutor')->name('tutor.achievements.moment');
+    Route::get('{empresa}/tutor/logros_por_pregunta/{affiliated_account_service_id}/{sequence_id}/{student_id}', 'TutorController@show_achievements_question')->middleware('role:tutor')->name('tutor.achievements.question');
 
 });
 //servicios carrito de compras

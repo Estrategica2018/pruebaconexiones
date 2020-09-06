@@ -12,32 +12,7 @@
   </a>
   @auth('afiliadoempresa')
   @if(auth('afiliadoempresa')->user())
-     @if(auth('afiliadoempresa')->user()->hasAnyRole('student'))
-     <ul class="nav collapse navbar-collapse row text-align-rigth row">
-        <li class="nav-item ml-lg-14 col-2-2 d-flex ml-xl-10 ml-lg-8">
-           <a href="{{ route('student', auth('afiliadoempresa')->user()->company_name()) }}" 
-              class="nav-link  mr-2 p-0 pb-1
-              @if(\Route::current()->getName() == 'avatar') selected @endif
-              @if(\Route::current()->getName() == 'student') selected @endif">
-              Mi perfíl
-           </a>
-              <i class="fas fa-user fs-1"></i>
-        </li>
-        <li class="nav-item ml-lg-14 col-auto d-flex">
-           <a href="{{ route('student.available_sequences',auth('afiliadoempresa')->user()->company_name()) }}" class="nav-link  mr-2 p-0 pb-1 
-           @if(Route::current()->getName() == 'student.available_sequences' ||  
-               Route::current()->getName() == 'student.sequences_section_1'  ) 
-               selected @endif">Guías de aprendizaje</a>
-           <i class="fas fa-book-open fs-1"></i>
-        </li>
-        <li class="nav-item ml-lg-14 col-auto d-flex"><a href="{{ route('home') }}" class="nav-link  mr-2 p-0 pb-1 @if(\Route::current()->getName() == 'home') selected @endif">Logros</a><i class="fas fa-star fs-1"></i></li>
-        <li class="nav-item ml-lg-14 col-auto d-flex"><a href="{{ route('home') }}" class="nav-link  mr-2 p-0 pb-1 @if(\Route::current()->getName() == 'home') selected @endif">Calendario</a><i class="fas fa-calendar-alt fs-1"></i></li>
-        <li class="nav-item ml-lg-14 col-2 d-flex"><a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link  mr-2 p-0 pb-1" >Salir</a><i class="fas fa-door-open fs-1"></i></li>
-        <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
-           @csrf
-        </form>
-     </ul>
-     @elseif(auth('afiliadoempresa')->user()->hasAnyRole('tutor'))
+     @if(auth('afiliadoempresa')->user()->hasAnyRole('tutor'))
      <ul class="nav collapse navbar-collapse row text-align-rigth row">
 		
 		

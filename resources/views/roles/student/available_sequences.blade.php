@@ -33,14 +33,14 @@
                                     <h5 class="ml-2">Guías de aprendizaje</h5>
                                </div>
                                <a ng-init="guide = true; experience = false"></a>
-                                <div ng-show="guide==true" class="d-none-result d-none position-relative card-body pr-1 row">
+                                <div ng-show="guide==true" class="d-none-result d-none position-relative card-body pr-1 row" style="min-height: 301px;">
                                    <a class="mt-3 col-lg-2 col-md-3 col-sm-4 col-6" ng-repeat="sequence in sequences"
                                         href="./secuencia/@{{sequence.sequence.id}}/situacion_generadora/@{{sequence.affiliated_account_service_id}}">
                                     <img width="132px" height="auto" src="{{asset('/')}}@{{sequence.sequence.url_image}}" />
                                     <button class="ml-2 mt-2 btn btn-outline-primary fs--2" class="col-6">Explorar</button>
                                    </a>
                                 </div>
-                                <div ng-show="experience==true" class="d-none-result d-none position-relative card-body pr-1 row">
+                                <div ng-show="experience==true" class="d-none-result d-none position-relative card-body pr-1 row" style="min-height: 301px;">
                                    <a class="mt-3 col-lg-2 col-md-3 col-sm-4 col-6" ng-repeat="sequence in sequences"
                                         href="./secuencia/@{{sequence.sequence.id}}/experiencia_cientifica/@{{sequence.affiliated_account_service_id}}">
                                     <img width="132px" height="auto" src="{{asset('/')}}@{{sequence.sequence.url_image}}" />

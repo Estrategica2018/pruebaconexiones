@@ -93,7 +93,7 @@
                                         </li-->
                                         <li class="nav-item nav-item-tutor">
                                             <a class="avatar avatar-3xl tutor-button-head @if(\Route::current()->getName() == 'tutor.reports' ) selected @endif"
-                                                href="{{route('tutor.inscriptions','conexiones')}}">
+                                                href="{{ route('tutor.achievements',auth('afiliadoempresa')->user()->company_name()) }}" >
                                                 <img src="{{asset('images/icons/portal-padres/reportes-01.png')}}" class="ml-auto mr-auto" width="auto" height="42px"  style="width: auto;height: 42px;"/>
                                                 <small class="fs--2 mb-1 text-700 font-weight-bold"> Reportes</small>
                                             </a>

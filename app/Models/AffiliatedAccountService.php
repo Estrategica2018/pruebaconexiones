@@ -23,7 +23,7 @@ class AffiliatedAccountService extends Model
 
     }
 
-    public function company_affilated()
+    public function company_affiliated()
     {
 
         return $this->belongsTo(AffiliatedCompanyRole::class, 'company_affiliated_id', 'affiliated_company_id');

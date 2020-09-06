@@ -595,7 +595,7 @@ class StudentController extends Controller
                 ]);
             })->first();
         $ids = AffiliatedAccountService::
-        with('rating_plan')->whereHas('company_affilated', function ($query) use ($tutor_id) {
+        with('rating_plan')->whereHas('company_affiliated', function ($query) use ($tutor_id) {
             $query->where('id', $tutor_id->tutor_company_id);
         })->where([
             ['init_date', '<=', Carbon::now()],
