@@ -320,8 +320,8 @@ class TutorController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show_achievements(Request $request, $empresa)
-    {	$company = Companies::where('nick_name', $empresa)->first();
-		$students = $this->get_students_tutor($request);
+    {    $company = Companies::where('nick_name', $empresa)->first();
+        $students = $this->get_students_tutor($request);
         foreach($students as $student) {
             $user_id = $student->id;
             $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
@@ -330,36 +330,36 @@ class TutorController extends Controller
             }])->where('affiliated_company_id', $user_id)->get();
             
             $updated_at = $advanceLine->min('updated_at');
-			if($updated_at) {
-				$date =  Carbon::parse($updated_at);
-				$student['first'] = $date->format("Y-m-d H:i");
-			}
+            if($updated_at) {
+                $date =  Carbon::parse($updated_at);
+                $student['first'] = $date->format("Y-m-d H:i");
+            }
             
             $updated_at = $advanceLine->max('updated_at');
-			if($updated_at) {
-				$date =  Carbon::parse($updated_at);
-				$student['last'] = $date->format("Y-m-d H:i");
-			}
+            if($updated_at) {
+                $date =  Carbon::parse($updated_at);
+                $student['last'] = $date->format("Y-m-d H:i");
+            }
         }
         return view('roles.tutor.achievements.index', ['students'=>$students]);
     }
-	
-	/**
+    
+    /**
      * @param Request $request
      * @param $empresa
      * @param int $affiliated_account_service_id
      * @param int $sequence_id
-	 * @param int $student_id
+     * @param int $student_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show_achievements_student(Request $request, $empresa, $student_id )
     {
-		
+        
         $company = Companies::where('nick_name', $empresa)->first();
-		$student = AfiliadoEmpresa::find($student_id);
-		$accountServices = $this->get_available_sequences($request, $empresa, $company->id);
-		
-		foreach($accountServices as $accountService) { 
+        $student = AfiliadoEmpresa::find($student_id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
+        
+        foreach($accountServices as $accountService) { 
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService->affiliated_account_service_id, $student->id, $accountService->sequence->id);
             $accountService->sequence['progress'] = $result['sequence']['progress'];
             $accountService->sequence['performance'] = $result['sequence']['performance'];
@@ -367,20 +367,20 @@ class TutorController extends Controller
         
         return view('roles.tutor.achievements.student', ['student'=>$student, 'accountServices'=>$accountServices]);
     }
-	
+    
     /**
      * @param Request $request
      * @param $empresa
      * @param int $affiliated_account_service_id
      * @param int $sequence_id
-	 * @param int $student_id
+     * @param int $student_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show_achievements_sequence(Request $request, $empresa, $affiliated_account_service_id, $sequence_id, $student_id )
     {
-		
+        
         $tutor = $request->user('afiliadoempresa');
-		$company = Companies::where('nick_name', $empresa)->first();
+        $company = Companies::where('nick_name', $empresa)->first();
         $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
         $student = AfiliadoEmpresa::find($student_id);
         $sequence = CompanySequence::with('moments')->find($sequence_id);
@@ -399,21 +399,21 @@ class TutorController extends Controller
        
         return view('roles.tutor.achievements.sequence', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id] );
     }
-	
+    
     /**   
      * @param Request $request
      * @param $empresa
      * @param int $affiliated_account_service_id
      * @param int $sequence_id
-	 * @param int $student_id
+     * @param int $student_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show_achievements_moment(Request $request, $empresa, $affiliated_account_service_id, $sequence_id, $student_id)
     {
         
         $tutor = $request->user('afiliadoempresa');
-		$company = Companies::where('nick_name', $empresa)->first();
-		$student = AfiliadoEmpresa::find($student_id);
+        $company = Companies::where('nick_name', $empresa)->first();
+        $student = AfiliadoEmpresa::find($student_id);
         $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
         
         $sequence = CompanySequence::with('moments')->find($sequence_id);
@@ -454,20 +454,20 @@ class TutorController extends Controller
         
         return view('roles.tutor.achievements.moment', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
     }
-	
+    
     /**   
      * @param Request $request
      * @param $empresa
      * @param int $affiliated_account_service_id
      * @param int $sequence_id
-	 * @param int $student_id
+     * @param int $student_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show_achievements_question(Request $request, $empresa, $affiliated_account_service_id, $sequence_id, $student_id )
     {
         $tutor = $request->user('afiliadoempresa');
-		$student = AfiliadoEmpresa::find($student_id);
-		$company = Companies::where('nick_name', $empresa)->first();
+        $student = AfiliadoEmpresa::find($student_id);
+        $company = Companies::where('nick_name', $empresa)->first();
         $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
         $sequence = CompanySequence::with('moments')->find($sequence_id);
 
@@ -485,8 +485,8 @@ class TutorController extends Controller
             ['affiliated_account_service_id',$affiliated_account_service_id],
         ])->get();
         
-		
-		
+        
+        
         foreach($sequence->moments as $moment) {
             $rating = [];
             
@@ -534,12 +534,12 @@ class TutorController extends Controller
 
         $tutor = $request->user('afiliadoempresa');
         $tutor_id = $tutor->id;
-		$ids = AffiliatedAccountService::
+        $ids = AffiliatedAccountService::
         with('rating_plan')
-		/*whereHas('company_affiliated', function ($query) use ($tutor_id) {
+        /*whereHas('company_affiliated', function ($query) use ($tutor_id) {
             $query->where('id', $tutor_id);
         })*/->where([
-		    ['company_affiliated_id', '=', $tutor_id],
+            ['company_affiliated_id', '=', $tutor_id],
             ['init_date', '<=', Carbon::now()],
             ['end_date', '>=', Carbon::now()]
         ])->pluck('id');

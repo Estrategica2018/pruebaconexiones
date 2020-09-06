@@ -23,9 +23,9 @@
                     </div>
                 </div>
                 <div class="col-md-9" id="content-section-sequences">
-					<div id="loading" class="modal-backdrop position-absolute w-100 background-white p-auto m-auto text-align card" style="padding: 25%; height: 0px;">
-						Cargando...
-					</div>
+                    <div id="loading" class="modal-backdrop position-absolute w-100 background-white p-auto m-auto text-align card" style="padding: 25%; height: 0px;">
+                        Cargando...
+                    </div>
                    <div class="d-result d-none">
                         @if (isset($success))
                         <div class="fade-message alert alert-success" role="alert" id="alert1" >

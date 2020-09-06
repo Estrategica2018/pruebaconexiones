@@ -2,18 +2,18 @@
 
 @section('content-tutor-index')
 <div class="row p-2 pl-md-4 pr-md-3" ng-controller="achievementsStudentCtrl" ng-init="initSequences(1)" >
-	@if($student)
-	<div class=" student-tutor-inscription btn btn-light row col-12">
-	  <div class="col-auto">
-		 <img class="rounded-circle" src="@if($student->url_image) {{asset($student->url_image)}} @else {{'/images/icons/default-avatar.png'}}@endif" width="100px"/>
-	  </div>
-	  <div class="col-auto col-md-4"><p>{{$student->name}} {{$student->last_name}}</p></div>
-	  <div class="col-12 col-md-auto mt-3 mt-md-0">
-		  <h6>Primer acceso @if($student->first) {{$student->first}} @else {{'sin iniciar'}} @endif</h6>
-		  <h6>@if($student->first) Última conexión @if($student->last) {{$student->last}} @else {{'sin iniciar'}} @endif @endif</h6>
-	  </div>
-	</div>
-	@endif
+    @if($student)
+    <div class=" student-tutor-inscription btn btn-light row col-12">
+      <div class="col-auto">
+         <img class="rounded-circle" src="@if($student->url_image) {{asset($student->url_image)}} @else {{'/images/icons/default-avatar.png'}}@endif" width="100px"/>
+      </div>
+      <div class="col-auto col-md-4"><p>{{$student->name}} {{$student->last_name}}</p></div>
+      <div class="col-12 col-md-auto mt-3 mt-md-0">
+          <h6>Primer acceso @if($student->first) {{$student->first}} @else {{'sin iniciar'}} @endif</h6>
+          <h6>@if($student->first) Última conexión @if($student->last) {{$student->last}} @else {{'sin iniciar'}} @endif @endif</h6>
+      </div>
+    </div>
+    @endif
 
     @if(isset($sequence))
         <div class="col-12 mt-sm-2 pr-sm-0 " >
@@ -79,7 +79,7 @@
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
                                 'affiliated_account_service_id'=>$affiliated_account_service_id,
                                 'sequence_id'=>$sequence['id'],
-								'student_id'=>$student->id
+                                'student_id'=>$student->id
                             ])}}">
                                 <img src="{{asset('images/icons/reporteSecuencias.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
                             </a>
@@ -89,7 +89,7 @@
                         ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
                             'affiliated_account_service_id'=>$affiliated_account_service_id,
                             'sequence_id'=>$sequence['id'],
-							'student_id'=>$student->id
+                            'student_id'=>$student->id
                         ])}}">
                             <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por guía de aprendizaje</label>
                         </a>
@@ -102,7 +102,7 @@
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
                                 'affiliated_account_service_id'=>$affiliated_account_service_id,
                                 'sequence_id'=>$sequence['id'],
-								'student_id'=>$student->id
+                                'student_id'=>$student->id
                             ])}}">
                                 <img src="{{asset('images/icons/reporteMomentos.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
                             </a>
@@ -112,7 +112,7 @@
                         ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
                             'affiliated_account_service_id'=>$affiliated_account_service_id,
                             'sequence_id'=>$sequence['id'],
-							'student_id'=>$student->id
+                            'student_id'=>$student->id
                         ])}}">
                             <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por momento</label>
                         </a>
@@ -124,7 +124,7 @@
                                 ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
                                 'affiliated_account_service_id'=>$affiliated_account_service_id,
                                 'sequence_id'=>$sequence['id'],
-								'student_id'=>$student->id
+                                'student_id'=>$student->id
                                 ])}}"> 
                                 <img src="{{asset('images/icons/reportePreguntas.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
                             </a>
@@ -134,7 +134,7 @@
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
                             'affiliated_account_service_id'=>$affiliated_account_service_id,
                             'sequence_id'=>$sequence['id'],
-							'student_id'=>$student->id
+                            'student_id'=>$student->id
                             ])}}"> 
                             <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por preguntas</label>
                         </a>
@@ -194,7 +194,7 @@
                             <div class="col-3 p-0 fs-0">  
                                 @if(isset($section['performance']))
                                     @if($section['performance'] >= 0 )                                                                 
-										<label class=""><strong>Desempeño</strong></label>
+                                        <label class=""><strong>Desempeño</strong></label>
                                         @if($section['performance']>=90)
                                         <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$section['performance']}} %
                                         @endif
