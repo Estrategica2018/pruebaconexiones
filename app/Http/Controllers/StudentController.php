@@ -606,6 +606,77 @@ class StudentController extends Controller
 
     }
 
+    public function get_avalible_experiences(Request $request,$company_id,$sequence_id){
+
+
+        $tutor_id = ConectionAffiliatedStudents::select('id', 'tutor_company_id')
+            ->whereHas('student_family', function ($query) use ($request, $company_id) {
+                $query->where([
+                    ['affiliated_company_id', $request->user('afiliadoempresa')->id],
+                    ['company_id', $company_id],
+                    ['rol_id', 1]
+                ]);
+            })->first();
+        $ids = AffiliatedAccountService::
+        with('rating_plan')->whereHas('company_affilated', function ($query) use ($tutor_id) {
+            $query->where('id', $tutor_id->tutor_company_id);
+        })->where([
+            ['init_date', '<=', Carbon::now()],
+            ['end_date', '>=', Carbon::now()]
+        ])->pluck('id');
+
+        $sequences = AffiliatedContentAccountService::with('sequence.moments')->where('sequence_id',$sequence_id)->where(function ($query)use($ids){
+           $query->whereIn('affiliated_account_service_id',$ids);
+        })->get();
+        $datas = [];
+        $companySequence = CompanySequence::find($sequences[0]->sequence_id);
+        $datas ['sequence_id'] = $companySequence->id;
+        $datas ['sequence_name'] = $companySequence->name;
+        $datas ['moments'] = [];
+        foreach($sequences as $sequence) {
+            $moment = SequenceMoment::find($sequence->moment_id);
+            $data['data'] = [];
+            $dataVideo = [];
+            $flag = false;
+            foreach([1,2,3,4] as $section_id) {
+                    $section = json_decode($moment['section_'.$section_id], true);
+                    foreach([1,2,3,4,5] as $part_id) {
+                        if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
+                            if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
+                                $elements = $section['part_'.$part_id]['elements'];
+                                $videos = [];
+                                foreach($elements as $element) {
+                                    if($element['type'] =='video-element') {
+                                        $flag = true;
+                                        $dataVideo['section_part'] = $section_id;
+                                        $dataVideo['section_name'] = $section['section']['name'];
+                                        $dataVideo['part_id'] = $part_id;
+                                        array_push( $videos,$element);
+                                        $dataVideo['video'] = $videos;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            if($flag){
+                $data['moment_id'] = $moment->id;
+                $data['moment_name'] = $moment->name;
+                $data['data'] = $dataVideo;
+                array_push($datas ['moments'],$data);
+            }
+
+        }
+
+
+        return response()->json([
+            'status' => 'successfull',
+            'message' => 'Datos consultados',
+            'data' => $datas
+        ]);
+
+    }
+
     /**
      * @param $account_service_id
      * @param bool $validation_moments

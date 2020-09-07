@@ -248,4 +248,6 @@ Route::group([],function (){
 });
 //servcios preguntas frecuentes
 Route::get('get_frequent_questions', 'FrequentQuestionController@get_frequent_questions')->name('get_frequent_questions');
+Route::get('get_avalible_experiences/{company_id}/{sequence_id}', 'StudentController@get_avalible_experiences')->name('get_avalible_experiences');
+
 
