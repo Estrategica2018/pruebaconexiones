@@ -145,23 +145,23 @@
                   <div class="col-6"
                      ng-show="dataJstree.type==='openSequenceSectionPart' || dataJstree.type==='openMomentSectionPart'">
                      <h6> <span>Elementos </span></h6>
-					 <div>
-						 <button class="btn btn-sm btn-outline-secondary mb-3" ng-show="showCopyButton" ng-click="copyElements()"> Copiar </button>
-						 <button ng-show="copyCache && copyCache.length > 0" class="btn btn-sm btn-outline-warning ml-2 mb-3" ng-click="pasteElements()">Pegar</button>
-					 </div>
-					 
+                     <div>
+                         <button class="btn btn-sm btn-outline-secondary mb-3" ng-show="showCopyButton" ng-click="copyElements()"> Copiar </button>
+                         <button ng-show="copyCache && copyCache.length > 0" class="btn btn-sm btn-outline-warning ml-2 mb-3" ng-click="pasteElements()">Pegar</button>
+                     </div>
+                     
                      <div ng-repeat="element in elementParentEdit.elements track by $index" class="cursor-pointer">
                         <div class="d-flex align-items-center fs--2">
                            <input type="checkbox" ng-model="element.selected" ng-change="onChangeElementSelected()" >
-						   <div ng-click="onClickElementWithDelete(elementParentEdit,element,$index)">
-							   <i ng-show="element.type === 'text-element'" class="fas fa-heading mr-3"></i>
-							   <i ng-show="element.type === 'text-area-element'" class="fas fa-align-left mr-3"></i>
-							   <i ng-show="element.type === 'image-element'" class="fas fa-image mr-3"></i>
-							   <i ng-show="element.type === 'video-element'" class="fab fa-youtube mr-3"></i>
-							   <i ng-show="element.type === 'button-element'" class="fab fa-flickr mr-3"></i>
-							   <i ng-show="element.type === 'evidence-element'" class="fas fa-edit mr-3"></i>
-							   @{{element.type}}
-						   </div>
+                           <div ng-click="onClickElementWithDelete(elementParentEdit,element,$index)">
+                               <i ng-show="element.type === 'text-element'" class="fas fa-heading mr-3"></i>
+                               <i ng-show="element.type === 'text-area-element'" class="fas fa-align-left mr-3"></i>
+                               <i ng-show="element.type === 'image-element'" class="fas fa-image mr-3"></i>
+                               <i ng-show="element.type === 'video-element'" class="fab fa-youtube mr-3"></i>
+                               <i ng-show="element.type === 'button-element'" class="fab fa-flickr mr-3"></i>
+                               <i ng-show="element.type === 'evidence-element'" class="fas fa-edit mr-3"></i>
+                               @{{element.type}}
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -192,7 +192,7 @@
                         ng-click="onSaveSequence()">Guardar</button>
                   </div>
                   <div ng-show="dataJstree.type==='openSequenceSectionPart'" class="ml-auto">
-					 <button ng-disabled="!applyChange" class="btn btn-sm btn-outline-primary ml-2"
+                     <button ng-disabled="!applyChange" class="btn btn-sm btn-outline-primary ml-2"
                         ng-click="onSaveSequenceSection()">Guardar</button>
                      <div class="d-flex position-absolute r-0 fs--2 ml-auto" style="top: 26px;right: 113px;">
                         <span>Ancho: @{{container.w}} Alto: <input type="number" style="width:50px;" class="ml-2"
@@ -203,9 +203,9 @@
                      <button ng-disabled="!applyChange" class="btn btn-sm btn-outline-primary"
                         ng-click="onSaveMoment()">Guardar</button>
                   </div>
-				  
+                  
                   <div ng-show="dataJstree.type==='openMomentSectionPart'" class="ml-auto">
-				  	 <button ng-disabled="!applyChange" class="btn btn-sm btn-outline-primary ml-2"
+                       <button ng-disabled="!applyChange" class="btn btn-sm btn-outline-primary ml-2"
                         ng-click="onSaveMomentSectionPart()">Guardar</button>
                      <div class="d-flex position-absolute r-0 fs--2 ml-auto" style="top: 26px;right: 113px;">
                         <span>Ancho: @{{container.w}} Alto: <input type="number" style="width:50px;" class="ml-2"
@@ -314,7 +314,7 @@
                            ng-show="element.type === 'text-element'" ml="@{{element.ml}}" mt="@{{element.mt}}"
                            w="@{{element.w}}" h="@{{element.h}}" fs="@{{element.fs}}"
                            class="@{{element.class}} font-text conx-element" conx-draggable="element"
-						   ng-class="{'selected':element.selected}"
+                           ng-class="{'selected':element.selected}"
                            ng-click="onClickElementWithDelete(sequenceSectionPart,element,$index)"
                            style="@{{element.style}}"
                            ng-style="{'color':element.color, 'background-color': element.background_color}">
@@ -327,7 +327,7 @@
                            ng-show="element.type==='text-area-element'" ml="@{{element.ml}}" mt="@{{element.mt}}"
                            w="@{{element.w}}" h="@{{element.h}}" fs="@{{element.fs}}"
                            class="@{{element.class}} font-text conx-element" conx-draggable="element"
-						   ng-class="{'selected':element.selected}"
+                           ng-class="{'selected':element.selected}"
                            ng-click="onClickElementWithDelete(sequenceSectionPart,element,$index)"
                            style="@{{element.style}}"
                            ng-style="{'color':element.color, 'background-color': element.background_color}">
@@ -341,7 +341,7 @@
                            <img id="@{{element.type==='image-element' ? element.id : ''}}"
                               src="@{{'/'+element.url_image || '/images/icons/NoImageAvailable.jpeg'}}"
                               class="@{{element.class}} conx-element" style="@{{element.style}}"
-							  ng-clas	s="{'selected':element.selected}"
+                              ng-clas    s="{'selected':element.selected}"
                               ng-click="onClickElementWithDelete(sequenceSectionPart,element,$index)"
                               conx-draggable="element" w="@{{element.w}}" h="@{{element.h}}" />
                            <div class="delete-element" ng-click="deleteElement(sequenceSectionPart,$index,true)">
@@ -371,7 +371,7 @@
                            class="conx-element">
                            <div id="@{{element.type==='button-element' ? element.id : ''}}"
                               class="@{{element.class}} conx-element position-absolute" style="@{{element.style}}"
-							  ng-class="{'selected':element.selected}"
+                              ng-class="{'selected':element.selected}"
                               ng-style="{'color':element.color, 'background-color': element.background_color}"
                               w="@{{element.w}}" h="@{{element.h}}" fs="@{{element.fs}}" conx-draggable="element"
                               ng-click="onClickElementWithDelete(sequenceSectionPart,element,$index)">
@@ -385,7 +385,7 @@
                            class="conx-element">
                            <div id="@{{element.type==='evidence-element' ? element.id : ''}}"
                               class="@{{element.class}} conx-element position-absolute evidence-head"
-							  ng-class="{'selected':element.selected}"
+                              ng-class="{'selected':element.selected}"
                               style="@{{element.style}}"
                               ng-style="{'color':element.color, 'background-color': element.background_color}"
                               w="@{{element.w}}" h="@{{element.h}}" fs="@{{element.fs}}" conx-draggable="element"
@@ -454,7 +454,7 @@
                            ng-show="element.type==='text-element'" ml="@{{element.ml}}" mt="@{{element.mt}}"
                            w="@{{element.w}}" h="@{{element.h}}" fs="@{{element.fs}}"
                            class="@{{element.class}} font-text conx-element"
-						   ng-class="{'selected':element.selected}"
+                           ng-class="{'selected':element.selected}"
                            ng-click="onClickElementWithDelete(momentSectionPart,element,$index)"
                            style="@{{element.style}}"
                            ng-style="{'color':element.color, 'background-color': element.background_color}">
@@ -467,7 +467,7 @@
                            ng-show="element.type==='text-area-element'" ml="@{{element.ml}}" mt="@{{element.mt}}"
                            w="@{{element.w}}" h="@{{element.h}}" fs="@{{element.fs}}"
                            class="@{{element.class}} font-text conx-element"
-						   ng-class="{'selected':element.selected}"
+                           ng-class="{'selected':element.selected}"
                            ng-click="onClickElementWithDelete(momentSectionPart,element,$index)"
                            style="@{{element.style}}"
                            ng-style="{'color':element.color, 'background-color': element.background_color}">
@@ -480,7 +480,7 @@
                            class="font-text conx-element"
                            ng-click="onClickElementWithDelete(momentSectionPart,element,$index)">
                            <img class="@{{element.class}} conx-element" style="@{{element.style}}"
-						      ng-class="{'selected':element.selected}"
+                              ng-class="{'selected':element.selected}"
                               id="@{{element.type==='image-element' ? element.id : ''}}"
                               src="@{{'/'+element.url_image || '/images/icons/NoImageAvailable.jpeg'}}"
                               w="@{{element.w}}" h="@{{element.h}}" />
@@ -511,7 +511,7 @@
                            <button id="@{{element.type==='button-element' ? element.id : ''}}"
                               style="@{{element.style}}"
                               class="@{{element.class}} font-text conx-element  position-absolute"
-							  ng-class="{'selected':element.selected}"
+                              ng-class="{'selected':element.selected}"
                               ng-style="{'color':element.color, 'background-color': element.background_color}"
                               mt="@{{element.mt}}" ml="@{{element.ml}}" w="@{{element.w}}" h="@{{element.h}}"
                               fs="@{{element.fs}}"
@@ -526,7 +526,7 @@
                            class="conx-element">
                            <div id="@{{element.type==='evidence-element' ? element.id : ''}}" style="@{{element.style}}"
                               class="@{{element.class}} conx-element position-absolute evidence-head"
-							  ng-class="{'selected':element.selected}"
+                              ng-class="{'selected':element.selected}"
                               ng-style="{'color':element.color, 'background-color': element.background_color}"
                               w="@{{element.w}}" h="@{{element.h}}" fs="@{{element.fs}}" conx-draggable="element"
                               ng-click="onClickElementWithDelete(momentSectionPart,element,$index)">
@@ -555,7 +555,8 @@
                <i class="far fa-times-circle"></i>
             </div>
             <div class="position-absolute" style="top:7px; right:51px;" ng-show="indexElement || indexElement >= 0">
-			   <button class="btn btn-sm btn-outline-secondary"
+               <button class="btn btn-sm btn-outline-secondary"
+                  ng-show=" ( dataJstree.type==='openSequenceSectionPart' || dataJstree.type==='openMomentSectionPart' )  && titleEdit != 'Fondo'"
                   ng-click="copyElements(indexElement)">
                   <i class="fa fa-trash" aria-hidden="true"></i> Copiar
                </button>
@@ -563,6 +564,7 @@
                   ng-click="deleteElement(sequenceSectionPart, indexElement,false)">
                   <i class="fa fa-trash" aria-hidden="true"></i> Eliminar
                </button>
+
                <button ng-show="dataJstree.type==='openMomentSectionPart'" class="btn btn-sm btn-outline-warning"
                   ng-click="deleteElement(momentSectionPart, indexElement,false)">
                   <i class="fa fa-trash" aria-hidden="true"></i> Eliminar

@@ -482,6 +482,9 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             }
             
             $scope.elementParentEdit.elements.push(copyElement);
+            if(copyElement.type === "evidence-element" ) {
+               $scope.applyChangeEvidence = true;
+            }
         }
         
         for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
