@@ -9,8 +9,8 @@
       </div>
       <div class="col-auto col-md-4"><p>{{$student->name}} {{$student->last_name}}</p></div>
       <div class="col-12 col-md-auto mt-3 mt-md-0">
-          <h6>Primer acceso @if($student->first) {{$student->first}} @else {{'sin iniciar'}} @endif</h6>
-          <h6>@if($student->first) Última conexión @if($student->last) {{$student->last}} @else {{'sin iniciar'}} @endif @endif</h6>
+          <h6>Primer acceso @if($student->firstMoment) {{$student->firstMoment}} @else {{'sin iniciar'}} @endif</h6>
+          <h6>@if($student->firstMoment) Última conexión @if($student->lastMoment) {{$student->lastMoment}} @else {{'sin iniciar'}} @endif @endif</h6>
       </div>
     </div>
     @endif
@@ -144,11 +144,13 @@
             <h5 class="mt-3  mb-3">Reporte por momentos</h5>
         
             @foreach ($moments as $key => $moment)
-               <div class="row p-3 rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif">
+
+               <div class="row p-3 rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif  @if(!$moment['isAvailable']) disabled-moment @endif">
 
                     <div class="col-12 d-flex fs-0">
                         <span class="col-4"> Momento {{$moment['order']}} <small>{{$moment['name']}}</small></span>
                         <div class="ml-4">
+                        @if($moment['isAvailable'])
                             @if($moment['progress']==0)
                             <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                             @endif
@@ -159,8 +161,12 @@
                             <i class="fa fa-circle mr-2 fs-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
                             @endif
                             </span>
+                        @else
+                            <label class="">No habilitada</label>
+                        @endif
                         </div>
                         <div class="ml-auto">
+                        @if($moment['isAvailable'])
                             <span class="font-weight-bold fs-0" style="font-size: 14px;">
                                 Última conexión:
                                 @if($moment['lastAccessInMoment'] != null)
@@ -169,13 +175,16 @@
                                     Sin iniciar
                                 @endif
                             </span>
+                        @endif
                         </div>
                     </div>
                     
                     
                     <div class="row mt-3 ml-auto mr-auto w-md-90 ml-auto mr-auto">
+                    @if($moment['isAvailable'])
                         @foreach ($moment['sections'] as $section)
-                        <div class="col-12 row border-1000 border-bottom p-0">
+                        @if($section['isAvailable'])
+                        <div class="col-12 row border-1000 border-bottom p-0 @if(!$section['isAvailable']) disabled-moment @endif">
                             <div class="col-6 p-0 fs-0">
                                 <span class="fs--1"><strong>{{$section['name']}} : </strong> {{$section['title']}}</span>
                             </div>
@@ -218,7 +227,9 @@
                                 @endif
                             </div>
                         </div>
+                        @endif
                         @endforeach
+                    @endif
                     </div>
                </div>
             @endforeach

@@ -9,8 +9,8 @@
       </div>
       <div class="col-auto col-md-4"><p>{{$student->name}} {{$student->last_name}}</p></div>
       <div class="col-12 col-md-auto mt-3 mt-md-0">
-          <h6>Primer acceso @if($student->first) {{$student->first}} @else {{'sin iniciar'}} @endif</h6>
-          <h6>@if($student->first) Última conexión @if($student->last) {{$student->last}} @else {{'sin iniciar'}} @endif @endif</h6>
+          <h6>Primer acceso @if($student->firstMoment) {{$student->firstMoment}} @else {{'sin iniciar'}} @endif</h6>
+          <h6>@if($student->firstMoment) Última conexión @if($student->lastMoment) {{$student->lastMoment}} @else {{'sin iniciar'}} @endif @endif</h6>
       </div>
     </div>
     @endif
@@ -149,9 +149,10 @@
             @foreach ($moments as $key => $moment)
                <div class="row p-3 rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif d-none-result d-none">
 
-                    <div class="col-12 d-flex fs-0 font-weight-bold">
+                    <div class="col-12 d-flex fs-0 font-weight-bold  @if(!$moment['isAvailable']) disabled-moment @endif">
                         <span class="col-4"> Momento {{$moment['order']}} <small>{{$moment['name']}}</small></span>
                         <div class="col-3 col-md-4">
+                        @if($moment['isAvailable'])
                             @if($moment['progress']==0)
                             <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><span class="fs--1">Sin iniciar</span>
                             @endif
@@ -162,25 +163,31 @@
                             <i class="fa fa-circle mr-2 fs-2" style="color:#6CB249" aria-hidden="true"></i> <span class="fs--1">Concluida</span>
                             @endif
                             </span>
+                        @else
+                            <label class="">No habilitada</label>
+                        @endif
                         </div>
                         <div class="ml-auto d-flex">
-                            <span class="font-weight-bold fs-0 mr-2" style="font-size: 14px;">
-                                Última conexión:
-                                @if($moment['lastAccessInMoment'] != null)
-                                     {{$moment['lastAccessInMoment']}}
-                                @else
-                                    Sin iniciar
-                                @endif
-                            </span>
-                            <div class="cursor-pointer" ng-show="!mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
-                                <i class="fa fa-angle-down fs-2" aria-hidden="true"></i>
-                            </div>
-                            <div class="cursor-pointer" ng-show="mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
-                                <i class="fa fa-angle-up fs-2" aria-hidden="true"></i>
-                            </div>
+                            @if($moment['isAvailable'])
+                                <span class="font-weight-bold fs-0 mr-2" style="font-size: 14px;">
+                                    Última conexión:
+                                    @if($moment['lastAccessInMoment'] != null)
+                                         {{$moment['lastAccessInMoment']}}
+                                    @else
+                                        Sin iniciar
+                                    @endif
+                                </span>
+                                <div class="cursor-pointer" ng-show="!mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
+                                    <i class="fa fa-angle-down fs-2" aria-hidden="true"></i>
+                                </div>
+                                <div class="cursor-pointer" ng-show="mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
+                                    <i class="fa fa-angle-up fs-2" aria-hidden="true"></i>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     
+                    @if($moment['isAvailable'])
                     @foreach ($moment['ratings'] as $rating)
                     <div class="row mt-3 col-12 pr-0" ng-show="mbShowMoment{{$moment['id']}}">
                         <div class="{{$rating['element']['class']}} evidence-head d-flex" 
@@ -265,6 +272,7 @@
                     @endif
                     
                     @endforeach
+                    @endif
                </div>
             @endforeach
     

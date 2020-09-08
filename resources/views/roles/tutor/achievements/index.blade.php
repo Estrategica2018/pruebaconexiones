@@ -9,8 +9,8 @@
           </div>
           <div class="col-10 col-md-4 mt-3"><p>{{$student->name}} {{$student->last_name}}</p></div>
           <div class="col-12 col-md-4 mt-3 mt-md-0">
-              <h6>Primer acceso @if($student->first) {{$student->first}} @else {{'sin iniciar'}} @endif</h6>
-              <h6>@if($student->first) Última conexión @if($student->last) {{$student->last}} @else {{'sin iniciar'}} @endif @endif</h6>
+              <h6>Primer acceso @if($student->firstMoment) {{$student->firstMoment}} @else {{'sin iniciar'}} @endif</h6>
+              <h6>@if($student->firstMoment) Última conexión @if($student->lastMoment) {{$student->lastMoment}} @else {{'sin iniciar'}} @endif @endif</h6>
           </div>
           <div class="ml-auto mt-0 mt-md-2">
               <a href="{{route('tutor.achievements.student',['empresa'=>auth('afiliadoempresa')->user()->company_name(),'student' => $student->id])}}">

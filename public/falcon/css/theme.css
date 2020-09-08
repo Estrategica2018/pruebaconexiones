@@ -18902,7 +18902,7 @@ button.bg-soft-light:focus {
 }
 
 .bg-soft-dark {
-    background-color: #e2e3e5 !important
+    background-color: #d8e1ea !important;
 }
 
 .bg-soft-dark-light {
@@ -23167,10 +23167,6 @@ footer .navbar-light {
    opacity: 0.5; 
 }
 
-.disabled-section:hover .tooltiptext {
-  visibility: visible;
-}
-
 .disabled-section .tooltiptext {
   visibility: hidden;
   width: 230px;
@@ -23187,7 +23183,17 @@ footer .navbar-light {
   font-size: 14px;
 }
 
+.disabled-section:hover .tooltiptext {
+  visibility: visible;
+  display: block;
+}
 
 .disabled-moment {
     opacity: 0.5;
+}
+
+
+.fa-angle-down,
+.fa-angle-up {
+    color: #3587C8;
 }

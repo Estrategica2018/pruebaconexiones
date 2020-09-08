@@ -50,7 +50,7 @@
                             @if($sequence['performance']>=0  && $sequence['performance']<40)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B) <span class="fs-0">{{$sequence['performance']}} %</span>
                             @endif
-							@if($sequence['performance']==-1)
+                            @if($sequence['performance']==-1)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                             @endif
                         @endif

@@ -323,22 +323,21 @@ class TutorController extends Controller
     {    $company = Companies::where('nick_name', $empresa)->first();
         $students = $this->get_students_tutor($request);
         foreach($students as $student) {
-            $user_id = $student->id;
             $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
                 $query->where('init_date', '>=', date('Y-m-d'))
                     ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
-            }])->where('affiliated_company_id', $user_id)->get();
+            }])->where('affiliated_company_id', $student->id)->get();
             
             $updated_at = $advanceLine->min('updated_at');
             if($updated_at) {
                 $date =  Carbon::parse($updated_at);
-                $student['first'] = $date->format("Y-m-d H:i");
+                $student['firstMoment'] = $date->format("Y-m-d H:i");
             }
             
             $updated_at = $advanceLine->max('updated_at');
             if($updated_at) {
                 $date =  Carbon::parse($updated_at);
-                $student['last'] = $date->format("Y-m-d H:i");
+                $student['lastMoment'] = $date->format("Y-m-d H:i");
             }
         }
         return view('roles.tutor.achievements.index', ['students'=>$students]);
@@ -358,6 +357,23 @@ class TutorController extends Controller
         $company = Companies::where('nick_name', $empresa)->first();
         $student = AfiliadoEmpresa::find($student_id);
         $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
+        
+        $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
+            $query->where('init_date', '>=', date('Y-m-d'))
+                ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
+        }])->where('affiliated_company_id', $student->id)->get();
+        
+        $updated_at = $advanceLine->min('updated_at');
+        if($updated_at) {
+            $date =  Carbon::parse($updated_at);
+            $student['firstMoment'] = $date->format("Y-m-d H:i");
+        }
+        
+        $updated_at = $advanceLine->max('updated_at');
+        if($updated_at) {
+            $date =  Carbon::parse($updated_at);
+            $student['lastMoment'] = $date->format("Y-m-d H:i");
+        }
         
         foreach($accountServices as $accountService) { 
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService->affiliated_account_service_id, $student->id, $accountService->sequence->id);
@@ -388,6 +404,27 @@ class TutorController extends Controller
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
+        
+        $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
+            $query->where('init_date', '>=', date('Y-m-d'))
+                ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
+        }])->where([
+        ['affiliated_account_service_id', $affiliated_account_service_id],
+        ['affiliated_company_id', $student->id]])
+        ->get();
+        
+        $updated_at = $advanceLine->min('updated_at');
+        if($updated_at) {
+            $date =  Carbon::parse($updated_at);
+            $student['firstMoment'] = $date->format("Y-m-d H:i");
+        }
+        
+        $updated_at = $advanceLine->max('updated_at');
+        if($updated_at) {
+            $date =  Carbon::parse($updated_at);
+            $student['lastMoment'] = $date->format("Y-m-d H:i");
+        }        
+        
 
         $moments = [];
         foreach($sequence->moments as $moment) {
@@ -421,7 +458,34 @@ class TutorController extends Controller
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student_id, $sequence->id);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
+
+
+        $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
+            $query->where('init_date', '>=', date('Y-m-d'))
+                ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
+        }])->where([
+        ['affiliated_account_service_id', $affiliated_account_service_id],
+        ['affiliated_company_id', $student->id]])
+        ->get();
         
+        $updated_at = $advanceLine->min('updated_at');
+        if($updated_at) {
+            $date =  Carbon::parse($updated_at);
+            $student['firstMoment'] = $date->format("Y-m-d H:i");
+        }
+        
+        $updated_at = $advanceLine->max('updated_at');
+        if($updated_at) {
+            $date =  Carbon::parse($updated_at);
+            $student['lastMoment'] = $date->format("Y-m-d H:i");
+        }        
+        
+        $affiliatedAccountService = 
+            AffiliatedAccountService::with('affiliated_content_account_service')->
+                where('init_date', '<=', Carbon::now())
+                ->where('end_date', '>=', Carbon::now())
+            ->find($affiliated_account_service_id);
+    
         $moments = [];
         foreach($sequence->moments as $moment) {
             
@@ -429,6 +493,7 @@ class TutorController extends Controller
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            $moment['isAvailable'] = $result['moment']['isAvailable'];
             
 
             $section_1 = json_decode($moment->section_1,true);
@@ -447,6 +512,19 @@ class TutorController extends Controller
                 $section['progress'] = $result['section']['progress'];
                 $section['performance'] = $result['section']['performance'];
                 $section_id ++;
+                
+                if ($affiliatedAccountService->rating_plan_type == 1 || $affiliatedAccountService->rating_plan_type == 2) { //Si es plan por secuencia o momento tiene acceso a todas las secciones
+                    $section['isAvailable'] = true;
+                }
+                else if ($affiliatedAccountService->rating_plan_type == 3  ) { //Si es plan por experiencia se valida la seccion experiencia cientifica
+                    if($section['section']['section']['type'] == 3) {
+                        $section['isAvailable'] = true;
+                    }
+                    else {
+                        $section['isAvailable'] = false;
+                    }
+                }
+                
             }
 
             $moment['sections'] = $sections;
@@ -475,6 +553,26 @@ class TutorController extends Controller
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
+        
+        $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
+            $query->where('init_date', '>=', date('Y-m-d'))
+                ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
+        }])->where([
+        ['affiliated_account_service_id', $affiliated_account_service_id],
+        ['affiliated_company_id', $student->id]])
+        ->get();
+        
+        $updated_at = $advanceLine->min('updated_at');
+        if($updated_at) {
+            $date =  Carbon::parse($updated_at);
+            $student['firstMoment'] = $date->format("Y-m-d H:i");
+        }
+        
+        $updated_at = $advanceLine->max('updated_at');
+        if($updated_at) {
+            $date =  Carbon::parse($updated_at);
+            $student['lastMoment'] = $date->format("Y-m-d H:i");
+        }
         
         $moments = [];
         
@@ -514,6 +612,7 @@ class TutorController extends Controller
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            $moment['isAvailable'] = $result['moment']['isAvailable'];
             
             $moment['ratings'] = $rating;
             array_push($moments,$moment);
