@@ -83,7 +83,12 @@ MyApp.controller("tutorHistoryCtrl", ["$scope", "$http", function($scope, $http)
                                          product && product.kiStruct ? product.kiStruct.name : 
                                          product && product.elementStruct ? product.elementStruct[0].name : '',
                               'status': row.payment_status.name,
-                              'price': row.rating_plan ? '$'+row.rating_plan.price+' COP' :
+                              'price': row.rating_plan ? 
+                              
+                              row.rating_plan.type_rating_plan_id === 1 ? '$'+row.rating_plan.price+' COP' : 
+                              '$'+row.shipping_price+' COP'
+
+                              :
                                        product && product.kiStruct ? '$'+product.kiStruct.price+' COP' :
                                        product && product.elementStruct ? '$'+product.elementStruct[0].price+' COP' : '' ,
                               'payment_transaction_id': row.approval_code

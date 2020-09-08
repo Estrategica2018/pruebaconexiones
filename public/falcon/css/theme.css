@@ -22197,17 +22197,18 @@ footer .navbar-light {
 } 
 
 .oval-line {
-    margin: 10px 10px 10px 0px;
-    border: 1.9px solid #f08934;
+    margin: 11px 10px 10px 0px;
+    border: 1.2px solid #f08934;
+    background-color: #f08934;
 }
 
 .oval-line:before {
     content: "•";
     color: #f08934;
     position: absolute;
-    top: -10.3px;
-    left: 10px;
-    font-size: 29px;
+    top: -18.3px;
+    left: 4px;
+    font-size: 39px;
 }
 
 .border-left-mini,

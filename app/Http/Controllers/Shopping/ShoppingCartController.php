@@ -274,7 +274,7 @@ class ShoppingCartController extends Controller
     public function get_preference_simulator()
     {
 
-        $preference_id = date("Y-m-d H:i:s");
+        $preference_id = date("YmdHis");
         $preference_init_point = '';
         $shopping_carts = ShoppingCart::with('shopping_cart_product')->where([
             ['company_affiliated_id',auth("afiliadoempresa")->user()->id],

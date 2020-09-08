@@ -21,8 +21,14 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
                     for (var i = 0; i < $scope.shopping_carts.length; i++) { 
                         var sc = $scope.shopping_carts[i];
                         if (sc.rating_plan_id != null) {
-                            $scope.totalPrices += sc.rating_plan.price;
-                            $scope.numberOfItems+=sc.rating_plan.count;
+                            if(sc.rating_plan.type_rating_plan_id === 1) {
+                                $scope.totalPrices += sc.rating_plan.price;
+                                $scope.numberOfItems+=sc.rating_plan.count;
+                            }
+                            else { 
+                                $scope.totalPrices += sc.shipping_price;
+                                $scope.numberOfItems++;
+                            }
                         }
                         else {
                             for (var l = 0; l <  sc.shopping_cart_product.length; l++) {
