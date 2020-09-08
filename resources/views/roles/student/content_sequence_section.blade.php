@@ -90,7 +90,7 @@
                                             'sequence_id'=>$sequence->id, 
                                             'moment_id'=>explode('|',$element['action'])[1],
                                             'order_moment_id'=>explode('|',$element['action'])[2],
-                                            'section'=>explode('|',$element['action'])[3],
+                                            'section_id'=>explode('|',$element['action'])[3],
                                             'account_service_id'=>$account_service_id,
                                           ])}}'"
                                           conx-action="{{$element['action']}}"

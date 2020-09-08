@@ -272,7 +272,12 @@ class StudentController extends Controller
     public function show_sequences_section_1(Request $request, $empresa, $sequence_id, $account_service_id, $part_id = 1)
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
-        $this->validation_access_sequence_content($account_service_id);
+        
+        $validate = $this->validation_access_sequence_content($account_service_id);
+        if($validate) {
+                return $validate;
+        }
+        
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         $section_part_id = 1;
@@ -306,7 +311,12 @@ class StudentController extends Controller
     public function show_sequences_section_2(Request $request, $empresa, $sequence_id, $account_service_id, $part_id = 1)
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
-        $this->validation_access_sequence_content($account_service_id);
+        
+        $validate = $this->validation_access_sequence_content($account_service_id);
+        if($validate) {
+                return $validate;
+        }
+        
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
         $section_part_id = 2;
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
@@ -354,6 +364,11 @@ class StudentController extends Controller
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
         $section_part_id = 3;
         
+        $validate = $this->validation_access_sequence_content($account_service_id);
+        if($validate) {
+                return $validate;
+        }
+        
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
         if ($sequence->section_3) {
             $sections = json_decode($sequence->section_3, true);
@@ -398,6 +413,12 @@ class StudentController extends Controller
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
 
         //$sequence = CompanySequence::where('id',$sequence_id)->get()->first();
+        
+        $validate = $this->validation_access_sequence_content($account_service_id);
+        if($validate) {
+                return $validate;
+        }
+        
         $section_part_id = 4;
         
         $sequence = $this->sequencesCache->where('id', $sequence_id)->first();
@@ -455,12 +476,26 @@ class StudentController extends Controller
     public function show_moment_section(Request $request, $empresa, $account_service_id, $sequence_id, $moment_id, $order_moment_id, $section_id, $part_id = 1)
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
-        $this->validation_access_sequence_content($account_service_id, true, $sequence_id, $moment_id);
         $moment = SequenceMoment::with('sequence')
             ->where('sequence_moments.sequence_company_id', $sequence_id)
             ->where('sequence_moments.id', $moment_id)
             ->first();
+        
+        if($moment == null) {
+            return $this->finishValidate('Página no encontrada');
+        }
+        $section = json_decode($moment['section_'.$section_id],true);
+        
+        if (!(isset($section) && $section != null && $section['section'] != null))  {
+                    return $this->finishValidate('Página no encontrada');
+        }
+        $section_type = $section['section']['type'];
 
+        $validate = $this->validation_access_sequence_content($account_service_id, true, $sequence_id, $moment_id, $section_type);
+        if($validate) {
+                return $validate;
+        }
+        
         $item = AdvanceLine::updateOrCreate(
             [
                 'affiliated_account_service_id' => $account_service_id,
@@ -690,7 +725,7 @@ class StudentController extends Controller
      * @param null $sequence_id
      * @param null $moment_id
      */
-    public function validation_access_sequence_content($account_service_id, $validation_moments = false, $sequence_id = null, $moment_id = null)
+    public function validation_access_sequence_content($account_service_id, $validation_moments = false, $sequence_id = null, $moment_id = null, $section_type = null)
     {
         $affiliatedAccountService = AffiliatedAccountService::with('affiliated_content_account_service')->
         where('init_date', '<=', Carbon::now())
@@ -703,30 +738,35 @@ class StudentController extends Controller
         ])->first();
         
         if ($affiliatedAccountService->exists() && $AfiliadoEmpresaRolesId->exists()) {
-            if ($affiliatedAccountService->rating_plan_type == 1 || $affiliatedAccountService->rating_plan_type == 2) {//tiene acceso a plan por secuencia o por momentos
+            //if ($affiliatedAccountService->rating_plan_type == 1 || $affiliatedAccountService->rating_plan_type == 2) {//tiene acceso a plan por secuencia o por momentos
                 $afiliadoEmpresa = AfiliadoEmpresa::whereHas('affiliated_company', function ($query) use ($AfiliadoEmpresaRolesId) {
                     $query->whereHas('conection_tutor', function ($query) use ($AfiliadoEmpresaRolesId) {
                         $query->where('student_company_id', $AfiliadoEmpresaRolesId->id);
                     })->where('rol_id', 3);
                 })->find($affiliatedAccountService->company_affiliated_id);
                 if (!$afiliadoEmpresa->exists())
-                    dd('no tiene permiso para ingresar, no esta vinculado para ver este contenido');
+                    return $this->finishValidate('no tiene permiso para ingresar, no esta vinculado para ver este contenido');
                 if ($validation_moments) {
                     if (isset($affiliatedAccountService->affiliated_content_account_service)) {
                         if (count($affiliatedAccountService->affiliated_content_account_service->where(
                                 'sequence_id', $sequence_id
                             )->where('moment_id', $moment_id)) == 0) {
-                            dd('no tiene permiso para acceder a este momento', $sequence_id, $moment_id);
+                            return $this->finishValidate('no tiene permiso para acceder a este momento', $sequence_id, $moment_id);
+                        }
+                        else {
+                            if($affiliatedAccountService->rating_plan_type == 3 && $section_type != 3) {
+                                return $this->finishValidate('no tiene permiso para acceder a este momento', $sequence_id, $moment_id);
+                            }
                         }
                     } else {
-                        dd('algo salio mal asignando los contenidos del plan, comunicarse con conexiones');
+                        return $this->finishValidate('algo salio mal asignando los contenidos del plan, comunicarse con conexiones');
                     }
                 }
-            } else {
-                dd('No tiene permiso para ingresar, no es plan por secuencias ni por momentos');
-            }
+            /*} else {
+                return $this->finishValidate('No tiene permiso para ingresar, no es plan por secuencias ni por momentos');
+            }*/
         } else {
-            dd('no tiene permiso para ingresar');
+            return $this->finishValidate('no tiene permiso para ingresar');
         }
 
     }
@@ -747,6 +787,16 @@ class StudentController extends Controller
             else if ($affiliatedAccountService->rating_plan_type == 2 || $affiliatedAccountService->rating_plan_type == 3) { //Si es plan por momento o experiencia se valida el momento 
                 return count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id)->where('moment_id', $moment_id)) > 0;
             }
+    }
+    
+    /**
+     * @param $account_service_id
+     * @param $sequence_id
+     * @param $moment_id
+     */
+    public function finishValidate($message)
+    {    
+            return view('page404',['message'=>$message]);    
     }
 
 }

@@ -23161,3 +23161,28 @@ footer .navbar-light {
     margin-top: auto;
     right: 0px;
 }
+
+.disabled-section {
+   cursor: not-allowed;
+   opacity: 0.5; 
+}
+
+.disabled-section:hover .tooltiptext {
+  visibility: visible;
+}
+
+.disabled-section .tooltiptext {
+  visibility: hidden;
+  width: 230px;
+  background-color: #748194;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 333px;
+  font-size: 14px;
+}

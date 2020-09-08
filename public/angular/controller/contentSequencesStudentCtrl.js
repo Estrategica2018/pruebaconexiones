@@ -124,6 +124,19 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
                 $('.d-result').removeClass('d-none');
                 resizeSequenceCard();
                 $('#loading').addClass('d-none');
+                
+                for (var i = 0; i < $scope.sequences.length; i++) {
+                    scp = $scope.sequences[i];
+                    if ((scp.type_product_id === 2 || scp.type_product_id === 1) && scp.sequence_id === sequenceId) {
+                        $('#section_type_question').removeClass('disabled-section');
+                        $('#section_type_question').attr('href',$('#section_type_question').attr('href2'));
+                        $('#section_type_science').removeClass('disabled-section');
+                        $('#section_type_science').attr('href',$('#section_type_question').attr('href2'));
+                        $('#section_type_connection').removeClass('disabled-section');
+                        $('#section_type_connection').attr('href',$('#section_type_question').attr('href2'));
+                    }
+                }
+                
                 $('.button-moment-validate[conx-action]').each(function (index, value) {
                     var momentId = Number($(value).attr('conx-action').split('|')[1]);
                     for (var i = 0; i < $scope.sequences.length; i++) {
@@ -139,7 +152,7 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
                                 $(this).attr('disabled', false);
                                 $(this).prop('disabled', false);
                             }
-                            else if (scp.type_product_id === 3) {
+                            else if (scp.type_product_id === 3 && scp.moment_id === momentId) {
                                 $(this).removeClass('cursor-not-allowed');
                                 $(this).attr('disabled', false);
                                 $(this).prop('disabled', false);
