@@ -89,7 +89,7 @@ class StudentController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
-        $accountServices = $this->get_available_sequences($request, $empresa, $company_id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company_id, true);
         $countSequences = count($accountServices);
         foreach($accountServices as $accountService) { 
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService->affiliated_account_service_id, $student->id, $accountService->sequence->id);
@@ -114,7 +114,7 @@ class StudentController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
-        $sequences = $this->get_available_sequences($request, $empresa, $company_id);
+        $sequences = $this->get_available_sequences($request, $empresa, $company_id, true);
         $countSequences = count($sequences);
         $firstAccess = $student->first_last_access()['first'];
         $lastAccess = $student->first_last_access()['last'];
@@ -148,7 +148,7 @@ class StudentController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
-        $sequences = $this->get_available_sequences($request, $empresa, $company_id);
+        $sequences = $this->get_available_sequences($request, $empresa, $company_id, true);
         $countSequences = count($sequences);
         $firstAccess = $student->first_last_access()['first'];
         $lastAccess = $student->first_last_access()['last'];
@@ -204,7 +204,7 @@ class StudentController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
-        $sequences = $this->get_available_sequences($request, $empresa, $company_id);
+        $sequences = $this->get_available_sequences($request, $empresa, $company_id, true);
         $countSequences = count($sequences);
         $firstAccess = $student->first_last_access()['first'];
         $lastAccess = $student->first_last_access()['last'];
