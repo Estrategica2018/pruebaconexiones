@@ -130,19 +130,16 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
                         scp = $scope.sequences[i];
                         if (scp.sequence_id === sequenceId) {
                             if (scp.type_product_id === 1) {
-                                console.log($(this));
                                 $(this).removeClass('cursor-not-allowed');
                                 $(this).attr('disabled', false);
                                 $(this).prop('disabled', false);
                             }
                             else if (scp.type_product_id === 2 && scp.moment_id === momentId) {
-                                console.log($(this));
                                 $(this).removeClass('cursor-not-allowed');
                                 $(this).attr('disabled', false);
                                 $(this).prop('disabled', false);
                             }
                             else if (scp.type_product_id === 3) {
-                                console.log($(this));
                                 $(this).removeClass('cursor-not-allowed');
                                 $(this).attr('disabled', false);
                                 $(this).prop('disabled', false);

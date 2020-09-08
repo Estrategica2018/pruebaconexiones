@@ -580,9 +580,10 @@ class StudentController extends Controller
      * @param Request $request
      * @param $empresa
      * @param $company_id
+     * @param $groupBy
      * @return AffiliatedContentAccountService[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function get_available_sequences(Request $request, $empresa, $company_id)
+    public function get_available_sequences(Request $request, $empresa, $company_id, $groupBy = false)
     {
 
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
@@ -594,6 +595,7 @@ class StudentController extends Controller
                     ['rol_id', 1]
                 ]);
             })->first();
+        
         $ids = AffiliatedAccountService::
         with('rating_plan')->whereHas('company_affiliated', function ($query) use ($tutor_id) {
             $query->where('id', $tutor_id->tutor_company_id);
@@ -601,8 +603,13 @@ class StudentController extends Controller
             ['init_date', '<=', Carbon::now()],
             ['end_date', '>=', Carbon::now()]
         ])->pluck('id');
-
-        return AffiliatedContentAccountService::with('sequence')->whereIn('affiliated_account_service_id', $ids)->groupBy('sequence_id')->get();
+        if($groupBy) { 
+          return AffiliatedContentAccountService::with('sequence')->whereIn('affiliated_account_service_id', $ids)->groupBy('sequence_id')->get();
+        }
+        else {
+            return AffiliatedContentAccountService::with('sequence')->whereIn('affiliated_account_service_id', $ids)->get();
+        }
+        
 
     }
 

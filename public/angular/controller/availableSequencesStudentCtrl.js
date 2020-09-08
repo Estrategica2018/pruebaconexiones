@@ -8,11 +8,10 @@ MyApp.controller("availableSequencesStudentCtrl", ["$scope", "$http", function (
         $scope.defaultCompanySequences = company_id;
         $('.d-none-result').removeClass('d-none');
         $http({
-            url:"/conexiones/get_available_sequences/"+$scope.defaultCompanySequences ,
+            url:"/conexiones/get_available_sequences/"+$scope.defaultCompanySequences+"/groupby",
             method: "GET",
         }).
         then(function (response) {
-            console.log(response.data);
             $scope.sequences = response.data;
         }).catch(function (e) {
             $scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
