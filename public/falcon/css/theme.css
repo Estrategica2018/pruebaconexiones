@@ -23186,3 +23186,8 @@ footer .navbar-light {
   top: 333px;
   font-size: 14px;
 }
+
+
+.disabled-moment {
+    opacity: 0.5;
+}

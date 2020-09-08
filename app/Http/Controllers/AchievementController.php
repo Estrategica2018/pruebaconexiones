@@ -12,6 +12,8 @@ use App\Models\SequenceMoment;
 use DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\AffiliatedAccountService;
+use App\Models\AffiliatedContentAccountService;
 
 /**
  * Class AchievementController
@@ -42,6 +44,21 @@ class AchievementController extends Controller
     {
         
         $sequence = [];
+        $momentCount = 0;
+        
+        $affiliatedAccountService = 
+            AffiliatedAccountService::with('affiliated_content_account_service')->
+                where('init_date', '<=', Carbon::now())
+                ->where('end_date', '>=', Carbon::now())
+            ->find($affiliated_account_service_id);
+    
+        if ($affiliatedAccountService->rating_plan_type == 1) { //Si es plan por secuencia tiene acceso a todos los momentos
+            $momentCount = 8;
+        }
+        else if ($affiliatedAccountService->rating_plan_type == 2 || $affiliatedAccountService->rating_plan_type == 3) { //Si es plan por momento o experiencia se valida el momento 
+            //return count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id)->where('moment_id', $moment_id)) > 0;
+            $momentCount = count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id));
+        }
        
         //calculando el progreso de la linea de avance de la secuencia  
         $advanceLine = AdvanceLine::where([
@@ -62,7 +79,7 @@ class AchievementController extends Controller
         ->groupBy('sequence_id','experience_id')
         ->get(); 
        
-        $sequence['progress'] = 100 * count($advanceLine) / (8*4);
+        $sequence['progress'] = 100 * count($advanceLine) / ($momentCount*4);
         if(count($ratings) >0 ) {
             $performance = $ratings->avg('weighted');
             $sequence['performance'] = number_format($performance,0);
@@ -122,7 +139,7 @@ class AchievementController extends Controller
         
         $moment = [];
         $moment['progress'] = (count($advanceLine) / 4) * 100;
-        if( count($questions) > 0 && $moment['progress'] == 100) { 
+        if( count($questions) > 0 && $moment['progress'] == 100) {
             if(count($ratings) == count($questions) ) {
                 $moment['progress'] = 100; 
             }
@@ -130,6 +147,13 @@ class AchievementController extends Controller
                 $moment['progress'] = 89;
             }
         }  
+        
+        $isAvailable = AffiliatedContentAccountService::with('sequence.moments')->where('sequence_id',$sequence_id)->where(function ($query)use($affiliated_account_service_id){
+           $query->where('affiliated_account_service_id',$affiliated_account_service_id);
+        })->where('moment_id', $moment_id)->get();
+        
+        
+        $moment['isAvailable'] = $isAvailable != null && count($isAvailable) > 0;
        
         
         //calculando los porcentajes de desempeño
@@ -141,7 +165,7 @@ class AchievementController extends Controller
         ])->get();
 
         if(count($ratings)>0) {
-			
+            
             $performance = $ratings->avg('weighted');
             $moment['performance'] = number_format($performance,0); 
         } 

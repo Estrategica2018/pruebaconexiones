@@ -143,47 +143,53 @@
             <h5 class="mt-3  mb-3">Reporte por guía de aprendizaje</h5>
             <div>
             @foreach ($moments as $key => $moment)
-               <div class="row p-3  rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif">
+               <div class="row p-3  rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif  @if(!$moment['isAvailable']) disabled-moment @endif">
                     <div class="col-12 col-md-6">
                         <span class="fs-14px"> Momento {{$moment['order']}}</span>
                         <h6> Momento {{$moment['name']}}</h6>
                     </div>
 
                     <span class="font-weight-normal col-5 col-md-3 mt-2 mt-md-0 fs-0">
-                       <label class=""><strong>Progreso</strong></label> 
-                        @if($moment['progress']==0)
-                        <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
-                        @endif
-                        @if($moment['progress']>0 && $moment['progress']<100)
-                        <i class="fa fa-circle  mr-2" style="color:#F9E538" aria-hidden="true"></i> <label class="">En proceso</label>
-                        @endif
-                        @if($moment['progress']==100)
-                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
+                       @if($moment['isAvailable'])
+                           <label class=""><strong>Progreso</strong></label>
+                            @if($moment['progress']==0)
+                            <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                            @endif
+                            @if($moment['progress']>0 && $moment['progress']<100)
+                            <i class="fa fa-circle  mr-2" style="color:#F9E538" aria-hidden="true"></i> <label class="">En proceso</label>
+                            @endif
+                            @if($moment['progress']==100)
+                            <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
+                            @endif
+                        @else
+                            <label class="">No habilitada</label>
                         @endif
                     </span>
                     
                     <span class="font-weight-bold col-5 col-md-3  mt-2 mt-md-0 fs-0">
-                        <label class=""><strong>Desempeño</strong></label>
-                        @if($moment['performance'] >= 0  )
-                            @if($moment['performance']>=90)
-                            <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) 
+                        @if($moment['isAvailable'])
+                            <label class=""><strong>Desempeño</strong></label>
+                            @if($moment['performance'] >= 0  )
+                                @if($moment['performance']>=90)
+                                <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) 
+                                @endif
+                                @if($moment['performance']>=70 && $moment['performance']<=89)
+                                <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A)
+                                @endif
+                                @if($moment['performance']>=60 && $moment['performance']<=69)
+                                <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B)
+                                @endif
+                                @if($moment['performance']>=40 && $moment['performance']<=59)
+                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B)
+                                @endif
+                                @if($moment['performance']<40)
+                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B)
+                                @endif
+                                {{$moment['performance']}} %
+                            @else
+                                <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                             @endif
-                            @if($moment['performance']>=70 && $moment['performance']<=89)
-                            <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A)
-                            @endif
-                            @if($moment['performance']>=60 && $moment['performance']<=69)
-                            <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B)
-                            @endif
-                            @if($moment['performance']>=40 && $moment['performance']<=59)
-                            <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B)
-                            @endif
-                            @if($moment['performance']<40)
-                            <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B)
-                            @endif
-                            {{$moment['performance']}} %
-                        @else
-                            <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
-                        @endif    
+                        @endif
                          
                     </span>
 

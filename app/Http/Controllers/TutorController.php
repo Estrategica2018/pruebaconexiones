@@ -394,6 +394,7 @@ class TutorController extends Controller
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student_id, $sequence->id, $moment->id, $moment->order);
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
+            $moment['isAvailable'] = $result['moment']['isAvailable'];
             array_push($moments,$moment);
         }
        
@@ -484,8 +485,6 @@ class TutorController extends Controller
             ['student_id',$student->id],
             ['affiliated_account_service_id',$affiliated_account_service_id],
         ])->get();
-        
-        
         
         foreach($sequence->moments as $moment) {
             $rating = [];
