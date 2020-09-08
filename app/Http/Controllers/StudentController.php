@@ -659,8 +659,9 @@ class StudentController extends Controller
                     ['rol_id', 1]
                 ]);
             })->first();
+
         $ids = AffiliatedAccountService::
-        with('rating_plan')->whereHas('company_affilated', function ($query) use ($tutor_id) {
+        with('rating_plan')->whereHas('company_affiliated', function ($query) use ($tutor_id) {
             $query->where('id', $tutor_id->tutor_company_id);
         })->where([
             ['init_date', '<=', Carbon::now()],
@@ -692,6 +693,9 @@ class StudentController extends Controller
                                         $flag = true;
                                         $dataVideo['section_part'] = $section_id;
                                         $dataVideo['section_name'] = $section['section']['name'];
+                                        $dataVideo['title'] = '';
+                                        if(isset($section['title']))
+                                            $dataVideo['title'] = $section['title'];
                                         $dataVideo['part_id'] = $part_id;
                                         array_push( $videos,$element);
                                         $dataVideo['video'] = $videos;
