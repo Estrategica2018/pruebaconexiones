@@ -124,13 +124,14 @@
             <h5 class="mt-3  mb-3">Reporte por guía de aprendizaje</h5>
             <div>
             @foreach ($moments as $key => $moment)
-               <div class="row p-3  rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif">
+               <div class="row p-3  rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif @if(!$moment['isAvailable']) disabled-moment @endif">
                     <div class="col-8 col-md-6">
                         <span class="fs--1"> Momento {{$moment['order']}}</span>
                         <h5 class="col-6 fs--1"> Momento {{$moment['name']}}</span>
                     </div>
 
                     <span class="font-weight-normal col-2-5 col-md-3 fs-0">
+                    @if($moment['isAvailable'])
                        <label class=""><strong>Progreso</strong></label> 
                         @if($moment['progress']==0)
                         <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
@@ -141,9 +142,13 @@
                         @if($moment['progress']==100)
                         <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
                         @endif
+                    @else
+                        <label class="">No habilitada</label>
+                    @endif
                     </span>
                     
                     <span class="font-weight-bold col-3 fs-0">
+                    @if($moment['isAvailable'])
                         <label class=""><strong>Desempeño</strong></label>
                         @if($moment['performance'] >= 0  )
                             @if($moment['performance']>=90)
@@ -165,7 +170,7 @@
                         @else
                             <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                         @endif    
-                         
+                    @endif    
                     </span>
 
                </div>

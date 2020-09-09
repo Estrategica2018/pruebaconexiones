@@ -125,11 +125,12 @@
             <h5 class="mt-3  mb-3">Reporte por momentos</h5>
         
             @foreach ($moments as $key => $moment)
-               <div class="row p-3 rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif">
+               <div class="row p-3 rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif @if(!$moment['isAvailable']) disabled-moment @endif">
 
                     <div class="col-12 d-flex fs-0">
                         <span class=""> Momento {{$moment['order']}} <small>{{$moment['name']}}</small></span>
                         <div class="ml-4">
+                        @if($moment['isAvailable'])
                             @if($moment['progress']==0)
                             <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                             @endif
@@ -139,9 +140,12 @@
                             @if($moment['progress']==100)
                             <i class="fa fa-circle mr-2 fs-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
                             @endif
-                            </span>
+                        @else
+                            <label class="">No habilitada</label>
+                        @endif    
                         </div>
                         <div class="ml-auto">
+                        @if($moment['isAvailable'])
                             <span class="font-weight-bold fs-0" style="font-size: 14px;">
                                 Última conexión:
                                 @if($moment['lastAccessInMoment'] != null)
@@ -150,12 +154,14 @@
                                     Sin iniciar
                                 @endif
                             </span>
+                        @endif    
                         </div>
                     </div>
                     
-                    
+                    @if($moment['isAvailable'])
                     <div class="row mt-3 ml-auto mr-auto w-md-90 ml-auto mr-auto">
                         @foreach ($moment['sections'] as $section)
+                        @if($section['isAvailable'])
                         <div class="col-12 row border-1000 border-bottom p-0">
                             <div class="col-6 p-0 fs-0">
                                 <span class="fs--1"><strong>{{$section['name']}} : </strong> {{$section['title']}}</span>
@@ -199,8 +205,10 @@
                                 @endif
                             </div>
                         </div>
+                        @endif
                         @endforeach
                     </div>
+                    @endif    
                </div>
             @endforeach
     

@@ -128,11 +128,12 @@
             </div>
         
             @foreach ($moments as $key => $moment)
-               <div class="row p-3 rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif d-none-result d-none">
+               <div class="row p-3 rounded @if($key%2==0) bg-soft-dark @else bg-soft-dark-light @endif d-none-result d-none @if(!$moment['isAvailable']) disabled-moment @endif">
 
                     <div class="col-12 d-flex fs-0 font-weight-bold">
                         <span class="col-4"> Momento {{$moment['order']}} <small>{{$moment['name']}}</small></span>
                         <div class="col-3 col-md-4">
+                        @if($moment['isAvailable'])
                             @if($moment['progress']==0)
                             <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><span class="fs--1">Sin iniciar</span>
                             @endif
@@ -142,9 +143,12 @@
                             @if($moment['progress']==100)
                             <i class="fa fa-circle mr-2 fs-2" style="color:#6CB249" aria-hidden="true"></i> <span class="fs--1">Concluida</span>
                             @endif
-                            </span>
+                        @else
+                            <label class="">No habilitada</label>
+                        @endif    
                         </div>
                         <div class="ml-auto d-flex">
+                        @if($moment['isAvailable'])
                             <span class="font-weight-bold fs-0 mr-2" style="font-size: 14px;">
                                 Última conexión:
                                 @if($moment['lastAccessInMoment'] != null)
@@ -159,10 +163,12 @@
                             <div class="cursor-pointer" ng-show="mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
                                 <i class="fa fa-angle-up fs-2" aria-hidden="true"></i>
                             </div>
+                        @endif
                         </div>
                     </div>
                     
                     @foreach ($moment['ratings'] as $rating)
+                    @if($moment['isAvailable'])
                     <div class="row mt-3 col-12 pr-0" ng-show="mbShowMoment{{$moment['id']}}">
                         <div class="{{$rating['element']['class']}} evidence-head d-flex" 
                            ng-style="{@if(isset($rating['element']['color'])) 'color': '{{$rating['element']['color']}}', @endif 
@@ -241,6 +247,7 @@
                     </div>
                     @endif
                     
+                    @endif
                     @endforeach
                </div>
             @endforeach

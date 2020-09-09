@@ -130,6 +130,7 @@ class StudentController extends Controller
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order);
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
+            $moment['isAvailable'] = $result['moment']['isAvailable'];
             array_push($moments,$moment);
         }
        
@@ -158,6 +159,13 @@ class StudentController extends Controller
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
         
+        $affiliatedAccountService = 
+            AffiliatedAccountService::with('affiliated_content_account_service')->
+                where('init_date', '<=', Carbon::now())
+                ->where('end_date', '>=', Carbon::now())
+            ->find($affiliated_account_service_id);
+
+        
         $moments = [];
         foreach($sequence->moments as $moment) {
             
@@ -165,6 +173,7 @@ class StudentController extends Controller
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            $moment['isAvailable'] = $result['moment']['isAvailable'];
             
 
             $section_1 = json_decode($moment->section_1,true);
@@ -183,6 +192,18 @@ class StudentController extends Controller
                 $section['progress'] = $result['section']['progress'];
                 $section['performance'] = $result['section']['performance'];
                 $section_id ++;
+                
+                if ($affiliatedAccountService->rating_plan_type == 1 || $affiliatedAccountService->rating_plan_type == 2) { //Si es plan por secuencia o momento tiene acceso a todas las secciones
+                    $section['isAvailable'] = true;
+                }
+                else if ($affiliatedAccountService->rating_plan_type == 3  ) { //Si es plan por experiencia se valida la seccion experiencia cientifica
+                    if($section['section']['section']['type'] == 3) {
+                        $section['isAvailable'] = true;
+                    }
+                    else {
+                        $section['isAvailable'] = false;
+                    }
+                }
             }
 
             $moment['sections'] = $sections;
@@ -254,6 +275,7 @@ class StudentController extends Controller
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            $moment['isAvailable'] = $result['moment']['isAvailable']; 
             
             $moment['ratings'] = $rating;
             array_push($moments,$moment);
@@ -659,9 +681,8 @@ class StudentController extends Controller
                     ['rol_id', 1]
                 ]);
             })->first();
-
         $ids = AffiliatedAccountService::
-        with('rating_plan')->whereHas('company_affiliated', function ($query) use ($tutor_id) {
+        with('rating_plan')->whereHas('company_affilated', function ($query) use ($tutor_id) {
             $query->where('id', $tutor_id->tutor_company_id);
         })->where([
             ['init_date', '<=', Carbon::now()],
