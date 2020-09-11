@@ -2403,7 +2403,8 @@ pre code {
 .table td {
     padding: .75rem;
     vertical-align: top;
-    border-top: 1px solid #e6edf5
+    border-top: 1px solid #e6edf5;
+    border-right: 1px solid #e6edf5;
 }
 
 .table thead th {

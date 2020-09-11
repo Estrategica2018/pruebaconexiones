@@ -45,6 +45,11 @@ Route::get('/implementos_de_laboratorio', function () {
 })->name('elementsKits.search');
 
 
+Route::get('/template', function () {
+    return view('roles.admin.template');
+})->name('template');
+
+
 Route::get('/kit_de_laboratorio/{kit_id}/{kit_name}', 'KitController@showKitDetail')->name('elementsKits.getKit');
 Route::get('/elemento_de_laboratorio/{element_id}/{element_name}', 'ElementController@showElementDetail')->name('elementsKits.getElement');
 
@@ -104,6 +109,9 @@ Route::group(['middleware' =>['auth:afiliadoempresa']],function (){
     Route::get('conexiones/admin/get_element/{id?}', 'ElementController@get_element')->middleware('role:admin')->name('get_element');
     Route::post('conexiones/admin/delete_elementorkit_in_moment', 'KitElementController@delete_elementorkit_in_moment')->middleware('role:admin')->name('delete_elementorkit_in_moment');
     Route::get('conexiones/admin/get_kit/{id?}', 'KitController@get_kit')->middleware('role:admin')->name('get_kit');
+    Route::get('conexiones/admin/usuarios/', 'AdminController@show_all_users')->middleware('role:admin')->name('admin.all_users');
+    Route::get('conexiones/admin/get_all_users/', 'AdminController@get_all_users')->middleware('role:admin')->name('admin.get_all_users');
+    Route::get('conexiones/admin/get_user_shoppingCart/{idShoppingCart}', 'AdminController@get_user_shoppingCart')->middleware('role:admin')->name('admin.get_user_shoppingCart');
 
 });
 
@@ -147,6 +155,8 @@ Route::group(['middleware' =>['auth:afiliadoempresa', 'companyaffiliated', 'comp
     Route::get('{empresa}/tutor/logros_por_secuencia/{affiliated_account_service_id}/{sequence_id}/{student_id}', 'TutorController@show_achievements_sequence')->middleware('role:tutor')->name('tutor.achievements.sequence');
     Route::get('{empresa}/tutor/logros_por_momento/{affiliated_account_service_id}/{sequence_id}/{student_id}', 'TutorController@show_achievements_moment')->middleware('role:tutor')->name('tutor.achievements.moment');
     Route::get('{empresa}/tutor/logros_por_pregunta/{affiliated_account_service_id}/{sequence_id}/{student_id}', 'TutorController@show_achievements_question')->middleware('role:tutor')->name('tutor.achievements.question');
+    
+    
 
 });
 //servicios carrito de compras

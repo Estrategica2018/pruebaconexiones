@@ -17,8 +17,6 @@ use Yajra\DataTables\DataTables;
  */
 class AdminController extends Controller
 {
-    //
-
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -27,8 +25,28 @@ class AdminController extends Controller
     {
 
         $request->user('afiliadoempresa')->authorizeRoles(['admin']);
-
-        return view('roles.admin.index');
+        $affiliated = AfiliadoEmpresa::whereHas('company_teacher_rol', function ($query) {
+            $query->where('rol_id','=','3');
+        })->with('company_teacher_rol')->count();
+        
+        $companyAffiliated = AfiliadoEmpresa::whereHas('affiliated_account_services', function ($query) {
+            $query->where([
+                ['init_date', '<=', Carbon::now()],
+                ['end_date', '>=', Carbon::now()]
+            ]);
+        })->count();
+        
+        $shoppingCarts = ShoppingCart::
+            with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
+            ->where('payment_status_id', '!=',1)
+            ->orderBy('updated_at', 'DESC')
+            ->skip(0)->take(10)
+            ->get();
+            
+        $totalShoppingCarts = ShoppingCart::where('payment_status_id', '!=',1)->count();
+            
+        $countShoppingCarts = count($shoppingCarts);
+        return view('roles.admin.index',['affiliated'=>$affiliated,'companyAffiliated'=>$companyAffiliated, 'shoppingCarts'=>$shoppingCarts, 'countShoppingCarts'=>$countShoppingCarts, 'totalShoppingCarts'=>$totalShoppingCarts]);
     }
 
     /**
@@ -56,6 +74,7 @@ class AdminController extends Controller
                 ['end_date', '>=', Carbon::now()]
             ]);
         })->get();
+        dd($companyAffiliateds);
 
         return DataTables::of($companyAffiliateds)
             ->addColumn('avatar', function ($companyAffiliated) {
@@ -182,5 +201,45 @@ class AdminController extends Controller
         return view('roles.admin.management_kit_elements');
 
     }
+    
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_all_users()
+    {
+        return view('roles.admin.listAllUsers');
+    }
+    
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_all_users(Request $request)
+    {
+        $affiliated = AfiliadoEmpresa::whereHas('company_teacher_rol', function ($query) {
+            $query->where('rol_id','=','3');
+        })
+        ->with(['company_teacher_rol','country','cityName','affiliated_account_services'=>function($query){
+            $query->where([
+                ['init_date', '<=', Carbon::now()],
+                ['end_date', '>=', Carbon::now()]
+            ]);            
+        }])->get();
+        
+        return response()->json(['users' => $affiliated], 200);
+    }
+    
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_user_shoppingCart(Request $request, $idShoppingCart)
+    {
+        $shoppingCart = ShoppingCart::
+            with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
+            ->where('payment_status_id', '!=',1)
+            ->find($idShoppingCart);
+        return response()->json($shoppingCart, 200);
+    }
+    
+
 
 }
