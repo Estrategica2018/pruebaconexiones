@@ -77,6 +77,7 @@
                                        <th tabindex="0" class="sortable border-0">Afiliado</th>
                                        <th tabindex="0" class="sortable border-0">Email</th>
                                        <th tabindex="0" class="sortable border-0">Producto</th>
+                                       <th tabindex="0" class="sortable border-0">Código aprobación</th>
                                        <th tabindex="0" class="sortable border-0">
                                           Estado
                                        </th>
@@ -107,8 +108,9 @@
                                             @if($shoppingCart->rating_plan->type_rating_plan_id == 3) ({{$shoppingCart->shopping_cart_product->count()}}) Experiencia(s) @endif
                                         </td>
                                        @else
-                                       <td class="border-0 align-middle">{{$shoppingCart}}</td>
+                                       <td class="border-0 align-middle">Producto ID: {{$shoppingCart->shopping_cart_product->product_id}}</td>
                                        @endif       
+                                       <td class="border-0 align-middle">{{$shoppingCart->approval_code}}</td>
                                        <td class="border-0 align-middle fs-0">
                                          @if($shoppingCart->payment_status->id == 2)
                                           <span class="rounded-capsule badge badge-soft-warning">
