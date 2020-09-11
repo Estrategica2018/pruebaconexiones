@@ -72,16 +72,14 @@
                               <table class="table table-dashboard table-sm fs--1 border-bottom border-200 mb-0 table-dashboard-th-nowrap">
                                  <thead>
                                     <tr class="bg-200 text-900 border-y border-200">
-                                       <th tabindex="0" class="sortable border-0">Id</th>
-                                       <th tabindex="0" class="sortable border-0">Fecha</th>
-                                       <th tabindex="0" class="sortable border-0">Afiliado</th>
-                                       <th tabindex="0" class="sortable border-0">Email</th>
-                                       <th tabindex="0" class="sortable border-0">Producto</th>
-                                       <th tabindex="0" class="sortable border-0">Código aprobación</th>
-                                       <th tabindex="0" class="sortable border-0">
-                                          Estado
-                                       </th>
-                                       <th tabindex="0" aria-label="Amount sortable" class="sortable border-0" style="text-align: right;">Precio</th>
+                                       <th tabindex="0" class="border-0">Id</th>
+                                       <th tabindex="0" class="border-0">Fecha</th>
+                                       <th tabindex="0" class="border-0">Afiliado</th>
+                                       <th tabindex="0" class="border-0">Email</th>
+                                       <th tabindex="0" class="border-0">Producto</th>
+                                       <th tabindex="0" class="border-0">Cód.Aprobación</th>
+                                       <th tabindex="0" class="border-0">Estado</th>
+                                       <th tabindex="0" class="border-0" style="text-align: right; min-width:100px;">Precio</th>
                                        <th tabindex="0" class="border-0"></th>
                                     </tr>
                                  </thead>
@@ -110,7 +108,7 @@
                                        @else
                                        <td class="border-0 align-middle">Producto ID: {{$shoppingCart->shopping_cart_product[0]->product_id}}</td>
                                        @endif       
-                                       <td class="border-0 align-middle">{{$shoppingCart->approval_code}}</td>
+                                       <td class="border-0 align-middle">@if($shoppingCart->approval_code) {{$shoppingCart->approval_code}} @else {{'--'}} @endif</td>
                                        <td class="border-0 align-middle fs-0">
                                          @if($shoppingCart->payment_status->id == 2)
                                           <span class="rounded-capsule badge badge-soft-warning">
