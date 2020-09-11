@@ -108,7 +108,7 @@
                                             @if($shoppingCart->rating_plan->type_rating_plan_id == 3) ({{$shoppingCart->shopping_cart_product->count()}}) Experiencia(s) @endif
                                         </td>
                                        @else
-                                       <td class="border-0 align-middle">Producto ID: {{$shoppingCart->shopping_cart_product->product_id}}</td>
+                                       <td class="border-0 align-middle">Producto ID: {{$shoppingCart->shopping_cart_product[0]->product_id}}</td>
                                        @endif       
                                        <td class="border-0 align-middle">{{$shoppingCart->approval_code}}</td>
                                        <td class="border-0 align-middle fs-0">
