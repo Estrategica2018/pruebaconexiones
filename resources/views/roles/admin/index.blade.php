@@ -72,14 +72,15 @@
                               <table class="table table-dashboard table-sm fs--1 border-bottom border-200 mb-0 table-dashboard-th-nowrap">
                                  <thead>
                                     <tr class="bg-200 text-900 border-y border-200">
-                                       <th tabindex="0" aria-label="Customer sortable" class="sortable border-0">Fecha<span class="order-4"></span></th>
-                                       <th tabindex="0" aria-label="Customer sortable" class="sortable border-0">Afiliado<span class="order-4"></span></th>
-                                       <th tabindex="0" aria-label="Email sortable" class="sortable border-0">Email<span class="order-4"></span></th>
-                                       <th tabindex="0" aria-label="Product sortable" class="sortable border-0">Producto<span class="order-4"></span></th>
-                                       <th tabindex="0" aria-label="Payment sortable" class="sortable border-0">
-                                          Estado<span class="order-4"></span>
+                                       <th tabindex="0" class="sortable border-0">Id</th>
+                                       <th tabindex="0" class="sortable border-0">Fecha</th>
+                                       <th tabindex="0" class="sortable border-0">Afiliado</th>
+                                       <th tabindex="0" class="sortable border-0">Email</th>
+                                       <th tabindex="0" class="sortable border-0">Producto</th>
+                                       <th tabindex="0" class="sortable border-0">
+                                          Estado
                                        </th>
-                                       <th tabindex="0" aria-label="Amount sortable" class="sortable border-0" style="text-align: right;">Precio<span class="order-4"></span></th>
+                                       <th tabindex="0" aria-label="Amount sortable" class="sortable border-0" style="text-align: right;">Precio</th>
                                        <th tabindex="0" class="border-0"></th>
                                     </tr>
                                  </thead>
@@ -87,6 +88,9 @@
                                  
                                  @foreach($shoppingCarts as $shoppingCart)
                                     <tr class="btn-reveal-trigger border-top border-200">
+                                       <td class="selection-cell" style="border: 0px; vertical-align: middle;">
+                                                {{ $shoppingCart->id }}
+                                       </td>
                                        <td class="selection-cell" style="border: 0px; vertical-align: middle;">
                                        {{ $shoppingCart->updated_at }}
                                        </td>
@@ -125,11 +129,8 @@
                                           @endif
                                        </td>
                                        <td class="border-0 align-middle" style="text-align: right;">
-                                       @if($shoppingCart->type_product_id == 1)
-                                         $  {{$shoppingCart->rating_plan->price}} USD
-                                       @endif
-                                       @if($shoppingCart->type_product_id == 2 || $shoppingCart->type_product_id == 3)
-                                         $ {{$shoppingCart->shipping_price}} USD
+                                       @if($shoppingCart->type_product_id == 1 || $shoppingCart->type_product_id == 2 || $shoppingCart->type_product_id == 3)
+                                         $  {{$shoppingCart->rating_plan_price}} USD
                                        @endif
                                        </td>
                                        <td class="border-0 align-middle">

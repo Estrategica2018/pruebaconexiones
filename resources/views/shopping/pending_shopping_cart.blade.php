@@ -43,11 +43,8 @@
                 <div class="fs--1 text-danger cursor-pointer" ng-click="onDelete(shopping_cart.id)">Remover</div>
               </div>
             </div>
-            <div class="p-3 col-4 text-align-right" ng-show="shopping_cart.type_product_id === 1">
-               $@{{shopping_cart.rating_plan.price}} USD
-            </div>
-            <div class="p-3 col-4 text-align-right" ng-show="shopping_cart.type_product_id === 2 || shopping_cart.type_product_id === 3">
-               $@{{shopping_cart.shipping_price}} USD
+            <div class="p-3 col-4 text-align-right" ng-show="shopping_cart.type_product_id === 1 || shopping_cart.type_product_id === 2 || shopping_cart.type_product_id === 3">
+               $@{{shopping_cart.rating_plan_price}} USD
             </div>
          </div>
          <div class="col-12 row">
