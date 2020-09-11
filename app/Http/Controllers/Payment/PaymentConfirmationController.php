@@ -31,7 +31,7 @@ class PaymentConfirmationController extends Controller
                 )
             );
 
-            dd($payment);
+            dd($shopping_cart,$payment);
 
             if ($payment->status == "approved") {
 
