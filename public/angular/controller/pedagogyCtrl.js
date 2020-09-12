@@ -1,16 +1,27 @@
 MyApp.controller("pedagogyCtrl", ["$scope", "$http", function ($scope, $http) {
-	$scope.loadFinished = false;
+    $scope.loadFinished = false;
 
     resizeSequenceCard();
     $scope.init = function (companyId, sequenceId, accountServiceId) {
         $('.d-none-result').removeClass('d-none');
-		$scope.loadFinished = true;
+        $scope.loadFinished = true;
+    }
+    
+    $scope.setIconPedagogy = function (iconPedagogy) {
+        $scope.icon_pedagogy = $scope.icon_pedagogy === iconPedagogy ? '' : iconPedagogy;
+        if($scope.icon_pedagogy === '') {
+            $('.background-sequence-card').attr('h','4524');
+        }
+        else {
+            $('.background-sequence-card').attr('h','5024');
+        }
+        resizeSequenceCard();        
     }
 
 }]);
 
 $(window).resize(function () {
-	resizeSequenceCard();
+    resizeSequenceCard();
 });
 
 

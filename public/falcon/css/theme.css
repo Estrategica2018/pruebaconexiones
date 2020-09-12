@@ -71,7 +71,7 @@ body {
     line-height: 1.5;
     color: #5e6e82;
     text-align: left;
-    background-color: #edf2f9
+    background-color: #fff
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -16169,7 +16169,8 @@ label {
 
     .navbar-vertical.navbar-expand-xl+.content .navbar-top {
         position: -webkit-sticky;
-        position: sticky
+        position: sticky;
+        width: 102%;
     }
 
     .navbar-vertical.navbar-expand-xl+.content .navbar-top .navbar-brand,
@@ -21714,7 +21715,7 @@ footer .navbar-light {
 
 .sticky-top-ie {
     position: fixed;        
-/*     width: 100vw; */
+    width: 100%;
     z-index: 99;
     top: 0px;
 }

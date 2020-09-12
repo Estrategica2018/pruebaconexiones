@@ -10,7 +10,7 @@
      </div>
 
      <div class="ml-1 nav collapse navbar-collapse row text-align fs-14px font-weight-semi-bold">
-        <div class="nav-item ml-auto mr-1 p-0 nav-small-fs--1"><a href="{{ route('home') }}" class="nav-link p-0 pb-1 @if(\Route::current()->getName() == 'home' || Route::current()->getName() == '') selected @endif">Inicio</a></div>
+        <div class="nav-item ml-auto mr-auto p-0 nav-small-fs--1"><a href="{{ route('home') }}" class="nav-link p-0 pb-1 @if(\Route::current()->getName() == 'home' || Route::current()->getName() == '') selected @endif">Inicio</a></div>
         <div class="nav-item ml-auto mr-auto p-0 max-with-105px "><a href="{{ route('aboutus') }}" class="nav-link p-0 pb-1 @if(\Route::current()->getName() == 'aboutus') selected @endif">Acerca de conexiones</a></div>
         <div class="nav-item ml-auto mr-auto p-0 max-with-105px " ><a href="{{ route('sequences.search') }}" class="nav-link p-0 pb-1 
         @if(\Route::current()->getName() == 'sequences.search') selected @endif
