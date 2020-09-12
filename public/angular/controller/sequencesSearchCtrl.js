@@ -19,6 +19,8 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
         $('[icon-pedagogy]').each(function(index){
             var left = $(this).position().left - ($(this).width()/2);
             var top = $(this).position().top + 130;
+            if($(this).attr('id') ==="pedagogy7" ) left = left - left * 10/100;
+            if($(this).attr('id') ==="pedagogy8" ) left = left - left * 20/100;
             $(this).next().next().css('left',left);
             $(this).next().next().css('top',top);
         });
@@ -46,6 +48,8 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
         $('[icon-pedagogy]').each(function(index){
             var left = $(this).position().left - ($(this).width()/2);
             var top = $(this).position().top + 130 ;
+            if($(this).attr('id') ==="pedagogy7" ) left = left - left * 10/100;
+            if($(this).attr('id') ==="pedagogy8" ) left = left - left * 20/100;
             $(this).next().next().css('left',left);
             $(this).next().next().css('top',top);
         });
@@ -262,7 +266,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
          function marginLeftText() {
              
               var maxHeight = 0;
-			  var maxHeightTitle = 0;
+              var maxHeightTitle = 0;
               var minHeight = 999;
               
               $('.ratinPlanCard ul').each(function(){
@@ -277,8 +281,8 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                     minHeight = height;
                 }
               });
-			  
-			  $('.card-title').each(function(){
+              
+              $('.card-title').each(function(){
                 var height =  Number($(this).css('height').replace('px',''));
                 if(maxHeightTitle < height) {
                     maxHeightTitle = height;
@@ -289,11 +293,11 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 $(this).css('height',maxHeight);
               });
               
-			  $('.card-title').each(function(){
+              $('.card-title').each(function(){
                 $(this).css('height',maxHeightTitle);
               });
-			  
-			  $('.card-footer').each(function(){
+              
+              $('.card-footer').each(function(){
                 $(this).css('height',minHeight);
               });
                  

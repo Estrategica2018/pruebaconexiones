@@ -16,7 +16,7 @@
          <div class=""  mt="80" ml="660" w="762"  fs="18">
             <div class="font-weight-bold"><strong>Aprendizaje por indagación y desarrollo de pensamiento científicos</strong></div>
             <div class="text-justify mt-3" >
-               <p>La propuesta educativa de Conexiones se sustenta en un enfoque pedagógico de aprendizaje por indagación,
+               <p>La propuesta educativa de <strong>Conexiones</strong> se sustenta en un enfoque pedagógico de aprendizaje por indagación,
                   que tiene la intención de promover en los niños, las niñas y los jóvenes, el desarrollo de pensamiento
                   científico. En coherencia con esto, las guías de aprendizaje se han diseñado bajo las siguientes
                   características comunes:
@@ -32,10 +32,9 @@
                   <li class="mt-2">Formulan preguntas abiertas, sencillas y contextualizadas, con la intención de motivar
                      el interés de aprender y la curiosidad por indagar.
                   </li>
-                  <li class="mt-2">Propone experiencias de aprendizaje en las que los y las estudiantes asuman un rol
-                     activo, protagónico y propositivo. 
+                  <li class="mt-2">Propone experiencias de aprendizaje que invitan al estudiante a desempeñar un rol activo, protagónico y creativo.
                   </li>
-                  <li class="mt-2">Involucran al estudiante en el diseño y desarrollo de las prácticas experimentales.
+                  <li class="mt-2">involucran a las y los estudiantes en el diseño y desarrollo de prácticas experimentales.
                   </li>
                   <li class="mt-2">Proponen la vivencia del trabajo colaborativo y la valoración de este.</li>
                   <li class="mt-2">Promueven la integración de diferentes áreas de conocimiento para la comprensión amplia
@@ -55,7 +54,7 @@
          </div>
          <div mt="1020" ml="40" w="600" fs="18">
             <p class="text-justify">Si les interesa conocer más respecto a la indagación científica en la etapa escolar,
-               perspectiva de enseñanza de las ciencias en la que se fundamenta pedagógicamente Conexiones, les
+               perspectiva de enseñanza de las ciencias en la que se fundamenta pedagógicamente <strong>Conexiones</strong>, les
                recomendamos ver la siguiente charla de TED, en la que Melina Furman, expertaen didáctcia de las ciencias
                nos cuenta sobre las potencialidades que esta tiene.
             </p>
@@ -72,7 +71,7 @@
             <img src="{{ asset('images/acercaConexiones/estructura_guias_aprendizaje.png') }}"  w="562" h="auto"/>
          </div>
          <div class="text-justify"  mt="1580" ml="660" w="762"  fs="18">
-            <p>Las guías de aprendizaje que hacen parte de Conexiones, usan la metáfora de recorrido o
+            <p>Las guías de aprendizaje que hacen parte de <strong>Conexiones</strong>, usan la metáfora de recorrido o
                camino para organizar y presentar los contenidos que los y las estudiantes son invitados a
                explorar. A diferencia de los recursos educativos convencionales, nuestras guías de aprendizaje
                no se diseñan a partir de una temática, ni restringen los contenidos a un único campo de saber
@@ -112,7 +111,7 @@
          <div mt="3370" ml="40" w="762">
             <span class="text-justify"  fs="14" style="font-size: 9px;display: inline-flex;"> Este es el ejemplo de la ruta de viaje de la
             guía de aprendizaje: Nuestro cuerpo: vida y movimiento, que está orientada a reconocer cómo funciona el
-            cuerpo, (partes y procesos vitales que desempeñan) valorarlo y tomar decisiones para su cuidado
+            cuerpo, partes y procesos vitales que desempeñan, valorarlo y tomar decisiones para su cuidado
             </span>
          </div>
          <div class="text-justify"  mt="2870" ml="830" w="600"  fs="18">
@@ -134,11 +133,11 @@
                presencia de los
                siguientes íconos:
             </p>
-            <p><strong>Saber qué:</strong> Manejo de conocimientos propios de las ciencias</p>
-            <p><strong>Saber cómo:</strong> Aproximación al conocimiento como lo hacen quienes se
+            <p><strong>Saber qué:</strong> manejo de conocimientos propios de las ciencias</p>
+            <p><strong>Saber cómo:</strong> aproximación al conocimiento como lo hacen quienes se
                dedican a las ciencias (Saber cómo)
             </p>
-            <p><strong  >Saber ser:</strong> Desarrollo de compromisos personales y sociales.</p>
+            <p><strong  >Saber ser:</strong> desarrollo de compromisos personales y sociales.</p>
          </div>
          <div class="z-index-1" mt="3440" ml="740">
             <img src="{{ asset('images/acercaConexiones/Guias_de_saberes.png') }}"  w="762" h="auto"/>
@@ -152,10 +151,8 @@
          </div>
          <div mt="4000" ml="40" w="1470" class="col-12 mt-3" fs="18">
             <p class="mt-3 text-justify">Cada momento de la ruta de viaje está conformado por: una pregunta central, de la que se derivan experiencias
-               científicas,
-               explicaciones de ciencia cotidiana y recursos recomendados para + conexiones, que movilizan la activación de
-               diferentes acciones
-               de pensamiento y producción esenciales para que las niñas, niños y jóvenes desarrollen pensamiento científico.
+               científicas, explicaciones de ciencia cotidiana y recursos recomendados para <strong>+conexiones</strong>, que movilizan la activación de
+               diferentes acciones de pensamiento y producción esenciales para que las niñas, niños y jóvenes desarrollen pensamiento científico.
             </p>
             <p>Los siguientes iconos permiten identificar la ubicación y relación de cada momento de aprendizaje <strong>(Ver + haciendo clic en cada ícono)</strong></p>
             <div class="row mt-4" fs="18">

@@ -75,7 +75,7 @@
              </h6>
              <p class="fs--2 mb-1">
                 <div class="fs--1 text-aling">
-                   <strong>Conexiones</strong> cuenta  con una completa serie de guías para el aprendizaje de las ciencias naturales, en formato multimedia que permite la interactividad
+                   <strong>Conexiones</strong> cuenta  con una completa serie de guías para el aprendizaje de las ciencias naturales, en formato multimedia que permite la interactividad en un ambiente virtual atractivo e intuitivo.
                    <a href="{{route('sequences.search')}}" class="font-weight-bold"> (Ver+).</a>
                 </div>
              </p>
@@ -89,8 +89,7 @@
              <h6 class="mb-1 font-weight-bold"><a href="{{route('elementsKits.search')}}">Implementos de laboratorio</a></h6>
              <p class="fs--2 mb-1">
                 <div class="fs--1 text-aling">
-                   Ofrecemos implementos de laboratorio para la realización de las prácticas experimentales propuestas por
-                   <strong> Conexiones </strong>,
+                   Ofrecemos implementos de laboratorio para la realización de las prácticas experimentales propuestas por <strong>Conexiones</strong>, 
                    y de otras que surjan de la indagación científica 
                    <a href="{{route('elementsKits.search')}}" class="font-weight-bold"> (Ver+).</a>
                 </div>

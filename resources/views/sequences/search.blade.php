@@ -30,12 +30,13 @@
                     <img icon-pedagogy src="{{asset('images/icons/situacionGeneradora.png')}}" width="74px" height="auto" ng-click="onIconPedagogy('pedagogy1')"  class="cursor-pointer">
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Situación generadora </span>
                     <div class="panel-icon-pedagogy-purple d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy1'" style="background-color: white; z-index:102;">
-                        <div style="margin-    left: 5vw;position: absolute;margin-top: -38px;">
+                        <div style="margin-left: -1vw;position: absolute;margin-top: -38px;">
                           <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #b92f7f transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: 43px;">
                           </div>
                         </div>  
                         <div class="header">
                           <span>Situación Generadora</span>
+                          
                         </div>            
                         <div class="body">
                             <p>Todo viaje inicia con un impulso, un deseo o una motivación.</p>
@@ -153,10 +154,10 @@
                     </div>
                   </li>
                   <li class="ml-auto" >
-                    <img icon-pedagogy src="{{asset('images/icons/cienciaCotidiana.png')}}" width="74px" height="auto"  ng-click="onIconPedagogy('pedagogy7')" class="cursor-pointer">
+                    <img icon-pedagogy id="pedagogy7" src="{{asset('images/icons/cienciaCotidiana.png')}}" width="74px" height="auto"  ng-click="onIconPedagogy('pedagogy7')" class="cursor-pointer">
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Ciencia cotidiana </span>
                     <div class="panel-icon-pedagogy-blue d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy7'" style="background-color: white; z-index:102;">
-                        <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
+                        <div style="margin-left: 11vw;position: absolute;margin-top: -38px;">
                           <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #00a4d6 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
@@ -174,10 +175,10 @@
                     </div>
                   </li>
                   <li class="ml-auto mr-auto" >
-                    <img icon-pedagogy src="{{asset('images/icons/masConexiones.png')}}" width="74px" height="auto"  ng-click="onIconPedagogy('pedagogy8')" class="cursor-pointer">
+                    <img icon-pedagogy id="pedagogy8" src="{{asset('images/icons/masConexiones.png')}}" width="74px" height="auto"  ng-click="onIconPedagogy('pedagogy8')" class="cursor-pointer">
                     <span class="d-flex mt-1 ml-auto mr-auto w-100 font-weight-bold"> + Conexiones </span>
                     <div class="panel-icon-pedagogy-beige d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy8'" style="background-color: white; z-index:102;">
-                        <div style="margin-left: 5vw;position: absolute;margin-top: -38px;">
+                        <div style="margin-left: 19vw;position: absolute;margin-top: -38px;">
                           <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #702283 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
@@ -222,7 +223,7 @@
                     Haciendo clic en la guía de interés, puede consultar el detalle de los contenidos y las <strong>opciones de compra</strong> disponibles.
                 </p>
                 <p>
-                    Si tiene dudas o sugerencias, <a target="_blank" href="{{route('contactus')}}"> <strong>contáctenos</strong></a> y con gusto le llamaremos para darle más detalles y ofrecerle la mejor opción de acuerdo sus expectativas.
+                    Si tiene dudas o sugerencias, <a target="_blank" href="{{route('contactus')}}"> <strong class="text-underline">contáctenos</strong></a> y con gusto le llamaremos para darle más detalles y ofrecerle la mejor opción de acuerdo sus expectativas.
                 </p>
             </div>
             <div class="mb-1 mt-3 col-12 mt-2">
