@@ -58,6 +58,7 @@ class ShoppingCartController extends Controller
             $data = $request->all();
             if (gettype($data) == 'array') {
                 $shoppingCart = [];
+                
                 for ($i = 0; $i < count($data); ++$i) {
                     $shoppingPart = $this->add_shoppingCart($request, $data[$i]);
                     array_push($shoppingCart, $shoppingPart);
@@ -121,10 +122,10 @@ class ShoppingCartController extends Controller
         if (isset($data['rating_plan_id'])) {
             $ratingPlan = RatingPlan::find($data['rating_plan_id']);
             $shoppingCart->rating_plan_id = intval($data['rating_plan_id']);
-			
-			if($type_product_id == 1 ) {
-				$shoppingCart->rating_plan_price = $ratingPlan->price;
-			}
+            
+            if($type_product_id == 1 ) {
+                $shoppingCart->rating_plan_price = $ratingPlan->price;
+            }
             else if($type_product_id == 2 || $type_product_id == 3) {
                 $shoppingCart->rating_plan_price = $ratingPlan->price * count($data['products']);
             }

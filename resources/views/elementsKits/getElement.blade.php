@@ -107,19 +107,19 @@
                  <div class="col-12 mt-4 mt-3" ng-show="listSequence.length > 0">
                    <h5 class="fs-1 pl-3 boder-header">Guías de aprendizaje que te pueden interesar</h5>
                    <div class="row  mt-4">
-                       <div class="col-lg-4 col-md-6" ng-repeat="sequence in listSequence" style="border: 6px solid white;">
+                       <div class="col-xl-4 col-lg-6 col-md-8" ng-repeat="sequence in listSequence" style="border: 6px solid white;">
                           <div class="card-body bg-light p-1 row">
                              <div class="col-auto">
-                                <img class="col-12 mt-3 p-0" ng-src="/@{{sequence.url_image}}" style="width:92px;height:auto;">
+                                <img class="mt-3 p-0" ng-src="/@{{sequence.url_image}}" style="width:92px;height:auto;">
                              </div>
-                             <div class="col-8">
-                                 <div class="col-12 mt-3 kit-description">
+                             <div class="col-8 col-xl-7">
+                                 <div class="mt-3 kit-description">
                                     <h6 class="boder-header pl-3 fs-0 text-left ">
                                        @{{sequence.name}}
                                     </h6>
                                     @{{sequence.description}}
                                  </div>
-								         <div class="col-12 p-0 mt-3 mb-3 text-aling-left">
+                                 <div class="p-0 mt-3 mb-3 text-aling-left">
                                     <a class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="/guia_de_aprendizaje/@{{sequence.id}}/@{{sequence.name_url_value}}">Detalle</a>
                                     <a class="pl-3 mt-1 btn btn-outline-primary fs--2" href="#" ng-click="onSequenceBuy(sequence)" class="col-6">Comprar</a>
                                  </div>

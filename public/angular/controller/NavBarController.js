@@ -1,16 +1,16 @@
 MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) {
     
-	$scope.shoppingCartLength = null;
+    $scope.shoppingCartLength = null;
 
     $(window).resize(function () {
         $("#sideMenu").removeClass("show");
         FixNavbarMenu();
     });
     
-	$("#toggleMenu").click(function () {
+    $("#toggleMenu").click(function () {
         $("#sideMenu").toggleClass("show");
     });
-	
+    
     function FixNavbarMenu () {
         var previousScroll = 0;
         $(window).scroll(function () {
@@ -45,31 +45,31 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
     
     $(document).ready(function () {
         FixNavbarMenu();
-		getShoppingCart();
+        getShoppingCart();
     });
-	
-	function getShoppingCart() {
-		$('.notification-indicator-number').html('!');
-		$http({
-			url: "/get_shopping_cart/",
-			method: "GET",
-		}).
-		then(function (response) {
-			$scope.shopping_carts = response.data.data;
-			var length = response.data && response.data.data ? response.data.data.length : 0;
-			if(response.data.data)
-			for(var i=0;i<response.data.data.length;i++) {
-				if(response.data.data[i].type_product_id === 3 ||
-				   response.data.data[i].type_product_id === 4) {
-					   length --;
-					   length += response.data.data[i].shopping_cart_product.length;
-				}
-			}
-			$('.notification-indicator-number').html(length);
-		}).catch(function (e) {
-			$scope.errorMessage = 'Error consultando el carrito de compras, compruebe su conexión a internet';
-			
-		});
-	}
-	
+    
+    function getShoppingCart() {
+        $('.notification-indicator-number').html('!');
+        $http({
+            url: "/get_shopping_cart/",
+            method: "GET",
+        }).
+        then(function (response) {
+            $scope.shopping_carts = response.data.data;
+            var length = response.data && response.data.data ? response.data.data.length : 0;
+            if(response.data.data)
+            for(var i=0;i<response.data.data.length;i++) {
+                if(response.data.data[i].type_product_id === 3 ||
+                   response.data.data[i].type_product_id === 4) {
+                       length --;
+                       length += response.data.data[i].shopping_cart_product.length;
+                }
+            }
+            $('.notification-indicator-number').html(length);
+        }).catch(function (e) {
+            $scope.errorMessage = 'Error consultando el carrito de compras, compruebe su conexión a internet';
+            
+        });
+    }
+    
 }]);

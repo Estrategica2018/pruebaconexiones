@@ -211,7 +211,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
             $('#move').next().removeClass('d-none');
         });
     }
-
+    
     $scope.onSequenceBuy = function (sequence) {
         var ratingPlans = '';
         for(var i = 0; i < $scope.ratingPlans.length; i++) {
@@ -220,18 +220,26 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                 var listItem = rt.description_items.split('|');
                 var items = '';
                 for(var j=0;j<listItem.length;j++) {
-                    items += '<li style="line-height: 17px;" class="card-rating-plan-id-'+ i +' fs-2 small pr-0 mt-4 ml-3"><span class="color-gray-dark font-14px font-family ">' + listItem[j] + '</span></li>';
+                    items += '<li style="line-height: 17px;" class="card-rating-plan-id-'+ (i) +' fs-2 small pr-0 mt-4 ml-3"><span class="color-gray-dark font-14px font-family ">' + listItem[j] + '</span></li>';
                 }
                var name = rt.name ? rt.name.replace(/\s/g,'_').toLowerCase() : '';
                var href = '/plan_de_acceso/' + rt.id + '/' + name + '/' + sequence.id;
-               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-75 trapecio-top position-absolute card-rating-button-id-'+ i  +'" style= "right: 12%;box-shadow: 0px 0px 0px 0px rgb(255 255 255), 0px -2px 0px rgba(255, 255, 255, 0.3);">'+
+               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-75 trapecio-top position-absolute card-rating-button-id-'+ (i)  +'" style= "right: 12%;box-shadow: 0px 0px 0px 0px rgb(255 255 255), 0px -2px 0px rgba(255, 255, 255, 0.3);">'+
                '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0 mt-2" style="position: absolute;top: -30px;color: white; ">Adquirir</span> </a> </div> ';
 
-               ratingPlans += '<div class="mt-3 col-12 col-md-4 "><div class="card-header card-rating-background-id-' + i + ' mt-3 fs--3 flex-100 box-shadow ">'+
-                '<h5 class="font-weight-bold card-rating-plan-id-'+ i +'" style="color: white;">'+rt.name+'</h5></div>'+
-                '<div class="card-body bg-light pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 220px  ;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
-                '   <div class="card-footer card-rating-background-id-' + i + ' font-weight-bold text-align box-shadow " style="color: white;">'+
-                '  $'+rt.price+'USD  </div></div>';
+               var message = 'por '+rt.count+' guía de aprendizaje';
+               if(rt.type_plan.id === 2) {
+                   message = 'Por momentos individuales';
+               }
+               if(rt.type_plan.id === 3) {
+                   message = 'Por experiencias individuales';
+               }
+               
+               ratingPlans += '<div class="mt-3 col-12 col-md-6 col-lg-4 p-4"><div class="card-header card-rating-background-id-' + (i) + ' mt-3 fs--3 flex-100 box-shadow ">'+
+                '<h5 class="card-title pl-lg-3 pr-lg-3 font-weight-bold card-rating-plan-id-'+ (i) +'" style="color: white;">'+rt.name+'</h5></div>'+
+                '<div class="card-body bg-light ratinPlanCard pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 165px;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
+                '<div class="row no-gutters card-footer card-rating-background-id-' + (i) + ' font-weight-bold text-align box-shadow " style="color: white;">'+
+                ' <div class="col-5"> $'+rt.price+' USD  </div> <div class="pl-lg-1 pr-lg-1 col-7 font-14px" style="    max-width: 176px;margin-top:-10px"> '+ message +' </div></div></div>';
             }
         }
         var html = '<div class="row justify-content-center">' + ratingPlans + '</div>';
@@ -246,15 +254,53 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         setTimeout(function () {
             marginLeftText();
          }, 300);
-  
+         
+         
          function marginLeftText() {
-            $('.trapecio-top').each(function(){ 
-                var width  = $(this).width(); 
-                $(this).find('a span').each(function(){ 
-                    var delta =  (width) - $(this).width();
-                    $(this).css('margin-left',(delta/2)+'px');  
-                });
-            }); 
+             
+              var maxHeight = 0;
+              var maxHeightTitle = 0;
+              var minHeight = 999;
+              
+              $('.ratinPlanCard ul').each(function(){
+                var height =  Number($(this).css('height').replace('px',''));
+                if(maxHeight < height) {
+                    maxHeight = height ;
+                }
+              });
+              $('.card-footer').each(function(){
+                var height =  Number($(this).css('height').replace('px',''));
+                if(minHeight > height) {
+                    minHeight = height;
+                }
+              });
+              
+              $('.card-title').each(function(){
+                var height =  Number($(this).css('height').replace('px',''));
+                if(maxHeightTitle < height) {
+                    maxHeightTitle = height;
+                }
+              });
+              
+              $('.ratinPlanCard ul').each(function(){
+                $(this).css('height',maxHeight);
+              });
+              
+              $('.card-title').each(function(){
+                $(this).css('height',maxHeightTitle);
+              });
+              
+              $('.card-footer').each(function(){
+                $(this).css('height',minHeight);
+              });
+                 
+              $('.trapecio-top').each(function(){ 
+                  var width  = $(this).width(); 
+                  $(this).find('a span').each(function(){ 
+                       var delta =  (width) - $(this).width();
+                       $(this).css('margin-left',(delta/2)+'px');  
+                  });
+              }); 
          }
   
          $( window ).resize(function() {
@@ -262,5 +308,8 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         });
 
     }
+
+
+
 });
  

@@ -1476,7 +1476,7 @@ function removeHashKey (appdata) {
 
 
 $(window).resize(function () {
-	resizeEdit();
+    resizeEdit();
 });
 
 resizeEdit();

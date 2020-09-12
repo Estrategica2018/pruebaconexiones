@@ -64,9 +64,10 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                     for (var i = 0; i < $scope.sequence.moments.length; i++) {
 
                         moment = $scope.sequence.moments[i];
+                       
                         if (moment.moment_kit) {
                             for (var j = 0; j < moment.moment_kit.length; j++) {
-                                kit = moment.moment_kit[i].kit;
+                                kit = moment.moment_kit[j].kit;
                                 if (kit) {
                                     kit.type = "kit";
                                     kit.name_url_value = kit.name.replace(/\s/g, '_').toLowerCase();
@@ -83,7 +84,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                                     }
                                 }
                                 else {
-                                    element = moment.moment_kit[i].element;
+                                    element = moment.moment_kit[j].element;
                                     if (element) {
                                         element.type = "element";
                                         element.name_url_value = element.name.replace(/\s/g, '_').toLowerCase();
@@ -168,6 +169,99 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
             }).catch(swal.noop);
         }
     }
+    
+    function getShoppingCart() {
+        $('.notification-indicator-number').html('!');
+        $http({
+            url: "/get_shopping_cart/",
+            method: "GET",
+        }).
+        then(function (response) {
+            $scope.shopping_carts = response.data.data;
+            var length = response.data && response.data.data ? response.data.data.length : 0;
+            if(response.data.data)
+            for(var i=0;i<response.data.data.length;i++) {
+                if(response.data.data[i].type_product_id === 3 ||
+                   response.data.data[i].type_product_id === 4) {
+                       length --;
+                       length += response.data.data[i].shopping_cart_product.length;
+                }
+            }
+            $('.notification-indicator-number').html(length);
+        }).catch(function (e) {
+            $scope.errorMessage = 'Error consultando el carrito de compras, compruebe su conexión a internet';
+            
+        });
+    }
+    
+
+    
+    $scope.buyKitElement = function(kitElement) {
+        
+        if(kitElement.quantity === 1) {
+            swal({
+              text: 'Este producto no se encuentra disponible actualmente',
+              type: "warning",
+              showCancelButton: true,
+              showCancelButton: false,
+              cancelButtonClass: "btn-danger",
+              cancelButtonText: "Cancelar"
+            }).catch(swal.noop);                
+        }
+        else {
+            html = '<h5 class="text-justify">Confirma para agregar el <strong>'+kitElement.name+'</strong> al carrito de compras!</h5><div class="col-12"><img width="231px" height="auto" src="/'+kitElement.url_image+'"></div>';
+            swal({
+              html: html,
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Confirmar",
+              cancelButtonText: "Cancelar",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            })
+            .then((isConfirm) => {
+                if (isConfirm) {
+                    var data = {};
+                    if(kitElement.type==='kit') {  
+                        data.type_product_id = 4; //tipo kit 
+                    }
+                    else if(kitElement.type==='element') {
+                        data.type_product_id = 5; //tipo element
+                    }
+                
+                    data.products = [kitElement];
+                    
+                    $http.post('/create_shopping_cart',[data]).
+                    then(function onSuccess(response) {
+                        
+                        $scope.getShoppingCart();
+                        
+                        var message = response.data && response.data.message ? response.data.message : 'implemento de laboratorio agregado exitosamente al carrito de compras!';
+                        swal({
+                          text: message,
+                          type: "success",
+                          showCancelButton: true,
+                          confirmButtonClass: "btn-danger",
+                          cancelButtonText: "Continuar comprando",
+                          confirmButtonText: "Ir a carrito de compras",
+                          closeOnConfirm: false,
+                          closeOnCancel: false
+                        })
+                        .then((isConfirm) => {
+                            if (isConfirm) {
+                                window.location='/carrito_de_compras';     
+                            }
+                        }).catch(swal.noop);
+                        
+                    }, function onError(response) {
+                        var message = response.data && response.data.message ? response.data.message : 'No se ha registrado el producto correctamente, intente de nuevo';
+                        swal('Conexiones',message,'error');
+                    });
+                }
+            }).catch(swal.noop);            
+        }
+
+    }
    
     $scope.onSequenceBuy = function (sequence) {
         var ratingPlans = '';
@@ -211,12 +305,12 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
         setTimeout(function () {
             marginLeftText();
          }, 300);
-		 
-		 
+         
+         
          function marginLeftText() {
              
               var maxHeight = 0;
-			  var maxHeightTitle = 0;
+              var maxHeightTitle = 0;
               var minHeight = 999;
               
               $('.ratinPlanCard ul').each(function(){
@@ -231,8 +325,8 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                     minHeight = height;
                 }
               });
-			  
-			  $('.card-title').each(function(){
+              
+              $('.card-title').each(function(){
                 var height =  Number($(this).css('height').replace('px',''));
                 if(maxHeightTitle < height) {
                     maxHeightTitle = height;
@@ -243,11 +337,11 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                 $(this).css('height',maxHeight);
               });
               
-			  $('.card-title').each(function(){
+              $('.card-title').each(function(){
                 $(this).css('height',maxHeightTitle);
               });
-			  
-			  $('.card-footer').each(function(){
+              
+              $('.card-footer').each(function(){
                 $(this).css('height',minHeight);
               });
                  

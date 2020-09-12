@@ -23,7 +23,7 @@ class SequencesController extends Controller
     public function get(Request $request, $sequence_id)
     {
 
-        return CompanySequence::with('moments.experiences', 'moments.moment_kit.kit.kit_elements.element')->where('id', $sequence_id)->get();
+        return CompanySequence::with('moments.experiences', 'moments.moment_kit.kit.kit_elements.element', 'moments.moment_kit.element')->where('id', $sequence_id)->get();
 
     }
 

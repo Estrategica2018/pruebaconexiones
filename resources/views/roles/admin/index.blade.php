@@ -86,9 +86,10 @@
                                  <tbody>
                                  
                                  @foreach($shoppingCarts as $shoppingCart)
+                                    @if($shoppingCart->affiliate)
                                     <tr class="btn-reveal-trigger border-top border-200">
                                        <td class="selection-cell" style="border: 0px; vertical-align: middle;">
-                                                {{ $shoppingCart->id }}
+                                           {{ $shoppingCart->id }}
                                        </td>
                                        <td class="selection-cell" style="border: 0px; vertical-align: middle;">
                                        {{ $shoppingCart->updated_at }}
@@ -144,6 +145,7 @@
                                           </div>
                                        </td>
                                     </tr>
+                                    @endif
                                  @endforeach
                                  <conx-shoppingcart-detail id="idShoppingCart"> </conx-shoppingcart-detail>
                                  </tbody>
