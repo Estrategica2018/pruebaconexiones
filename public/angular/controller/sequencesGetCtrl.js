@@ -198,7 +198,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
     
     $scope.buyKitElement = function(kitElement) {
         
-        if(kitElement.quantity === 1) {
+        if(kitElement.quantity === 0) {
             swal({
               text: 'Este producto no se encuentra disponible actualmente',
               type: "warning",
