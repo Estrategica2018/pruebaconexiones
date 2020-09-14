@@ -259,7 +259,7 @@
                </div>
             </div>
             <div class="d-none-result d-none row w-100 p-3">
-               <div class="col-lg-6 ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex" ng-repeat="sequence in sequences | filter: searchText">
+               <div class="col-lg-6 ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex" ng-repeat="sequence in sequences | filter: searchText" style="min-width: 412px;">
                   <div class="view" id="sequence-description-@{{sequence.id}}">
                      <div class="media">
                         <img ng-src="{{asset('/')}}@{{sequence.url_image}}" width="142px" height="auto" style="width:142px"/> 
