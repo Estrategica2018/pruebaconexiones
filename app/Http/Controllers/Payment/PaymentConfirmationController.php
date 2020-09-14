@@ -19,29 +19,19 @@ class PaymentConfirmationController extends Controller
             ['payment_status_id', 2],
         ])->get();
 
-        //dd($shopping_carts[0]->affiliate);
-        //consultar el paymentStatus de cada externalReference
         foreach ($shopping_carts as $shopping_cart) {
 
+            //busqueda por payment_id
             //$payment = \MercadoPago\Payment::get("6861587621");
 
             $filters = array(
-                "external_reference" => "147",
+                "external_reference" => $shopping_cart->payment_transaction_id,
             );
             $payment = MercadoPago\Payment::search($filters);
-            /*$payment = new MercadoPago\Payment();
-            $payment = $mp->get(
-            "/v1/payments/search",
-            array(
-            "access_token" => "APP_USR-3764584103744876-052802-214ee174865974c1821473fc8bafd65a-575372312",
-            //"external_reference" => 147,
-            )
-            );
-             */
-
-            dd($shopping_cart, $payment);
 
             if ($payment->status == "approved") {
+
+                dd($shopping_cart, $payment);
 
                 $update = ShoppingCart::where([['id', $shopping_cart->id],
                     ['payment_status_id', 2],
