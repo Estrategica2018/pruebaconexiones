@@ -26,7 +26,7 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
                                 $scope.numberOfItems+=sc.rating_plan.count;
                             }
                             else { 
-                                $scope.totalPrices += sc.shipping_price;
+                                $scope.totalPrices += sc.rating_plan_price;
                                 $scope.numberOfItems++;
                             }
                         }
