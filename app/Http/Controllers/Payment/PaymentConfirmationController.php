@@ -27,8 +27,8 @@ class PaymentConfirmationController extends Controller
             $payment->get(
                 "/v1/payments/search",
                 array(
-                    "access_token" => env('MERCADOPAGO_ACCESS_TOKEN'),
-                    "external_reference" => 147,
+                    "access_token" => "APP_USR-3764584103744876-052802-214ee174865974c1821473fc8bafd65a-575372312",
+                    //"external_reference" => 147,
                 )
             );
 
