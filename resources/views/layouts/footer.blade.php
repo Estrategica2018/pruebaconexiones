@@ -1,4 +1,4 @@
- <div class="navbar-light justify-content-between fs--1 no-gutters row mt-3">
+ <div class="navbar-light justify-content-between fs--1 no-gutters row mt-3 p-4 p-md-6">
 	<div class="col-sm-auto navbar-brand">
 	   <img class="mr-2" src="{{ asset('images/icons/logoEstrategica.png') }}" alt="Logo" width="240">
 	</div>
