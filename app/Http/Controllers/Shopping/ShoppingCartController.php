@@ -213,6 +213,7 @@ class ShoppingCartController extends Controller
             ['company_affiliated_id',auth("afiliadoempresa")->user()->id],
             ['payment_status_id',1],
         ])->get();
+        
         $sum = 0;
         $items = [];
         foreach ($shopping_carts as $shopping_cart){
@@ -243,15 +244,28 @@ class ShoppingCartController extends Controller
                     }
                 }
             }else{
-                $ratingPlanf = RatingPlan::find($shopping_cart->rating_plan_id);
-                $sum += $ratingPlanf->price;
-                $item = new MercadoPago\Item();
-                $item->title = $ratingPlanf->name;
-                $item->description = $ratingPlanf->description;
-                $item->quantity = 1;
-                $item->unit_price = $ratingPlanf->price;
-                $item->currency_id = 'USD';
-                array_push($items,$item);
+                if($shopping_cart->type_product_id == 1 ){
+                    $ratingPlanf = RatingPlan::find($shopping_cart->rating_plan_id);
+                    $sum += $ratingPlanf->price;
+                    $item = new MercadoPago\Item();
+                    $item->title = $ratingPlanf->name;
+                    $item->description = $ratingPlanf->description;
+                    $item->quantity = 1;
+                    $item->unit_price = $ratingPlanf->price;
+                    $item->currency_id = 'USD';
+                    array_push($items,$item);
+                }
+                else if($shopping_cart->type_product_id == 2 or $shopping_cart->type_product_id == 3 ) {
+                    $ratingPlanf = RatingPlan::find($shopping_cart->rating_plan_id);
+                    $sum += $ratingPlanf->price * count($shopping_cart->shopping_cart_product);
+                    $item = new MercadoPago\Item();
+                    $item->title = $ratingPlanf->name;
+                    $item->description = $ratingPlanf->description;
+                    $item->quantity = 1;
+                    $item->unit_price = $ratingPlanf->price * count($shopping_cart->shopping_cart_product);
+                    $item->currency_id = 'USD';
+                    array_push($items,$item);
+                }
             }
         }
 

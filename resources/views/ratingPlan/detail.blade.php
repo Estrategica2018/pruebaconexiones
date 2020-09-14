@@ -55,7 +55,7 @@
                                   <img ng-src="{{asset('/')}}@{{sequenceForAdd.url_image}}" width="142px" height="auto" style="width:142px"/>
                              </div>
                             <div class="position-absolute" style="top:10px; transform : scale(2);">
-                              <input type="checkbox" class="sequence_ForAdd" ng-model="sequenceForAdd.isSelected" name="check_sequence_ForAdd_"@{{sequenceForAdd.id}} ng-change="onCheckChange(sequenceForAdd,null,sequenceForAdd)"/>
+                              <input type="checkbox" ng-show="ratingPlan.type_rating_plan_id === 1" class="sequence_ForAdd" ng-model="sequenceForAdd.isSelected" name="check_sequence_ForAdd_"@{{sequenceForAdd.id}} ng-change="onCheckChange(sequenceForAdd,null,sequenceForAdd)"/>
                              </div>
                             <div class="pl-2 ml-3 ml-md-2">
                                <h5 class="pl-2 fs-0 boder-header text-align-left">@{{sequenceForAdd.name}}</h5>
@@ -68,7 +68,7 @@
                                      <i class="fas fa-search"></i> Ver video
                                  </a>
                                  
-                                <div class="fade bg-light mt-2 row p-3" ng-show="sequenceForAdd.isSelected" id="moment_div_responsive_ForAdd" style="margin-left: -216px;"> 
+                                <div class="fade show bg-light mt-2 row p-3" ng-show="ratingPlan.type_rating_plan_id === 2 || ratingPlan.type_rating_plan_id === 3" id="moment_div_responsive_ForAdd" style="margin-left: -19vh;     margin-right: 15px;"> 
                                      <div class="text-left mt-2" ng-repeat="moment in sequenceForAdd.moments" ng-show="ratingPlan.type_rating_plan_id === 2">
                                          <input class="transform-scale-2 ml-3 mt-1 mr-2" type="checkbox" ng-model="moment.isSelected" name="check_moment_ForAdd@{{moment.id}}" ng-change="onCheckChange(sequenceForAdd,moment,sequenceForAdd)"/>
                                          <span class="fs--1">@{{moment.name}}</span>
@@ -96,7 +96,7 @@
                                  <img ng-src="{{asset('/')}}@{{sequence.url_image}}" width="142px" height="auto" style="width:142px"/>
                              </div>
                              <div class="position-absolute" style="top:10px; transform : scale(2);">
-                               <input type="checkbox" ng-model="sequence.isSelected" name="check_sequence_"@{{sequences.id}} ng-change="onCheckChange(sequence)"/>
+                               <input type="checkbox" ng-show="ratingPlan.type_rating_plan_id === 1" ng-model="sequence.isSelected" name="check_sequence_"@{{sequences.id}} ng-change="onCheckChange(sequence)"/>
                               </div>
                                  <div class="pl-2 ml-3 ml-md-2">
                                  <h5 class="pl-2 fs-0 boder-header text-align-left">@{{sequence.name}}</h5>
@@ -109,7 +109,7 @@
                                          <i class="fas fa-search"></i> Ver video
                                      </a>
                                      
-                                    <div class="fade bg-light mt-2 row p-3" ng-show="sequence.isSelected" id="moment_div_responsive_@{{sequence.id}}" style="margin-left: -216px;"> 
+                                    <div class="fade show bg-light mt-2 row p-3" ng-show="ratingPlan.type_rating_plan_id === 2 || ratingPlan.type_rating_plan_id === 3" id="moment_div_responsive_@{{sequence.id}}" style="margin-left: -19vh;     margin-right: 15px;"> 
                                          <div class="text-left mt-2" ng-repeat="moment in sequence.moments" ng-show="ratingPlan.type_rating_plan_id === 2">
                                              <input class="transform-scale-2 ml-3 mt-1 mr-2" type="checkbox" ng-model="moment.isSelected" name="check_moment_ForAdd@{{moment.id}}" ng-change="onCheckChange(sequence,moment,sequence)"/>
                                              <span class="fs--1">@{{moment.name}}</span>

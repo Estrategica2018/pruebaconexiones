@@ -94,7 +94,7 @@
                           </div>
                         </div>                
                         <div class="header">
-                          <span>Guía de saber</span>
+                          <span>Guía de saberes</span>
                         </div>
                         <div class="body">
                             <p>Algunos viajes se planean con el propósito de lograr algún objetivo pero en el recorrido se pueden vivir experiencias no planeadas de las cuales emergen otras enseñanzas»</p>
