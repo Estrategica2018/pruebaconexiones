@@ -56,6 +56,8 @@ class MomentController extends Controller
             $moment->objectives = $data['objectives'];
         if (isset($data['performances']))
             $moment->performances = $data['performances'];
+        if (isset($data['url_image_experience']))
+            $moment->url_image_experience = $data['url_image_experience'];
         if (isset($data['section_1']))
             $moment->section_1 = $data['section_1'];
         if (isset($data['section_2']))

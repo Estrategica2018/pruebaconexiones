@@ -729,6 +729,7 @@ class StudentController extends Controller
             if($flag){
                 $data['moment_id'] = $moment->id;
                 $data['moment_name'] = $moment->name;
+                $data['url_image_experience'] = $moment->url_image_experience;
                 $data['data'] = $dataVideo;
                 array_push($datas ['moments'],$data);
             }

@@ -418,6 +418,12 @@
                         <h6>Desempeños</h6>
                         &nbsp; &nbsp; @{{ moment.performances }}
                      </div>
+                     <div class="conx-element col-auto"
+                        ng-click="onClickElement(moment,'url_image_experience','Imágen Experiencia','img')">
+                        <h6>Imágen Experiencia</h6>
+                        <img ng-src="/@{{moment.url_image_experience || 'images/icons/NoImageAvailable.jpeg'}}" width="79px"
+                           height="auto" />
+                     </div>
                      <div class="col-12 mt-2 pt-1">
                         <h6>Secciones</h6>
                         <div class="row ml-3 move-up-down" ng-repeat="section in moment.sections track by $index">
