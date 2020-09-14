@@ -5,7 +5,7 @@
 @include('layouts/float_buttons')
 
 <div class="ml-auto mr-auto row " ng-controller="contactusController" ng-init="init()">
-   <div class="pr-lg-2 col-lg-12">
+   <div class="pr-lg-2 col-12 col-lg-6 m-auto">
       <div class="mb-3 card">
          <div class="card-header">
             <h5 class="mb-0">Contáctenos</h5>
@@ -41,7 +41,10 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                      <div class="form-group">
                          <label for="affair" class="">Asunto</label>
-                         <input name="affair" id="affair" type="text" class="form-control" ng-model="affair">
+                         <input name="affair" id="affair" type="text" class="form-control" ng-model="affair" required >
+                         <div class="d-result d-none" ng-messages="contactusForm.affair.$error">
+                           <div ng-message="required" ng-if="contactusForm.affair.$invalid && contactusForm.affair.$touched"><span class="text-danger">Campo obligatorio</span></div>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -49,7 +52,10 @@
                   <div class="col-12">
                      <div class="form-group">
                          <label for="message" class="">Mensaje</label>
-                         <textarea name="message" id="message" type="text" class="form-control" ng-model="message"></textarea>
+                         <textarea name="message" id="message" type="text" class="form-control" ng-model="message" required ></textarea>
+                         <div class="d-result d-none" ng-messages="contactusForm.message.$error">
+                           <div ng-message="required" ng-if="contactusForm.message.$invalid && contactusForm.message.$touched"><span class="text-danger">Campo obligatorio</span></div>
+                        </div>
                      </div>
                   </div>
                   <div class="d-flex justify-content-end col-12">

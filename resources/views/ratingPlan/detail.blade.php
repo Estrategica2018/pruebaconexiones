@@ -48,18 +48,16 @@
               
                <div class="p-0 col-md-6 col-sm-12" ng-show="sequenceForAdd" style="border: 10px solid white;">
                    <div class="d-none-result d-none row w-100">
-                      <div class="ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex" >
+                      <div class="ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex card-boody-sequence" >
                         <div class="view" id="sequence-description-@{{sequenceForAdd.id}}">
                           <div class="media">
-                             <div class="row col-5">
-                              <div class="col-12">
+                             <div class="row col-auto">
                                   <img ng-src="{{asset('/')}}@{{sequenceForAdd.url_image}}" width="142px" height="auto" style="width:142px"/>
-                              </div>
                              </div>
                             <div class="position-absolute" style="top:10px; transform : scale(2);">
                               <input type="checkbox" class="sequence_ForAdd" ng-model="sequenceForAdd.isSelected" name="check_sequence_ForAdd_"@{{sequenceForAdd.id}} ng-change="onCheckChange(sequenceForAdd,null,sequenceForAdd)"/>
                              </div>
-                            <div class="media-body pl-2 pr-3">
+                            <div class="pl-2 ml-3 ml-md-2">
                                <h5 class="pl-2 fs-0 boder-header text-align-left">@{{sequenceForAdd.name}}</h5>
                                <div class="mt-3 pr-2 pl-2 fs--1" style="min-height: 110px;">@{{sequenceForAdd.description}}</div>
                                <div class="col-12">
@@ -91,18 +89,16 @@
                </div>
                <div class="p-0 col-md-6 col-sm-12" style="border: 10px solid white;" ng-repeat="sequence in sequences">
                    <div class="row w-100 p-0">
-                      <div class="ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex" style="min-height: 297px;">
+                      <div class="ml-2 pr-2 border-white-extent card card-body bg-dark row d-flex card-boody-sequence" style="min-height: 297px;">
                         <div class="view" id="sequence-description-@{{sequence.id}}">
                           <div class="media">
-                            <div class="row col-5">
-                              <div class="col-12">
-                                  <img ng-src="{{asset('/')}}@{{sequence.url_image}}" width="142px" height="auto" style="width:142px"/>
-                              </div>
+                            <div class="row col-auto">
+                                 <img ng-src="{{asset('/')}}@{{sequence.url_image}}" width="142px" height="auto" style="width:142px"/>
                              </div>
                              <div class="position-absolute" style="top:10px; transform : scale(2);">
                                <input type="checkbox" ng-model="sequence.isSelected" name="check_sequence_"@{{sequences.id}} ng-change="onCheckChange(sequence)"/>
                               </div>
-                                 <div class="media-body pl-2 pr-3">
+                                 <div class="pl-2 ml-3 ml-md-2">
                                  <h5 class="pl-2 fs-0 boder-header text-align-left">@{{sequence.name}}</h5>
                                  <div class="mt-3 pr-2 pl-2 fs--1" style="min-height: 110px;">@{{sequence.description}}</div>
                                  <div class="col-12 p-0">

@@ -5,7 +5,8 @@
 <br>
     <strong>fecha de expriración {{$originalEndDate}}. Este plan ahora expira para el dia {{$end_date}}</strong>
 <br>
+<br>
     Gracias.
 <br>
-    {{ config('app.name') }}
+<strong>{{ config('app.name') }}</strong>
 @endcomponent

@@ -12,7 +12,8 @@
 <strong>Nº radicado:</strong>
 {{$data['contacus_id']}}
 <br>
+<br>
 Gracias.
 <br>
-{{ config('app.name') }}
+<strong>{{ config('app.name') }}</strong>
 @endcomponent

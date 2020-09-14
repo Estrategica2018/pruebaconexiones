@@ -14,8 +14,7 @@ MyApp.directive('conxShoppingcartDetail', [function () {
         scope: {
             id: "="
         },
-        //template: '<div> {{response}} </div>',
-        templateUrl: '/template',
+        templateUrl: '/dialog_template_detail_user',
         controller: function ($scope, $timeout, $http) {
             
             $scope.$watch('id', function (newVal, oldVal) {

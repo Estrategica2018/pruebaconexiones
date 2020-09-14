@@ -10,5 +10,5 @@
 <br>
 Gracias.
 <br>
-{{ config('app.name') }}
+<strong>{{ config('app.name') }}</strong>
 @endcomponent

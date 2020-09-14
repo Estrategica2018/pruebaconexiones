@@ -115,6 +115,30 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             }
             $scope.sequences = listTemp;
             
+            
+            $scope.resizeWidth = function() {
+                var maxHeight = 0;
+                    $('.card-boody-sequence').each(function(){
+                        var height =  Number($(this).css('height').replace('px',''));
+                        if(maxHeight < height) {
+                            maxHeight = height ;
+                        }
+                    });
+                    $('.card-boody-sequence').each(function(){
+                        $(this).css('height',maxHeight);
+                    });
+            }
+            
+            $(window).resize(function () {
+                $scope.resizeWidth();    
+            });
+            
+            $timeout(function () {
+                $scope.resizeWidth();        
+            }, 300);
+              
+            
+            
         }).catch(function (e) {
             $scope.errorMessageFilter = 'Error consultando las guías de aprendizaje, compruebe su conexión a internet' + e;
         });

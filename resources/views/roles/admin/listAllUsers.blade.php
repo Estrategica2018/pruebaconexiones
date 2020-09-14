@@ -19,9 +19,9 @@
                <div class="card-header">
                   <div class="align-items-center row">
                      <div class="col">
-                        <h5 class="mb-0">
-                           Usuarios activos
-                        </h5>
+                        <h6 class="mb-0">
+                           Lista de usuarios en el sistema
+                        </h6>
                      </div>
                      <div class="text-right col-auto">
                         <button class="mx-2 btn btn-falcon-default btn-sm">
@@ -86,19 +86,8 @@
                   </div>
                   <div class="px-1 py-3 no-gutters row">
                      <div class="pl-3 fs--1 col">
-                        <span>1 to 6 of 12 — </span>
-                        <button type="button" class="px-0 font-weight-semi-bold btn btn-link btn-sm">
-                           view all
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" class="svg-inline--fa fa-chevron-right fa-w-10 ml-1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="transform-origin: 0.3125em 0.5625em;">
-                              <g transform="translate(160 256)">
-                                 <g transform="translate(0, 32)  scale(0.75, 0.75)  rotate(0 0 0)">
-                                    <path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" transform="translate(-160 -256)"></path>
-                                 </g>
-                              </g>
-                           </svg>
-                        </button>
+                        <span>@{{users.length}} uuarios </span>
                      </div>
-                     <div class="pr-3 col-auto"><button type="button" disabled="" class="px-4 btn btn-light btn-sm disabled">Previous</button><button type="button" class="px-4 ml-2 btn btn-primary btn-sm">Next</button></div>
                   </div>
                </div>
             </div>

@@ -11,5 +11,5 @@ Te informamos que el estudiante {{$student['name'].' '.$student['last_name']}}, 
 <br>
 Gracias.
 <br>
-{{ config('app.name') }}
+<strong>{{ config('app.name') }}</strong>
 @endcomponent

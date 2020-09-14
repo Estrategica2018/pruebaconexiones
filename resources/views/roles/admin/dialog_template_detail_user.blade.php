@@ -1,3 +1,21 @@
+<style>
+#tabContact div {
+    display: flex;
+    height: 34px;
+    align-items: center;
+}
+
+#tabContact div {
+   border-bottom: 1px solid #e6edf5;
+}
+
+#tabContact div>div:first-child {
+    background-color: #e6edf5;
+    min-width: 139px;
+    padding-left: 13px;
+}
+</style>
+
 <div class="swal2-container swal2-fade swal2-shown" ng-show="id" >
    <div role="dialog" class="swal2-modal swal2-show" style="width: 500px; padding: 20px; background: rgb(255, 255, 255); display: block; min-height: 229px;">
       <div ng-click="id=null" class="position_absolute fs-2 cursor-pointer" style="top: 0px;right: 16px;left: 35px;text-align: right;position: absolute;"> 
@@ -18,11 +36,26 @@
          </ul>
          <div class="tab-content border-x border-bottom p-3" id="myTabContent">
             <div id="tabContact" class="tab-pane fade" ng-class="{'show active': tabSelected === 'contact'}">
-               Nombre: <span>@{{response.affiliate.name}} @{{response.affiliate.last_name}}</span>
-               Email: <span>@{{response.affiliate.email}} </span>    
-               Email: <span>@{{response.affiliate.city}} </span>    
-               Tel: <span>@{{response.affiliate.phone}} </span>    
-               Fecha Creación: <span class="cursor-pointer" ng-click="tabSelected = 'payment')">@{{response.affiliate.created_at}} </span>    
+                <div>
+                    <div>Nombre</div>
+                    <div class="ml-2">@{{response.affiliate.name}} @{{response.affiliate.last_name}}</div>
+                </div>
+                <div>
+                    <div>Email</div>
+                    <div class="ml-2">@{{response.affiliate.email}}</div>
+                </div>
+                <div>
+                    <div>Ciudad</div>
+                    <div class="ml-2">@{{response.affiliate.country && response.affiliate.country.name ?  response.affiliate.country.name : '' }} @{{ response.affiliate.country ? '-': '' }} @{{response.affiliate.city}}</div>
+                </div>
+                <div>
+                    <div>Teléfono</div>
+                    <div class="ml-2">@{{response.affiliate.phone}}</div>
+                </div>
+                <div>
+                    <div>Fecha Creación</div>
+                    <div class="ml-2">@{{response.affiliate.created_at}}</div>
+                </div>
             </div>
             <div class="tab-pane fade" ng-class="{'show active': tabSelected === 'subscription'}">
                Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic. 

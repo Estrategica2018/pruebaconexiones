@@ -45,9 +45,9 @@ Route::get('/implementos_de_laboratorio', function () {
 })->name('elementsKits.search');
 
 
-Route::get('/template', function () {
-    return view('roles.admin.template');
-})->name('template');
+Route::get('/dialog_template_detail_user', function () {
+    return view('roles.admin.dialog_template_detail_user');
+})->name('dialog_template_detail_user');
 
 
 Route::get('/kit_de_laboratorio/{kit_id}/{kit_name}', 'KitController@showKitDetail')->name('elementsKits.getKit');
@@ -111,7 +111,7 @@ Route::group(['middleware' =>['auth:afiliadoempresa']],function (){
     Route::get('conexiones/admin/get_kit/{id?}', 'KitController@get_kit')->middleware('role:admin')->name('get_kit');
     Route::get('conexiones/admin/usuarios/', 'AdminController@show_all_users')->middleware('role:admin')->name('admin.all_users');
     Route::get('conexiones/admin/get_all_users/', 'AdminController@get_all_users')->middleware('role:admin')->name('admin.get_all_users');
-    Route::get('conexiones/admin/get_user_shoppingCart/{idShoppingCart}', 'AdminController@get_user_shoppingCart')->middleware('role:admin')->name('admin.get_user_shoppingCart');
+    Route::get('conexiones/admin/get_user_shoppingCart/{user_id}/{idShoppingCart?}', 'AdminController@get_user_shoppingCart')->middleware('role:admin')->name('admin.get_user_shoppingCart');
 
 });
 

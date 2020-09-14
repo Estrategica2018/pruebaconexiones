@@ -234,7 +234,7 @@ class AdminController extends Controller
     public function get_user_shoppingCart(Request $request, $idShoppingCart)
     {
         $shoppingCart = ShoppingCart::
-            with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
+            with('rating_plan', 'shopping_cart_product','affiliate.country','shopping_cart_product','payment_status')
             ->where('payment_status_id', '!=',1)
             ->find($idShoppingCart);
         return response()->json($shoppingCart, 200);

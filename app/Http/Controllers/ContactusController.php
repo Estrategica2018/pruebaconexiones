@@ -38,7 +38,7 @@ class ContactusController extends Controller
             $var['user_notification'] = 2;
             Mail::to($request->email)->send(new SendContactus($var));
             return response()->json([
-                ['message' => 'El mensaje ha sido enviado satisfactoriamente, la respuesta se enviará al correo'],
+                ['message' => 'El mensaje ha sido enviado satisfactoriamente. A tu correo llegará un número de radicado para seguimiento del proceso.'],
                 ['status' => 'success']
 
             ], 200);

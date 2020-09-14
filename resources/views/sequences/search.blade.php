@@ -281,7 +281,7 @@
             <div class="p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-hide="sequences.length > 0">
                cargando...
             </div>
-            <div class="d-none-result d-none p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="searchText.length > 0 && sequences.length > 0">
+            <div class="d-none-result d-none p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="searchText.length > 0 && sequences.length === 0">
                No se encontraron guías que coincidan con la búsqueda @{{searchText}}
             </div>
          </div>
