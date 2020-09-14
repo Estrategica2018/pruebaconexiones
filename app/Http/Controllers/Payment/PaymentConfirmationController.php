@@ -27,7 +27,7 @@ class PaymentConfirmationController extends Controller
             $payment->get(
                 "/v1/payments/search",
                 array(
-                    "external_reference" => $shopping_cart->id,
+                    "external_reference" => "147",
                 )
             );
 
