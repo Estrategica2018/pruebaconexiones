@@ -12,7 +12,7 @@ class PaymentConfirmationController extends Controller
 
     public function payment_confirmation(Request $request)
     {
-        MercadoPago\SDK::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
+       MercadoPago\SDK::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
 
         // Consulta de pagos en estado 2 en la tabla shoppingCarts
         $shopping_carts = ShoppingCart::with("affiliate")->where([
@@ -27,7 +27,7 @@ class PaymentConfirmationController extends Controller
             $payment->get(
                 "/v1/payments/search",
                 array(
-                    "external_reference" => $shopping_cart->payment_transaction_id,
+                    "external_reference" => $shopping_cart->id,
                 )
             );
 
