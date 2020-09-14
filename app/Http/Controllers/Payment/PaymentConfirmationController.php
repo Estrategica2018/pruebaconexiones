@@ -23,8 +23,8 @@ class PaymentConfirmationController extends Controller
         //consultar el paymentStatus de cada externalReference
         foreach ($shopping_carts as $shopping_cart) {
 
-            $payment = \MercadoPago\Payment::get("6861587621");
-
+            //$payment = \MercadoPago\Payment::get("6861587621");
+            $payment = \MercadoPago\Payment::get("external_reference", "147");
             /*$payment = new MercadoPago\Payment();
             $payment = $mp->get(
                 "/v1/payments/search",
