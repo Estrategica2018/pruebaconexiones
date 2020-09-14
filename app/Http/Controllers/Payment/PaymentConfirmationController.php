@@ -29,11 +29,12 @@ class PaymentConfirmationController extends Controller
             );
             $payments = MercadoPago\Payment::search($filters);
             $payment = end($payments);
-            
-            dd($shopping_cart, $payment);
+
+            //dd($shopping_cart, $payment);
 
             if ($payment->status == "approved") {
 
+                dd($shopping_cart, $payment);
 
                 $update = ShoppingCart::where([['id', $shopping_cart->id],
                     ['payment_status_id', 2],
