@@ -31,7 +31,7 @@ class PaymentConfirmationController extends Controller
 
             if ($payment->status == "approved") {
 
-                dd($shopping_cart, $payment->payer->email);
+                //dd($shopping_cart, $payment->payer->email);
 
                 $update = ShoppingCart::where([['id', $shopping_cart->id],
                     ['payment_transaction_id', $payment->external_reference]])->
@@ -64,7 +64,8 @@ class PaymentConfirmationController extends Controller
                 //}
                 $transaction_date = ShoppingCart::select('payment_process_date')->where('payment_transaction_id', $payment->external_reference)->first();
                 //Envío correo de pago exitoso
-                Mail::to($request->user('afiliadoempresa')->email)->send(
+                //Mail::to($request->user('afiliadoempresa')->email)->send(
+                Mail::to($payment->payer->email)->send(
                     new SendSuccessfulPaymentNotification($shoppingCart, $payment, $afiliado_empresa, $payment->transaction_amount, $transaction_date));
                 return redirect()->route('tutor.products', ['empresa' => 'conexiones']);
             } else {
