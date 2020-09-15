@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendSuccessfulPaymentNotification;
 use MercadoPago;
 
 class PaymentConfirmationController extends Controller
@@ -29,7 +31,7 @@ class PaymentConfirmationController extends Controller
 
             if ($payment->status == "approved") {
 
-                dd($shopping_cart, $payment);
+                dd($shopping_cart, $payment->payer->email);
 
                 $update = ShoppingCart::where([['id', $shopping_cart->id],
                     ['payment_transaction_id', $payment->external_reference]])->
@@ -40,29 +42,30 @@ class PaymentConfirmationController extends Controller
                     'payment_method' => 'PSE',
                 ));
 
-                if ($request->user('afiliadoempresa')) {
+                //if ($request->user('afiliadoempresa')) {
 
-                    $afiliado_empresa = $request->user('afiliadoempresa');
-                    $shoppingCarts = ShoppingCart::
+                    //$afiliado_empresa = $request->user('afiliadoempresa');
+                    $afiliado_empresa = $shopping_cart->company_affiliated_id;
+                    $shoppingCartsPay = ShoppingCart::
                         with('rating_plan', 'shopping_cart_product')->
                         where([
-                        ['company_affiliated_id', $request->user('afiliadoempresa')->id],
+                        ['company_affiliated_id', $shopping_cart->company_affiliated_id],
                         ['payment_transaction_id', $payment->external_reference],
                         ['payment_status_id', 3],
                     ])->get();
 
-                    foreach ($shoppingCarts as $shoppingCart) {
+                    foreach ($shoppingCartsPay as $shoppingCart) {
                         $ratingPlan = $shoppingCart->rating_plan;
                         if ($ratingPlan) {
                             //Iniciar el tiempo de acceso a las secuencias
                             $this->addRatingPlanPaid($shoppingCart, $ratingPlan, $afiliado_empresa);
                         }
                     }
-                }
-                $transaction_date = ShoppingCart::select('payment_process_date')->where('payment_transaction_id', $request->external_reference)->first();
+                //}
+                $transaction_date = ShoppingCart::select('payment_process_date')->where('payment_transaction_id', $payment->external_reference)->first();
                 //Envío correo de pago exitoso
                 Mail::to($request->user('afiliadoempresa')->email)->send(
-                    new SendSuccessfulPaymentNotification($shoppingCart, $request, $afiliado_empresa, $price_callback, $transaction_date));
+                    new SendSuccessfulPaymentNotification($shoppingCart, $payment, $afiliado_empresa, $payment->transaction_amount, $transaction_date));
                 return redirect()->route('tutor.products', ['empresa' => 'conexiones']);
             } else {
                 $update = ShoppingCart::where([['id', $shopping_cart->id]])->update(
