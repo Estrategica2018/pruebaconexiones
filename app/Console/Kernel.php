@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use File;
+use Artisan ;
 
 class Kernel extends ConsoleKernel
 {
@@ -27,12 +28,15 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+		$filePath = public_path() .'/backups/logs';
+		File::isDirectory($filePath) or File::makeDirectory($filePath, 0777, true, true);
         $strDate = date("YmdHis");
-        $filePath = public_path() .'/backups/logs';
+        
         $filename = $filePath . '/log_'.$strDate.'.txt';
         $this->writeLog($filename,'inicia mysqlDump');
-        File::isDirectory($filePath) or File::makeDirectory($filePath, 0777, true, true);
-        $schedule->call('App\Http\Controllers\BackupDatabase@mysqlDump')->everyMinute()->appendOutputTo(storage_path('logs/examplecommand.log'));
+        
+        //$schedule->call('App\Http\Controllers\BackupDatabase@mysqlDump')->everyMinute()->appendOutputTo(storage_path('logs/examplecommand.log'));
+		app(\App\Http\Controllers\BackupDatabase::class)->mysqlDump();
     }
 
     /**
