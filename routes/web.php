@@ -15,6 +15,11 @@ use Illuminate\Http\Request;
 */
 Auth::routes();
 
+Route::get('put', function() {
+    Storage::cloud()->put('test.txt', 'Hello World');
+    return 'File was saved to Google Drive';
+});
+
 Route::get('/', 'WelcomeController@index')->name('/');
 Route::get('/login', 'WelcomeController@index')->name('login');
 
