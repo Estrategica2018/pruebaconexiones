@@ -33,7 +33,7 @@ class PaymentConfirmationController extends Controller
 
             if ($payment->status == "approved") {
 
-                dd($shopping_cart, $payment, $shopping_cart->with("affiliate")->find($shopping_cart->company_affiliated_id));
+                dd($shopping_cart, $payment, $shopping_cart->with("affiliate"));
 
                 $update = ShoppingCart::where([['id', $shopping_cart->id],
                     ['payment_transaction_id', $payment->external_reference]])->
