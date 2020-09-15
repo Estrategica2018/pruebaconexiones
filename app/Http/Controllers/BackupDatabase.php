@@ -27,9 +27,22 @@ class BackupDatabase extends Controller
 			$strDate = date("YmdHis");
 			File::isDirectory(public_path() .'/backups/work') or File::makeDirectory(public_path() .'/backups/work', 0777, true, true);
 			$dump->start(public_path() . '/backups/work/dump_'.$strDate.'.sql');
-			echo 'mysqldump-php sucess';
+			
+			$filePath = public_path() .'/backups/logs';
+			$filename = $filePath . '/log_'.$strDate.'.txt';
+			$this->writeLog($filename,'finaliza mysqldump-php');
+
 		} catch (\Exception $e) {
 			echo 'mysqldump-php error: ' . $e->getMessage();
 		}
+    }
+	
+    public function writeLog($filename, $string) {
+
+        if (!file_exists($filename)) {
+            touch($filename, strtotime('-1 days'));
+        }
+        $strDate = date("[Y-m-d H:i:s]");
+        file_put_contents($filename, $strDate . ' '.$string . PHP_EOL, FILE_APPEND);
     }
 }

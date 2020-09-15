@@ -27,10 +27,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-		$strDate = date("YmdHis");
-		$filePath = public_path() .'/backups/logs/log_'.$strDate.'.txt';
-		File::isDirectory(public_path() .'/backups/logs') or File::makeDirectory(public_path() .'/backups/logs', 0777, true, true);
-		$schedule->call('App\Http\Controllers\BackupDatabase@mysqlDump')->everyMinute()->sendOutputTo($filePath);
+        $strDate = date("YmdHis");
+        $filePath = public_path() .'/backups/logs';
+        $filename = $filePath . '/log_'.$strDate.'.txt';
+        $this->writeLog($filename,'inicia mysqlDump');
+        File::isDirectory($filePath) or File::makeDirectory($filePath, 0777, true, true);
+        $schedule->call('App\Http\Controllers\BackupDatabase@mysqlDump')->everyMinute()->appendOutputTo(storage_path('logs/examplecommand.log'));
     }
 
     /**
@@ -43,5 +45,14 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
+    }
+	
+    public function writeLog($filename, $string) {
+
+        if (!file_exists($filename)) {
+            touch($filename, strtotime('-1 days'));
+        }
+        $strDate = date("[Y-m-d H:i:s]");
+        file_put_contents($filename, $strDate . ' '.$string . PHP_EOL, FILE_APPEND);
     }
 }
