@@ -27,10 +27,17 @@
                 <span class="tooltiptext">atr&aacute;s</span>
             </a>
             @endif
+            @if($buttonNext != 'none')
             <a class="ml-1 cursor-pointer image-tooltip" href="@if(isset($buttonNext)) {{$buttonNext }} @endif">
                 <img src="{{asset('images/icons/portal-estudiante/adelante_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
                 <span class="tooltiptext">adelante</span>
             </a>
+            @else
+                <a class="ml-1 cursor-not-allowed image-tooltip" disabled style="opacity: .5;">
+                    <img src="{{asset('images/icons/portal-estudiante/adelante_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
+                    <span class="tooltiptext">adelante</span>
+                </a>
+            @endif
             <a class="ml-1 cursor-pointer image-tooltip" href="{{ route('student.available_sequences',auth('afiliadoempresa')->user()->company_name()) }}">
                 <img src="{{asset('images/icons/portal-estudiante/guias_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
                 <span class="tooltiptext">gu&iacute;as de aprendizaje</span>
