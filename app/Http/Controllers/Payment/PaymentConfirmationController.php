@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShoppingCart;
+use App\Models\AffiliatedAccountService;
+use App\Models\AffiliatedContentAccountService;
+use App\Models\SequenceMoment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendSuccessfulPaymentNotification;
@@ -11,7 +14,6 @@ use MercadoPago;
 
 class PaymentConfirmationController extends Controller
 {
-
     public function payment_confirmation(Request $request)
     {
         MercadoPago\SDK::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
@@ -75,6 +77,45 @@ class PaymentConfirmationController extends Controller
                         //se debería almacenar en log los cambios de estado por este proceso
                     )
                 );
+            }
+        }
+    }
+
+    public function addRatingPlanPaid($shoppingCart, $ratingPlan, $afiliado_empresa)
+    {
+        $affiliatedAccountService = new AffiliatedAccountService();
+        $affiliatedAccountService->company_affiliated_id = $afiliado_empresa->id;
+        $affiliatedAccountService->rating_plan_id = $ratingPlan->id;
+        $affiliatedAccountService->rating_plan_type = $ratingPlan->type_rating_plan_id;
+        $affiliatedAccountService->shopping_cart_id = $shoppingCart->id;
+
+        $affiliatedAccountService->end_date = date('Y-m-d', strtotime('+ ' . $ratingPlan->days . ' day'));
+        $affiliatedAccountService->rating_plan_type = $ratingPlan->type_rating_plan_id;
+        $affiliatedAccountService->init_date = date('Y-m-d');
+
+        $affiliatedAccountService->save();
+        if ($ratingPlan->type_rating_plan_id == 1) { //sequence rating plan
+            foreach ($shoppingCart->shopping_cart_product as $product) {
+                $sequenceMoments = SequenceMoment::where('sequence_company_id', $product->product_id)->get();
+                foreach ($sequenceMoments as $sequenceMoment) {
+                    $affiliatedContentAccountService = new AffiliatedContentAccountService();
+                    $affiliatedContentAccountService->affiliated_account_service_id = $affiliatedAccountService->id;
+                    $affiliatedContentAccountService->type_product_id = $ratingPlan->type_rating_plan_id;
+                    $affiliatedContentAccountService->sequence_id = $product->product_id;
+                    $affiliatedContentAccountService->moment_id = $sequenceMoment->id;
+                    $affiliatedContentAccountService->save();
+                }
+
+            }
+        } else if ($ratingPlan->type_rating_plan_id == 2 || $ratingPlan->type_rating_plan_id == 3) { //moment / experiences rating plan
+            foreach ($shoppingCart->shopping_cart_product as $product) {
+                $affiliatedContentAccountService = new AffiliatedContentAccountService();
+                $affiliatedContentAccountService->affiliated_account_service_id = $affiliatedAccountService->id;
+                $affiliatedContentAccountService->type_product_id = $ratingPlan->type_rating_plan_id;
+                $moment = SequenceMoment::find($product->product_id);
+                $affiliatedContentAccountService->sequence_id = $moment->sequence_company_id;
+                $affiliatedContentAccountService->moment_id = $product->product_id;
+                $affiliatedContentAccountService->save();
             }
         }
     }
