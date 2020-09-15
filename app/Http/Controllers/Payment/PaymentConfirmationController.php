@@ -21,27 +21,21 @@ class PaymentConfirmationController extends Controller
 
         foreach ($shopping_carts as $shopping_cart) {
 
-            //busqueda por payment_id
-            //$payment = \MercadoPago\Payment::get("6861587621");
-
             $filters = array(
                 "external_reference" => $shopping_cart->payment_transaction_id,
             );
             $payments = MercadoPago\Payment::search($filters);
             $payment = end($payments);
 
-            //dd($shopping_cart, $payment);
-
             if ($payment->status == "approved") {
 
-                dd($shopping_cart, $payment);
+                dd($shopping_cart, $payment, $shopping_cart->affiliate->user('afiliadoempresa'));
 
                 $update = ShoppingCart::where([['id', $shopping_cart->id],
-                    ['payment_status_id', 2],
                     ['payment_transaction_id', $payment->external_reference]])->
                     update(array(
                     'payment_status_id' => '3',
-                    'payment_process_date' => $payment->date_created,
+                    'payment_process_date' => $payment->date_approved,
                     'approval_code' => $payment->id,
                     'payment_method' => 'PSE',
                 ));
