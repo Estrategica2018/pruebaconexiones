@@ -1,4 +1,22 @@
 <style>
+
+#tabTrax div {
+    display: flex;
+    height: 34px;
+    align-items: center;
+    width: 374px;
+}
+
+#tabTrax div {
+   border-bottom: 1px solid #e6edf5;
+}
+
+#tabTrax div>div:first-child {
+    background-color: #e6edf5;
+    min-width: 139px;
+    padding-left: 13px;
+}
+
 #tabContact div {
     display: flex;
     height: 34px;
@@ -14,27 +32,65 @@
     min-width: 139px;
     padding-left: 13px;
 }
+
 </style>
 
-<div class="swal2-container swal2-fade swal2-shown" ng-show="id" >
+<div class="swal2-container swal2-fade swal2-shown" ng-show="id || userid" >
    <div role="dialog" class="swal2-modal swal2-show" style="width: 500px; padding: 20px; background: rgb(255, 255, 255); display: block; min-height: 229px;">
-      <div ng-click="id=null" class="position_absolute fs-2 cursor-pointer" style="top: 0px;right: 16px;left: 35px;text-align: right;position: absolute;"> 
+      <div ng-click="id=null; userid = null" class="position_absolute fs-2 cursor-pointer" style="top: 0px;right: 16px;left: 35px;text-align: right;position: absolute;"> 
         <i class="far fa-times-circle"></i>
         <!--img ng-click="id=null" class="cursor-pointer" src="/images/icons/close.png"/-->
       </div>
       <div id="swal2-content" class="swal2-content  mt-2" style="display: block;">
          <ul class="nav nav-tabs">
-            <li class="nav-item cursor-pointer"  onclick="$('#tabContact').addClass('show active');">
+            <li class="nav-item cursor-pointer">
+               <span class="nav-link" ng-class="{'active': tabSelected === 'tranaction'}" ng-click="tabSelected = 'tranaction'"> Transacción</span>
+            </li>
+            <li class="nav-item cursor-pointer">
                <span class="nav-link" ng-class="{'active': tabSelected === 'contact'}" ng-click="tabSelected = 'contact'"> Contacto</span>
             </li>
-            <li class="nav-item cursor-pointer"  onclick="$('#subscription').addClass('show active');">
+            <li class="nav-item cursor-pointer">
                <span class="nav-link" ng-class="{'active': tabSelected === 'subscription'}" ng-click="tabSelected = 'subscription'">Suscripciones</span>
             </li>
-            <li class="nav-item cursor-pointer" ng-click="tabSelected = 'payment')">
+            <li class="nav-item cursor-pointer">
                <span class="nav-link" ng-class="{'active': tabSelected === 'payment'}" ng-click="tabSelected = 'payment'">Pagos</span>
             </li>
          </ul>
          <div class="tab-content border-x border-bottom p-3" id="myTabContent">
+            <div id="tabTrax" class="tab-pane fade" ng-class="{'show active': tabSelected === 'tranaction'}">
+                <div>
+                    <div>Código de transacción</div>
+                    <div class="ml-2">@{{response.payment_transaction_id}}</div>
+                </div>
+                <div>
+                    <div>Estado</div>
+                    <div class="ml-2">
+                        <span ng-show="response.payment_status.id === 2" class="rounded-capsule badge badge-soft-warning">@{{response.payment_status.name}}</span>
+                        <span ng-show="response.payment_status.id === 3" class="rounded-capsule badge badge-soft-success">@{{response.payment_status.name}} <i class="fas fa-check"></i></span>
+                        <span ng-show="response.payment_status.id === 4 || response.payment_status.id === 5" class="rounded-capsule badge badge-soft-danger">  <i class="fas fa-exclamation-triangle"></i> @{{response.payment_status.name}} </span>
+                    </div>
+                </div>
+                <div>
+                    <div>Fecha de Pago</div>
+                    <div class="ml-2">@{{response.payment_init_date}}</div>
+                </div>
+                <div>
+                    <div>Cod. Aprobación</div>
+                    <div class="ml-2">@{{response.approval_code}}</div>
+                </div>
+                <div>
+                    <div>Medio de pago</div>
+                    <div class="ml-2">@{{response.payment_method}}</div>
+                </div>
+                <div ng-show="response.rating_plan">
+                    <div>Descripción</div>
+                    <div class="ml-2">@{{response.rating_plan.name}}</div>
+                </div>
+                <div ng-show="!response.rating_plan">
+                    <div>Descripción</div>
+                    <div class="ml-2">@{{response.rating_plan}}</div>
+                </div>
+            </div>
             <div id="tabContact" class="tab-pane fade" ng-class="{'show active': tabSelected === 'contact'}">
                 <div>
                     <div>Nombre</div>
@@ -65,5 +121,5 @@
             </div>
          </div>
       </div>
-   </div>
+    </div>
 </div>

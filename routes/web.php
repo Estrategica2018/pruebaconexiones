@@ -116,7 +116,8 @@ Route::group(['middleware' =>['auth:afiliadoempresa']],function (){
     Route::get('conexiones/admin/get_kit/{id?}', 'KitController@get_kit')->middleware('role:admin')->name('get_kit');
     Route::get('conexiones/admin/usuarios/', 'AdminController@show_all_users')->middleware('role:admin')->name('admin.all_users');
     Route::get('conexiones/admin/get_all_users/', 'AdminController@get_all_users')->middleware('role:admin')->name('admin.get_all_users');
-    Route::get('conexiones/admin/get_user_shoppingCart/{user_id}/{idShoppingCart?}', 'AdminController@get_user_shoppingCart')->middleware('role:admin')->name('admin.get_user_shoppingCart');
+    Route::get('conexiones/admin/get_user/{user_id}', 'AdminController@get_user')->middleware('role:admin')->name('admin.get_user');
+    Route::get('conexiones/admin/get_user_shoppingCart/{idShoppingCart}', 'AdminController@get_user_shoppingCart')->middleware('role:admin')->name('admin.get_user_shoppingCart');
 
 });
 

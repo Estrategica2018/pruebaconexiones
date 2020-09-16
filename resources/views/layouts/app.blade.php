@@ -22,8 +22,7 @@
     <link href="{{ asset('falcon/css/theme.css') }}" type="text/css" rel="stylesheet" class="theme-stylesheet">
     <!-- select2 CSS -->
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-    <!-- Helvetica Rounded LT -->
-    <link href="{{ asset('css/fonts/helvetica-rounded-lt.css') }}" rel="stylesheet" type="text/css" />
+    
 
     <script src="{{ asset('js/jquery-3.5.0.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/jquery-ui.min.js') }}" type="text/javascript"></script>

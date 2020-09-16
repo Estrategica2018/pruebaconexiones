@@ -67,16 +67,11 @@
                                  </td>
                                  <td class="border-0 align-middle">
                                     <div class="dropdown">
-                                       <button type="button" aria-haspopup="true" aria-expanded="false" class="text-600 btn-reveal btn btn-link btn-sm">
+                                       <button type="button" aria-haspopup="true" aria-expanded="false" class="text-600 btn-reveal btn btn-link btn-sm" ng-click="showUser(user.id)">
                                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                              <path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
                                           </svg>
                                        </button>
-                                       <div tabindex="-1" role="menu" aria-hidden="true" class="border py-2 dropdown-menu dropdown-menu-right">
-                                          <button type="button" tabindex="0" role="menuitem" class="dropdown-item">View</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">Edit</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">Refund</button>
-                                          <div tabindex="-1" class="dropdown-divider"></div>
-                                          <button type="button" tabindex="0" role="menuitem" class="text-warning dropdown-item">Archive</button><button type="button" tabindex="0" role="menuitem" class="text-danger dropdown-item">Delete</button>
-                                       </div>
                                     </div>
                                  </td>
                               </tr>
@@ -86,9 +81,10 @@
                   </div>
                   <div class="px-1 py-3 no-gutters row">
                      <div class="pl-3 fs--1 col">
-                        <span>@{{users.length}} uuarios </span>
+                        <span>@{{users.length}} usuarios</span>
                      </div>
                   </div>
+                  <conx-shoppingcart-detail userid="userid"> </conx-shoppingcart-detail>
                </div>
             </div>
          </div>

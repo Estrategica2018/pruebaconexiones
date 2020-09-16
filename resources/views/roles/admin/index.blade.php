@@ -2,9 +2,9 @@
 @section('content')
 <div class="container">
    <div class="content">
-      <div class="row">
+      <div class="d-flex">
          @include('roles/admin/sidebar')
-         <div class="col-md-8" style="min-width:700px;" ng-controller="adminIndexCtrl">
+         <div class="" style="min-width:700px;" ng-controller="adminIndexCtrl">
             <div class="mb-3 card">
                <div class="card-header">
                   <h5 class="mb-0">Panel Administrador</h5>
@@ -12,7 +12,7 @@
                <div class="bg-light card-body">
                   <div class="card-deck">
                      <div class="mb-3 overflow-hidden card" style="min-width: 12rem;">
-                        <div class="bg-holder bg-card" style="background-image: url(&quot;/static/media/corner-1.dfdb6c51.png&quot;);"></div>
+                        <div class="bg-holder bg-card"></div>
                         <div class="position-relative card-body">
                            <h6>Afiliados<span class="badge badge-soft-warning rounded-capsule ml-2">{{$companyAffiliated}} Activos</span></h6>
                            <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-warning">{{$affiliated}} Total</div>
@@ -23,7 +23,7 @@
                      </div>
 
                      <div class="mb-3 overflow-hidden card" style="min-width: 12rem;">
-                        <div class="bg-holder bg-card" style="background-image: url(&quot;/static/media/corner-3.7df03b54.png&quot;);"></div>
+                        <div class="bg-holder bg-card"></div>
                         <div class="position-relative card-body">
                            <h6>Pagos<span class="badge badge-soft-success rounded-capsule ml-2">9.54%</span></h6>
                            <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif"><span>$43,594</span></div>
@@ -73,10 +73,10 @@
                                  <thead>
                                     <tr class="bg-200 text-900 border-y border-200">
                                        <th tabindex="0" class="border-0">Id</th>
-                                       <th tabindex="0" class="border-0">Fecha</th>
+                                       <th tabindex="0" class="border-0" style="min-width: 78px;">Fecha</th>
                                        <th tabindex="0" class="border-0">Afiliado</th>
                                        <th tabindex="0" class="border-0">Email</th>
-                                       <th tabindex="0" class="border-0">Producto</th>
+                                       <th tabindex="0" class="border-0" style="min-width: 121px;">Producto</th>
                                        <th tabindex="0" class="border-0">Cód.Aprobación</th>
                                        <th tabindex="0" class="border-0">Estado</th>
                                        <th tabindex="0" class="border-0" style="text-align: right; min-width:100px;">Precio</th>

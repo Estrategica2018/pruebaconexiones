@@ -12,8 +12,6 @@ MyApp.controller("listAllUsersCtrl", ["$scope", "$http", function ($scope, $http
                         value.status = value.affiliated_account_services.length > 0 ? 'Activo' : 'Inactivo';
                         return value;
                 })
-                
-                
             }
             else  { 
                 $scope.errorMessage = response.message || 'Error consultando usuarios';
@@ -25,5 +23,10 @@ MyApp.controller("listAllUsersCtrl", ["$scope", "$http", function ($scope, $http
             swal('Conexiones',$scope.errorMessage,'error');
         });
     }
+    
+    $scope.showUser = function(userid) {
+       $scope.userid = userid;
+    }
 
 }])
+

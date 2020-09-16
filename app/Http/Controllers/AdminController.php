@@ -227,19 +227,34 @@ class AdminController extends Controller
         
         return response()->json(['users' => $affiliated], 200);
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_user(Request $request, $user_id)
+    {
+        
+        $user = AfiliadoEmpresa::find($user_id);
+        
+        $shoppingCart = ShoppingCart::
+            with('rating_plan', 'shopping_cart_product','shopping_cart_product','payment_status')
+            ->where('payment_status_id', '!=',1)
+            ->whereHas('affiliate', function ($query) use ($user_id) {
+                 $query->where('id','=',$user_id);
+            })
+            ->get();
+        return response()->json(['shoppingCart'=>$shoppingCart, 'user'=>$user], 200);
+    }
     
     /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function get_user_shoppingCart(Request $request, $idShoppingCart)
-    {
+    {   
         $shoppingCart = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','affiliate.country','shopping_cart_product','payment_status')
             ->where('payment_status_id', '!=',1)
             ->find($idShoppingCart);
         return response()->json($shoppingCart, 200);
     }
-    
-
-
 }
