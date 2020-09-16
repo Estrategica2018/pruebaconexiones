@@ -32,6 +32,8 @@ class PaymentConfirmationController extends Controller
             $payments = MercadoPago\Payment::search($filters);
             $payment = end($payments);
 
+            dd($shoppingCart, $payment, $shoppingCart->with("affiliate"));
+
             if ($payment->status == "approved") {
 
                // dd($shoppingCart, $payment, $shoppingCart->with("affiliate"));
