@@ -43,12 +43,12 @@
                                         </span>
                                         <br>
                                         <span color="#0059a4" face="Roboto, sans-serif">
-                                            @if ({{$request->collection_id}}){
+                                            @if ({{$request->collection_id}})
                                                 <span style="color:#999999">Identificador de la transacción: {{$request->collection_id}}
-                                            }
-                                            @else{
+                                            
+                                            @else
                                                 <span style="color:#999999">Identificador de la transacción: {{$request->id}}
-                                            }
+                                            @endif
                                             </span>
                                             <br>
                                             <span style="color:#999999">Usuario: {{$afiliadoEmpresa->user_name}}
