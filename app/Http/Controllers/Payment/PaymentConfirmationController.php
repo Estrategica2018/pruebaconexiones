@@ -34,7 +34,7 @@ class PaymentConfirmationController extends Controller
 
             dd($shoppingCart, $payment, $shoppingCart->with("affiliate"));
 
-            if ($payment->status == "approved") {
+            if ($payment && $payment->status == "approved") {
 
                // dd($shoppingCart, $payment, $shoppingCart->with("affiliate"));
 
