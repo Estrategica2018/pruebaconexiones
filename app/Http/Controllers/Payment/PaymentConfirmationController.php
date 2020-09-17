@@ -55,6 +55,7 @@ class PaymentConfirmationController extends Controller
                     $this->addRatingPlanPaid($shoppingCart, $ratingPlan, $afiliado_empresa);
                 }
 
+                dd(isset($payment->collection_id), isset($payment->id), $payment );
                 //Envío correo de pago exitoso
                 Mail::to($afiliado_empresa->email)->send(
                     new SendSuccessfulPaymentNotification($shoppingCart, $payment, $afiliado_empresa, $payment->transaction_amount, $payment->date_approved));
