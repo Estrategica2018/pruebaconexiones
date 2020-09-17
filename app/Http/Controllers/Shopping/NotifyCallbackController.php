@@ -298,6 +298,6 @@ class NotifyCallbackController extends Controller
             touch($filename, strtotime('-1 days'));
         }
         //file_put_contents($filename, file_get_contents($filename) .'\n' . $string);        
-        file_put_contents($filename, $string . PHP_EOL, FILE_APPEND);
+        //file_put_contents($filename, $string . PHP_EOL, FILE_APPEND);
     }
 }
