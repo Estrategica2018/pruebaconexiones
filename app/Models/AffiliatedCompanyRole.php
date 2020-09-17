@@ -44,7 +44,7 @@ class AffiliatedCompanyRole extends Model
 
     }
 
-    public function retrive_tutor()
+    public function retrive_afiliado_empresa()
     { 
         return $this->belongsTo(AfiliadoEmpresa::class, 'affiliated_company_id', 'id');
 

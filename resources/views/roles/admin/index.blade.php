@@ -25,26 +25,23 @@
                      <div class="mb-3 overflow-hidden card" style="min-width: 12rem;">
                         <div class="bg-holder bg-card"></div>
                         <div class="position-relative card-body">
-                           <h6>Pagos<span class="badge badge-soft-success rounded-capsule ml-2">9.54%</span></h6>
-                           <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif"><span>$43,594</span></div>
-                           <a class="font-weight-semi-bold fs--1 text-nowrap" href="/#!">
-                              Statistics
-                              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8 ml-1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" style="transform-origin: 0.25em 0.59375em;">
-                                 <g transform="translate(128 256)">
-                                    <g transform="translate(0, 48)  scale(1, 1)  rotate(0 0 0)">
-                                       <path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z" transform="translate(-128 -256)"></path>
-                                    </g>
-                                 </g>
-                              </svg>
-                           </a>
+                           <h6>Pagos
+                           <span class="badge rounded-capsule ml-2" ng-class="{ 'badge-soft-success':{{$progressPrice}}  >= 1, 'badge-soft-warning':{{$progressPrice}}  < 1  }">
+                           {{$progressPrice}} % 
+                           <i ng-show="{{$progressPrice}} >= 1 " class="fa fa-chevron-up" aria-hidden="true"></i>
+                           <i ng-show="{{$progressPrice}} < 1" class="fa fa-chevron-down" aria-hidden="true"></i>
+                           </span>
+                           <small>respecto al mes pasasdo</small>
+                           </h6>
+                           <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif"><span>${{ $totalSumPrices }} USD</span></div>
                         </div>
                      </div>
                      <div class="mb-3 overflow-hidden card" style="min-width: 12rem;">
                         <div class="position-relative card-body">
                            <h6>Envíos<span class="badge badge-soft-info rounded-capsule ml-2">0.0%</span></h6>
                            <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-info">0</div>
-                           <a class="font-weight-semi-bold fs--1 text-nowrap" href="/#!">
-                              All orders
+                           <a class="font-weight-semi-bold fs--1 text-nowrap">
+                              Todas las Órdenes
                               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8 ml-1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" style="transform-origin: 0.25em 0.59375em;">
                                  <g transform="translate(128 256)">
                                     <g transform="translate(0, 48)  scale(1, 1)  rotate(0 0 0)">
@@ -131,7 +128,7 @@
                                        </td>
                                        <td class="border-0 align-middle" style="text-align: right;">
                                        @if($shoppingCart->type_product_id == 1 || $shoppingCart->type_product_id == 2 || $shoppingCart->type_product_id == 3)
-                                         $  {{$shoppingCart->rating_plan_price}} USD
+                                         @if($shoppingCart->rating_plan_price>0) $  {{$shoppingCart->rating_plan_price}} USD @endif
                                        @endif
                                        </td>
                                        <td class="border-0 align-middle">

@@ -5,6 +5,7 @@
             
             <div class="mb-3">
                 <ul class="list-group">
+                    <li class="list-group-item btn text-align-left"><a href="{{route('admin','conexiones')}}">Inicio</a></li>
                     <li class="list-group-item btn text-align-left"><a href="{{route('fileupload')}}">Carga masiva</a></li>
                     <li class="list-group-item btn text-align-left"><a href="{{route('fileuploadlogs')}}">Lista carga masiva</a></li>
                     <li class="list-group-item btn text-align-left"><a href="{{route('admin.get_sequences_list')}}">Diseño de Guías de aprendizaje</a></li>

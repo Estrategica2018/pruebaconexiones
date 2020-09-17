@@ -30,3 +30,30 @@ MyApp.controller("listAllUsersCtrl", ["$scope", "$http", function ($scope, $http
 
 }])
 
+MyApp.directive('conxShoppingcartDetail', [function () {
+    return {
+        restrict: 'E',
+        scope: {
+            userid: "="
+        },
+        templateUrl: '/dialog_template_detail_user',
+        controller: function ($scope, $timeout, $http) {
+            
+            $scope.$watch('userid',function () {
+                if(typeof $scope.userid != 'undefined') {
+                    
+                    $scope.tabSelected = 'contact';
+                    
+                    $http.get('/conexiones/admin/get_user/' + $scope.userid)
+                    .then(function (response) {
+                        $scope.response = response.data;
+                        
+                    }).catch(function(err){
+                        var message = err.data && err.data.exception ? err.data.exception : ' Error inesperado'
+                        swal('Conexiones','Error consultando detalle de compra: ' + err,'error').catch(swal.noop);
+                    });
+                }
+            });
+        }
+    };
+}]);

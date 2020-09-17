@@ -10,8 +10,7 @@ MyApp.directive('conxShoppingcartDetail', [function () {
     return {
         restrict: 'E',
         scope: {
-            id: "=",
-            userid: "="
+            id: "="
         },
         templateUrl: '/dialog_template_detail_user',
         controller: function ($scope, $timeout, $http) {

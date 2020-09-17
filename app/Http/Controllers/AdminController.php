@@ -6,17 +6,22 @@ use App\Mail\SendChangeDateExpirationContent;
 use App\Models\AffiliatedAccountService;
 use App\Models\AfiliadoEmpresa;
 use App\Models\ShoppingCart;
+use App\Models\AffiliatedCompanyRole;
+use App\Models\ConectionAffiliatedStudents;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
-
+use App\Traits\RelationRatingPlan;
+use DateTime;
 /**
  * Class AdminController
  * @package App\Http\Controllers
  */
 class AdminController extends Controller
 {
+    use RelationRatingPlan;
+    
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -44,9 +49,30 @@ class AdminController extends Controller
             ->get();
             
         $totalShoppingCarts = ShoppingCart::where('payment_status_id', '!=',1)->count();
+        
+        $payments = ShoppingCart::where('payment_status_id', '=',3)->get();
+        
+        $fist_day_previous = date("Y-n-j", strtotime("first day of previous month"));
+        $end_day_previous =  date("Y-n-j", strtotime("last day of previous month"));
+        $lastSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->where([['updated_at','>=',$fist_day_previous],['updated_at','<=',$end_day_previous]])->get()->sum('rating_plan_price');
+        
+        
+        $fist_day_now = date("Y-n-j", strtotime("first day of this month"));
+        $end_day_now =  date("Y-n-j", strtotime("last day of this month"));
+        $nowSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->where([['updated_at','>=',$fist_day_now],['updated_at','<=',$end_day_now]])->get()->sum('rating_plan_price');
+        
+        $progressPrice = '0%';
+        if($lastSumPrices > 0 && $nowSumPrices > 0) {
+            $progressPrice = round($nowSumPrices/$lastSumPrices,2);
+        }
+        //dd($lastSumPrices, $nowSumPrices, $progressPrice);
+        
+        $totalSumPrices =  $payments->sum('rating_plan_price');
+        
+        
             
         $countShoppingCarts = count($shoppingCarts);
-        return view('roles.admin.index',['affiliated'=>$affiliated,'companyAffiliated'=>$companyAffiliated, 'shoppingCarts'=>$shoppingCarts, 'countShoppingCarts'=>$countShoppingCarts, 'totalShoppingCarts'=>$totalShoppingCarts]);
+        return view('roles.admin.index',['affiliated'=>$affiliated,'companyAffiliated'=>$companyAffiliated, 'shoppingCarts'=>$shoppingCarts, 'countShoppingCarts'=>$countShoppingCarts, 'totalShoppingCarts'=>$totalShoppingCarts, 'totalSumPrices'=>$totalSumPrices, 'progressPrice'=>$progressPrice]);
     }
 
     /**
@@ -234,16 +260,30 @@ class AdminController extends Controller
     public function get_user(Request $request, $user_id)
     {
         
-        $user = AfiliadoEmpresa::find($user_id);
+        $user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($user_id);
         
-        $shoppingCart = ShoppingCart::
-            with('rating_plan', 'shopping_cart_product','shopping_cart_product','payment_status')
+
+        $rol_id = AffiliatedCompanyRole::where([
+            ['affiliated_company_id', $user->id],
+            ['rol_id', 3],//familiar
+            ['company_id', 1]//conexiones
+        ])->first();
+        
+        $kidSelected = ConectionAffiliatedStudents::with('student_family.retrive_afiliado_empresa')->where([
+            ['tutor_company_id', $rol_id->id]
+        ])->get();
+        
+        
+        $shoppingCarts = ShoppingCart::
+            with('rating_plan', 'shopping_cart_product','payment_status')
             ->where('payment_status_id', '!=',1)
             ->whereHas('affiliate', function ($query) use ($user_id) {
                  $query->where('id','=',$user_id);
             })
             ->get();
-        return response()->json(['shoppingCart'=>$shoppingCart, 'user'=>$user], 200);
+        $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
+
+        return response()->json(['shoppingCarts'=>$shoppingCarts, 'affiliate'=>$user, 'kidSelected'=>$kidSelected], 200);
     }
     
     /**
@@ -252,9 +292,34 @@ class AdminController extends Controller
     public function get_user_shoppingCart(Request $request, $idShoppingCart)
     {   
         $shoppingCart = ShoppingCart::
-            with('rating_plan', 'shopping_cart_product','affiliate.country','shopping_cart_product','payment_status')
+            with('rating_plan', 'shopping_cart_product','payment_status')
+            ->where([['payment_status_id', '!=',1],['id',$idShoppingCart]])
+            ->get();
+            
+        $shoppingCart = $this->relation_rating_plan($shoppingCart)[0];    
+        
+        $user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($shoppingCart->affiliate->id);
+        $user_id = $user->id;
+        
+        $rol_id = AffiliatedCompanyRole::where([
+            ['affiliated_company_id', $user->id],
+            ['rol_id', 3],//familiar
+            ['company_id', 1]//conexiones
+        ])->first();
+        
+        $kidSelected = ConectionAffiliatedStudents::with('student_family.retrive_afiliado_empresa')->where([
+            ['tutor_company_id', $rol_id->id]
+        ])->get();
+        
+        $shoppingCarts = ShoppingCart::
+            with('rating_plan', 'shopping_cart_product','payment_status')
             ->where('payment_status_id', '!=',1)
-            ->find($idShoppingCart);
-        return response()->json($shoppingCart, 200);
+            ->whereHas('affiliate', function ($query) use ($user_id) {
+                 $query->where('id','=',$user_id);
+            })
+            ->get();
+        $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
+        
+        return response()->json(['transaction'=>$shoppingCart, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);
     }
 }

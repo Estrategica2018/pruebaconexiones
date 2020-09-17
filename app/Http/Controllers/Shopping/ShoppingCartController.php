@@ -130,6 +130,7 @@ class ShoppingCartController extends Controller
                 $shoppingCart->rating_plan_price = $ratingPlan->price * count($data['products']);
             }
         }
+        
 
         $shoppingCart->type_product_id = intval($data['type_product_id']);
 
@@ -138,12 +139,26 @@ class ShoppingCartController extends Controller
         } else {
             $shoppingCart->payment_status_id = $payment_status_default;
         }
+        
         $shoppingCart->save();
 
         foreach ($data['products'] as $product) {
             $shoppingCartProduct = new ShoppingCartProduct();
             $shoppingCartProduct->shopping_cart_id = $shoppingCart->id;
             $shoppingCartProduct->product_id = $product['id'];
+            
+            if($type_product_id == 4 ) {
+                $kit = Kit::find($product['id']);
+                $shoppingCart->rating_plan_price = $kit->price;
+                $shoppingCart->save();
+            }
+            
+            if($type_product_id == 5 ) {
+                $element = Element::find($product['id']);
+                $shoppingCart->rating_plan_price = $element->price;
+                $shoppingCart->save();
+            }
+            
             $shoppingCartProduct->save();
         }
         return $shoppingCart;
