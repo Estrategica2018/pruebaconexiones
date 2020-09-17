@@ -174,7 +174,7 @@ Route::group([],function (){
             return redirect()->route('registerForm');
         })->name('registryWithPendingShoppingCart');
         Route::get('get_shopping_cart/', 'Shopping\ShoppingCartController@get_shopping_cart')->name('get_shopping_cart');
-        Route::get('payment_confirmation/', 'Payment\PaymentConfirmationController@payment_confirmation')->name('payment_confirmation');
+        Route::get('payment_confirmation/', 'Payment\PaymentConfirmationController@payment_confirmation_test')->name('payment_confirmation');
         
         Route::get('get_preference_initPoint', 'Shopping\ShoppingCartController@get_preference_initPoint')->name('get_preference_initPoint');
         Route::get('get_preference_simulator', 'Shopping\ShoppingCartController@get_preference_simulator')->name('get_preference_simulator');

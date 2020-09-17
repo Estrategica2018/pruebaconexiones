@@ -15,7 +15,11 @@ use MercadoPago;
 
 class PaymentConfirmationController extends Controller
 {
-    public function payment_confirmation(Request $request)
+    public function payment_confirmation_test(Request $request) {
+        $this->payment_confirmation();
+    }
+
+    public function payment_confirmation()
     {
         MercadoPago\SDK::setAccessToken(env('MERCADOPAGO_ACCESS_TOKEN'));
 
