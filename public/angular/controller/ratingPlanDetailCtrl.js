@@ -5,6 +5,7 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
     $scope.elementsKits = [];
     $scope.meshDirectory = null;
     $scope.totalMoments = 0;
+
     
     var type_sequence = 1;
     var type_moment = 2;
@@ -365,7 +366,22 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
                 }
             }
         }
-    }
+    
+		if($scope.elementsKits.length == 0 ) {
+			swal({
+				text: 'Confirma para continuar con la compra',
+				showConfirmButton: true, showCancelButton: true,
+				confirmButtonColor: '#2c7be5',
+				confirmButtonText: "Continuar compra",
+				cancelButtonText: "Cancelar",
+			})
+			.then((result) => {
+				if (result) {
+					$scope.onContinuePayment();
+				}
+			}).catch(swal.noop);
+		}
+	}
     
     $scope.onContinuePayment = function() {
         

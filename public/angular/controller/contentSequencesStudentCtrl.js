@@ -127,13 +127,23 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
                 
                 for (var i = 0; i < $scope.sequences.length; i++) {
                     scp = $scope.sequences[i];
-                    if ((scp.type_product_id === 2 || scp.type_product_id === 1) && scp.sequence_id === sequenceId) {
-                        $('#section_type_question').removeClass('disabled-section');
-                        $('#section_type_question').attr('href',$('#section_type_question').attr('href2'));
-                        $('#section_type_science').removeClass('disabled-section');
-                        $('#section_type_science').attr('href',$('#section_type_question').attr('href2'));
-                        $('#section_type_connection').removeClass('disabled-section');
-                        $('#section_type_connection').attr('href',$('#section_type_question').attr('href2'));
+                    if (!((scp.type_product_id === 2 || scp.type_product_id === 1) && scp.sequence_id === sequenceId)) {
+                        $('#section_type_question').addClass('disabled-section');
+                        $('#section_type_question').removeAttr('href');
+                        $('#section_type_question + div').find('a').addClass('disabled-section');
+                        $('#section_type_question + div').find('a').removeAttr('href','');
+                        
+                        
+                        $('#section_type_science').addClass('disabled-section');
+                        $('#section_type_science').removeAttr('href');
+                        $('#section_type_science + div').find('a').addClass('disabled-section');
+                        $('#section_type_science + div').find('a').removeAttr('href');
+                        
+                        $('#section_type_connection').addClass('disabled-section');
+                        $('#section_type_connection').removeAttr('href');
+                        $('#section_type_connection + div').find('a').addClass('disabled-section');
+                        $('#section_type_connection + div').find('a').removeAttr('href');
+                        
                     }
                 }
                 

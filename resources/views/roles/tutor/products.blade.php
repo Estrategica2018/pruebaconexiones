@@ -7,25 +7,27 @@
           <h6 ng-show="products.length > 1" class="mt-3 mb-4"> Actualmente cuentas con diferentes productos con nosotros.</h6>
           <div class="row">
               <div ng-repeat="product in products" class="col-lg-6 col-12 mb-3">
-                <div ng-show="product.type_product_id === 1" class="d-flex">
-                    <img width="auto" height="100px" src="{{asset('/')}}@{{product.sequence.url_image}}" />
+                <div ng-show="product.rating_plan_type === 1" class="d-flex">
+                    <img width="auto" height="100px" src="{{asset('/')}}@{{product.affiliated_content_account_service[0].sequence.url_image}}" />
                     <div class="row">
-                       <h6 class="col-12 ml-3">Secuencia @{{product.sequence.name}}</h6>
+                       <h6 class="col-12 ml-3">Secuencia @{{product.affiliated_content_account_service[0].sequence.name}}</h6>
                        <p class="fs--3 ml-3 col-12  pr-5">Esta guía de aprendizaje consta de : Situación generadora, guía de saberes, ruta de viaje y los 8 momentos que contienen : Pregunta central, ciencia en contexto, experiencia cientíﬁcas y + conexiones</p>
                     </div>
                 </div>
-                <div ng-show="product.type_product_id === 2" class="d-flex">
-                    <img width="auto" height="100px" src="{{asset('/')}}@{{product.sequence.url_image}}" />
+                <div ng-show="product.rating_plan_type === 2" class="d-flex">
+                    <img width="auto" height="100px" src="{{asset('/')}}@{{product.affiliated_content_account_service[0].sequence.url_image}}" />
                     <div class="row">
-                       <h6 class="col-12 ml-3">Experiencia @{{product.sequence.name}}</h6>
-                       <p class="fs--3 ml-3 col-12  pr-5">Consta de diversas experiencias científicas</p>
+                       <h6 class="col-12 ml-3">Momentos de @{{product.affiliated_content_account_service[0].sequence.name}}</h6>
+                       <p class="fs--3 ml-3 col-12  pr-5">Consta de @{{ product.affiliated_content_account_service.length }}
+                       @{{ (product.affiliated_content_account_service.length > 1 ? 'momentos' :  'momento' ) }}  para desarrollar</p>
                     </div>
                 </div>
-                <div ng-show="product.type_product_id === 3" class="d-flex">
-                    <img width="auto" height="100px" src="{{asset('/')}}@{{product.sequence.url_image}}" />
+                <div ng-show="product.rating_plan_type === 3" class="d-flex">
+                    <img width="auto" height="100px" src="{{asset('/')}}@{{product.affiliated_content_account_service[0].sequence.url_image}}" />
                     <div class="row">
-                       <h6 class="col-12 ml-3">Momentos de @{{product.sequence.name}}</h6>
-                       <p class="fs--3 ml-3 col-12 pr-5">Consta de diveros momentos</p>
+                       <h6 class="col-12 ml-3">Experiencias de @{{product.affiliated_content_account_service[0].sequence.name}}</h6>
+                       <p class="fs--3 ml-3 col-12  pr-5">Consta de @{{ product.affiliated_content_account_service.length }}
+                       @{{ (product.affiliated_content_account_service.length > 1 ? 'experiencias científicas' :  'experiencia científica' ) }}  para desarrollar</p>
                     </div>
                 </div>
                 <div ng-show="product.affiliated_account_services.rating_plan.is_free" class="position-absolute label_free">

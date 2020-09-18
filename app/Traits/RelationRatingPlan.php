@@ -19,9 +19,9 @@ trait RelationRatingPlan
         $momentsCache = cache()->tags('connection_moments_redis')->rememberForever('moments_redis',function(){
             return SequenceMoment::all();
         });
-        $experiencesCache = cache()->tags('connection_experiences_redis')->rememberForever('experiences_redis',function(){
+        /*$experiencesCache = cache()->tags('connection_experiences_redis')->rememberForever('experiences_redis',function(){
             return MomentExperience::all();
-        });
+        });*/
         $kitsCache = cache()->tags('connection_kits_redis')->rememberForever('kits_redis',function(){
             return Kit::all();
         });
@@ -52,8 +52,7 @@ trait RelationRatingPlan
                     break;
                 case 3://experience
                     foreach ($shoppingCarts[$i]['shopping_cart_product'] as $sequenceA){
-                        $id = $experiencesCache->where('id', $sequenceA['product_id'])->pluck('sequence_moment_id')->toArray();
-                        foreach ($sequencesCache->whereIn('id', $momentsCache->whereIn('id', $id)->pluck('sequence_company_id')->toArray()) as $sequenceB){
+                        foreach ($sequencesCache->whereIn('id', $momentsCache->whereIn('id', $sequenceA['product_id'])->pluck('sequence_company_id')->toArray()) as $sequenceB){
                             $sequenceA['sequenceStruct_experience'] = $sequenceB;
                         }
                     }

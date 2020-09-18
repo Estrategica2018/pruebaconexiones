@@ -26,11 +26,11 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
         }).
         then(function (response) {
             $scope.ratingPlans = response.data ? response.data.data || response.data : response;
-			
-			$scope.ratingPlans = $scope.ratingPlans.map(function(value) {
-				value.description_items = value.description_items ?value.description_items.split('|'):[];
-				value.name_url_value = value.name.replace(/\s/g,'_').toLowerCase();
-			  return value;
+            
+            $scope.ratingPlans = $scope.ratingPlans.map(function(value) {
+                value.description_items = value.description_items ?value.description_items.split('|'):[];
+                value.name_url_value = value.name.replace(/\s/g,'_').toLowerCase();
+              return value;
             });
             
         

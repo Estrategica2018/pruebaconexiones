@@ -40,7 +40,7 @@
         @if(isset($sections))
         @foreach( $sections as $index=> $section )
         @if($section['section']['type'] == 1)
-            <a id="section_type_question" class="disabled-section cursor-pointer d-flex color-gray-dark mt-2" href2="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id])}}">
+            <a id="section_type_question" class="cursor-pointer d-flex color-gray-dark mt-2" href2="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id])}}">
                 <img src="{{asset('/images/icons/preguntaCentral.png')}}" height= "auto" width="45px">
                 <h6 class="tooltiptext d-none">No tienes acceso al módulo</h6>
                 <div class="fs--1 text-align-left ml-3 mb-auto mt-auto">Pregunta central:
@@ -67,7 +67,7 @@
            </div>    
         @endif
         @if($section['section']['type'] == 2)
-            <a id="section_type_science" class="disabled-section cursor-pointer d-flex color-gray-dark mt-2" href2="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id])}}">
+            <a id="section_type_science" class="cursor-pointer d-flex color-gray-dark mt-2" href2="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id])}}">
                 <img src="{{asset('/images/icons/cienciaCotidiana.png')}}" height= "auto" width="45px">
                 <h6 class="tooltiptext d-none">No tienes acceso al módulo</h6>
                 <div class="fs--1 text-align-left ml-3 mb-auto mt-auto">Ciencia en contexto:
@@ -116,7 +116,7 @@
            </div>    
         @endif
         @if($section['section']['type'] == 4)
-            <a id="section_type_connection"  class="disabled-section cursor-pointer d-flex color-gray-dark mt-2" href2="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id])}}">
+            <a id="section_type_connection"  class="cursor-pointer d-flex color-gray-dark mt-2" href2="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id])}}">
             <img src="{{asset('/images/icons/masConexiones.png')}}" height= "auto" width="45px">
                 <h6 class="tooltiptext d-none">No tienes acceso al módulo</h6>
                 <div class="fs--1 text-align-left ml-3 mb-auto mt-auto"> + Conexiones:<span class="fs--2 ml-2">@if(isset($section['title'])){{$section['title']}} @endif</span></div>

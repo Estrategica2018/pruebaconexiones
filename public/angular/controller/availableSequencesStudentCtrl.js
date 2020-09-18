@@ -1,6 +1,6 @@
 MyApp.controller("availableSequencesStudentCtrl", ["$scope", "$http", function ($scope, $http) {
     
-    $scope.sequences = null;
+    $scope.accountServices = null;
     $scope.errorMessage = null;
 
     $scope.init = function(company_id)    {
@@ -12,7 +12,7 @@ MyApp.controller("availableSequencesStudentCtrl", ["$scope", "$http", function (
             method: "GET",
         }).
         then(function (response) {
-            $scope.sequences = response.data;
+            $scope.accountServices = response.data;
         }).catch(function (e) {
             $scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
             swal('Conexiones',$scope.errorMessage,'error');

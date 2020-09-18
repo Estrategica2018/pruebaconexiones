@@ -164,23 +164,43 @@ class TutorController extends Controller
     {
 
         $user_id = auth('afiliadoempresa')->user()->id;
-//esta consulta no se esta realizando
+        //esta consulta no se esta realizando
         /*
         $accountServices = AffiliatedAccountService::
         where('affiliated_account_services.company_affiliated_id', '=', $user_id)
             ->where('init_date', '<=', date('Y-m-d') . ' 00:00:00')
             ->where('end_date', '>=', date('Y-m-d') . ' 24:59:59')
             ->get();
-*/
-        $ids = AffiliatedAccountService::
+        */
+        
+        /*$ids = AffiliatedAccountService::
         where('company_affiliated_id', '=', $user_id)
             ->where([
                 ['init_date', '<=', date('Y-m-d') ],
                 ['end_date', '>=', date('Y-m-d') ]
-            ])->pluck('id');
-
-        return AffiliatedContentAccountService::with('affiliated_account_services.rating_plan', 'sequence')
-            ->whereIn('affiliated_account_service_id', $ids)->groupBy('sequence_id')->get();
+         ])->pluck('id');*/
+        
+        
+        /*$services =  AffiliatedContentAccountService::with('affiliated_account_services.rating_plan', 'sequence')
+        ->whereIn('affiliated_account_service_id', $ids)
+        ->groupBy('sequence_id','created_at')
+        ->get();*/
+        
+        /*$services = AffiliatedAccountService::
+        with('affiliated_content_account_service','rating_plan', 'sequence')
+        ->whereIn('affiliated_account_service_id', $ids)
+        ->get();*/
+        
+        $accountServices = AffiliatedAccountService::
+        with(['affiliated_content_account_service.sequence'=>function($query){
+            $query->select('id','url_image','name');
+        }, 'rating_plan'])
+        ->where([
+                ['company_affiliated_id', $user_id],
+                ['init_date', '<=', date('Y-m-d') ],
+                ['end_date', '>=', date('Y-m-d') ]])
+        ->get();
+        return $accountServices;
     }
 
     /**

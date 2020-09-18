@@ -34,23 +34,23 @@
                                </div>
                                <a ng-init="guide = true; experience = false"></a>
                                 <div ng-show="guide==true" class="d-none-result d-none position-relative card-body pr-1 row" style="min-height: 301px;">
-                                   <a class="mt-3 col-lg-2 col-md-3 col-sm-4 col-6" ng-repeat="sequence in sequences"
-                                        href="./secuencia/@{{sequence.sequence.id}}/situacion_generadora/@{{sequence.affiliated_account_service_id}}">
-                                    <img width="132px" height="auto" src="{{asset('/')}}@{{sequence.sequence.url_image}}" />
+                                   <a class="mt-3 col-lg-2 col-md-3 col-sm-4 col-6" ng-repeat="accountService in accountServices"
+                                        href="./secuencia/@{{accountService.affiliated_content_account_service[0].sequence.id}}/situacion_generadora/@{{accountService.id}}">
+                                    <img width="132px" height="auto" src="{{asset('/')}}@{{accountService.affiliated_content_account_service[0].sequence.url_image}}" />
                                     <button class="ml-2 mt-2 btn btn-outline-primary fs--2" class="col-6">Explorar</button>
                                    </a>
                                 </div>
                                 <div ng-show="experience==true" class="d-none-result d-none position-relative card-body pr-1 row" style="min-height: 301px;">
-                                   <a class="mt-3 col-lg-2 col-md-3 col-sm-4 col-6" ng-repeat="sequence in sequences"
-                                        href="./secuencia/@{{sequence.sequence.id}}/experiencia_cientifica/@{{sequence.affiliated_account_service_id}}">
-                                    <img width="132px" height="auto" src="{{asset('/')}}@{{sequence.sequence.url_image}}" />
+                                   <a class="mt-3 col-lg-2 col-md-3 col-sm-4 col-6" ng-repeat="accountService in accountServices"
+                                        href="./secuencia/@{{accountService.affiliated_content_account_service[0].sequence.id}}/experiencia_cientifica/@{{accountService.id}}">
+                                    <img width="132px" height="auto" src="{{asset('/')}}@{{accountService.affiliated_content_account_service[0].sequence.url_image}}" />
                                     <button class="ml-2 mt-2 btn btn-outline-primary fs--2" class="col-6">Explorar</button>
                                    </a>
                                 </div>
-                                <div class="p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="sequences === null">
+                                <div class="p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="accountServices === null">
                                   cargando...
                                </div>
-                               <div class="d-none-result d-none  p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="sequences.length === 0">
+                               <div class="d-none-result d-none  p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="accountService.length === 0">
                                   No se encontraron secuencias activas...
                                </div>
                                <div class="text-align">
