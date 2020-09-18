@@ -100,7 +100,6 @@ class AdminController extends Controller
                 ['end_date', '>=', Carbon::now()]
             ]);
         })->get();
-        dd($companyAffiliateds);
 
         return DataTables::of($companyAffiliateds)
             ->addColumn('avatar', function ($companyAffiliated) {
