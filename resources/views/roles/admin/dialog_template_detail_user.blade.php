@@ -61,7 +61,7 @@
            <i class="far fa-times-circle" ></i>
         </div>
       </div>
-      <div id="swal2-content" class="swal2-content  mt-2" style="display: block;">
+      <div id="swal2-content" class="swal2-content  mt-2" style="display: block;" ng-hide="loading">
          <ul class="nav nav-tabs">
             <li class="nav-item cursor-pointer" ng-show="response.transaction">
                <span class="nav-link" ng-class="{'active': tabSelected === 'tranaction'}" ng-click="tabSelected = 'tranaction'"> Transacción</span>
@@ -120,7 +120,9 @@
                 </div>
                 <div>
                     <div>Precio</div>
-                    <div class="ml-2">  <span ng-show="response.transaction.rating_plan_price>0"> $ @{{response.transaction.rating_plan_price}} USD <span></div>
+                    <div class="ml-2">  
+                        <span ng-show="response.transaction.rating_plan_price>0"> $ @{{response.transaction.rating_plan_price}} USD <span>
+                    </div>
                 </div>
             </div>
             <div id="tabContact" class="tab-pane fade" ng-class="{'show active': tabSelected === 'contact'}">
@@ -187,6 +189,9 @@
                </table>
             </div>
          </div>
+      </div>
+      <div class="swal2-content  mt-2" style="display: block;" ng-show="loading">
+        Cargando ...
       </div>
     </div>
 </div>
