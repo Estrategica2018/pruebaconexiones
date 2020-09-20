@@ -3,12 +3,13 @@ MyApp.controller("availableSequencesStudentCtrl", ["$scope", "$http", function (
     $scope.accountServices = null;
     $scope.errorMessage = null;
 
-    $scope.init = function(company_id)    {
-        console.log('ingresa consulta secuencias');
-        $scope.defaultCompanySequences = company_id;
+    $scope.init = function(companyId,companyNick)    {
+        
+        $scope.defaultCompanySequences = companyId;
+
         $('.d-none-result').removeClass('d-none');
         $http({
-            url:"/conexiones/get_available_sequences/"+$scope.defaultCompanySequences+"/groupby",
+            url:"/"+companyNick+"/get_available_sequences/"+companyId,
             method: "GET",
         }).
         then(function (response) {

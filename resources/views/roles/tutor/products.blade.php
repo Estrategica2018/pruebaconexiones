@@ -11,23 +11,28 @@
                     <img width="auto" height="100px" src="{{asset('/')}}@{{product.affiliated_content_account_service[0].sequence.url_image}}" />
                     <div class="row">
                        <h6 class="col-12 ml-3">Secuencia @{{product.affiliated_content_account_service[0].sequence.name}}</h6>
-                       <p class="fs--3 ml-3 col-12  pr-5">Esta guía de aprendizaje consta de : Situación generadora, guía de saberes, ruta de viaje y los 8 momentos que contienen : Pregunta central, ciencia en contexto, experiencia cientíﬁcas y + conexiones</p>
+                       <p class="fs--3 ml-3 col-12  pr-5">
+                       Esta guía de aprendizaje contiene ocho  momentos, cada uno estructurado a partir de una pregunta central, experiencias científicas que integran teoría y práctica, explicaciones de los fenómenos en contexto, y recursos recomendados disponibles en la web para establecer  + conexiones.
+                       </p>
                     </div>
                 </div>
                 <div ng-show="product.rating_plan_type === 2" class="d-flex">
                     <img width="auto" height="100px" src="{{asset('/')}}@{{product.affiliated_content_account_service[0].sequence.url_image}}" />
                     <div class="row">
-                       <h6 class="col-12 ml-3">Momentos de @{{product.affiliated_content_account_service[0].sequence.name}}</h6>
-                       <p class="fs--3 ml-3 col-12  pr-5">Consta de @{{ product.affiliated_content_account_service.length }}
-                       @{{ (product.affiliated_content_account_service.length > 1 ? 'momentos' :  'momento' ) }}  para desarrollar</p>
+                       <h6 class="col-12 ml-3">Momentos de @{{product.affiliated_content_account_service[0].sequence.name}} (@{{ product.affiliated_content_account_service.length }} @{{ (product.affiliated_content_account_service.length > 1 ? 'momentos' :  'momento' ) }})</h6>
+                       <p class="fs--3 ml-3 col-12  pr-5">
+                       Esta experiencias científica permite integrar teoría y práctica. Contiene videos que orientan con detalle los procedimientos.
+            
+                       </p>
                     </div>
                 </div>
                 <div ng-show="product.rating_plan_type === 3" class="d-flex">
                     <img width="auto" height="100px" src="{{asset('/')}}@{{product.affiliated_content_account_service[0].sequence.url_image}}" />
                     <div class="row">
-                       <h6 class="col-12 ml-3">Experiencias de @{{product.affiliated_content_account_service[0].sequence.name}}</h6>
-                       <p class="fs--3 ml-3 col-12  pr-5">Consta de @{{ product.affiliated_content_account_service.length }}
-                       @{{ (product.affiliated_content_account_service.length > 1 ? 'experiencias científicas' :  'experiencia científica' ) }}  para desarrollar</p>
+                       <h6 class="col-12 ml-3">Experiencias de @{{product.affiliated_content_account_service[0].sequence.name}} (@{{ product.affiliated_content_account_service.length }})</h6>
+                       <p class="fs--3 ml-3 col-12  pr-5">
+                       Cada momento está  estructurado a partir de una pregunta central, experiencias científicas que integran teoría y práctica, explicaciones de los fenómenos en contexto, y recursos recomendados disponibles en la web para establecer  + conexiones.
+                       </p>
                     </div>
                 </div>
                 <div ng-show="product.affiliated_account_services.rating_plan.is_free" class="position-absolute label_free">

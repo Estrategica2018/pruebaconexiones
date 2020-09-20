@@ -13,11 +13,11 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
     $scope.onFinishEvidenceLoad = false;
     
 
-    $scope.init = function (companyId, sequenceId, accountServiceId) {
+    $scope.init = function (companyId, companyNick, sequenceId, accountServiceId) {
         $scope.companyId = companyId;
         $scope.accountServiceId = accountServiceId;
         $('.d-none-result').removeClass('d-none');
-        getAvailableSequences(companyId, sequenceId);
+        getAvailableSequences(companyId, companyNick, sequenceId,accountServiceId);
     }
 
     $scope.onClickEvidence = function(sequenceId,momentId,sectionId,experience_id,icon,subtitle,partId) {
@@ -114,60 +114,56 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         });
     }
     
-    function getAvailableSequences(companyId, sequenceId) {
+    function getAvailableSequences(companyId,companyNick, sequenceId, accountServiceId) {
         $http({
-            url: "/conexiones/get_available_sequences/" + companyId,
+            url: "/"+companyNick+"/get_available_sequences/" + companyId + "/" + accountServiceId,
             method: "GET",
         }).
             then(function (response) {
-                $scope.sequences = response.data;
+                var accountService = response.data[0];
                 $('.d-result').removeClass('d-none');
                 resizeSequenceCard();
                 $('#loading').addClass('d-none');
                 
-                for (var i = 0; i < $scope.sequences.length; i++) {
-                    scp = $scope.sequences[i];
-                    if (!((scp.type_product_id === 2 || scp.type_product_id === 1) && scp.sequence_id === sequenceId)) {
-                        $('#section_type_question').addClass('disabled-section');
-                        $('#section_type_question').removeAttr('href');
-                        $('#section_type_question + div').find('a').addClass('disabled-section');
-                        $('#section_type_question + div').find('a').removeAttr('href','');
-                        
-                        
-                        $('#section_type_science').addClass('disabled-section');
-                        $('#section_type_science').removeAttr('href');
-                        $('#section_type_science + div').find('a').addClass('disabled-section');
-                        $('#section_type_science + div').find('a').removeAttr('href');
-                        
-                        $('#section_type_connection').addClass('disabled-section');
-                        $('#section_type_connection').removeAttr('href');
-                        $('#section_type_connection + div').find('a').addClass('disabled-section');
-                        $('#section_type_connection + div').find('a').removeAttr('href');
-                        
-                    }
+                if ( Number(accountService.rating_plan_type) === 3 ) {
+                    $('#section_type_question').addClass('disabled-section');
+                    $('#section_type_question').removeAttr('href');
+                    $('#section_type_question + div').find('a').addClass('disabled-section');
+                    $('#section_type_question + div').find('a').removeAttr('href','');
+                    
+                    
+                    $('#section_type_science').addClass('disabled-section');
+                    $('#section_type_science').removeAttr('href');
+                    $('#section_type_science + div').find('a').addClass('disabled-section');
+                    $('#section_type_science + div').find('a').removeAttr('href');
+                    
+                    $('#section_type_connection').addClass('disabled-section');
+                    $('#section_type_connection').removeAttr('href');
+                    $('#section_type_connection + div').find('a').addClass('disabled-section');
+                    $('#section_type_connection + div').find('a').removeAttr('href');
+                    
                 }
                 
                 $('.button-moment-validate[conx-action]').each(function (index, value) {
                     var momentId = Number($(value).attr('conx-action').split('|')[1]);
-                    for (var i = 0; i < $scope.sequences.length; i++) {
-                        scp = $scope.sequences[i];
-                        if (scp.sequence_id === sequenceId) {
-                            if (scp.type_product_id === 1) {
-                                $(this).removeClass('cursor-not-allowed');
-                                $(this).attr('disabled', false);
-                                $(this).prop('disabled', false);
-                            }
-                            else if (scp.type_product_id === 2 && scp.moment_id === momentId) {
-                                $(this).removeClass('cursor-not-allowed');
-                                $(this).attr('disabled', false);
-                                $(this).prop('disabled', false);
-                            }
-                            else if (scp.type_product_id === 3 && scp.moment_id === momentId) {
-                                $(this).removeClass('cursor-not-allowed');
-                                $(this).attr('disabled', false);
-                                $(this).prop('disabled', false);
-                            }
+                    for (var i = 0; i < accountService.affiliated_content_account_service.length; i++) {
+                        scp = accountService.affiliated_content_account_service[i];
+                        if (Number(accountService.rating_plan_type)  === 1) {
+                            $(this).removeClass('cursor-not-allowed');
+                            $(this).attr('disabled', false);
+                            $(this).prop('disabled', false);
                         }
+                        else if (Number(accountService.rating_plan_type)  === 2 && scp.moment_id === momentId) {
+                            $(this).removeClass('cursor-not-allowed');
+                            $(this).attr('disabled', false);
+                            $(this).prop('disabled', false);
+                        }
+                        else if (Number(accountService.rating_plan_type)  === 3 && scp.moment_id === momentId) {
+                            $(this).removeClass('cursor-not-allowed');
+                            $(this).attr('disabled', false);
+                            $(this).prop('disabled', false);
+                        }
+                        
                     }
                 })
             }).catch(function (e) {

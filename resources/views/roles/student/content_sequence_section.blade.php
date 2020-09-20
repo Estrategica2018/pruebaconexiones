@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container"  ng-controller="contentSequencesStudentCtrl" 
-            ng-init="init({{auth('afiliadoempresa')->user()->company_id()}},{{$sequence->id}},{{$account_service_id}})">
+            ng-init="init({{auth('afiliadoempresa')->user()->company_id()}},'{{auth('afiliadoempresa')->user()->company_name()}}',{{$sequence->id}},{{$account_service_id}})">
         <div class="content">
             <div class="row">
                 <div class="col-md-12">
@@ -91,7 +91,6 @@
                                             'sequence_id'=>$sequence->id, 
                                             'moment_id'=>explode('|',$element['action'])[1],
                                             'order_moment_id'=>explode('|',$element['action'])[2],
-                                            'section_id'=>explode('|',$element['action'])[3],
                                             'account_service_id'=>$account_service_id,
                                           ])}}'"
                                           conx-action="{{$element['action']}}"

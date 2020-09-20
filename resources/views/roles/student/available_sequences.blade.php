@@ -5,7 +5,8 @@
         <div class="content">
             <div class="row">
                 <div class="col-md-12">
-                   <div ng-controller="availableSequencesStudentCtrl" ng-init="init(1)">
+                   <div ng-controller="availableSequencesStudentCtrl" 
+                        ng-init="init({{auth('afiliadoempresa')->user()->company_id()}},'{{auth('afiliadoempresa')->user()->company_name()}}')">
                         @if (isset($success))
                         <div class="fade-message alert alert-success" role="alert" id="alert1" >
                            @{{ $success }}
