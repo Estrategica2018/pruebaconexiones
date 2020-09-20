@@ -681,8 +681,7 @@ class StudentController extends Controller
                             $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                             'sequence_id' => $sequence_id,
                             'moment_id' => $next_moment->id,
-                            'order_moment_id' => $next_moment->order,
-                            'part_id' => 1]);
+                            'order_moment_id' => $next_moment->order]);
                             break;
                         }
                     }
