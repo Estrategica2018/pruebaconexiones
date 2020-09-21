@@ -35,31 +35,25 @@ class AchievementController extends Controller
 
     /**
      * Function for retrive the progress and performance for sequence
-     * @param $affiliated_account_service_id
+     * @param $accountService
      * @param $student_id
      * @param $sequence_id 
      * @return array
      */
-    public static function retriveProgressSequence($affiliated_account_service_id, $student_id, $sequence_id) 
+    public static function retriveProgressSequence($accountService, $student_id, $sequence_id) 
     {
         
         $sequence = [];
         $momentCount = 0;
-        $momentSectionCount = 4;
-        
-        $affiliatedAccountService = 
-            AffiliatedAccountService::with('affiliated_content_account_service')->
-                where('init_date', '<=', Carbon::now())
-                ->where('end_date', '>=', Carbon::now())
-            ->find($affiliated_account_service_id);
+        $momentSectionCount = 4; 
     
-        if ($affiliatedAccountService->rating_plan_type == 1) { //Si es plan por secuencia tiene acceso a todos los momentos
+        if ($accountService->rating_plan_type == 1) { //Si es plan por secuencia tiene acceso a todos los momentos
             $momentCount = 8;
         }
-        else if ($affiliatedAccountService->rating_plan_type == 2 || $affiliatedAccountService->rating_plan_type == 3) { //Si es plan por momento o experiencia se valida el momento 
+        else if ($accountService->rating_plan_type == 2 || $accountService->rating_plan_type == 3) { //Si es plan por momento o experiencia se valida el momento 
             //return count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id)->where('moment_id', $moment_id)) > 0;
-            $momentCount = count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id));
-            if($affiliatedAccountService->rating_plan_type == 3 )  {
+            $momentCount = count($accountService->affiliated_content_account_service->where('sequence_id', $sequence_id));
+            if($accountService->rating_plan_type == 3 )  {
                 $momentSectionCount = 1;
             }
         }
@@ -67,13 +61,13 @@ class AchievementController extends Controller
         //calculando el progreso de la linea de avance de la secuencia  
         $advanceLine = AdvanceLine::where([
             ['affiliated_company_id',$student_id],
-            ['affiliated_account_service_id',$affiliated_account_service_id],
+            ['affiliated_account_service_id',$accountService->id],
             ['sequence_id',$sequence_id]
         ])->get(); 
 
         //calculando los porcentajes de desempeño
         $ratings = Rating::where([
-            ['affiliated_account_service_id',$affiliated_account_service_id],
+            ['affiliated_account_service_id',$accountService->id],
             ['student_id', $student_id],
             ['sequence_id',$sequence_id ] 
         ])->get();  
@@ -84,6 +78,7 @@ class AchievementController extends Controller
         ->get(); 
        
         $sequence['progress'] = 100 * count($advanceLine) / ($momentCount*$momentSectionCount);
+      
         if(count($ratings) >0 ) {
             $performance = $ratings->avg('weighted');
             $sequence['performance'] = number_format($performance,0);
@@ -93,36 +88,33 @@ class AchievementController extends Controller
         }
 
         if(  $sequence['progress'] == '100') {
-            if(count($ratings)>0 && count($questions) == count($ratings) ) {
-                $sequence['progress'] == '100';
-            }
-            else {
-                $sequence['progress'] == '79';
+             
+            if($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2 ) {
+                if(count($ratings)>0 && count($questions) == count($ratings) ) {
+                    $sequence['progress'] == '100';
+                }
+                else {
+                    $sequence['progress'] == '79';
+                }
             }
         }
-
         return [ 'sequence' => $sequence];
     }
 
     /**
      * Function for retrive the progress and performance for a moment
-     * @param $affiliated_account_service_id
+     * @param $accountService
      * @param $student_id
      * @param $sequence_id
      * @param $moment_id
      * @return array
      */
-    public static function retriveProgressMoment($affiliated_account_service_id, $student_id, $sequence_id, $moment_id, $moment_order) 
+    public static function retriveProgressMoment($accountService, $student_id, $sequence_id, $moment_id, $moment_order) 
     {
 
         $momentCount = 0;
-        $affiliatedAccountService = 
-            AffiliatedAccountService::with('affiliated_content_account_service')->
-                where('init_date', '<=', Carbon::now())
-                ->where('end_date', '>=', Carbon::now())
-            ->find($affiliated_account_service_id);
-    
-        if ($affiliatedAccountService->rating_plan_type == 1 || $affiliatedAccountService->rating_plan_type == 2) { //Si es plan por secuencia tiene acceso a todos los momentos
+         
+        if ($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2) { //Si es plan por secuencia tiene acceso a todos los momentos
             $momentCount = 4;
         }
         else {
@@ -132,7 +124,7 @@ class AchievementController extends Controller
         //calculando el progreso de la linea de avance        
         $advanceLine = AdvanceLine::where([
             ['affiliated_company_id',$student_id],
-            ['affiliated_account_service_id',$affiliated_account_service_id],
+            ['affiliated_account_service_id',$accountService->id],
             ['sequence_id',$sequence_id],
             ['moment_order',$moment_order]
         ])->orderBy('moment_order', 'ASC')->orderBy('moment_section_id', 'ASC')->get();
@@ -147,7 +139,7 @@ class AchievementController extends Controller
 
         //calculando los porcentajes de desempeño
         $ratings = Rating::where([
-            ['affiliated_account_service_id',$affiliated_account_service_id],
+            ['affiliated_account_service_id',$accountService->id],
             ['student_id', $student_id],
             ['sequence_id',$sequence_id ],
             ['moment_id',$moment_id]
@@ -157,17 +149,20 @@ class AchievementController extends Controller
         
         $moment = [];
         $moment['progress'] = (count($advanceLine) / $momentCount) * 100;
-        if( count($questions) > 0 && $moment['progress'] == 100) {
-            if(count($ratings) == count($questions) ) {
-                $moment['progress'] = 100; 
-            }
-            else {
-                $moment['progress'] = 89;
-            }
-        }  
+
+        if($accountService->rating_plan_type != 3) {
+            if( count($questions) > 0 && $moment['progress'] == 100) {
+                if(count($ratings) == count($questions) ) {
+                    $moment['progress'] = 100; 
+                }
+                else {
+                    $moment['progress'] = 89;
+                }
+            }  
+        } 
         
-        $isAvailable = AffiliatedContentAccountService::with('sequence.moments')->where('sequence_id',$sequence_id)->where(function ($query)use($affiliated_account_service_id){
-           $query->where('affiliated_account_service_id',$affiliated_account_service_id);
+        $isAvailable = AffiliatedContentAccountService::with('sequence.moments')->where('sequence_id',$sequence_id)->where(function ($query)use($accountService){
+           $query->where('affiliated_account_service_id',$accountService->id);
         })->where('moment_id', $moment_id)->get();
         
         
@@ -176,7 +171,7 @@ class AchievementController extends Controller
         
         //calculando los porcentajes de desempeño
         $ratings = Rating::where([
-            ['affiliated_account_service_id',$affiliated_account_service_id],
+            ['affiliated_account_service_id',$accountService->id],
             ['student_id',$student_id],
             ['sequence_id',$sequence_id],
             ['moment_id',$moment_id]
@@ -204,7 +199,7 @@ class AchievementController extends Controller
 
     /**
      * Function for retrive the progress and performance for a moment section
-     * @param $affiliated_account_service_id
+     * @param $accountService
      * @param $student_id
      * @param $sequence_id
      * @param $moment_id
@@ -212,13 +207,13 @@ class AchievementController extends Controller
      * @param $section_id
      * @return array
      */
-    public static function retriveProgressSection($affiliated_account_service_id, $student_id, $sequence_id, $moment_id, $moment_order, $section_id) 
+    public static function retriveProgressSection($accountService, $student_id, $sequence_id, $moment_id, $moment_order, $section_id) 
     {
 
         //calcula el Progreso según la línea de avance
         $advanceLine = AdvanceLine::where([
             ['affiliated_company_id',$student_id],
-            ['affiliated_account_service_id',$affiliated_account_service_id],
+            ['affiliated_account_service_id',$accountService->id],
             ['sequence_id',$sequence_id],
             ['moment_order',$moment_order],
             ['moment_section_id',$section_id]
@@ -226,7 +221,7 @@ class AchievementController extends Controller
         
         //calcula el desempeño según las evaluaciones
         $ratings = Rating::where([
-            ['affiliated_account_service_id',$affiliated_account_service_id],
+            ['affiliated_account_service_id',$accountService->id],
             ['student_id',$student_id], 
             ['sequence_id',$sequence_id],
             ['moment_id',$moment_id],

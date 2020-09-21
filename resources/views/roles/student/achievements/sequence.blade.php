@@ -32,7 +32,7 @@
                     @else
                         <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                     @endif  
-                    @if($sequence['progress']>0) 
+                    @if($sequence['progress']>0 && $rating_plan_type != 3 ) 
                         <label class="" style="margin-left: -35px;"><strong> Desempeño</strong></label> 
                         @if($sequence['performance'] >= 0)
                             @if($sequence['performance']>=90)
@@ -49,11 +49,10 @@
                             @endif
                             @if($sequence['performance']<40)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B)
-                            @endif
-
+                            @endif 
                             <span class="fs-0">{{$sequence['performance']}} %</span>
                         @else
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="fs-0">Sin iniciar</label>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                         @endif
                     @endif
                 </div>
@@ -149,26 +148,28 @@
                     
                     <span class="font-weight-bold col-3 fs-0">
                     @if($moment['isAvailable'])
-                        <label class=""><strong>Desempeño</strong></label>
-                        @if($moment['performance'] >= 0  )
-                            @if($moment['performance']>=90)
-                            <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) 
+                        @if($rating_plan_type != 3)
+                            <label class=""><strong>Desempeño</strong></label>
+                            @if($moment['performance'] >= 0  )
+                                @if($moment['performance']>=90)
+                                <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) 
+                                @endif
+                                @if($moment['performance']>=70 && $moment['performance']<=89)
+                                <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A)
+                                @endif
+                                @if($moment['performance']>=60 && $moment['performance']<=69)
+                                <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B)
+                                @endif
+                                @if($moment['performance']>=40 && $moment['performance']<=59)
+                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B)
+                                @endif
+                                @if($moment['performance']<40)
+                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B)
+                                @endif
+                                {{$moment['performance']}} %
+                            @else
+                                <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                             @endif
-                            @if($moment['performance']>=70 && $moment['performance']<=89)
-                            <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A)
-                            @endif
-                            @if($moment['performance']>=60 && $moment['performance']<=69)
-                            <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B)
-                            @endif
-                            @if($moment['performance']>=40 && $moment['performance']<=59)
-                            <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B)
-                            @endif
-                            @if($moment['performance']<40)
-                            <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B)
-                            @endif
-                            {{$moment['performance']}} %
-                        @else
-                            <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                         @endif    
                     @endif    
                     </span>

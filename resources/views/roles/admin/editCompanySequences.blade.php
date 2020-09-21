@@ -86,7 +86,7 @@
                </div>
             </div>
             <div ng-show="dataJstree.type === 'openSequenceSectionPart' || dataJstree.type === 'openMomentSectionPart'"
-               class="mb-3 card fade show d-none d-lg-block p-3 height_282 row" id="sidemenu-tools-content" style="overflow-y: auto;">
+               class="mb-3 card fade show d-none d-block p-3 height_282 row" id="sidemenu-tools-content" style="overflow-y: auto;">
                <div class="row">
                   <div class="col-6">
                      <h6> Herramientas</h6>
@@ -144,12 +144,12 @@
                   </div>
                   <div class="col-6"
                      ng-show="dataJstree.type==='openSequenceSectionPart' || dataJstree.type==='openMomentSectionPart'">
-                     <h6> <span>Elementos </span></h6>
+                     <h6> <span>Elementos (@{{elementParentEdit.elements.length}})</span></h6>
                      <div>
                          <button class="btn btn-sm btn-outline-secondary mb-3" ng-show="showCopyButton" ng-click="copyElements()"> Copiar </button>
                          <button ng-show="copyCache && copyCache.length > 0" class="btn btn-sm btn-outline-warning ml-2 mb-3" ng-click="pasteElements()">Pegar</button>
                      </div>
-                     
+                   
                      <div ng-repeat="element in elementParentEdit.elements track by $index" class="cursor-pointer">
                         <div class="d-flex align-items-center fs--2">
                            <input type="checkbox" ng-model="element.selected" ng-change="onChangeElementSelected()" >
@@ -675,6 +675,7 @@
                      class="w-100" />
                </div>
                <div class="d-flex mt-3">
+         
                   <i class="fas fa-arrow-right mr-2"></i>
                   <input class="mr-2 col-4" type="number" ng-keypress="onChangeInput()" ng-change="onChangeInput()"
                      ng-model="elementEdit.ml" />
@@ -964,6 +965,7 @@
                <input type="text" ng-change="onChangeInput(elementEdit.text)" ng-model="elementEdit.text"
                   class="w-100" />
                <div class="d-flex mt-3">
+       
                   <i class="fas fa-arrow-right mr-2"></i>
                   <input class="mr-2 col-4" type="number" ng-keypress="onChangeInput()" ng-change="onChangeInput()"
                      ng-model="elementEdit.ml" />
