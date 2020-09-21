@@ -26,7 +26,7 @@
              <ul class="text-justify pr-4 pl-3 mb-0">
                 <p> @{{ratingPlan.description}}</p>
                 <p>A continuación, te mostramos las <strong>guías de aprendizaje</strong> disponibles. Para conocer de qué se tratan y cuáles son sus contenidos pueden hacer clic en <strong>ver detalle</strong>, allí encontrarán un video introductorio y una <strong>malla curricular</strong> en la que se describen los <strong>propósitos de cada momento</strong>, la <strong>pregunta central</strong>, el eje temático de la <strong>explicación de ciencia en contexto</strong>, las <strong>experiencias científicas</strong> propuestas y los <strong>materiales</strong> que se requieren para esta.</p>
-                <p>Si tienes alguna pregunta puedes escribirnos a través del formulario de  <a target="_blank" href="{{route('contactus')}}">contacto</a>. </p>
+                <p>Si tienes alguna pregunta puedes escribirnos a través del formulario de  <a target="_blank" href="{{route('contactus')}}"><strong class="text-underline">contáctenos</strong></a>. </p>
              </ul>
              
              <div class="col-12 text-right r-0 w-md-50" id="div-continue" style="background-color: white; z-index: 10; ">

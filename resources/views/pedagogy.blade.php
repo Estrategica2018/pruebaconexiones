@@ -91,10 +91,8 @@
                aprender.
             </p>
             <p>A continuación podrán apreciar como ejemplo, la situación generadora de la guía de aprendizaje: Las
-               Astroaventuras de Yotopó y la
-               cápsula del tiempo, en la que se invita a los niños, niñas y jóvenes a observar los movimientos del Sol,
-               la Luna y las estrellas, para
-               deducir la relación que estos fenómenos naturales tienen con la medida del tiempo.
+               <strong>Astroaventuras de Yotopo y la cápsula del tiempo</strong>, en la que se invita a los niños, niñas y jóvenes a observar los movimientos del Sol,
+               la Luna y las estrellas, para deducir la relación que estos fenómenos naturales tienen con la medida del tiempo.
             </p>
          </div>
          <div mt="2360" ml="740" >

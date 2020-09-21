@@ -97,13 +97,14 @@
                           <span>Guía de saberes</span>
                         </div>
                         <div class="body">
-                            <p>Algunos viajes se planean con el propósito de lograr algún objetivo pero en el recorrido se pueden vivir experiencias no planeadas de las cuales emergen otras enseñanzas»</p>
+                            <p>Algunos viajes se planean con el propósito de lograr algún objetivo pero en el recorrido se pueden vivir experiencias no planeadas de las cuales emergen otras enseñanzas.</p>
                             <p>Cada guía de aprendizaje propone el despliegue e integración de un conjunto de acciones de pensamiento y producción que hacen parte de los tres ejes articuladores que las estructuran:</p>
                             <ul>
-                            <li>Aproximación al conocimiento como científicos</li>
-                            <li>Manejo de conocimientos propios de las ciencias, y</li>
+                            <li>Aproximación al conocimiento como científicos.</li>
+                            <li>Manejo de conocimientos propios de las ciencias.</li>
                             <li>Desarrollo de compromisos personales y sociales.</li>
                             </ul>
+                            <br>
                             <p>Así, en las primeras páginas de la guía, tanto el profesorado como los y las estudiantes pueden identificar fácilmente lo que se espera que aprendan durante el desarrollo de estas. 
                             </p>
                         </div>

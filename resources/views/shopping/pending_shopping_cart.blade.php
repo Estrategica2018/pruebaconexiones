@@ -127,25 +127,7 @@
      </div>
      <div ng-show="shopping_carts.length === 0" class="m-4 align-items-center px-1 border-bottom border-200 no-gutters row fs-0">
       No hay elementos en el carrito de compras
-     </div>
-
-     <div ng-show="shopping_carts.length > 0" class="font-weight-bold px-1 no-gutters row">
-      <div class="py-2 px-md-3 ml-auto text-900 col-9 col-md-8">SubTotal</div>
-      <div class="px-3 col">
-         <div class="row">
-         <div ng-show="subtotalPrice >= 0" class="col-12 col-md-4 ml-auto py-2 pr-md-3 pl-0 col">$ @{{subtotalPrice}} USD</div>
-         </div>
-      </div>
-     </div>
-
-     <div ng-show="shopping_carts.length > 0" class="font-weight-bold px-1 no-gutters row">
-      <div class="py-2 px-md-3 ml-auto text-900 col-9 col-md-8">IVA</div>
-      <div class="px-3 col">
-         <div class="row">
-         <div ng-show="totalPrices >= 0" class="col-12 col-md-4 ml-auto py-2 pr-md-3 pl-0 col">$ @{{ivaPrice}} USD</div>
-         </div>
-      </div>
-     </div>
+     </div> 
 
      <div ng-show="shopping_carts.length > 0" class="font-weight-bold px-1 no-gutters row">
       <div class="py-2 px-md-3 ml-auto text-900 col-9 col-md-8">Total</div>
