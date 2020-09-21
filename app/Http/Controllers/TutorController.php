@@ -377,7 +377,7 @@ class TutorController extends Controller
         $company = Companies::where('nick_name', $empresa)->first();
         $student = AfiliadoEmpresa::find($student_id);
         $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
-        
+    
         $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
             $query->where('init_date', '>=', date('Y-m-d'))
                 ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
@@ -395,10 +395,11 @@ class TutorController extends Controller
             $student['lastMoment'] = $date->format("Y-m-d H:i");
         }
         
-        foreach($accountServices as $accountService) { 
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService->affiliated_account_service_id, $student->id, $accountService->sequence->id);
-            $accountService->sequence['progress'] = $result['sequence']['progress'];
-            $accountService->sequence['performance'] = $result['sequence']['performance'];
+        foreach($accountServices as $accountService) {  
+            $accountService['sequence'] = $accountService->affiliated_content_account_service[0]->sequence;
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService['sequence']->id);
+            $accountService['sequence']['progress'] = $result['sequence']['progress'];
+            $accountService['sequence']['performance'] = $result['sequence']['performance'];
         } 
         
         return view('roles.tutor.achievements.student', ['student'=>$student, 'accountServices'=>$accountServices]);
@@ -417,11 +418,19 @@ class TutorController extends Controller
         
         $tutor = $request->user('afiliadoempresa');
         $company = Companies::where('nick_name', $empresa)->first();
-        $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company->id, $affiliated_account_service_id);
+        if( count($accountServices) < 1) {
+            return $this->finishValidate('No tiene permiso para acceder a este módulo');
+        }
+        
         $student = AfiliadoEmpresa::find($student_id);
-        $sequence = CompanySequence::with('moments')->find($sequence_id);
+        if( $student == null) {
+            return $this->finishValidate('Error relacionando al estudiante');
+        }
+        $accountService = $accountServices[0];
+        $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
  
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence->id);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
         
@@ -448,7 +457,7 @@ class TutorController extends Controller
 
         $moments = [];
         foreach($sequence->moments as $moment) {
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student_id, $sequence->id, $moment->id, $moment->order);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $moment->id, $moment->order);
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['isAvailable'] = $result['moment']['isAvailable'];
@@ -472,14 +481,18 @@ class TutorController extends Controller
         $tutor = $request->user('afiliadoempresa');
         $company = Companies::where('nick_name', $empresa)->first();
         $student = AfiliadoEmpresa::find($student_id);
-        $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company->id, $affiliated_account_service_id);
+        if( count($accountServices) < 1) {
+            return $this->finishValidate('No tiene permiso para acceder a este módulo');
+        }
         
-        $sequence = CompanySequence::with('moments')->find($sequence_id);
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student_id, $sequence->id);
+        $accountService = $accountServices[0];
+        $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
+ 
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student_id, $sequence->id);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
-
-
+ 
         $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
             $query->where('init_date', '>=', date('Y-m-d'))
                 ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
@@ -509,7 +522,7 @@ class TutorController extends Controller
         $moments = [];
         foreach($sequence->moments as $moment) {
             
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student_id, $sequence->id, $moment->id, $moment->order);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $moment->id, $moment->order);
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
@@ -528,15 +541,15 @@ class TutorController extends Controller
             ]; 
             $section_id=1; 
             foreach($sections as &$section) {
-                $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($affiliated_account_service_id, $student_id, $sequence->id, $moment->id, $moment->order, $section_id);
+                $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student_id, $sequence->id, $moment->id, $moment->order, $section_id);
                 $section['progress'] = $result['section']['progress'];
                 $section['performance'] = $result['section']['performance'];
                 $section_id ++;
                 
-                if ($affiliatedAccountService->rating_plan_type == 1 || $affiliatedAccountService->rating_plan_type == 2) { //Si es plan por secuencia o momento tiene acceso a todas las secciones
+                if ($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2) { //Si es plan por secuencia o momento tiene acceso a todas las secciones
                     $section['isAvailable'] = true;
                 }
-                else if ($affiliatedAccountService->rating_plan_type == 3  ) { //Si es plan por experiencia se valida la seccion experiencia cientifica
+                else if ($accountService->rating_plan_type == 3  ) { //Si es plan por experiencia se valida la seccion experiencia cientifica
                     if($section['section']['section']['type'] == 3) {
                         $section['isAvailable'] = true;
                     }
@@ -567,10 +580,17 @@ class TutorController extends Controller
         $tutor = $request->user('afiliadoempresa');
         $student = AfiliadoEmpresa::find($student_id);
         $company = Companies::where('nick_name', $empresa)->first();
-        $accountServices = $this->get_available_sequences($request, $empresa, $company->id);
-        $sequence = CompanySequence::with('moments')->find($sequence_id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company->id, $affiliated_account_service_id);
+        
+        if( count($accountServices) < 1) {
+            return $this->finishValidate('No tiene permiso para acceder a este módulo');
+        }
+        
+        $accountService = $accountServices[0];
+        $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
+ 
 
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliated_account_service_id, $student->id, $sequence->id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence->id);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
         
@@ -578,7 +598,7 @@ class TutorController extends Controller
             $query->where('init_date', '>=', date('Y-m-d'))
                 ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
         }])->where([
-        ['affiliated_account_service_id', $affiliated_account_service_id],
+        ['affiliated_account_service_id', $accountService->id],
         ['affiliated_company_id', $student->id]])
         ->get();
         
@@ -601,7 +621,7 @@ class TutorController extends Controller
         ->where([
             ['sequence_id',$sequence->id],
             ['student_id',$student->id],
-            ['affiliated_account_service_id',$affiliated_account_service_id],
+            ['affiliated_account_service_id',$accountService->id],
         ])->get();
         
         foreach($sequence->moments as $moment) {
@@ -628,7 +648,7 @@ class TutorController extends Controller
                 }
             }
             
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($affiliated_account_service_id, $student->id, $sequence->id, $moment->id, $moment->order);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
             $moment['progress'] = $result['moment']['progress'];
             $moment['performance'] = $result['moment']['performance'];
             $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
@@ -645,25 +665,27 @@ class TutorController extends Controller
      * @param Request $request
      * @param $empresa
      * @param $company_id
+     * @param $accountService_id
      * @return AffiliatedContentAccountService[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function get_available_sequences(Request $request, $empresa, $company_id)
-    {
-
+    public function get_available_sequences(Request $request, $empresa, $company_id, $accountService_id= null)
+    { 
         $tutor = $request->user('afiliadoempresa');
-        $tutor_id = $tutor->id;
-        $ids = AffiliatedAccountService::
-        with('rating_plan')
-        /*whereHas('company_affiliated', function ($query) use ($tutor_id) {
-            $query->where('id', $tutor_id);
-        })*/->where([
-            ['company_affiliated_id', '=', $tutor_id],
+        
+         
+        $accountServices = AffiliatedAccountService::
+        with('rating_plan','affiliated_content_account_service.sequence')
+        ->where('company_affiliated_id',  $tutor->id); 
+        /*->where([
             ['init_date', '<=', Carbon::now()],
             ['end_date', '>=', Carbon::now()]
-        ])->pluck('id');
+        ]);*/
 
-        return AffiliatedContentAccountService::with('sequence')->whereIn('affiliated_account_service_id', $ids)->groupBy('sequence_id')->get();
-
+        if(  $accountService_id != null) {
+            $accountServices = $accountServices->where('id',$accountService_id);
+        }
+        
+        return $accountServices->get();
     }
 
 }

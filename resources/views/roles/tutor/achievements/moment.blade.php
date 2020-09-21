@@ -3,23 +3,23 @@
 @section('content-tutor-index')
 <div class="row p-2 pl-md-4 pr-md-3" ng-controller="achievementsStudentCtrl" ng-init="initSequences(1)" >
     @if($student)
-    <div class=" student-tutor-inscription btn btn-light row col-12">
+    <div class=" student-tutor-inscription row col-12 p-3">
       <div class="col-auto">
          <img class="rounded-circle" src="@if($student->url_image) {{asset($student->url_image)}} @else {{'/images/icons/default-avatar.png'}}@endif" width="100px"/>
       </div>
       <div class="col-auto col-md-4"><p>{{$student->name}} {{$student->last_name}}</p></div>
-      <div class="col-12 col-md-auto mt-3 mt-md-0">
-          <h6>Primer acceso @if($student->firstMoment) {{$student->firstMoment}} @else {{'sin iniciar'}} @endif</h6>
+      <div class="col-12 col-md-auto mt-3 ">
+          <h6>@if($student->firstMoment) Primer acceso: {{$student->firstMoment}} @else {{'Sin iniciar el primer acceso' }} @endif</h6>
           <h6>@if($student->firstMoment) Última conexión @if($student->lastMoment) {{$student->lastMoment}} @else {{'sin iniciar'}} @endif @endif</h6>
       </div>
     </div>
     @endif
 
-    @if(isset($sequence))
+    @if(isset($sequence) && $student)
         <div class="col-12 mt-sm-2 pr-sm-0 " >
-            <div class="oval-line"></div>
-            <button class="btn btn-sm fs-1">
-                <a href="{{route('tutor.achievements',auth('afiliadoempresa')->user()->company_name())}}"><i class="fas fa-arrow-left"></i>
+            <div class="oval-line"></div> 
+            <button class="btn btn-sm fs-1 text-align-left">
+                 <a href="{{route('tutor.achievements.student',['empresa'=>auth('afiliadoempresa')->user()->company_name(),'student_id'=>$student->id])}}"><i class="fas fa-arrow-left"></i>
                 </a>
             </button>
             <div class="row">

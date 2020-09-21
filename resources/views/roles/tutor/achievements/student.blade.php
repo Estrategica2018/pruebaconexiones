@@ -2,14 +2,18 @@
 
 @section('content-tutor-index')
    <div class="d-none-result d-none list-group" ng-controller="tutorInscriptionsCtrl" ng-init="initInscriptions()" >
+        <button class="btn btn-sm fs-1 text-align-left">
+            <a href="{{route('tutor.achievements',auth('afiliadoempresa')->user()->company_name())}}"><i class="fas fa-arrow-left"></i>
+            </a>
+        </button>
         @if($student)
-        <div class=" student-tutor-inscription btn btn-light row">
+        <div class=" student-tutor-inscription row p-3" >
           <div class="col-auto">
              <img class="rounded-circle" src="@if($student->url_image) {{asset($student->url_image)}} @else {{'/images/icons/default-avatar.png'}}@endif" width="100px"/>
           </div>
-          <div class="col-4"><p>{{$student->name}} {{$student->last_name}}</p></div>
-          <div class="col-12 col-md-auto mt-3 mt-md-0">
-              <h6>Primer acceso @if($student->firstMoment) {{$student->firstMoment}} @else {{'sin iniciar'}} @endif</h6>
+          <div class="col-4 "><p>{{$student->name}} {{$student->last_name}}</p></div>
+          <div class="col-12 col-md-auto mt-3 ">
+              <h6>@if($student->firstMoment) Primer acceso {{$student->firstMoment}} @else {{'Sin iniciar el primer acceso '}} @endif</h6>
               <h6>@if($student->firstMoment) Última conexión @if($student->lastMoment) {{$student->lastMoment}} @else {{'sin iniciar'}} @endif @endif</h6>
           </div>
         </div>
@@ -21,11 +25,11 @@
                 <div class="col-2 col-md-auto">
                     <img class="imagen-sequence" src="{{asset($accountService->sequence->url_image)}}" width="80px" height= "100px"/>
                 </div>
-                <div class="col-6 col-md-4 col-xl-3 pr-xl-0 d-block"> 
+                <div class="col-9 col-md-5 col-xl-3 pr-xl-0 d-block ml-5 ml-sm-1 ml-md-0"> 
                     <p class="font-weight-bold mb-1">{{ 'Guía de aprendizaje ' . ($index + 1) }}</p>
                     <p class="">{{$accountService->sequence->name}}</p>
                 </div>
-                <div class="col-3 col-lg-3 col-md-2 col-xl-2 mt-1 mt-md-1 mt-xl-0 ml-7 p-xl-0 d-block fs-md--1" style="min-width: 161px;">
+                <div class="col-12 col-md-3 col-lg-3 col-md-2 col-xl-2 mt-1 mt-md-1 mt-xl-0 ml-8 p-xl-0 d-block fs-md--1">
                     <h6 class="" style="margin-left: -62px;"><strong> Progreso</strong> 
                     @if(isset($accountService->sequence['progress']))
                         @if($accountService->sequence['progress']==0)
@@ -75,7 +79,7 @@
                             <a href="{{
                                 route('tutor.achievements.sequence',
                                 ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                                'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                                'affiliated_account_service_id'=>$accountService->id,
                                 'sequence_id'=>$accountService->sequence->id,
                                 'student_id'=>$student->id,
                                 ])}}"> 
@@ -85,7 +89,7 @@
                         <a href="{{
                             route('tutor.achievements.sequence',
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                            'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                            'affiliated_account_service_id'=>$accountService->id,
                             'sequence_id'=>$accountService->sequence->id,
                             'student_id'=>$student->id,
                             ])}}"> 
@@ -97,7 +101,7 @@
                             <a href="{{
                                 route('tutor.achievements.moment',
                                 ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                                'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                                'affiliated_account_service_id'=>$accountService->id,
                                 'sequence_id'=>$accountService->sequence->id,
                                 'student_id'=>$student->id,
                                 ])}}"> 
@@ -107,7 +111,7 @@
                         <a href="{{
                             route('tutor.achievements.moment',
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                            'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                            'affiliated_account_service_id'=>$accountService->id,
                             'sequence_id'=>$accountService->sequence->id,
                             'student_id'=>$student->id,
                             ])}}"> 
@@ -119,7 +123,7 @@
                             <a href="{{
                                 route('tutor.achievements.question',
                                 ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                                'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                                'affiliated_account_service_id'=>$accountService->id,
                                 'sequence_id'=>$accountService->sequence->id,
                                 'student_id'=>$student->id,
                                 ])}}"> 
@@ -129,7 +133,7 @@
                         <a href="{{
                             route('tutor.achievements.question',
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                            'affiliated_account_service_id'=>$accountService->affiliated_account_service_id,
+                            'affiliated_account_service_id'=>$accountService->id,
                             'sequence_id'=>$accountService->sequence->id,
                             'student_id'=>$student->id,
                             ])}}"> 

@@ -6,6 +6,7 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
     
     $scope.init = function() {
         
+        
         $('.d-none-result').removeClass('d-none');
         
         $http({
@@ -13,7 +14,29 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
             method: "GET",
         }).
         then(function (response) {
-            $scope.products = response.data; 
+            if(response.data) {
+                $scope.products = response.data; 
+                if( $scope.products.length > 0 ) { 
+                    swal({
+                    text: "Recuerda que para poder visualizar los contenidos, debes ingresar con el rol de estudiante!",
+                    type: "warning",
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    }).catch(swal.noop); 
+                }
+                else { 
+                    swal({
+                    text: "Aún no cuentas con productos con nosotros, te invitamos a activar el plan gratuito!",
+                    type: "warning",
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    }).catch(swal.noop); 
+                }
+            }
+            else {
+                $scope.errorMessage = 'Error consultando los productos asociados';
+            }
+                
             $('.d-none-result.d-none').removeClass('d-none');
             
         }).catch(function (e) {

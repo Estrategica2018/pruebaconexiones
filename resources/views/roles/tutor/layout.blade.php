@@ -83,16 +83,15 @@
                                                 <img src="{{asset('images/icons/portal-padres/productos-01.png')}}" class="ml-auto mr-auto" width="auto" height="42px"  style="width: auto;height: 42px;"/>
                                                 <small class="fs--2 mb-1 text-700 font-weight-bold"> Productos</small>
                                             </a>
-                                        </li>
-                                        <!--li class="nav-item nav-item-tutor">
-                                            <a class="avatar avatar-3xl tutor-button-head @if(\Route::current()->getName() == 'tutor.calendar' ) selected @endif"
-                                                href="{{route('tutor.inscriptions','conexiones')}}">
-                                                <i class="fas fa-stopwatch icon"></i>
-                                                <small class="fs--2 mb-1 text-700 font-weight-bold"> Calendario</small>
-                                            </a>
-                                        </li-->
+                                        </li> 
                                         <li class="nav-item nav-item-tutor">
-                                            <a class="avatar avatar-3xl tutor-button-head @if(\Route::current()->getName() == 'tutor.reports' ) selected @endif"
+                                            <a class="avatar avatar-3xl tutor-button-head 
+                                            @if(\Route::current()->getName() == 'tutor.achievements' ) selected @endif
+                                            @if(\Route::current()->getName() == 'tutor.achievements.student' ) selected @endif
+                                            @if(\Route::current()->getName() == 'tutor.achievements.sequence' ) selected @endif
+                                            @if(\Route::current()->getName() == 'tutor.achievements.moment' ) selected @endif
+                                            @if(\Route::current()->getName() == 'tutor.achievements.question' ) selected @endif
+                                            "
                                                 href="{{ route('tutor.achievements',auth('afiliadoempresa')->user()->company_name()) }}" >
                                                 <img src="{{asset('images/icons/portal-padres/reportes-01.png')}}" class="ml-auto mr-auto" width="auto" height="42px"  style="width: auto;height: 42px;"/>
                                                 <small class="fs--2 mb-1 text-700 font-weight-bold"> Reportes</small>
@@ -147,8 +146,7 @@
             </div>
         </div>
         <script>
-            $(document).ready( function () {
-
+            $(document).ready( function () { 
                 $('.freePlan').on('click',function(){
                     var data = new FormData();
                     $.ajax({

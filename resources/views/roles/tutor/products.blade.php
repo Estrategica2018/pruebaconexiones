@@ -19,7 +19,12 @@
                 <div ng-show="product.rating_plan_type === 2" class="d-flex">
                     <img width="auto" height="100px" src="{{asset('/')}}@{{product.affiliated_content_account_service[0].sequence.url_image}}" />
                     <div class="row">
-                       <h6 class="col-12 ml-3">  @{{ product.affiliated_content_account_service.length > 1  }}) Momentos de @{{product.affiliated_content_account_service[0].sequence.name}} (@{{ product.affiliated_content_account_service.length }}</h6>
+                       <h6 class="col-12 ml-3" ng-show="product.affiliated_content_account_service.length > 1"> 
+                       @{{ product.affiliated_content_account_service.length }} Momentos de @{{product.affiliated_content_account_service[0].sequence.name}}
+                        </h6>
+                        <h6 class="col-12 ml-3" ng-show="product.affiliated_content_account_service.length === 1"> 
+                       @{{ product.affiliated_content_account_service.length }} Momento de @{{product.affiliated_content_account_service[0].sequence.name}}
+                        </h6>
                        <p class="fs--3 ml-3 col-12  pr-5">
                        Esta experiencias científica permite integrar teoría y práctica. Contiene videos que orientan con detalle los procedimientos.
             
@@ -29,7 +34,12 @@
                 <div ng-show="product.rating_plan_type === 3" class="d-flex">
                     <img width="auto" height="100px" src="{{asset('/')}}@{{product.affiliated_content_account_service[0].sequence.url_image}}" />
                     <div class="row">
-                       <h6 class="col-12 ml-3">(@{{ product.affiliated_content_account_service.length }}) Experiencias científicas de @{{product.affiliated_content_account_service[0].sequence.name}} </h6>
+                        <h6 class="col-12 ml-3" ng-show="product.affiliated_content_account_service.length > 1">    
+                        @{{ product.affiliated_content_account_service.length}}  Experiencias científicas de @{{product.affiliated_content_account_service[0].sequence.name}}
+                        </h6>
+                        <h6 class="col-12 ml-3" ng-show="product.affiliated_content_account_service.length === 1">    
+                        @{{ product.affiliated_content_account_service.length}}  Experiencia científica de @{{product.affiliated_content_account_service[0].sequence.name}}
+                        </h6>
                        <p class="fs--3 ml-3 col-12  pr-5">
                        Cada momento está  estructurado a partir de una pregunta central, experiencias científicas que integran teoría y práctica, explicaciones de los fenómenos en contexto, y recursos recomendados disponibles en la web para establecer  + conexiones.
                        </p>
@@ -90,14 +100,7 @@
                </div>
            </div>
         </div>
-   </div>
-
-   <div ng-show="showHelpModal"> 
-    @include('roles/tutor/help-platform')
-   </div>
-   <div ng-show="showHelpModal"> 
-    @include('roles/tutor/help-platform')
-   </div>
+   </div> 
 
 @endsection
 @section('js')
