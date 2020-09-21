@@ -49,7 +49,7 @@ class MyResetPassword extends Notification
 
         $users = AfiliadoEmpresa::where('email', $notifiable->email)->get();
         return (new MailMessage)->markdown(
-            'vendor.notifications.email', ['data' => $users]
+            'vendor.notifications.resetPassword', ['data' => $users]
         )
             ->from('operaciones@educonexiones.com')
             ->subject(' contraseña')
