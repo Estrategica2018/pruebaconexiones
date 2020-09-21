@@ -95,6 +95,9 @@
    <div ng-show="showHelpModal"> 
     @include('roles/tutor/help-platform')
    </div>
+   <div ng-show="showHelpModal"> 
+    @include('roles/tutor/help-platform')
+   </div>
 
 @endsection
 @section('js')

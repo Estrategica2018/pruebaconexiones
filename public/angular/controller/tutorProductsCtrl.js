@@ -43,7 +43,6 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
                     var width  = $(this).width(); 
                     $(this).find('a span').each(function(){ 
                         var delta =  (width) - $(this).width();
-                        console.log(delta,width)
                         $(this).css('margin-left',(delta/4)+'px');  
                     });
                 }); 

@@ -5,7 +5,7 @@
       style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-hide="loadFinished">
       cargando...
    </div>
-   <div class="background-sequence-card mt-3 ml-3 pt-2 row card card-body" w="1519" h="4424" ng-show="loadFinished">
+   <div class="background-sequence-card mt-3 ml-3 pt-2 row card card-body" w="1519" h="4524" ng-show="loadFinished">
       <div class="d-none-result d-none">
          <div mt="20" ml="40" fs="30" class="boder-header p-2" >
             <h5 class="mb-0">Enfoque pedagógico</h5>
@@ -13,7 +13,7 @@
          <div class="z-index-1" mt="100" ml="40">
             <img src="{{ asset('images/acercaConexiones/tituloMomento.jpg') }}"  w="562" h="auto"/>
          </div>
-         <div class=""  mt="100" ml="660" w="762"  fs="18">
+         <div mt="100" ml="660" w="762"  fs="18">
             <div class="font-weight-bold"><strong>Aprendizaje por indagación y desarrollo de pensamiento científicos</strong></div>
             <div class="text-justify mt-3" >
                <p>La propuesta educativa de <strong>Conexiones</strong> se sustenta en un enfoque pedagógico de aprendizaje por indagación,
@@ -154,15 +154,15 @@
             </p>
             <p>Los siguientes iconos permiten identificar la ubicación y relación de cada momento de aprendizaje <strong>(Ver + haciendo clic en cada ícono)</strong></p>
             <div class="row mt-4" fs="18">
-               <div class="col-3  text-align">
+               <div ml="140">
                   <img class="mb-3 cursor-pointer" ng-click="setIconPedagogy('central_question')" w="74" h="auto" src="{{ asset('images/icons/preguntaCentral.png') }}">
-                  <span class="font-14px justify-content-center font-weight-bold d-flex mt-1 ml-auto mr-automl-1 w-75" ml="80"  mt="75" fs="18">  Pregunta Central </span>
-                  <div class="d-none-result d-none panel-icon-pedagogy fs--3 mt-3" mt="120" ng-show="icon_pedagogy==='central_question'">
+                  <span ml="-30" mt="90" w="300" fs="18" class="text-align  font-weight-bold d-flex cursor-pointer" ng-click="setIconPedagogy('central_question')">  Pregunta Central </span>
+                  <div mt="170" ml="-140" class="d-none-result d-none panel-icon-pedagogy fs--3" ng-show="icon_pedagogy==='central_question'">
                      <div style="margin-left: 9vw;position: absolute;margin-top: -38px;">
-                        <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #ec6625 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -6px;">
+                        <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #ec6625 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -32px;">
                         </div>
                      </div>
-                     <div class="header">
+                     <div class="header text-align">
                         <span class="central_question_color">Pregunta central</span>
                      </div>
                      <div class="body">
@@ -178,15 +178,15 @@
                      </div>
                   </div>
                </div>
-               <div class="col-3  text-align">
+               <div ml="470" fs="18">
                   <img class="mb-3 cursor-pointer" ng-click="setIconPedagogy('scientific_experience')" w="74" h="auto" src="{{ asset('images/icons/iconoExperiencia.png') }}">
-                  <span class="font-14px justify-content-center font-weight-bold d-flex mt-1 ml-auto mr-auto ml-1 w-75" ml="80"  mt="75" fs="18">  Experiencia Científica </span>
-                  <div class="d-none-result d-none panel-icon-pedagogy-green fs--3 mt-3" mt="120" ng-show="icon_pedagogy==='scientific_experience'">
+                  <span ml="-60" mt="90" w="300" fs="18" class="text-align  font-weight-bold d-flex cursor-pointer" ng-click="setIconPedagogy('scientific_experience')">  Experiencia Científica </span>
+                  <div mt="170" ml="-240" class="d-none-result d-none panel-icon-pedagogy-green"  ng-show="icon_pedagogy==='scientific_experience'">
                      <div style="margin-left: 9vw;position: absolute;margin-top: -38px;">
-                        <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #95c11f transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -6px;">
+                        <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #95c11f transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: 35px;">
                         </div>
                      </div>
-                     <div class="header">
+                     <div class="header  text-align">
                         <span class="scientific_experience_color">Experiencia científica</span>
                      </div>
                      <div class="body">
@@ -200,15 +200,15 @@
                      </div>
                   </div>
                </div>
-               <div class="col-3  text-align">
+               <div ml="800" fs="18">
                   <img class="mb-3 cursor-pointer" ng-click="setIconPedagogy('everyday_science')" w="74" h="auto" src="{{ asset('images/icons/cienciaCotidiana.png') }}">
-                  <span class="font-14px justify-content-center font-weight-bold d-flex mt-1 ml-auto mr-auto ml-1 w-75" ml="80"  mt="75" fs="18">  Ciencia Cotidiana </span>
-                  <div class="d-none-result d-none panel-icon-pedagogy-blue fs--3 mt-3 everyday_science_color" mt="120" ng-show="icon_pedagogy==='everyday_science'">
+                  <span ml="-40" mt="90" w="300" fs="18" class="text-align  font-weight-bold d-flex cursor-pointer" ng-click="setIconPedagogy('everyday_science')">  Ciencia Cotidiana </span>
+                  <div  mt="170" ml="-240" class="d-none-result d-none panel-icon-pedagogy-blue everyday_science_color" ng-show="icon_pedagogy==='everyday_science'">
                      <div style="margin-left: 9vw;position: absolute;margin-top: -38px;">
-                        <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #00a4d6 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -6px;">
+                        <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #00a4d6 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: 29px;">
                         </div>
                      </div>
-                     <div class="header">
+                     <div class="header  text-align">
                         <span class="everyday_science_color"> Ciencia cotidiana</span>
                      </div>
                      <div class="body">
@@ -221,15 +221,15 @@
                      </div>
                   </div>
                </div>
-               <div class="col-3  text-align">
+               <div ml="1130" fs="18">
                   <img class="mb-3 cursor-pointer" ng-click="setIconPedagogy('more_conextion')" w="74" h="auto" src="{{ asset('images/icons/masConexiones.png') }}">
-                  <span class="font-14px justify-content-center font-weight-bold d-flex mt-1 mr-auto ml-1 w-75" ml="80"  mt="75" fs="18">  + Conexiones </span>
-                  <div class="d-none-result d-none panel-icon-pedagogy-beige fs--3" mt="140" ng-show="icon_pedagogy==='more_conextion'">
+                  <span ml="-25" mt="90" w="300" fs="18" class="text-align  font-weight-bold d-flex cursor-pointer" ng-click="setIconPedagogy('more_conextion')">   + Conexiones </span>
+                  <div mt="170" ml="-340" class="d-none-result d-none panel-icon-pedagogy-beige"  ng-show="icon_pedagogy==='more_conextion'">
                      <div style="margin-left: 9vw;position: absolute;margin-top: -38px;">
-                        <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #702283 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -6px;">
+                        <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #702283 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;right: -131px;">
                         </div>
                      </div>
-                     <div class="header">
+                     <div class="header  text-align">
                         <span class="more_conextion_color">+ Conexiones</span>
                      </div>
                      <div class="body">
