@@ -5,15 +5,15 @@
       style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-hide="loadFinished">
       cargando...
    </div>
-   <div class="background-sequence-card mt-3 ml-3 row" w="1519" h="4424" ng-show="loadFinished">
+   <div class="background-sequence-card mt-3 ml-3 pt-2 row card card-body" w="1519" h="4424" ng-show="loadFinished">
       <div class="d-none-result d-none">
-         <div mt="0" ml="40" fs="30" class="boder-header p-2" >
+         <div mt="20" ml="40" fs="30" class="boder-header p-2" >
             <h5 class="mb-0">Enfoque pedagógico</h5>
          </div>
-         <div class="z-index-1" mt="80" ml="40">
+         <div class="z-index-1" mt="100" ml="40">
             <img src="{{ asset('images/acercaConexiones/tituloMomento.jpg') }}"  w="562" h="auto"/>
          </div>
-         <div class=""  mt="80" ml="660" w="762"  fs="18">
+         <div class=""  mt="100" ml="660" w="762"  fs="18">
             <div class="font-weight-bold"><strong>Aprendizaje por indagación y desarrollo de pensamiento científicos</strong></div>
             <div class="text-justify mt-3" >
                <p>La propuesta educativa de <strong>Conexiones</strong> se sustenta en un enfoque pedagógico de aprendizaje por indagación,
@@ -59,7 +59,7 @@
                nos cuenta sobre las potencialidades que esta tiene.
             </p>
          </div>
-         <div mt="990" ml="740" >
+         <div mt="1030" ml="740" >
             <iframe w="700" h="441" src="https://www.youtube.com/embed/LFB9WJeBCdA" frameborder="0"
                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                allowfullscreen=""></iframe>
