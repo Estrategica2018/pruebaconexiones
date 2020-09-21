@@ -267,7 +267,7 @@
                         <div class="media-body pl-2 pr-3">
                            <h5 class="pl-2 fs-0 boder-header text-align-left">@{{sequence.name}}</h5>
                            <div class="mt-3 pr-2 pl-2 fs--1" style="min-height: 110px;">@{{sequence.description}}</div>
-                           <div class="mt-2">
+                           <div class="position-absolute" style="bottom: 24px;">
                               <a class="btn btn-sm btn-outline-primary" ng-href="/guia_de_aprendizaje/@{{sequence.id}}/@{{sequence.name_url_value}}">
                               <span class="fs--1">Detalle</span></a>
                               <a ng-click="onSequenceBuy(sequence)" class="ml-2  btn-sm btn btn-outline-primary" href="#" class="col-auto">
