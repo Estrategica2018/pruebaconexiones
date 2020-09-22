@@ -32,8 +32,12 @@
                     @if($accountService->is_active != 1) 
                      <p class="">Fecha Expiración: {{$accountService->end_date}}</p>
                     @endif
-
                 </div>
+                @if($accountService->rating_plan->is_free) 
+                <div class="position-absolute label_free" style="top: 39px;">
+                       Prueba gratuita
+                </div>
+                @endif
                 <div class="col-12 col-md-3 col-lg-3 col-md-2 col-xl-2 mt-1 mt-md-1 mt-xl-0 ml-8 p-xl-0 d-block fs-md--1">
                     <h6 class="" style="margin-left: -62px;"><strong> Progreso</strong> 
                     @if(isset($accountService->sequence['progress']))

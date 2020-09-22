@@ -697,6 +697,7 @@ class StudentController extends Controller
                         $next_moment = $sequence->moments[$i-1];
                         $has_moment = $this->validation_access_moment($account_service_id, $sequence_id, $next_moment->id);
                         if($has_moment){
+                             
                             $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                             'sequence_id' => $sequence_id,
                             'moment_id' => $next_moment->id,
@@ -971,12 +972,7 @@ class StudentController extends Controller
         $affiliatedAccountService = AffiliatedAccountService::with('affiliated_content_account_service')->
             where('init_date', '<=', Carbon::now())
             ->where('end_date', '>=', Carbon::now())->find($account_service_id);
-            if ($affiliatedAccountService->rating_plan_type == 1) { //Si es plan por secuencia tiene acceso a todos los momentos
-                return true;
-            }
-            else if ($affiliatedAccountService->rating_plan_type == 2 || $affiliatedAccountService->rating_plan_type == 3) { //Si es plan por momento o experiencia se valida el momento 
-                return count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id)->where('moment_id', $moment_id)) > 0;
-            }
+            return count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id)->where('moment_id', $moment_id)) > 0;
     }
 
     function sectionExperiencesInMoment($moment) {
