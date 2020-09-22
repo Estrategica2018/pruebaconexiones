@@ -212,7 +212,6 @@
                             </div>
                            @if(isset($rating['evidences']['answers']))
                            <div class="ml-auto mr-3 fs-2">
-                               asdfasdfasd
                                <div class="cursor-pointer" ng-show="!mbShowEvidence{{$rating['element']['id']}}" ng-click="mbShowEvidence{{$rating['element']['id']}} = !mbShowEvidence{{$rating['element']['id']}}">
                                     <i class="fa fa-angle-down color-white" aria-hidden="true"></i>
                                </div>

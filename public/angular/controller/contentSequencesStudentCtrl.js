@@ -148,22 +148,11 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
                     var momentId = Number($(value).attr('conx-action').split('|')[1]);
                     for (var i = 0; i < accountService.affiliated_content_account_service.length; i++) {
                         scp = accountService.affiliated_content_account_service[i];
-                        if (Number(accountService.rating_plan_type)  === 1) {
+                        if (scp.moment_id === momentId) {
                             $(this).removeClass('cursor-not-allowed');
                             $(this).attr('disabled', false);
                             $(this).prop('disabled', false);
                         }
-                        else if (Number(accountService.rating_plan_type)  === 2 && scp.moment_id === momentId) {
-                            $(this).removeClass('cursor-not-allowed');
-                            $(this).attr('disabled', false);
-                            $(this).prop('disabled', false);
-                        }
-                        else if (Number(accountService.rating_plan_type)  === 3 && scp.moment_id === momentId) {
-                            $(this).removeClass('cursor-not-allowed');
-                            $(this).attr('disabled', false);
-                            $(this).prop('disabled', false);
-                        }
-                        
                     }
                 })
             }).catch(function (e) {
