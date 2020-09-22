@@ -18,7 +18,7 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
                 $scope.products = response.data; 
                 if( $scope.products.length > 0 ) { 
                     swal({
-                    text: "Recuerda que para poder visualizar los contenidos, debes ingresar con el rol de estudiante!",
+                    text: "Recuerda que para poder visualizar los contenidos, debes ingresar con una inscripción del rol de estudiante!",
                     type: "warning",
                     showCancelButton: false,
                     showConfirmButton: false,

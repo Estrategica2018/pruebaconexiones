@@ -20,6 +20,7 @@ use App\Models\CompanySequence;
 use App\Models\Answer;
 use App\Models\Rating;
 use App\Models\Question;
+use DB;
 
 /**
  * Class TutorController
@@ -396,12 +397,13 @@ class TutorController extends Controller
         }
         
         foreach($accountServices as $accountService) {  
-            $accountService['sequence'] = $accountService->affiliated_content_account_service[0]->sequence;
+            $accountService['sequence'] = clone $accountService->affiliated_content_account_service[0]->sequence;
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService['sequence']->id);
             $accountService['sequence']['progress'] = $result['sequence']['progress'];
             $accountService['sequence']['performance'] = $result['sequence']['performance'];
         } 
-        
+    
+   
         return view('roles.tutor.achievements.student', ['student'=>$student, 'accountServices'=>$accountServices]);
     }
     
@@ -458,9 +460,12 @@ class TutorController extends Controller
         $moments = [];
         foreach($sequence->moments as $moment) {
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $moment->id, $moment->order);
-            $moment['progress'] = $result['moment']['progress'];
-            $moment['performance'] = $result['moment']['performance'];
-            $moment['isAvailable'] = $result['moment']['isAvailable'];
+            if($result['moment']['isAvailable']) {
+                $moment['progress'] = $result['moment']['progress'];
+                $moment['performance'] = $result['moment']['performance'];
+                $moment['isAvailable'] = $result['moment']['isAvailable'];
+            }
+            
             array_push($moments,$moment);
         }
        
@@ -494,12 +499,12 @@ class TutorController extends Controller
         $sequence['performance'] = $result['sequence']['performance'];
  
         $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
-            $query->where('init_date', '>=', date('Y-m-d'))
-                ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
-        }])->where([
-        ['affiliated_account_service_id', $affiliated_account_service_id],
-        ['affiliated_company_id', $student->id]])
-        ->get();
+                $query->where('init_date', '>=', date('Y-m-d'))
+                    ->where('end_date', '<=', date('Y-m-d', strtotime('+ 1 day')));
+            }])->where([
+            ['affiliated_account_service_id', $affiliated_account_service_id],
+            ['affiliated_company_id', $student->id]])
+            ->get();
         
         $updated_at = $advanceLine->min('updated_at');
         if($updated_at) {
@@ -523,46 +528,53 @@ class TutorController extends Controller
         foreach($sequence->moments as $moment) {
             
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $moment->id, $moment->order);
-            $moment['progress'] = $result['moment']['progress'];
-            $moment['performance'] = $result['moment']['performance'];
-            $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+             
             $moment['isAvailable'] = $result['moment']['isAvailable'];
-            
+           
+            if($moment['isAvailable'] ) {
+                $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+                $moment['progress'] = $result['moment']['progress'];
+                $moment['performance'] = $result['moment']['performance'];
 
-            $section_1 = json_decode($moment->section_1,true);
-            $section_2 = json_decode($moment->section_2,true);
-            $section_3 = json_decode($moment->section_3,true);
-            $section_4 = json_decode($moment->section_4,true);
-            $sections = [
-                'section_1' => ['name' => $section_1['section']['name'],'title' => isset($section_1['title']) ? $section_1['title'] : '', 'section' => $section_1],
-                'section_2' => ['name' => $section_2['section']['name'],'title' => isset($section_2['title']) ? $section_2['title'] : '', 'section' => $section_2],
-                'section_3' => ['name' => $section_3['section']['name'],'title' => isset($section_3['title']) ? $section_3['title'] : '', 'section' => $section_3],
-                'section_4' => ['name' => $section_4['section']['name'],'title' => isset($section_4['title']) ? $section_4['title'] : '', 'section' => $section_4],
-            ]; 
-            $section_id=1; 
-            foreach($sections as &$section) {
-                $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student_id, $sequence->id, $moment->id, $moment->order, $section_id);
-                $section['progress'] = $result['section']['progress'];
-                $section['performance'] = $result['section']['performance'];
-                $section_id ++;
-                
-                if ($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2) { //Si es plan por secuencia o momento tiene acceso a todas las secciones
-                    $section['isAvailable'] = true;
-                }
-                else if ($accountService->rating_plan_type == 3  ) { //Si es plan por experiencia se valida la seccion experiencia cientifica
-                    if($section['section']['section']['type'] == 3) {
+                $section_1 = json_decode($moment->section_1,true);
+                $section_2 = json_decode($moment->section_2,true);
+                $section_3 = json_decode($moment->section_3,true);
+                $section_4 = json_decode($moment->section_4,true);
+                $sections = [
+                    'section_1' => ['name' => $section_1['section']['name'],'title' => isset($section_1['title']) ? $section_1['title'] : '', 'section' => $section_1],
+                    'section_2' => ['name' => $section_2['section']['name'],'title' => isset($section_2['title']) ? $section_2['title'] : '', 'section' => $section_2],
+                    'section_3' => ['name' => $section_3['section']['name'],'title' => isset($section_3['title']) ? $section_3['title'] : '', 'section' => $section_3],
+                    'section_4' => ['name' => $section_4['section']['name'],'title' => isset($section_4['title']) ? $section_4['title'] : '', 'section' => $section_4],
+                ]; 
+                $section_id=1; 
+                foreach($sections as &$section) {
+                    $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student_id, $sequence->id, $moment->id, $moment->order, $section_id);
+                    $section['progress'] = $result['section']['progress'];
+                    if(isset($result['section']['performance'])) {
+                        $section['performance'] =   $result['section']['performance'];
+                    }
+                    
+                    $section_id ++;
+                    
+                    if ($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2) { //Si es plan por secuencia o momento tiene acceso a todas las secciones
                         $section['isAvailable'] = true;
                     }
-                    else {
-                        $section['isAvailable'] = false;
-                    }
-                }
-                
+                    else if ($accountService->rating_plan_type == 3  ) { //Si es plan por experiencia se valida la seccion experiencia cientifica
+                        if($section['section']['section']['type'] == 3) {
+                            $section['isAvailable'] = true;
+                        }
+                        else {
+                            $section['isAvailable'] = false;
+                        }
+                    } 
+                } 
+                $moment['sections'] = $sections;
+                //
             }
-
-            $moment['sections'] = $sections;
+           
             array_push($moments,$moment);
-        }
+           
+        }  
         
         return view('roles.tutor.achievements.moment', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
     }
@@ -649,12 +661,15 @@ class TutorController extends Controller
             }
             
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
-            $moment['progress'] = $result['moment']['progress'];
-            $moment['performance'] = $result['moment']['performance'];
-            $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
             $moment['isAvailable'] = $result['moment']['isAvailable'];
+            if($result['moment']['isAvailable']) {
+                $moment['progress'] = $result['moment']['progress'];
+                $moment['performance'] = $result['moment']['performance'];
+                $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            }
             
             $moment['ratings'] = $rating;
+           
             array_push($moments,$moment);
         }
         return view('roles.tutor.achievements.questions', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
@@ -671,20 +686,19 @@ class TutorController extends Controller
     public function get_available_sequences(Request $request, $empresa, $company_id, $accountService_id= null)
     { 
         $tutor = $request->user('afiliadoempresa');
-        
          
         $accountServices = AffiliatedAccountService::
         with('rating_plan','affiliated_content_account_service.sequence')
-        ->where('company_affiliated_id',  $tutor->id); 
+        ->where('company_affiliated_id',  $tutor->id)
+        ->select(DB::raw('*,(CASE WHEN init_date <= CURRENT_DATE and end_date >= CURRENT_DATE  THEN 1 ELSE 0 END) AS is_active'))
+        ->orderBy('created_at', 'desc'); 
         /*->where([
             ['init_date', '<=', Carbon::now()],
             ['end_date', '>=', Carbon::now()]
         ]);*/
-
         if(  $accountService_id != null) {
             $accountServices = $accountServices->where('id',$accountService_id);
-        }
-        
+        } 
         return $accountServices->get();
     }
 

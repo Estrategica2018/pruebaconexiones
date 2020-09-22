@@ -19,7 +19,8 @@
         </div>
         @endif
         @foreach($accountServices as $index=>$accountService)
-        <div class="col-12 mt-sm-2 pr-sm-0 ">
+         
+        <div class="col-12 mt-sm-2 pr-sm-0" style="@if($accountService->is_active != 1) opacity:65%; @endif">
             <div class="oval-line"></div>
             <div class="row mt-3"> 
                 <div class="col-2 col-md-auto">
@@ -28,6 +29,10 @@
                 <div class="col-9 col-md-5 col-xl-3 pr-xl-0 d-block ml-5 ml-sm-1 ml-md-0"> 
                     <p class="font-weight-bold mb-1">{{ 'Guía de aprendizaje ' . ($index + 1) }}</p>
                     <p class="">{{$accountService->sequence->name}}</p>
+                    @if($accountService->is_active != 1) 
+                     <p class="">Fecha Expiración: {{$accountService->end_date}}</p>
+                    @endif
+
                 </div>
                 <div class="col-12 col-md-3 col-lg-3 col-md-2 col-xl-2 mt-1 mt-md-1 mt-xl-0 ml-8 p-xl-0 d-block fs-md--1">
                     <h6 class="" style="margin-left: -62px;"><strong> Progreso</strong> 

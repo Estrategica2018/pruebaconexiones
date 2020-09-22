@@ -182,7 +182,12 @@
                            @endif
                            </div>
                            <div class="col-7 col-md-6 p-0">  
-                            <span>Preguntas de {{$rating['element']['subtitle']}}</span>
+                           
+                           <span>Preguntas de 
+                                 @if(isset($rating['element']['subtitle']))
+                                    {{$rating['element']['subtitle']}}  
+                                @endif 
+                           </span>
                            </div>
                            <div class="col-3 p-0 fs-0">  
                                 @if(isset($rating['evidences'] ))
@@ -249,6 +254,16 @@
                     
                     @endif
                     @endforeach
+                    @if( count($moment['ratings']) == 0)  
+                    <div class="row mt-3 col-12 pr-0" ng-show="mbShowMoment{{$moment['id']}}">
+                        <div class=" evidence-head p-3 opactity-86 text-align" style="width:100%;height:auto;">
+                            
+                            <span>No hay preguntas quedesplegar en ésta sección
+                            </span>
+                        
+                        </div>
+                    </div>
+                    @endif
                </div>
             @endforeach
     

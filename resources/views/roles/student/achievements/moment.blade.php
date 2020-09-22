@@ -198,10 +198,8 @@
                                         <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$section['performance']}} %
                                         @endif
                                     @else 
-                                        <!--i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label-->
+                                        <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                                     @endif
-                                @else 
-                                    <!--i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label-->
                                 @endif
                             </div>
                         </div>

@@ -140,9 +140,13 @@ class StudentController extends Controller
         $moments = [];
         foreach($sequence->moments as $moment) {
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
-            $moment['progress'] = $result['moment']['progress'];
-            $moment['performance'] = $result['moment']['performance'];
             $moment['isAvailable'] = $result['moment']['isAvailable'];
+            if($moment['isAvailable']) {
+                 $moment['progress'] = $result['moment']['progress'];
+                $moment['performance'] = $result['moment']['performance'];
+                $moment['isAvailable'] = $result['moment']['isAvailable'];
+            }
+           
             array_push($moments,$moment);
         }
        
@@ -186,12 +190,13 @@ class StudentController extends Controller
         foreach($sequence->moments as $moment) {
             
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
-            $moment['progress'] = $result['moment']['progress'];
-            $moment['performance'] = $result['moment']['performance'];
-            $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
             $moment['isAvailable'] = $result['moment']['isAvailable'];
-            
-
+            if($moment['isAvailable']) {
+                $moment['progress'] = $result['moment']['progress'];
+                $moment['performance'] = $result['moment']['performance'];
+                $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            }
+ 
             $section_1 = json_decode($moment->section_1,true);
             $section_2 = json_decode($moment->section_2,true);
             $section_3 = json_decode($moment->section_3,true);
@@ -206,7 +211,10 @@ class StudentController extends Controller
             foreach($sections as &$section) {
                 $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student->id, $sequence->id, $moment->id, $moment->order, $section_id);
                 $section['progress'] = $result['section']['progress'];
-                $section['performance'] = $result['section']['performance'];
+                if(isset($result['section']['performance'])) {
+                    $section['performance'] = $result['section']['performance'];
+                }
+                
                 $section_id ++;
                 if ($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2) { //Si es plan por secuencia o momento tiene acceso a todas las secciones
                     $section['isAvailable'] = true;
@@ -295,10 +303,12 @@ class StudentController extends Controller
             }
             
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
-            $moment['progress'] = $result['moment']['progress'];
-            $moment['performance'] = $result['moment']['performance'];
-            $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
             $moment['isAvailable'] = $result['moment']['isAvailable']; 
+            if($moment['isAvailable'] ) {
+                 $moment['progress'] = $result['moment']['progress'];
+                $moment['performance'] = $result['moment']['performance'];
+                $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            }
             
             $moment['ratings'] = $rating;
             array_push($moments,$moment);
@@ -751,7 +761,7 @@ class StudentController extends Controller
             $accountServices = $accountServices->where('id',$accountService_id);
         }
 
-        return $accountServices->get();
+        return $accountServices->orderBy('created_at', 'desc')->get();
 		
         /*if($groupBy) {
 			return  AffiliatedAccountService::
