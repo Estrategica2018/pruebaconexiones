@@ -34,8 +34,10 @@
                     @endif 
                      
                     @if(isset($sequence['performance'])) 
+                        
+                        <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
+                            
                         @if($sequence['performance'] >= 0 )
-                            <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
                             @if($sequence['performance']>=90)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label>Superior </label><span class="fs--1">{{$sequence['performance']}} %</span> 
                             @endif
