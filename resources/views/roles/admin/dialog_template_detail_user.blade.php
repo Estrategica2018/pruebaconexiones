@@ -135,8 +135,11 @@
                     <div class="ml-2">@{{response.affiliate.email}}</div>
                 </div>
                 <div>
-                    <div>Ciudad</div>
-                    <div class="ml-2">@{{response.affiliate.country && response.affiliate.country.name ?  response.affiliate.country.name : '' }} @{{ response.affiliate.country ? '-': '' }} @{{response.affiliate.city}}</div>
+                    <div>Localidad</div>
+                    <div class="ml-2">
+                        @{{response.affiliate.country && response.affiliate.country.name ?  response.affiliate.country.name : '' }}
+                        - @{{ (response.affiliate.city ? response.affiliate.city.name : 
+                            response.affiliate.city_name ) }}</div>
                 </div>
                 <div>
                     <div>Teléfono</div>

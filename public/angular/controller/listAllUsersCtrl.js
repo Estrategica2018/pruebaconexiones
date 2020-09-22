@@ -8,7 +8,8 @@ MyApp.controller("listAllUsersCtrl", ["$scope", "$http", function ($scope, $http
             if(response.data && response.data.users){
                 $scope.users = response.data.users;
                 $scope.users = $scope.users.map(function(value){
-                        value.location = (value.country && value.country.name ? value.country.name : '') + (value.country && value.country.name ? ' - ' : '') + value.city;
+                        value.location = (value.country && value.country.name ? value.country.name : '') 
+                        + ( value.city ? ' - ' + value.city.name : value.city_name ? ' - ' + value.city_name : '');
                         value.status = value.affiliated_account_services.length > 0 ? 'Activo' : 'Inactivo';
                         return value;
                 })

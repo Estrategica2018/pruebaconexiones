@@ -44,7 +44,7 @@
                               <tr class="bg-200 text-900 border-y border-200">
                                  <th tabindex="0">Afiliado<span class="sortable order-4" ng-click="orderByItem != 'name' ? orderByItem = 'name' : orderByItem ='-name'"></span></th>
                                  <th tabindex="0">Email<span class=" sortable order-4" ng-click="orderByItem !='email' ? orderByItem = 'email' : orderByItem ='-email'"></span></th>
-                                 <th tabindex="0">Ciudad<span class="sortable order-4" ng-click="orderByItem !='location' ? orderByItem = 'location' : orderByItem ='-location'"></span></th>
+                                 <th tabindex="0">Localidad<span class="sortable order-4" ng-click="orderByItem !='location' ? orderByItem = 'location' : orderByItem ='-location'"></span></th>
                                  <th tabindex="0"># Contacto</th>
                                  <th tabindex="0">Estado<span class="sortable order-4" ng-click="orderByItem !='status' ? orderByItem = 'status' : orderByItem ='-status'"></span></th>
                                  <th tabindex="0" class="border-0"></th>
