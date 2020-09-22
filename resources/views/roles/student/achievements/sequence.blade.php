@@ -32,7 +32,7 @@
                     @else
                         <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                     @endif  
-                    @if($sequence['progress']>0 && $rating_plan_type != 3 ) 
+                    @if($sequence['performance'] ) 
                         <label class="" style="margin-left: -35px;"><strong> Desempeño</strong></label> 
                         @if($sequence['performance'] >= 0)
                             @if($sequence['performance']>=90)

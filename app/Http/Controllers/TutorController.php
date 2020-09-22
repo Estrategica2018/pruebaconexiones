@@ -692,10 +692,7 @@ class TutorController extends Controller
         ->where('company_affiliated_id',  $tutor->id)
         ->select(DB::raw('*,(CASE WHEN init_date <= CURRENT_DATE and end_date >= CURRENT_DATE  THEN 1 ELSE 0 END) AS is_active'))
         ->orderBy('end_date', 'desc'); 
-        /*->where([
-            ['init_date', '<=', Carbon::now()],
-            ['end_date', '>=', Carbon::now()]
-        ]);*/
+     
         if(  $accountService_id != null) {
             $accountServices = $accountServices->where('id',$accountService_id);
         } 

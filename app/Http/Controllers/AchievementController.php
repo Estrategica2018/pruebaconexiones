@@ -73,21 +73,22 @@ class AchievementController extends Controller
             ['sequence_id',$sequence_id ] 
         ])->get(); 
       
-        if(count($ratings) >0 ) {
-            $performance = $ratings->avg('weighted');
-            $sequence['performance'] = number_format($performance,0);
-        }
-        else {
-            $sequence['performance'] = -1;
+        $questions = Question::where('sequence_id',$sequence_id)
+            ->select('sequence_id','experience_id', DB::raw('count(1) as total'))
+            ->groupBy('sequence_id','experience_id')
+            ->get(); 
+            
+        if(count($questions)>0 ) {
+            if(count($ratings) >0 ) {
+                $performance = $ratings->avg('weighted');
+                $sequence['performance'] = number_format($performance,0);
+            }
+            else {
+                $sequence['performance'] = -1;
+            }
         }
          
         if(  $sequence['progress'] == '100') {
-           
-            $questions = Question::where('sequence_id',$sequence_id)
-                ->select('sequence_id','experience_id', DB::raw('count(1) as total'))
-                ->groupBy('sequence_id','experience_id')
-                ->get(); 
-            
             if(count($questions) > 0 && count($questions) != count($ratings) ) {
                 $sequence['progress'] = '79';
             }  

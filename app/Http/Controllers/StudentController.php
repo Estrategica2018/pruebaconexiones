@@ -90,19 +90,22 @@ class StudentController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
-        $accountServices = $this->get_available_sequences($request, $empresa, $company_id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company_id, null, false);
+        $accountAllServices = $this->get_available_sequences($request, $empresa, $company_id, null, true);
         
-        $countSequences = count($accountServices);
+        $countSequences = count($accountAllServices);
         foreach($accountServices as $accountService) {  
             $accountService->sequence = clone $accountService->affiliated_content_account_service[0]->sequence;
             
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService->sequence->id);
-            $accountService->sequence['progress'] = $result['sequence']['progress']; 
-            $accountService->sequence['performance'] = $result['sequence']['performance'];  
+            $accountService->sequence['progress'] = $result['sequence']['progress'];
+            if(isset($result['sequence']['performance'])) {
+                $accountService->sequence['performance'] = $result['sequence']['performance']; 
+            }
         } 
         $firstAccess = $student->first_last_access()['first'];
         $lastAccess = $student->first_last_access()['last'];
-
+  
         return view('roles.student.achievements.index', ['accountServices'=> $accountServices, 'student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess]);
     }
 
@@ -118,7 +121,7 @@ class StudentController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
-        $accountServices = $this->get_available_sequences($request, $empresa, $company_id, $affiliated_account_service_id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company_id, $affiliated_account_service_id,false);
         $accountAllServices = $this->get_available_sequences($request, $empresa, $company_id);
         
         if( count($accountServices) < 1) {
@@ -166,7 +169,7 @@ class StudentController extends Controller
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
        
-        $accountServices = $this->get_available_sequences($request, $empresa, $company_id, $affiliated_account_service_id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company_id, $affiliated_account_service_id, true);
         $accountAllServices = $this->get_available_sequences($request, $empresa, $company_id);
         $countSequences = count($accountAllServices);
         
@@ -248,7 +251,7 @@ class StudentController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
         $student = $request->user('afiliadoempresa');
-        $accountServices = $this->get_available_sequences($request, $empresa, $company_id, $affiliated_account_service_id);
+        $accountServices = $this->get_available_sequences($request, $empresa, $company_id, $affiliated_account_service_id,false);
         $accountAllServices = $this->get_available_sequences($request, $empresa, $company_id);
 
         if( count($accountServices) < 1) {
@@ -305,11 +308,11 @@ class StudentController extends Controller
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
             $moment['isAvailable'] = $result['moment']['isAvailable']; 
             if($moment['isAvailable'] ) {
-                 $moment['progress'] = $result['moment']['progress'];
+                $moment['progress'] = $result['moment']['progress'];
                 $moment['performance'] = $result['moment']['performance'];
                 $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
             }
-            
+             
             $moment['ratings'] = $rating;
             array_push($moments,$moment);
         }
@@ -730,10 +733,10 @@ class StudentController extends Controller
      * @param Request $request
      * @param $empresa
      * @param $company_id
-     * @param $groupBy
+     * @param $accountService_id
      * @return AffiliatedContentAccountService[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function get_available_sequences(Request $request, $empresa, $company_id, $accountService_id = null)
+    public function get_available_sequences(Request $request, $empresa, $company_id, $accountService_id = null, $onlyAvailable= true)
     {
 
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
@@ -747,18 +750,31 @@ class StudentController extends Controller
                 ]);
             })->first();  
 
-        $accountServices = AffiliatedAccountService::
+        /*$accountServices = AffiliatedAccountService::
         with('rating_plan','affiliated_content_account_service.sequence')
         ->whereHas('company_affiliated', function ($query) use ($tutor_id) {
             $query->where('id', $tutor_id->tutor_company_id);
         })
-        ->where([
-            ['init_date', '<=', Carbon::now()],
-            ['end_date', '>=', Carbon::now()]
-        ]);
+        */
+
+        $accountServices = AffiliatedAccountService::
+            with('rating_plan','affiliated_content_account_service.sequence')
+            ->whereHas('company_affiliated', function ($query) use ($tutor_id) {
+                $query->where('id', $tutor_id->tutor_company_id);
+            })
+            ->select(DB::raw('*,(CASE WHEN init_date <= CURRENT_DATE and end_date >= CURRENT_DATE  THEN 1 ELSE 0 END) AS is_active'))
+            ->orderBy('end_date', 'desc'); 
+     
         
         if(  $accountService_id != null) {
             $accountServices = $accountServices->where('id',$accountService_id);
+        }
+ 
+        if($onlyAvailable) {
+            $accountServices = $accountServices->where([
+                ['init_date', '<=', Carbon::today()],
+                ['end_date', '>=', Carbon::today()]
+            ]);
         }
 
         return $accountServices->orderBy('created_at', 'desc')->get();

@@ -3,7 +3,7 @@
 @section('achievements_layout')
 <div class="row p-2 pl-md-4 pr-md-3" ng-controller="achievementsStudentCtrl" ng-init="initSequences(1)" >
     @foreach($accountServices as $index=>$accountService)
-    <div class="col-12 mt-sm-2 pr-sm-0 ">
+    <div class="col-12 mt-sm-2 pr-sm-0 " style="@if($accountService->is_active != 1) opacity:65%; @endif">
         <div class="oval-line"></div>
         <div class="row mt-3"> 
             <div class="col-2 col-md-auto">
@@ -12,6 +12,9 @@
             <div class="col-6 col-md-4 col-xl-3 pr-xl-0 d-block"> 
                 <p class="font-weight-bold mb-1">{{ 'Guía de aprendizaje ' . ($index + 1) }}</p>
                 <p class="">{{$accountService->sequence->name}}</p>
+                @if($accountService->is_active != 1) 
+                    <p class="">Fecha Expiración: {{$accountService->end_date}}</p>
+                @endif
             </div>
             <div class="col-3 col-lg-3 col-md-2 col-xl-2 mt-1 mt-md-1 mt-xl-0 ml-7 p-xl-0 d-block fs-md--1" style="min-width: 161px;">
                 <h6 class="" style="margin-left: -62px;"><strong> Progreso</strong> 
