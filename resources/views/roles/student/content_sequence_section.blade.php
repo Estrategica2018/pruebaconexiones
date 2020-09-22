@@ -99,9 +99,16 @@
                                         @else
                                           class="{{$element['class']}} cursor-pointer"
                                         @endif
-                                          style="@if(isset($element['style'])) {{$element['style']}} @endif"
+                                          style="
+                                          @if(isset($element['background_color'])) 
+                                            background-color: {{$element['background_color']}}  
+                                          @endif
+                                          @if(isset($element['color'])) 
+                                            background-color: {{$element['color']}}  
+                                          @endif
+                                          @if(isset($element['style'])) {{$element['style']}} @endif"
                                           ml="{{$element['ml']}}" mt="{{$element['mt']}}" w="{{$element['w']}}" h="{{$element['h']}}">
-                                         {{$element['text']}}
+                                                                                  
                                         </button>
                                         @if(isset($element['action']))
                                         <span ml="{{$element['ml']}}" mt="{{$element['mt']}}" class="not-allowed">
