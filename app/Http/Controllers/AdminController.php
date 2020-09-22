@@ -243,7 +243,7 @@ class AdminController extends Controller
         $affiliated = AfiliadoEmpresa::whereHas('company_teacher_rol', function ($query) {
             $query->where('rol_id','=','3');
         })
-        ->with(['company_teacher_rol','country','cityName','affiliated_account_services'=>function($query){
+        ->with(['company_teacher_rol','country','city','affiliated_account_services'=>function($query){
             $query->where([
                 ['init_date', '<=', Carbon::now()],
                 ['end_date', '>=', Carbon::now()]
