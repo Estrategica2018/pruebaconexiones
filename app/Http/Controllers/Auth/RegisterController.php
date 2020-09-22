@@ -93,7 +93,7 @@ class RegisterController extends Controller
             'country_id' => $data['country_id'],
             'department_id' => $data['department_id'],
             'city_id' => $data['city_id'],
-            'city' => $data['city'],
+            'city_name' => $data['city_name'],
         ]);
 
 

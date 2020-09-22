@@ -4,7 +4,7 @@ MyApp.controller("registerController", ["$scope", "$http", "$templateCache", fun
     $scope.cities = null;
     $scope.countryId = null;
     $scope.cityId = 0;
-    $scope.city = '';
+    $scope.city_name = '';
     $scope.name = '';
     $scope.email = '';
     $scope.departmentId = null;
@@ -48,12 +48,12 @@ MyApp.controller("registerController", ["$scope", "$http", "$templateCache", fun
                 if(country.id === "42") {
                     $scope.showCitySelect =  true;
                     $scope.city_id = null;
-                    $scope.city = '';
+                    $scope.city_name = '';
                     $("#selectCity").val(null).trigger("change");
                 }
                 else {
                     if($scope.countryId === "42") { //previous country selected
-                        $scope.city = '';    
+                        $scope.city_name = '';    
                     }
                     $scope.showCitySelect =  false;
                     $scope.city_id = null;
@@ -99,7 +99,7 @@ MyApp.controller("registerController", ["$scope", "$http", "$templateCache", fun
         $('#selectCity').on('select2:select', function (e) {
             var city = e.params.data;
             $scope.departmentId = Number(city.department_id);
-            $scope.city = city.text;
+            $scope.city_name = city.text;
             $scope.city_id = city.id;
             $scope.$apply();
         });

@@ -40,7 +40,7 @@ class TutorController extends Controller
     {
         $request->user('afiliadoempresa')->authorizeRoles(['tutor']);
         $route = route('tutor.registerStudentForm', session('name_company'));
-        $tutor = AfiliadoEmpresa::find(auth('afiliadoempresa')->user()->id);
+        $tutor = AfiliadoEmpresa::with('country','city')->find(auth('afiliadoempresa')->user()->id);
         if($request->session()->has('status_validation_free_plan'))
         {
             $statusValidationFreePlan = $request->session()->pull('status_validation_free_plan');
@@ -112,7 +112,6 @@ class TutorController extends Controller
      */
     public function register_student(Request $request)
     {
-
         $request->user('afiliadoempresa')->authorizeRoles(['tutor']);
         $quantityStudents = AffiliatedCompanyRole::with('conection_tutor')->has('conection_tutor')->where([
             ['affiliated_company_id',auth('afiliadoempresa')->user()->id],
@@ -130,7 +129,6 @@ class TutorController extends Controller
             }
             return response()->json(['status'=>403]);
         }
-
     }
 
     /**
@@ -139,7 +137,6 @@ class TutorController extends Controller
      */
     public function get_students_tutor(Request $request)
     {
-
         $company = Companies::where('nick_name', session('name_company'))->first();
         $user_id = auth('afiliadoempresa')->user()->id;
         $affiliatedCompanyRole = AffiliatedCompanyRole::where([

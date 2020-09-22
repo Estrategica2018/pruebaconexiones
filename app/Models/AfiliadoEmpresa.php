@@ -30,7 +30,7 @@ class AfiliadoEmpresa extends Model
         'country_id',
         'department_id',
         'city_id',
-        'city',
+        'city_name',
         'password'
     ];
     // protected $guarded = ['id'];
@@ -130,7 +130,7 @@ class AfiliadoEmpresa extends Model
 
     }
 
-    public function cityName()
+    public function city()
     {
 
         return $this->belongsTo(City::class, 'city_id', 'id');

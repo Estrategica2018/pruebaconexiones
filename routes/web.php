@@ -24,6 +24,7 @@ Route::get('/', 'WelcomeController@index')->name('/');
 Route::get('/login', 'WelcomeController@index')->name('login');
 
 Route::get('/inicio', 'WelcomeController@index')->name('home');
+Route::get('/home', 'WelcomeController@index')->name('home');
 
 Route::get('/acercade', function () {
     return view('aboutus');

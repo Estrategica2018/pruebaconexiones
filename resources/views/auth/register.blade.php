@@ -108,9 +108,9 @@
                                     </select>
                                  </div>
                                  <div ng-hide="showCitySelect">
-                                    <input class="" ng-required="!showCitySelect" ng-model="city" type="text" id="city"
-                                       name="city" autocomplete="off"
-                                       ng-class="{'form-control': true, 'is-invalid': registerForm.city.$dirty && registerForm.city.$invalid}" />
+                                    <input class="" ng-required="!showCitySelect" ng-model="city_name" type="text" id="city_name"
+                                       name="city_name" autocomplete="off"
+                                       ng-class="{'form-control': true, 'is-invalid': registerForm.city_name.$dirty && registerForm.city_name.$invalid}" />
                                  </div>
                                  @error('city')
                                  <span class="invalid-feedback" role="alert">
