@@ -40,18 +40,17 @@ class AchievementController extends Controller
      * @param $sequence_id 
      * @return array
      */
-    public static function retriveProgressSequence($accountService, $student_id, $sequence_id) 
-    {
-        $sequence = [];
+    public static function retriveProgressSequence($accountService, $student_id, $sequence) 
+    { 
+        
         $momentCount = 0;
         $momentSectionCount = 4; 
-    
+ 
         if ($accountService->rating_plan_type == 1) { //Si es plan por secuencia tiene acceso a todos los momentos
             $momentCount = 8;
         }
         else if ($accountService->rating_plan_type == 2 || $accountService->rating_plan_type == 3) { //Si es plan por momento o experiencia se valida el momento 
-            //return count($affiliatedAccountService->affiliated_content_account_service->where('sequence_id', $sequence_id)->where('moment_id', $moment_id)) > 0;
-            $momentCount = count($accountService->affiliated_content_account_service->where('sequence_id', $sequence_id));
+            $momentCount = count($accountService->affiliated_content_account_service->where('sequence_id', $sequence->id));
             if($accountService->rating_plan_type == 3 )  {
                 $momentSectionCount = 1;
             }
@@ -61,7 +60,7 @@ class AchievementController extends Controller
         $advanceLine = AdvanceLine::where([
             ['affiliated_company_id',$student_id],
             ['affiliated_account_service_id',$accountService->id],
-            ['sequence_id',$sequence_id]
+            ['sequence_id',$sequence->id]
         ])->get(); 
   
         $sequence['progress'] = 100 * count($advanceLine) / ($momentCount*$momentSectionCount);
@@ -70,13 +69,33 @@ class AchievementController extends Controller
         $ratings = Rating::where([
             ['affiliated_account_service_id',$accountService->id],
             ['student_id', $student_id],
-            ['sequence_id',$sequence_id ] 
-        ])->get(); 
-      
-        $questions = Question::where('sequence_id',$sequence_id)
-            ->select('sequence_id','experience_id', DB::raw('count(1) as total'))
-            ->groupBy('sequence_id','experience_id')
-            ->get(); 
+            ['sequence_id',$sequence->id ] 
+        ])->get();  
+
+        $questions = [];
+        foreach($sequence->moments as $sequenceMoment) {
+            foreach([1,2,3,4] as $section_id) {
+                $section = json_decode($sequenceMoment['section_'.$section_id], true);
+                if($accountService['rating_plan_type'] == 3) {
+                    if($section['section']['type'] != 3) {
+                    continue;
+                    }
+                }
+                foreach([1,2,3,4,5] as $part_id) {
+                    if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
+                        if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
+                            $elements = $section['part_'.$part_id]['elements'];
+                            foreach($elements as $element) {
+                                if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
+                                    $questions[$element['id']] = ['element'=>$element];
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            }    
+        }
             
         if(count($questions)>0 ) {
             if(count($ratings) >0 ) {
@@ -88,7 +107,7 @@ class AchievementController extends Controller
             }
         }
          
-        if(  $sequence['progress'] == '100') {
+        if( $sequence['progress'] == '100') {
             if(count($questions) > 0 && count($questions) != count($ratings) ) {
                 $sequence['progress'] = '79';
             }  
@@ -105,19 +124,19 @@ class AchievementController extends Controller
      * @param $moment_id
      * @return array
      */
-    public static function retriveProgressMoment($accountService, $student_id, $sequence_id, $moment_id, $moment_order) 
+    public static function retriveProgressMoment($accountService, $student_id, $sequence_id, $sequenceMoment) 
     {
         $isAvailable = AffiliatedContentAccountService::with('sequence.moments')->where('sequence_id',$sequence_id)->where(function ($query)use($accountService){
             $query->where('affiliated_account_service_id',$accountService->id);
-         })->where('moment_id', $moment_id)->get();
+         })->where('moment_id', $sequenceMoment['id'])->get();
         
         
         if( $isAvailable == null || count($isAvailable) == 0) {
             $moment['isAvailable'] = false;
-            return [ 'moment' => $moment];
+            return [ 'moment' => $sequenceMoment];
         }
        
-        $moment['isAvailable'] = true; 
+        $sequenceMoment['isAvailable'] = true; 
        
         //Si es plan por secuencia o  momento tiene acceso a las 4 secciones del momento
         $momentSectionCount = 
@@ -129,64 +148,82 @@ class AchievementController extends Controller
             ['affiliated_company_id',$student_id],
             ['affiliated_account_service_id',$accountService->id],
             ['sequence_id',$sequence_id],
-            ['moment_order',$moment_order]
+            ['moment_order',$sequenceMoment->order]
         ])->orderBy('moment_order', 'ASC')->orderBy('moment_section_id', 'ASC')->get();
     
-        $questions = Question::where([
+        $questions = [];
+
+        $evidences = Rating::with('answers.question')
+        ->where([
             ['sequence_id',$sequence_id],
-            ['moment_id',$moment_id]
-        ])
-        ->select('sequence_id','moment_id', DB::raw('count(1) as total'))
-        ->groupBy('sequence_id','moment_id')
-        ->get();
-
-        //calculando los porcentajes de desempeño
-        $ratings = Rating::where([
+            ['student_id',$student_id],
             ['affiliated_account_service_id',$accountService->id],
-            ['student_id', $student_id],
-            ['sequence_id',$sequence_id ],
-            ['moment_id',$moment_id]
-        ])->select('sequence_id','moment_id', DB::raw('count(1) as total'))
-        ->groupBy('sequence_id','moment_id')
-        ->get();
-            
-        $moment['progress'] = (count($advanceLine) / $momentSectionCount) * 100;
+        ])->get();
 
-        if( count($questions) > 0 && $moment['progress'] == 100) {
-            
-            if(count($ratings) == count($questions) ) {
-                $moment['progress'] = 100; 
+        foreach([1,2,3,4] as $section_id) {
+                
+            $section = json_decode($sequenceMoment['section_'.$section_id], true);
+            if($accountService['rating_plan_type'] == 3) {
+                if($section['section']['type'] != 3) {
+                continue;
+                }
             }
-            else {
-                $moment['progress'] = 89;
+            foreach([1,2,3,4,5] as $part_id) {
+                if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
+                    if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
+                        $elements = $section['part_'.$part_id]['elements'];
+                        foreach($elements as $element) {
+                            if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
+                                $questions[$element['id']] = ['element'=>$element];
+                                $questions[$element['id']]['evidences'] = $evidences->where('experience_id',$element['id'])->first();
+                                if($questions[$element['id']]['evidences']) {
+                                    //  ($rating[$element['id']]['evidences']);
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        } 
+        }
+   
         //calculando los porcentajes de desempeño
         $ratings = Rating::where([
             ['affiliated_account_service_id',$accountService->id],
             ['student_id',$student_id],
             ['sequence_id',$sequence_id],
-            ['moment_id',$moment_id]
-        ])->get();
-
-        if(count($ratings)>0) {
+            ['moment_id',$sequenceMoment->id]
+        ])->get();  
             
-            $performance = $ratings->avg('weighted');
-            $moment['performance'] = number_format($performance,0); 
-        } 
-        else { 
-            $moment['performance'] = -1;
+        $sequenceMoment['progress'] = (count($advanceLine) / $momentSectionCount) * 100;
+ 
+        if( count($questions) > 0 && $sequenceMoment['progress'] == 100) {
+            if(count($ratings) == count($questions) ) {
+                $sequenceMoment['progress'] = 100; 
+            }
+            else {
+                $sequenceMoment['progress'] = 89;
+            }
+        }  
+        if( count($questions) > 0) {
+            if(count($ratings)>0) { 
+                $performance = $ratings->avg('weighted');
+                $sequenceMoment['performance'] = number_format($performance,0); 
+            } 
+            else { 
+                $sequenceMoment['performance'] = -1;
+            } 
         }
+
         $created_at = $advanceLine->max('updated_at');
         if($created_at != null) {
             $date =  Carbon::parse($created_at);
-            $moment['lastAccessInMoment'] = $date->format("Y-m-d H:i");
+            $sequenceMoment['lastAccessInMoment'] = $date->format("Y-m-d H:i");
         }
         else {
-            $moment['lastAccessInMoment'] = null;
+            $sequenceMoment['lastAccessInMoment'] = null;
         }
-
-        return [ 'moment' => $moment];
+        $sequenceMoment['questions'] = $questions;
+        return [ 'moment' => $sequenceMoment];
     }
 
     /**
@@ -199,7 +236,7 @@ class AchievementController extends Controller
      * @param $section_id
      * @return array
      */
-    public static function retriveProgressSection($accountService, $student_id, $sequence_id, $moment_id, $moment_order, $section_id) 
+    public static function retriveProgressSection($accountService, $student_id, $sequence_id, $sequenceMoment, $section_id) 
     {
 
         //calcula el Progreso según la línea de avance
@@ -207,52 +244,58 @@ class AchievementController extends Controller
             ['affiliated_company_id',$student_id],
             ['affiliated_account_service_id',$accountService->id],
             ['sequence_id',$sequence_id],
-            ['moment_order',$moment_order],
+            ['moment_order',$sequenceMoment->order],
             ['moment_section_id',$section_id]
         ])->get();
-        
+      
         //calcula el desempeño según las evaluaciones
         $ratings = Rating::where([
             ['affiliated_account_service_id',$accountService->id],
             ['student_id',$student_id], 
             ['sequence_id',$sequence_id],
-            ['moment_id',$moment_id],
+            ['moment_id',$sequenceMoment->id],
             ['section',$section_id]
-        ])->get();
-
-        $questions = Question::where([
-            ['sequence_id',$sequence_id],
-            ['moment_id',$moment_id],
-            ['section',$section_id]
-        ])
-        ->select('sequence_id','moment_id','section', DB::raw('count(1) as total'))
-        ->groupBy('sequence_id','moment_id','section')
-        ->get(); 
+        ])->get(); 
          
+        $section = json_decode($sequenceMoment['section_'.$section_id], true);
+        
+        $questions = [];
+        foreach([1,2,3,4,5] as $part_id) {
+            if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
+                if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
+                    $elements = $section['part_'.$part_id]['elements'];
+                    foreach($elements as $element) {
+                        if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
+                            $questions[$element['id']] = ['element'=>$element];
+                            
+                        }
+                    }
+                }
+            }
+        } 
+
         
         $section = [];
-         
-        $section['progress'] = 0;
-
-        if( count($advanceLine) > 0) {
-            if( count( $ratings ) == count($questions)) {
-                $section['progress'] = 100;
-            }
-            else {
+        $section['progress'] = -1;
+    
+        if( count($advanceLine) > 0 ) {
+            $section['progress'] = 100;
+            if( count($questions) > 0 && count( $ratings ) != count($questions)) {
                 $section['progress'] = 89;
             }
-        }
+        } 
+
+       // 
         if(count($questions)>0) {
+            
             if( count( $ratings ) > 0) {
-             $section['performance'] = $ratings->avg('weighted') ? $ratings->avg('weighted') : 0;
+                $section['performance'] = $ratings->avg('weighted') ? $ratings->avg('weighted') : 0;
             }
             else{
                 $section['performance'] = -1;
             }
         }
-        
-       
-        
+
         return [ 'section' => $section];
     }
     
@@ -273,8 +316,6 @@ class AchievementController extends Controller
                 }
             }
         }
-        return '';
-        
-    }
-
+        return ''; 
+    } 
 }

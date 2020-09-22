@@ -45,28 +45,28 @@
             @else
             <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
             @endif  
-            @if($sequence['progress']>0) 
-            @if($sequence['performance'] >= 0 ))
-            <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
-            @if($sequence['performance']>=90)
-            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (S)<span class="fs-0">{{$sequence['performance']}} %</span> 
-            @endif
-            @if($sequence['performance']>=70 && $sequence['performance']<=89)
-            <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (A)  <span class="fs-0">{{$sequence['performance']}} %</span>
-            @endif
-            @if($sequence['performance']>=60 && $sequence['performance']<=69)
-            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> (B)  <span class="fs-0">{{$sequence['performance']}} %</span>
-            @endif
-            @if($sequence['performance']>=40 && $sequence['performance']<=59)
-            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B) <span class="fs-0">{{$sequence['performance']}} %</span>
-            @endif
-            @if($sequence['performance']>=0  && $sequence['performance']<40)
-            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B) <span class="fs-0">{{$sequence['performance']}} %</span>
-            @endif
-            @if($sequence['performance']==-1)
-            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
-            @endif
-            @endif
+            @if(isset($sequence['performance'])) 
+            
+                @if($sequence['performance'] >= 0 )
+                    <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
+                    @if($sequence['performance']>=90)
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label>Superior </label><span class="fs--1">{{$sequence['performance']}} %</span> 
+                    @endif
+                    @if($sequence['performance']>=70 && $sequence['performance']<=89)
+                    <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label>Superior </Alto> <span class="fs--1">{{$sequence['performance']}} %</span>
+                    @endif
+                    @if($sequence['performance']>=60 && $sequence['performance']<=69)
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i><label>Bajo </Alto>   <span class="fs--1">{{$sequence['performance']}} %</span>
+                    @endif
+                    @if($sequence['performance']>=40 && $sequence['performance']<=59)
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> <label>Bajo </Alto>  <span class="fs--1">{{$sequence['performance']}} %</span>
+                    @endif
+                    @if($sequence['performance']>=0  && $sequence['performance']<40)
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> <label>Bajo </Alto>  <span class="fs--1">{{$sequence['performance']}} %</span>
+                    @endif
+                @else  
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                @endif
             @endif
          </div>
          <div class="col-12 col-xl-4 row mt-4 mt-xl-0 text-align " style="min-width: 408px;">
@@ -174,10 +174,10 @@
                @endif
                </span>
                <div class="cursor-pointer" ng-show="!mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
-                  <i class="fa fa-angle-down fs-2" aria-hidden="true"></i>
+                  <i class="fa fa-angle-down color-dark-blue fs-2" aria-hidden="true"></i>
                </div>
                <div class="cursor-pointer" ng-show="mbShowMoment{{$moment['id']}}" ng-click="mbShowMoment{{$moment['id']}} = !mbShowMoment{{$moment['id']}}">
-                  <i class="fa fa-angle-up fs-2" aria-hidden="true"></i>
+                  <i class="fa fa-angle-up color-dark-blue fs-2" aria-hidden="true"></i>
                </div>
                @endif
             </div>
@@ -225,12 +225,13 @@
                   @endif
                </div>
                @if(isset($rating['evidences']['answers']))
+              
                <div class="ml-auto mr-3 fs-2">
                   <div class="cursor-pointer" ng-show="!mbShowEvidence{{$rating['element']['id']}}" ng-click="mbShowEvidence{{$rating['element']['id']}} = !mbShowEvidence{{$rating['element']['id']}}">
-                     <i class="fa fa-angle-down" aria-hidden="true"></i>
+                     <i class="fa fa-angle-down color-white" aria-hidden="true"></i>
                   </div>
-                  <div class="cursor-pointer" ng-show="mbShowEvidence{{$rating['element']['id']}}" ng-click="mbShowEvidence{{$rating['element']['id']}} = !mbShowEvidence{{$rating['element']['id']}}">
-                     <i class="fa fa-angle-up" aria-hidden="true"></i>
+                  <div class="cursor-pointer " ng-show="mbShowEvidence{{$rating['element']['id']}}" ng-click="mbShowEvidence{{$rating['element']['id']}} = !mbShowEvidence{{$rating['element']['id']}}">
+                     <i class="fa fa-angle-up color-white" aria-hidden="true"></i>
                   </div>
                </div>
                @endif
@@ -267,10 +268,7 @@
          @if( count($moment['ratings']) == 0)  
          <div class="row mt-3 col-12 pr-0" ng-show="mbShowMoment{{$moment['id']}}">
             <div class=" evidence-head p-3 opactity-86 text-align" style="width:100%;height:auto;">
-                 
-                  <span>No hay preguntas quedesplegar en ésta sección
-                  </span>
-               
+                 <span>No hay preguntas por desplegar en ésta sección</span>
             </div>
          </div>
          @endif

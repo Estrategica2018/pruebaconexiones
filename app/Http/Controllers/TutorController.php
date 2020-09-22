@@ -398,12 +398,11 @@ class TutorController extends Controller
         
         foreach($accountServices as $accountService) {  
             $accountService['sequence'] = clone $accountService->affiliated_content_account_service[0]->sequence;
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService['sequence']->id);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService['sequence']);
             $accountService['sequence']['progress'] = $result['sequence']['progress'];
             $accountService['sequence']['performance'] = $result['sequence']['performance'];
         } 
-    
-   
+        
         return view('roles.tutor.achievements.student', ['student'=>$student, 'accountServices'=>$accountServices]);
     }
     
@@ -432,7 +431,7 @@ class TutorController extends Controller
         $accountService = $accountServices[0];
         $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
  
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence->id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
         
@@ -459,16 +458,18 @@ class TutorController extends Controller
 
         $moments = [];
         foreach($sequence->moments as $moment) {
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $moment->id, $moment->order);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $moment);
+            $moment['isAvailable'] = $result['moment']['isAvailable'];
+         
             if($result['moment']['isAvailable']) {
+                
                 $moment['progress'] = $result['moment']['progress'];
-                $moment['performance'] = $result['moment']['performance'];
-                $moment['isAvailable'] = $result['moment']['isAvailable'];
-            }
-            
+                if($result['moment']) {
+                   $moment['performance'] = $result['moment']['performance']; 
+                } 
+            } 
             array_push($moments,$moment);
-        }
-       
+        } 
         return view('roles.tutor.achievements.sequence', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id] );
     }
     
@@ -482,7 +483,7 @@ class TutorController extends Controller
      */
     public function show_achievements_moment(Request $request, $empresa, $affiliated_account_service_id, $sequence_id, $student_id)
     {
-        
+    
         $tutor = $request->user('afiliadoempresa');
         $company = Companies::where('nick_name', $empresa)->first();
         $student = AfiliadoEmpresa::find($student_id);
@@ -494,7 +495,7 @@ class TutorController extends Controller
         $accountService = $accountServices[0];
         $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
  
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student_id, $sequence->id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student_id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
  
@@ -527,7 +528,7 @@ class TutorController extends Controller
         $moments = [];
         foreach($sequence->moments as $moment) {
             
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $moment->id, $moment->order);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $moment);
              
             $moment['isAvailable'] = $result['moment']['isAvailable'];
            
@@ -535,7 +536,7 @@ class TutorController extends Controller
                 $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
                 $moment['progress'] = $result['moment']['progress'];
                 $moment['performance'] = $result['moment']['performance'];
-
+ 
                 $section_1 = json_decode($moment->section_1,true);
                 $section_2 = json_decode($moment->section_2,true);
                 $section_3 = json_decode($moment->section_3,true);
@@ -548,7 +549,7 @@ class TutorController extends Controller
                 ]; 
                 $section_id=1; 
                 foreach($sections as &$section) {
-                    $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student_id, $sequence->id, $moment->id, $moment->order, $section_id);
+                    $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student_id, $sequence->id, $moment, $section_id);
                     $section['progress'] = $result['section']['progress'];
                     if(isset($result['section']['performance'])) {
                         $section['performance'] =   $result['section']['performance'];
@@ -566,16 +567,16 @@ class TutorController extends Controller
                         else {
                             $section['isAvailable'] = false;
                         }
-                    } 
+                    }   
                 } 
                 $moment['sections'] = $sections;
                 //
             }
-           
+          
             array_push($moments,$moment);
            
         }  
-        
+       
         return view('roles.tutor.achievements.moment', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
     }
     
@@ -602,9 +603,10 @@ class TutorController extends Controller
         $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
  
 
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence->id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
+       
         
         $advanceLine = AdvanceLine::with(['affiliated_account_service' => function ($query) {
             $query->where('init_date', '>=', date('Y-m-d'))
@@ -660,18 +662,18 @@ class TutorController extends Controller
                 }
             }
             
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment);
             $moment['isAvailable'] = $result['moment']['isAvailable'];
             if($result['moment']['isAvailable']) {
                 $moment['progress'] = $result['moment']['progress'];
                 $moment['performance'] = $result['moment']['performance'];
                 $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+                $moment['ratings'] = $result['moment']['questions'];
             }
-            
-            $moment['ratings'] = $rating;
            
             array_push($moments,$moment);
         }
+
         return view('roles.tutor.achievements.questions', ['student' => $student, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
     }
 

@@ -97,7 +97,7 @@ class StudentController extends Controller
         foreach($accountServices as $accountService) {  
             $accountService->sequence = clone $accountService->affiliated_content_account_service[0]->sequence;
             
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService->sequence->id);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService->sequence);
             $accountService->sequence['progress'] = $result['sequence']['progress'];
             if(isset($result['sequence']['performance'])) {
                 $accountService->sequence['performance'] = $result['sequence']['performance']; 
@@ -135,14 +135,14 @@ class StudentController extends Controller
         $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
     
  
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence->id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
   
 
         $moments = [];
         foreach($sequence->moments as $moment) {
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment);
             $moment['isAvailable'] = $result['moment']['isAvailable'];
             if($moment['isAvailable']) {
                  $moment['progress'] = $result['moment']['progress'];
@@ -184,26 +184,27 @@ class StudentController extends Controller
         $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
 
         //$sequence = CompanySequence::with('moments')->find($sequence_id);
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence->id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
          
         
         $moments = [];
-        foreach($sequence->moments as $moment) {
+        foreach($sequence->moments as $sequenceMoment) {
             
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
-            $moment['isAvailable'] = $result['moment']['isAvailable'];
-            if($moment['isAvailable']) {
-                $moment['progress'] = $result['moment']['progress'];
-                $moment['performance'] = $result['moment']['performance'];
-                $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $sequenceMoment);
+            $sequenceMoment['isAvailable'] = $result['moment']['isAvailable'];
+            if($sequenceMoment['isAvailable']) {
+                $sequenceMoment['progress'] = $result['moment']['progress'];
+                $sequenceMoment['performance'] = $result['moment']['performance'];
+                $sequenceMoment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+                
             }
  
-            $section_1 = json_decode($moment->section_1,true);
-            $section_2 = json_decode($moment->section_2,true);
-            $section_3 = json_decode($moment->section_3,true);
-            $section_4 = json_decode($moment->section_4,true);
+            $section_1 = json_decode($sequenceMoment->section_1,true);
+            $section_2 = json_decode($sequenceMoment->section_2,true);
+            $section_3 = json_decode($sequenceMoment->section_3,true);
+            $section_4 = json_decode($sequenceMoment->section_4,true);
             $sections = [
                 'section_1' => ['name' => $section_1['section']['name'],'title' => isset($section_1['title']) ? $section_1['title'] : '', 'section' => $section_1],
                 'section_2' => ['name' => $section_2['section']['name'],'title' => isset($section_2['title']) ? $section_2['title'] : '', 'section' => $section_2],
@@ -212,11 +213,12 @@ class StudentController extends Controller
             ]; 
             $section_id=1; 
             foreach($sections as &$section) {
-                $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student->id, $sequence->id, $moment->id, $moment->order, $section_id);
+                $result = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student->id, $sequence->id, $sequenceMoment, $section_id);
                 $section['progress'] = $result['section']['progress'];
                 if(isset($result['section']['performance'])) {
                     $section['performance'] = $result['section']['performance'];
                 }
+                
                 
                 $section_id ++;
                 if ($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2) { //Si es plan por secuencia o momento tiene acceso a todas las secciones
@@ -230,10 +232,10 @@ class StudentController extends Controller
                         $section['isAvailable'] = false;
                     }
                 }
-            }
+            } 
 
-            $moment['sections'] = $sections;
-            array_push($moments,$moment);
+            $sequenceMoment['sections'] = $sections;
+            array_push($moments,$sequenceMoment);
         }
         
         return view('roles.student.achievements.moment', ['rating_plan_type'=>$accountService->rating_plan_type,'student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $accountService->id]  );
@@ -267,13 +269,11 @@ class StudentController extends Controller
 
 
         $sequence = CompanySequence::with('moments')->find($sequence_id);
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence->id);
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
         
         $moments = [];
-        
-        
         $evidences = Rating::with('answers.question')
         ->where([
             ['sequence_id',$sequence->id],
@@ -281,41 +281,25 @@ class StudentController extends Controller
             ['affiliated_account_service_id',$accountService->id],
         ])->get();
         
-        foreach($sequence->moments as $moment) {
-            $rating = [];
-            
-            foreach([1,2,3,4] as $section_id) {
-                
-                $section = json_decode($moment['section_'.$section_id], true);
-                foreach([1,2,3,4,5] as $part_id) {
-                    if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
-                        if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
-                            $elements = $section['part_'.$part_id]['elements'];
-                            foreach($elements as $element) {
-                                if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
-                                    $rating[$element['id']] = ['element'=>$element];
-                                    $rating[$element['id']]['evidences'] = $evidences->where('experience_id',$element['id'])->first();
-                                    if($rating[$element['id']]['evidences']) {
-                                        //dd($rating[$element['id']]['evidences']);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        foreach($sequence->moments as $sequenceMoment) {
+           
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $sequenceMoment);
+            $sequenceMoment['isAvailable'] = $result['moment']['isAvailable']; 
+            if($sequenceMoment['isAvailable'] ) {
+                $sequenceMoment['progress'] = $result['moment']['progress'];
+                $sequenceMoment['performance'] = $result['moment']['performance'];
+                $sequenceMoment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
+                $sequenceMoment['ratings'] = $result['moment']['questions'];
+            }
+            else {
+                $sequenceMoment['ratings'] = [];
+              
             }
             
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $moment->id, $moment->order);
-            $moment['isAvailable'] = $result['moment']['isAvailable']; 
-            if($moment['isAvailable'] ) {
-                $moment['progress'] = $result['moment']['progress'];
-                $moment['performance'] = $result['moment']['performance'];
-                $moment['lastAccessInMoment'] = $result['moment']['lastAccessInMoment'];
-            }
-             
-            $moment['ratings'] = $rating;
-            array_push($moments,$moment);
+            array_push($moments,$sequenceMoment);
         }
+
+        
         return view('roles.student.achievements.questions', ['rating_plan_type'=>$accountService->rating_plan_type,'student' => $student, 'countSequences' => $countSequences, 'firstAccess' => $firstAccess, 'lastAccess' => $lastAccess, 'sequence'=>$sequence, 'moments' => $moments, 'affiliated_account_service_id' => $affiliated_account_service_id]  );
     }
  
