@@ -94,12 +94,7 @@ class AdminController extends Controller
     public function get_users_contracted_products_dt(Request $request)
     {
 
-        $companyAffiliateds = AfiliadoEmpresa::whereHas('affiliated_account_services', function ($query) {
-            $query->where([
-                ['init_date', '<=', Carbon::now()],
-                ['end_date', '>=', Carbon::now()]
-            ]);
-        })->get();
+        $companyAffiliateds = AfiliadoEmpresa::whereHas('affiliated_account_services')->get();
 
         return DataTables::of($companyAffiliateds)
             ->addColumn('avatar', function ($companyAffiliated) {

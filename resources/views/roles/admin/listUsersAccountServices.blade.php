@@ -17,7 +17,7 @@
                 <div class="col-md-8" >
                     <div class="mb-3 card">
                         <div class="card-header">
-                            <h5 class="">Lista de usuarios con contenidos vigentes</h5>
+                            <h5 class="">Lista de usuarios con contenidos adquiridos</h5>
                         </div>
                         <div class="bg-light card-body">
                             <table id="myTable" class="display-1 table table-sm table-dashboard data-table no-wrap mb-0 fs--1 w-100" style="width: 100%">
