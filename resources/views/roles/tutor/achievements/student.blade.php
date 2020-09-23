@@ -42,16 +42,16 @@
                     <h6 class="" style="margin-left: -62px;"><strong> Progreso</strong> 
                     @if(isset($accountService->sequence['progress']))
                         @if($accountService->sequence['progress']==0)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
                         @endif
                         @if($accountService->sequence['progress']>0 && $accountService->sequence['progress']<100)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="">En proceso</label>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="font-weight-bold">En proceso</label>
                         @endif
                         @if($accountService->sequence['progress']==100)
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
+                        <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold">Concluida</label>
                         @endif
                     @else
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                        <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
                     @endif                 
                     </h6>
                      
@@ -60,21 +60,20 @@
                         <h6  style="margin-left: -82px;"> <strong class="ml-lg-0 ml-md-1 ml-3"> Desempeño</strong>
                         @if($accountService->sequence['performance']>=0) 
                             @if($accountService->sequence['performance']>=90)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (S) 
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold">Superior > 90%</label>
                             @endif
                             @if($accountService->sequence['performance']>=70 && $accountService->sequence['performance']<=89)
-                            <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> (A) 
+                            <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold">Alto 70% - 89%</label>
                             @endif
                             @if($accountService->sequence['performance']>=60 && $accountService->sequence['performance']<=69)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> (B)  
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold">Bajo 60% - 69%</label>
                             @endif
                             @if($accountService->sequence['performance']>=40 && $accountService->sequence['performance']<=59)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B)  
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold">Bajo 60% - 69%</label>
                             @endif
                             @if($accountService->sequence['performance']<40)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> (B)  
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold">Bajo < 40%</label>
                             @endif
-                            {{$accountService->sequence['performance']}} %
                         @else  
                             <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
                         @endif

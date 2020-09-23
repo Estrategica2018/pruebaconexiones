@@ -30,103 +30,91 @@
                     <p class="font-weight-bold mb-1">Guía de aprendizaje</p>
                     <p class="fs-0" >{{$sequence['name']}}</p>
                 </div>
-                <div class="col-1 mt-3 mt-md-0 ml-5 ml-md-0" style="min-width: 186px;">
-                     <label class="mt-md-fix" style="margin-left: -21px;"><strong> Progreso</strong></label> 
+                <div class="col-1 mt-3 mt-md-0 ml-5 ml-md-0" style="min-width: 207px;">
+                    <label class="mt-md-fix" style="margin-left: -21px;"><strong> Progreso</strong></label> 
                     @if(isset($sequence['progress']))
-                        @if($sequence['progress']==0)
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
-                        @endif
-                        @if($sequence['progress']>0 && $sequence['progress']<100)
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="">En proceso</label>
-                        @endif
-                        @if($sequence['progress']==100)
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
-                        @endif
+                    @if($sequence['progress']==0)
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
+                    @endif
+                    @if($sequence['progress']>0 && $sequence['progress']<100)
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="font-weight-bold">En proceso</label>
+                    @endif
+                    @if($sequence['progress']==100)
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold">Concluida</label>
+                    @endif
                     @else
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
-                    @endif 
-                     
+                    <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
+                    @endif  
                     @if(isset($sequence['performance'])) 
-                        @if($sequence['performance'] >= 0 )
+                    @if($sequence['performance'] >= 0 )
                             <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
                             @if($sequence['performance']>=90)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label>Superior </label><span class="fs--1">{{$sequence['performance']}} %</span> 
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold ">Superior > 90% </label>
                             @endif
                             @if($sequence['performance']>=70 && $sequence['performance']<=89)
-                            <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label>Superior </Alto> <span class="fs--1">{{$sequence['performance']}} %</span>
+                            <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold ">Alto 70% - 89% </label>
                             @endif
                             @if($sequence['performance']>=60 && $sequence['performance']<=69)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i><label>Bajo </Alto>   <span class="fs--1">{{$sequence['performance']}} %</span>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold ">Bajo 60% - 69% </label>
                             @endif
                             @if($sequence['performance']>=40 && $sequence['performance']<=59)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> <label>Bajo </Alto>  <span class="fs--1">{{$sequence['performance']}} %</span>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold ">Bajo 60% - 69% </label>
                             @endif
                             @if($sequence['performance']>=0  && $sequence['performance']<40)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> <label>Bajo </Alto>  <span class="fs--1">{{$sequence['performance']}} %</span>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold ">Bajo < 40% </label>
                             @endif
-                        @else  
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
-                        @endif
+                    @else  
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
+                    @endif
                     @endif
                 </div>
-                <div class="col-12 col-xl-4 row mt-4 mt-xl-0 text-align " style="min-width: 408px;">
-                    <div class="col-4 border-left-mini"> 
-                        <div class="mb-2">
-                            <a href="{{
+                <div class="col-12 col-xl-4 row mt-4 mt-xl-0  ml-auto text-align " style="min-width: 408px;">
+                    <div class="col-4 border-left-mini">
+                    <div class="mb-2">
+                        <a href="{{
                             route('tutor.achievements.sequence',
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                                'affiliated_account_service_id'=>$affiliated_account_service_id,
-                                'sequence_id'=>$sequence['id'],
-                                'student_id'=>$student->id
-                            ])}}">
-                                <img src="{{asset('images/icons/reporteSecuencias.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
-                            </a>
-                        </div>
-                        <a href="{{
-                        route('tutor.achievements.sequence',
-                        ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
                             'affiliated_account_service_id'=>$affiliated_account_service_id,
                             'sequence_id'=>$sequence['id'],
                             'student_id'=>$student->id
-                        ])}}">
-                            <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por guía de aprendizaje</label>
+                            ])}}">
+                        <img src="{{asset('images/icons/reporteSecuencias.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
                         </a>
                     </div>
-
-                    <div class="col-4 border-left-mini"> 
-                        <div class="mb-2">
-                            <a href="{{
+                    <a href="{{
+                        route('tutor.achievements.sequence',
+                        ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                        'affiliated_account_service_id'=>$affiliated_account_service_id,
+                        'sequence_id'=>$sequence['id'],
+                        'student_id'=>$student->id
+                        ])}}">
+                    <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por guía de aprendizaje</label>
+                    </a>
+                    </div>
+                    <div class="col-4 border-left-mini">
+                    <div class="mb-2">
+                        <a href="{{
                             route('tutor.achievements.moment',
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                                'affiliated_account_service_id'=>$affiliated_account_service_id,
-                                'sequence_id'=>$sequence['id'],
-                                'student_id'=>$student->id
-                            ])}}">
-                                <img src="{{asset('images/icons/reporteMomentos.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
-                            </a>
-                        </div>
-                        <a href="{{
-                        route('tutor.achievements.moment',
-                        ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
                             'affiliated_account_service_id'=>$affiliated_account_service_id,
                             'sequence_id'=>$sequence['id'],
                             'student_id'=>$student->id
-                        ])}}">
-                            <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por momento</label>
+                            ])}}">
+                        <img src="{{asset('images/icons/reporteMomentos.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
                         </a>
-                    </div> 
-                    <div class="col-4 border-left-mini"> 
-                        <div class="mb-2">
-                            <a href="{{
-                                route('tutor.achievements.question',
-                                ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
-                                'affiliated_account_service_id'=>$affiliated_account_service_id,
-                                'sequence_id'=>$sequence['id'],
-                                'student_id'=>$student->id
-                                ])}}"> 
-                                <img src="{{asset('images/icons/reportePreguntas.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
-                            </a>
-                        </div>
+                    </div>
+                    <a href="{{
+                        route('tutor.achievements.moment',
+                        ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                        'affiliated_account_service_id'=>$affiliated_account_service_id,
+                        'sequence_id'=>$sequence['id'],
+                        'student_id'=>$student->id
+                        ])}}">
+                    <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por momento</label>
+                    </a>
+                    </div>
+                    <div class="col-4 border-left-mini">
+                    <div class="mb-2">
                         <a href="{{
                             route('tutor.achievements.question',
                             ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
@@ -134,10 +122,20 @@
                             'sequence_id'=>$sequence['id'],
                             'student_id'=>$student->id
                             ])}}"> 
-                            <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por preguntas</label>
+                        <img src="{{asset('images/icons/reportePreguntas.png')}}" class="imagen-reports-type-mini"  width="45px" height= "auto"/>
                         </a>
-                    </div> 
-                </div> 
+                    </div>
+                    <a href="{{
+                        route('tutor.achievements.question',
+                        ['empresa'=>auth('afiliadoempresa')->user()->company_name(),
+                        'affiliated_account_service_id'=>$affiliated_account_service_id,
+                        'sequence_id'=>$sequence['id'],
+                        'student_id'=>$student->id
+                        ])}}"> 
+                    <label class="cursor-pointer font-weight-bold fs--1" style="width: 102px;">Reporte por preguntas</label>
+                    </a>
+                    </div>
+                </div>
             </div> 
             <h5 class="mt-3  mb-3">Reporte por momentos</h5>
         
@@ -150,13 +148,13 @@
                         <div class="ml-4">
                         @if($moment['isAvailable'])
                             @if($moment['progress']==0)
-                            <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                            <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
                             @endif
                             @if($moment['progress']>0 && $moment['progress']<100)
-                            <i class="fa fa-circle  mr-2 fs-2" style="color:#F9E538" aria-hidden="true"></i><label class="">En proceso</label> 
+                            <i class="fa fa-circle  mr-2 fs-2" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold">En proceso</label> 
                             @endif 
                             @if($moment['progress']==100)
-                            <i class="fa fa-circle mr-2 fs-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
+                            <i class="fa fa-circle mr-2 fs-2" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold">Concluida</label>
                             @endif
                             </span>
                         @else
@@ -190,12 +188,12 @@
                                 <label class=""><strong>Progreso</strong></label> 
                                 @if($section['progress'] > 0 )
                                     @if($section['progress']==100)
-                                    <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
+                                    <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold">Concluida</label>
                                     @else
-                                    <i class="fa fa-circle  mr-2" style="color:#F9E538" aria-hidden="true"></i> <label class="">En proceso</label>
+                                    <i class="fa fa-circle  mr-2" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold">En proceso</label>
                                     @endif
                                 @else
-                                    <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                                    <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
                                 @endif
                             </div> 
                             <div class="col-3 p-0 fs-0">  
@@ -204,22 +202,22 @@
                                     <label class=""><strong>Desempeño</strong></label>
                                     @if($section['performance'] >= 0 )  
                                         @if($section['performance']>=90)
-                                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i> (S) {{$section['performance']}} %
+                                        <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold ">Superior > 90% </label>
                                         @endif
                                         @if($section['performance']>=70 && $section['performance']<=89)
-                                        <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i> (A) {{$section['performance']}} %
+                                        <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold ">Alto 70% - 89% </label>
                                         @endif
                                         @if($section['performance']>=60 && $section['performance']<=69)
-                                        <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i> (B) {{$section['performance']}} %
+                                        <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold ">Bajo 60% - 69% </label>
                                         @endif
                                         @if($section['performance']>=40 && $section['performance']<=59)
-                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$section['performance']}} %
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold ">Bajo 60% - 69% </label>
                                         @endif
                                         @if($section['performance']<40)
-                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> (B) {{$section['performance']}} %
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold ">Bajo < 40% </label>
                                         @endif
                                     @else 
-                                        <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                                        <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
                                     @endif
                                 @endif
                             </div>

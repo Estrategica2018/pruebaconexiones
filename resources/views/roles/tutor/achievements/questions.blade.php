@@ -30,46 +30,45 @@
             <p class="font-weight-bold mb-1">Guía de aprendizaje</p>
             <p class="fs-0" >{{$sequence['name']}}</p>
          </div>
-         <div class="col-1 mt-3 mt-md-0 ml-5 ml-md-0" style="min-width: 186px;">
+         <div class="col-1 mt-3 mt-md-0 ml-5 ml-md-0" style="min-width: 207px;">
             <label class="mt-md-fix" style="margin-left: -21px;"><strong> Progreso</strong></label> 
             @if(isset($sequence['progress']))
             @if($sequence['progress']==0)
-            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
             @endif
             @if($sequence['progress']>0 && $sequence['progress']<100)
-            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="">En proceso</label>
+            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="font-weight-bold">En proceso</label>
             @endif
             @if($sequence['progress']==100)
-            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="">Concluida</label>
+            <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold">Concluida</label>
             @endif
             @else
-            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
             @endif  
             @if(isset($sequence['performance'])) 
-               <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
-                @if($sequence['performance'] >= 0 )
-                    
-                    @if($sequence['performance']>=90)
-                    <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label>Superior </label><span class="fs--1">{{$sequence['performance']}} %</span> 
-                    @endif
-                    @if($sequence['performance']>=70 && $sequence['performance']<=89)
-                    <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label>Superior </Alto> <span class="fs--1">{{$sequence['performance']}} %</span>
-                    @endif
-                    @if($sequence['performance']>=60 && $sequence['performance']<=69)
-                    <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i><label>Bajo </Alto>   <span class="fs--1">{{$sequence['performance']}} %</span>
-                    @endif
-                    @if($sequence['performance']>=40 && $sequence['performance']<=59)
-                    <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> <label>Bajo </Alto>  <span class="fs--1">{{$sequence['performance']}} %</span>
-                    @endif
-                    @if($sequence['performance']>=0  && $sequence['performance']<40)
-                    <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> <label>Bajo </Alto>  <span class="fs--1">{{$sequence['performance']}} %</span>
-                    @endif
-                @else  
-                    <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
-                @endif
+               @if($sequence['performance'] >= 0 )
+                     <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
+                     @if($sequence['performance']>=90)
+                     <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold ">Superior > 90% </label>
+                     @endif
+                     @if($sequence['performance']>=70 && $sequence['performance']<=89)
+                     <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold ">Alto 70% - 89% </label>
+                     @endif
+                     @if($sequence['performance']>=60 && $sequence['performance']<=69)
+                     <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold ">Bajo 60% - 69% </label>
+                     @endif
+                     @if($sequence['performance']>=40 && $sequence['performance']<=59)
+                     <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold ">Bajo 60% - 69% </label>
+                     @endif
+                     @if($sequence['performance']>=0  && $sequence['performance']<40)
+                     <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold ">Bajo < 40% </label>
+                     @endif
+               @else  
+                     <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
+               @endif
             @endif
          </div>
-         <div class="col-12 col-xl-4 row mt-4 mt-xl-0 text-align " style="min-width: 408px;">
+         <div class="col-12 col-xl-4 row mt-4 mt-xl-0  ml-auto text-align " style="min-width: 408px;">
             <div class="col-4 border-left-mini">
                <div class="mb-2">
                   <a href="{{
