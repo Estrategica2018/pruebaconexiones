@@ -1,7 +1,7 @@
 <form novalidate name="myForm">
     <div class="">
         <div class="row">
-            <h6><i class="fa fas fa-arrow-right arrow-icon"></i>Registra los datos del estudiante</h6>
+            <h6><i class="fa fas fa-arrow-right arrow-icon"></i>Registra los datos del estudiantess</h6>
             <div class="col-12 d-flex mt-3">
                 <div class="register-avatar-kid" ng-click="onKidSelected('niño')" ng-class="{'selected':newStudent.kidSelected==='niño'}">
                     <img src="{{asset('images/icons/kid2.png')}}" width="93px;" height="auto"/>
@@ -61,7 +61,7 @@
                     <input ID="txtPassword" type="Password" name="password"  ng-model="newStudent.password"
                            class="form-control @error('last_name') is-invalid @enderror" value="">
                     <div class="input-group-append">
-                        <button id="show_password" class="btn btn-primary" type="button" ng-click="viewPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                        <button id="show_password" class="btn btn-primary" type="button" ng-click="viewPassword('txtPassword')"> <span class="fa fa-eye-slash icon txtPassword"></span> </button>
                     </div>
                 </div>
             </div>
