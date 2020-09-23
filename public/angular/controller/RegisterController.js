@@ -109,14 +109,14 @@ MyApp.controller("registerController", ["$scope", "$http", "$templateCache", fun
     });
 
     $scope.onTermsConditions = function() {
-
         swal({
-                    title:'', 
-                    html: $scope.termsConditions,
-                    allowOutsideClick: true,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                });
+            title:'', 
+            customClass: 'w-100 w-md-75 w-lg-50',
+            html: $scope.termsConditions,
+            allowOutsideClick: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+        });
     }
     
     $scope.goToFacebook = function() {
