@@ -71,5 +71,32 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
             
         });
     }
+
+    $scope.initSearch = function () {
+        $scope.searchList = [];
+        $http.get('/get_company_sequences/' + 1)
+        .then(function (response) {
+            for(var i=0;i<response.data.companySequences.length;i++) {
+                $scope.searchList.push({
+                    type: 'Guía',  
+                    obj:response.data.companySequences[i]
+                })
+            }
+        }).catch(function(err){ 
+        });
+
+        $http.get('/get_kit_elements/')
+        .then(function (response) {
+            var kit = null;
+            for(var i=0;i<response.data.length;i++) {
+                kit = response.data[i];
+                $scope.searchList.push({ type: 'Kit',  obj:response.data[i] });
+            }
+            
+        }).catch(function(err){ 
+        });
+
+        $('.d-none-result.d-none').removeClass('d-none');
+    }
     
 }]);

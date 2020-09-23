@@ -46,12 +46,32 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
     
     $(window).resize(function () {
         $('[icon-pedagogy]').each(function(index){
+            
+            
+            if($(this).attr('id') ==="pedagogy8" ) {
+                $(this).position();
+                
+            }
+
+
             var left = $(this).position().left - ($(this).width()/2);
             var top = $(this).position().top + 130 ;
-            if($(this).attr('id') ==="pedagogy7" ) left = left - left * 10/100;
-            if($(this).attr('id') ==="pedagogy8" ) left = left - left * 20/100;
+            if($(this).attr('id') ==="pedagogy7" ) {
+                left = left - left * 20/100;
+                var arrow = $(this).next().next().find('div')[0];
+                $(arrow).css('left','58%');
+                $(this).find('div').css('left',left);
+            }
+            
+            if($(this).attr('id') ==="pedagogy8" ) {
+                left = left - left * 20/100;
+                var arrow = $(this).next().next().find('div')[0];
+                $(arrow).css('left','40%');
+                $(this).find('div').css('left',left);
+            }
             $(this).next().next().css('left',left);
             $(this).next().next().css('top',top);
+            
         });
     });
     
@@ -87,7 +107,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
             value = $scope.sequences[i];
             value.name_url_value = value.name.replace(/\s/g,'_').toLowerCase()
             if (value.areas) {
-                angular.forEach(value.areas.split(','), function (areaName, key) {
+                angular.forEach(value.areas.split('|'), function (areaName, key) {
                     areaName = (areaName[0] == ' ') ? areaName.substr(1) : areaName;
                     if (!searchArea(areaName)) {
                         $scope.areas.push(areaName);
@@ -95,7 +115,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 });
             }
             if (value.themes) {
-                angular.forEach(value.themes.split(','), function (themeName, key) {
+                angular.forEach(value.themes.split('|'), function (themeName, key) {
                     themeName = (themeName[0] == ' ') ? themeName.substr(1) : themeName;
                     if (!searchTheme(themeName)) {
                         $scope.themesList.push(themeName);
@@ -103,7 +123,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 });
             }
             if (value.keywords) {
-                angular.forEach(value.keywords.split(','), function (keyword, key) {
+                angular.forEach(value.keywords.split('|'), function (keyword, key) {
                     keyword = (keyword[0] == ' ') ? keyword.substr(1) : keyword;
                     if (!searchKeyword(keyword)) {
                         $scope.keywords.push(keyword);

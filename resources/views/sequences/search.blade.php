@@ -11,7 +11,7 @@
       <span class="col">@{{ errorMessageFilter }}</span>
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
    </div>
-   <div class="mb-3 card">
+   <div class="mb-3 card" style="min-width:946px;">
       <div class="card-body">
          <div class="no-gutters row">
             <div class="mb-3 col-12">
@@ -158,7 +158,7 @@
                     <img icon-pedagogy id="pedagogy7" src="{{asset('images/icons/cienciaCotidiana.png')}}" width="74px" height="auto"  ng-click="onIconPedagogy('pedagogy7')" class="cursor-pointer">
                     <span class="d-flex mt-1 ml-auto mr-auto w-75 font-weight-bold"> Ciencia cotidiana </span>
                     <div class="panel-icon-pedagogy-blue d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy7'" style="background-color: white; z-index:102;">
-                        <div style="margin-left: 11vw;position: absolute;margin-top: -38px;">
+                        <div style="margin-left: 10px;left:40%; position: absolute;margin-top: -38px;">
                           <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #00a4d6 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
@@ -179,7 +179,7 @@
                     <img icon-pedagogy id="pedagogy8" src="{{asset('images/icons/masConexiones.png')}}" width="74px" height="auto"  ng-click="onIconPedagogy('pedagogy8')" class="cursor-pointer">
                     <span class="d-flex mt-1 ml-auto mr-auto w-100 font-weight-bold"> + Conexiones </span>
                     <div class="panel-icon-pedagogy-beige d-none-result d-none fs--3 position-absolute" ng-show="icon_pedagogy==='pedagogy8'" style="background-color: white; z-index:102;">
-                        <div style="margin-left: 19vw;position: absolute;margin-top: -38px;">
+                        <div style="margin-left: 9vw;left: 40%;position: absolute;margin-top: -38px;">
                           <div style="border-width: 0px 17px 17px; border-style: solid;border-image: initial;border-color: #702283 transparent;content: '';display: block;font-size: 0px;height: 0px;line-height: 0;position: absolute;top: 1px;width: 0px;left: -23px;">
                           </div>
                         </div>                
