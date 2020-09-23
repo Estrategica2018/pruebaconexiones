@@ -87,10 +87,29 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
 
         $http.get('/get_kit_elements/')
         .then(function (response) {
-            var kit = null;
+            var kit = element = elementTmp =null;
+            var mbControl = false;
+            var elements = [];
             for(var i=0;i<response.data.length;i++) {
                 kit = response.data[i];
+                for(var j=0; j<kit.kit_elements.length; j++){
+                    element = kit.kit_elements[j].element;
+                    mbAditionControl = true;
+                    for(var k = 0; k<elements.length; k++) {
+                        elementTmp = elements[k];
+                        if(elementTmp.id===element.id){
+                            mbAditionControl = false;
+                        }
+                    }
+                    if(mbAditionControl) {
+                        elements.push(element);
+                    }
+                }
                 $scope.searchList.push({ type: 'Kit',  obj:response.data[i] });
+            }
+            for(var j=0; j<elements.length; j++){
+                element = elements[j];
+                $scope.searchList.push({ type: 'Elemento', obj:element });
             }
             
         }).catch(function(err){ 

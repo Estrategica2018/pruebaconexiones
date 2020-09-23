@@ -84,6 +84,11 @@
                        <span class="font-weight-bold">@{{item.type}}</span>  @{{item.obj.name}} 
                      </a>
                   </div>
+                  <div ng-show="item.type === 'Elemento'">
+                    <a href="/elemento_de_laboratorio/@{{item.obj.id}}/@{{item.obj.name}}">
+                       <span class="font-weight-bold">@{{item.type}}</span>  @{{item.obj.name}} 
+                     </a>
+                  </div>
                </li>
             </ul>
            </div>
