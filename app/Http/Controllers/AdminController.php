@@ -149,12 +149,17 @@ class AdminController extends Controller
             $query->with('sequence')->select('id', 'sequence_id', 'affiliated_account_service_id')->groupBy('affiliated_account_service_id', 'sequence_id');
         }])->where([
             ['company_affiliated_id', $affiliatedId],
-            ['init_date', '<=', Carbon::now()],
-            ['end_date', '>=', Carbon::now()]
+            //['init_date', '<=', Carbon::now()],
+            //['end_date', '>=', Carbon::now()]
         ])->get();
         return DataTables::of($affiliatedAccountService)
             ->addColumn('plan', function ($affiliatedAccountService) {
                 return $affiliatedAccountService->rating_plan->name . ' (' . $affiliatedAccountService->rating_plan->type_plan->name . ')';
+            })
+            ->addColumn('state', function ($affiliatedAccountService) {
+                if($affiliatedAccountService->init_date && $affiliatedAccountService->end_date)
+                    return 'Activo';
+                return 'Inactivo';
             })
             ->addColumn('init_date', function ($affiliatedAccountService) {
                 return $affiliatedAccountService->init_date;

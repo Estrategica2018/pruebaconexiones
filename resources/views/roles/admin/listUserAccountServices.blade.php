@@ -78,6 +78,7 @@
                                 <thead class="bg-200">
                                 <tr>
                                     <th class="sort">Plan</th>
+                                    <th class="sort">Estado</th>
                                     <th class="sort">Fecha de inicio</th>
                                     <th class="sort">Fecha de expiración</th>
                                     <th class="sort">Editar fecha</th>
@@ -86,6 +87,7 @@
                                 <tfoot class="bg-200">
                                 <tr>
                                     <th>plan</th>
+                                    <th>Estado</th>
                                     <th>fecha de inicio</th>
                                     <th>fecha de expiración</th>
                                     <th>Editar fecha</th>
@@ -139,6 +141,7 @@
                 'ajax': "{{ route('get_user_contracted_products_dt',$companyAffiliated->id)}}",
                 'columns': [
                     {data: 'plan', className: 'text-center'},
+                    {data: 'state', className: 'text-center'},
                     {data: 'init_date', className: 'text-center'},
                     {data: 'end_date', className: 'text-center'},
                     {data: 'edit_date', className: 'text-center'},
