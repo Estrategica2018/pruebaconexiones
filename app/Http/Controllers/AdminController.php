@@ -168,7 +168,7 @@ class AdminController extends Controller
             ->addColumn('edit_date', function ($affiliatedAccountService) {
                 return '<button class="btn btn-warning btn-sm mr-1 mb-1 edit_date" type="button" style="padding: 0.1875rem 1.75rem;font-size: 0.67rem;">Editar</button>';
             })
-            ->rawColumns(['view_content', 'edit_date'])
+            ->rawColumns(['state', 'edit_date'])
             ->make(true);
 
     }
