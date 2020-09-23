@@ -17,7 +17,7 @@ MyApp.controller("frequentQuestionCtrl", function ($scope, $http, $timeout) {
             $scope.frequentQuestions = response.data.data
 
         }).catch(function (e) {
-            $scope.errorMessageFilter = 'Error consultando los planes de acceso, compruebe su conexión a internet';
+            $scope.errorMessageFilter = 'Error consultando las preguntas frecuentes, compruebe su conexión a internet';
         });
 
     
