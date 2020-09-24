@@ -377,8 +377,9 @@
                            ng-class="{'selected':element.selected}"
                            ng-click="onClickElementWithDelete(elementParentEdit,element,$index)"
                            style="@{{element.style}}"
-                           ng-style="{'color':element.color, 'background-color': element.background_color}">
-                           @{{element.text}}
+                           ng-style="{'color':element.color, 'background-color': element.background_color}"
+                           ng-bind-html = "element.text"> 
+                           
                            <div class="delete-element" ng-click="onDeleteElement(elementParentEdit,$index,true)">
                               <i class="far fa-times-circle"></i>
                            </div>
@@ -390,8 +391,9 @@
                            ng-class="{'selected':element.selected}"
                            ng-click="onClickElementWithDelete(elementParentEdit ,element,$index)"
                            style="@{{element.style}}"
-                           ng-style="{'color':element.color, 'background-color': element.background_color}">
-                           @{{element.text}}
+                           ng-style="{'color':element.color, 'background-color': element.background_color}"
+                           ng-bind-html = "element.text">
+                            
                            <div class="delete-element" ng-click="onDeleteElement(elementParentEdit ,$index,true)">
                               <i class="far fa-times-circle"></i>
                            </div>
