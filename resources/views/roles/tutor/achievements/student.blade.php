@@ -38,8 +38,10 @@
                        Prueba gratuita
                 </div>
                 @endif
-                <div class="col-12 col-md-3 col-lg-3 col-md-2 col-xl-2 mt-1 mt-md-1 mt-xl-0 ml-8 p-xl-0 d-block fs-md--1">
-                    <h6 class="" style="margin-left: -62px;"><strong> Progreso</strong> 
+                <div class="col-1 mt-3 mt-md-0 ml-5 ml-md-3 ml-lg-0" style="min-width: 247px;">
+                    <label class="mt-md-fix" style="margin-left: 9px;">
+                        <strong> Progreso</strong> 
+                    </label>
                     @if(isset($accountService->sequence['progress']))
                         @if($accountService->sequence['progress']==0)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
@@ -53,11 +55,13 @@
                     @else
                         <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
                     @endif                 
-                    </h6>
+                    
                      
                     @if(isset($accountService->sequence['performance'] ))
                     
-                        <h6  style="margin-left: -82px;"> <strong class="ml-lg-0 ml-md-1 ml-3"> Desempeño</strong>
+                        <label  style="margin-left: -10px;">  
+                            <strong class=""> Desempeño</strong>
+                        </label>
                         @if($accountService->sequence['performance']>=0) 
                             @if($accountService->sequence['performance']>=90)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold">Superior > 90%</label>
@@ -76,9 +80,8 @@
                             @endif
                         @else  
                             <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
-                        @endif
+                        @endif 
                         
-                        </h6>
                     @endif 
                 </div>
                 <div class="mt-md-fix mt-lg-fix col-12 col-xl-4 mt-4 mt-lg-0 mb-3 d-flex">

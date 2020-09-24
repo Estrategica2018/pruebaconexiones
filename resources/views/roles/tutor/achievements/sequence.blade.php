@@ -170,23 +170,23 @@
                             <label class=""><strong>Desempeño</strong></label>
                             @if($moment['performance'] >= 0  )
                                 @if($moment['performance']>=90)
-                                <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i>  <label class=""><strong>Superior > 90%<strong></label>
+                                <i class="fa fa-circle mr-2" style="color:#6CB249" aria-hidden="true"></i>  <label class=""><strong>Superior > 90%</strong></label>
                                 @endif
                                 @if($moment['performance']>=70 && $moment['performance']<=89)
-                                <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i>  <label class=""><strong>Alto 70% - 89% <strong></label>
+                                <i class="fa fa-circle  mr-2" style="color:#6CB249" aria-hidden="true"></i>  <label class=""><strong>Alto 70% - 89% </strong></label>
                                 @endif
                                 @if($moment['performance']>=60 && $moment['performance']<=69)
-                                <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i>  <label class=""><strong>Bajo 60% - 69% <strong></label>
+                                <i class="fa fa-circle mr-2" style="color:#F9E538" aria-hidden="true"></i>  <label class=""><strong>Bajo 60% - 69% </strong></label>
                                 @endif
                                 @if($moment['performance']>=40 && $moment['performance']<=59)
-                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i>  <label class=""><strong>Bajo 60% - 69%  <strong></label>
+                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i>  <label class=""><strong>Bajo 60% - 69%  </strong></label>
                                 @endif
                                 @if($moment['performance']<40)
-                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i>  <label class=""><strong>Bajo < 40%<strong></label>
+                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i>  <label class=""><strong>Bajo < 40%</strong></label>
                                 @endif
                             @else
                                 <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i> 
-                                <label class=""><strong>Sin iniciar<strong></label>
+                                <label class=""><strong>Sin iniciar</strong></label>
                             @endif
                         @endif
                          

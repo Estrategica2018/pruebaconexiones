@@ -164,11 +164,11 @@
                                 <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i><label class=""><strong>Bajo 40% - 59% </strong></label>
                                 @endif
                                 @if($moment['performance']<40)
-                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i><label class=""><strong>Bajo < 40%<strong></label>
+                                <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i><label class=""><strong>Bajo < 40%</strong></label>
                                 @endif
                             @else
                                 <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i> 
-                                <label class=""><strong>Sin iniciar<strong></label>
+                                <label class=""><strong>Sin iniciar</strong></label>
                             @endif
                         @endif
                     </span>

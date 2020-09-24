@@ -98,8 +98,9 @@ class AdminController extends Controller
 
         return DataTables::of($companyAffiliateds)
             ->addColumn('avatar', function ($companyAffiliated) {
+                $url = $companyAffiliated->url_image ? $companyAffiliated->url_image : '/images/icons/default-avatar.png';
                 return '<div class="avatar avatar-m">
-                        <img class="rounded-circle" src="' . asset($companyAffiliated->url_image) . '" alt="" />
+                        <img class="rounded-circle" src="' . $url. '" alt="" />
                        </div>';
             })
             ->addColumn('name', function ($companyAffiliated) {

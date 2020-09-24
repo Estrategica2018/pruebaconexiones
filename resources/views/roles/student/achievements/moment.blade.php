@@ -198,7 +198,7 @@
                                         <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i><label class=""><strong>Bajo 40% - 59% </strong></label>
                                         @endif
                                         @if($section['performance']<40)
-                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> <label class=""><strong>Bajo < 40%<strong></label>
+                                        <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> <label class=""><strong>Bajo < 40%</strong></label>
                                         @endif
                                     @else 
                                         <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
