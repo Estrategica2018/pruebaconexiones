@@ -3,13 +3,10 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     $scope.errorMessage = null;
     $scope.sequence = null;
     $scope.sequenceSection = null;
-    $scope.sequenceSectionPart = null;
     $scope.moment = null;
     $scope.momentSection = null;
-    $scope.momentSectionPart = null;
     $scope.moments = [];
     $scope.momentSections = [];
-    $scope.momentSectionParts = [];
     $scope.sectionsSequenceNames = [{ "id": 1, "name": "Situación Generadora" }, { "id": 2, "name": "Ruta de viaje" }, { "id": 3, "name": "Guía de saberes" }, { "id": 4, "name": "Punto de encuentro" }];
     $scope.sectionsMomentNames = [{ "type": 1, "name": "Pregunta Central" }, { "type": 2, "name": "Ciencia en contexto" }, { "type": 3, "name": "Experiencia científica" }, { "type": 4, "name": "+ Conexiones" }];
     $scope.PageName = '';
@@ -33,18 +30,22 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     $scope.showEvidenceModal = false;
     
     $scope.showCopyButton = false;
-    $scope.copyCache = false;
+    $scope.copyCache = null;
+    $scope.copyBackground= null;
+
+    $scope.mbDraggable = false;
+    $scope.showDeleteButton = false;
  
     $scope.resizeWidth = function () {
         var card = $('.background-sequence-card');
         var newW = Math.round(Number(card.css('width').replace('px', '')));
+
         var deltaW = newW - $scope.container.w;
         var deltaH = (deltaW * $scope.container.h) / $scope.container.w;
         var scaleW =  newW / $scope.container.w;
-         
         $scope.container.w = Math.round(newW);
         $scope.container.h = Math.round($scope.container.h + deltaH); 
-         
+    
         var w = Number(card.attr('w'));
         var h = Number(card.attr('h'));
         var newW = Number(card.css('width').replace('px', ''));
@@ -63,24 +64,14 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     }
 
     $scope.resizeEdit = function (scaleW) {
-      
-        function selectElement(id) {
-            var ele = null;
-            if($scope.sequenceSectionPart && $scope.sequenceSectionPart.elements)
-            for(var i=0;i<$scope.sequenceSectionPart.elements.length;i++) {
-                ele = $scope.sequenceSectionPart.elements[i];
-                if(ele.id === id) {
+        function selectElement(id) { 
+            for(var i=0, ele = null;i<$scope.elementParentEdit.elements.length;i++) {
+                ele = $scope.elementParentEdit.elements[i];
+                if(Number(ele.id) === Number(id)) {
                     return ele;
                 }
             }
-            if($scope.momentSectionPart && $scope.momentSectionPart.elements)
-            for(var i=0;i<$scope.momentSectionPart.elements.length;i++) {
-                ele = $scope.momentSectionPart.elements[i];
-                if(ele.id === id) {
-                    return ele;
-                }
-            }
-            return ele;
+            return null;
         }
       
         var card = $('.background-sequence-card');
@@ -126,7 +117,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 var ele = selectElement(id);
                 if(ele) {
                     var newMl = Number($(this).attr('ml')) * scaleW; 
-                    newMl = Math.round(newMl);
+                    newMl = Math.round(newMl); 
                     ele.ml = newMl;  
                     $(this).css('left', newMl + 'px');
                     $(this).addClass('position-absolute');
@@ -141,17 +132,13 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             else {
                 var w = Number($(this).attr('w'));
                 var id = $(this).attr('id') ;
-                console.log(id);
                 if(id){
                     var ele = selectElement(id);
                     if(ele) {
                         var newW =  Number($(this).attr('w')) * scaleW; 
                         newW = Math.round(newW);
-                        console.log($(this));
-                        console.log(JSON.stringify({'url_image':ele.url_image,'ele.w':ele.w,'newW':newW,'scaleW':scaleW}));
                         ele.w = newW;
-                        $(this).addClass('position-absolute'); 
-                        console.log(newW);
+                        $(this).addClass('position-absolute');
                         $(this).css('width', newW + 'px');
                     }
                 }
@@ -180,12 +167,10 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         $timeout(function () {
             $scope.resizeWidth();
         }, 10);
-    }); 
+    });
 
     $scope.onChangeHeight = function () {
-
         var card = $('.background-sequence-card');
-
         var minH = Number(card.css('min-height').replace('px', ''));
         if ($scope.container.h < minH) {
             $scope.container.h = minH;
@@ -197,14 +182,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         background.css('width', $scope.container.w);
         background.css('height', $scope.container.h);
 
-        if ($scope.dataJstree.type === 'openSequenceSectionPart') {
-            $scope.sequenceSectionPart.container = $scope.container;
-        }
-        else if ($scope.dataJstree.type === 'openMomentSectionPart') {
-            $scope.momentSectionPart.container = $scope.container;
-        }
+        $scope.elementParentEdit.container = $scope.container;
         $scope.applyChange = true;
-        
     }
 
     $scope.toggleSideMenu = function () {
@@ -262,6 +241,32 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         return list[0];
     }
 
+    function refreshElements(elements) {
+         
+        var newElements = [];
+        if(elements)
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].selected = false;
+            newElements.push(Object.assign({}, elements[i]));
+        } 
+        $scope.elementParentEdit.elements = $scope.elementParentEdit.elements || [];
+        var length = $scope.elementParentEdit.elements.length;
+        for(var i=0;i<length; i++) {
+            $scope.elementParentEdit.elements.pop();
+        }
+        
+        $timeout(function () {
+            for (var i = 0; i < newElements.length; i++) {
+                newElements[i].id = getId_forElement();
+                $scope.elementParentEdit.elements.push(newElements[i]);
+            } 
+            $timeout(function () {
+                $scope.resizeWidth();
+            }, 10);
+        }, 10);
+        
+    }
+
     function InitializeJstree() {
 
         $('#sidemenu-sequences-content').remove();
@@ -271,17 +276,17 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         $newDiv.addClass('d-block');
         $newDiv.find('#jstree').attr('id', 'jstreetemp');
         $newDiv.attr('id', 'sidemenu-sequences-content');
+ 
         $('#jstreetemp').on('select_node.jstree', function (evt, data) {
 
             if ($scope.applyChange) {
                 $scope.openChangeAlert();
                 return;
             }
-
+            
             $scope.dataJstree = JSON.parse($('#' + data.selected).attr('data-jstree'));
-            $scope.sequenceSection = $scope.sequenceSectionPart = $scope.moment = $scope.momentSection = $scope.momentSectionPart = $scope.momentSections = $scope.momentSectionParts = null;
-
-
+            $scope.sequenceSection = $scope.moment = $scope.momentSection  = $scope.momentSections = null;
+ 
             switch ($scope.dataJstree.type) {
                 case 'openAllSequence':
                     location="/conexiones/admin/sequences_list";
@@ -293,27 +298,25 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     break;
                 case 'openSequenceSection':
                 case 'openSequenceSectionPart':
-                    $scope.sequenceSection = JSON.parse($scope.sequence[$scope.dataJstree.sequenceSectionIndex]);
-                    $scope.sequenceSection.sequenceSectionIndex = $scope.dataJstree.sequenceSectionIndex;
-                    $scope.sequenceSection.sequenceSectionPartIndex = $scope.dataJstree.partId;
-                    $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] || {};
-                    $scope.sequenceSectionPart = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
-                    $scope.PageName = $scope.sequenceSection.section.name;
-                    $scope.elementParentEdit = $scope.sequenceSectionPart;
-                    $scope.container = $scope.sequenceSectionPart.container || { "w": $scope.container.w, "h": 385 };
-                    
-                    $('#sidemenu-sequences .overflow-auto').addClass('height_235').removeClass('height_337');
 
                     if ($scope.dataJstree.type === 'openSequenceSection') {
                         var section = $('#' + data.selected[0]);
                         data.instance.open_node(section);
                         data.instance.deselect_all(true);
                         data.instance.select_node($(section.find('.jstree-children li'))[0]);
-                    }
+                        return;
+                    } 
+                    
+                    $scope.sequenceSection = JSON.parse($scope.sequence[$scope.dataJstree.sequenceSectionIndex]);
+                    $scope.sequenceSection.sequenceSectionIndex = $scope.dataJstree.sequenceSectionIndex;
+                    $scope.sequenceSection.sequenceSectionPartIndex = $scope.dataJstree.partId;
+                    $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] || {};
+                    $scope.elementParentEdit = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
+                    $scope.PageName = $scope.sequenceSection.section.name; 
+                    $scope.container = $scope.elementParentEdit.container || { "w": $scope.container.w, "h": 385 };
+                    refreshElements($scope.elementParentEdit.elements);
 
-                    $timeout(function () {
-                        $scope.resizeWidth();
-                    }, 10);
+                    $('#sidemenu-sequences .overflow-auto').addClass('height_235').removeClass('height_337');
                     break;
                 case 'openMoment':
                     $scope.moment = findMoment($scope.dataJstree.momentIndex);
@@ -325,36 +328,28 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     break;
                 case 'openSectionMoment':
                 case 'openMomentSectionPart':
-                    $scope.moment = findMoment($scope.dataJstree.momentIndex);
-                    $scope.momentSection = $scope.moment.sections[Number($scope.dataJstree.momentSectionIndex)];
-
-                    $scope.PageName = $scope.momentSection.section.name;
-
                     if ($scope.dataJstree.type === 'openSectionMoment') {
                         var section = $('#' + data.selected[0]);
                         data.instance.open_node(section);
                         data.instance.deselect_all(true);
                         data.instance.select_node($(section.find('.jstree-children li'))[0]);
+                        return;
                     }
-
-                    $scope.dataJstree.type = 'openMomentSectionPart';
-
-                    $scope.momentSectionPart = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex];
-                    if(!$scope.momentSectionPart) $scope.momentSectionPart = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] = {};
-                    $scope.momentSectionPart.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
-                    $scope.elementParentEdit = $scope.momentSectionPart;
-                   
-                    $scope.container = $scope.momentSectionPart.container || { "w": $scope.container.w, "h": 385 };
-                     
-                    $timeout(function () {
-                        $scope.resizeWidth();
-                    }, 10);
-
+                    $scope.moment = findMoment($scope.dataJstree.momentIndex);
+                    $scope.momentSection = $scope.moment.sections[Number($scope.dataJstree.momentSectionIndex)];
+                    $scope.momentSection.momentSectionIndex = $scope.dataJstree.momentSectionIndex;
+                    $scope.momentSection.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
+                    $scope.PageName = $scope.momentSection.section.name;
+                
+                    $scope.elementParentEdit = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] || {};
+                    $scope.elementParentEdit.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
+                    $scope.container = $scope.elementParentEdit.container || { "w": $scope.container.w, "h": 385 };
+                    refreshElements($scope.elementParentEdit.elements);
                     $('#sidemenu-sequences .overflow-auto').addClass('height_235').removeClass('height_337');
                     break;
             }
-
             $scope.$apply();
+
         }).jstree({
             "core": {
                 "multiple": false,
@@ -396,9 +391,9 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 
                 loadFolderImage($scope.sequence,'mesh',$scope.sequence.mesh);
                 loadFolderImage($scope.sequence,'url_slider_images',$scope.sequence.url_slider_images);
-                
-                
+                 
                 $scope.applyChangeEvidence = false;
+                $scope.showCopyButton = $scope.showDeleteButton = false;
                 if (!$scope.sequence['section_1']) $scope.sequence['section_1'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
                 if (!$scope.sequence['section_2']) $scope.sequence['section_2'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
                 if (!$scope.sequence['section_3']) $scope.sequence['section_3'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
@@ -442,37 +437,37 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 
                 switch ($scope.dataJstree.type) {
                     case 'openSequence':
-                        $scope.PageName = 'Guía de Aprendizaje';
                         $scope.elementParentEdit = $scope.sequence;
                         break;
                     case 'openSequenceSectionPart':
-                        $scope.sequenceSection = JSON.parse($scope.sequence[$scope.sequenceSection.sequenceSectionIndex]);
-                        $scope.sequenceSectionPart = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
-                        $scope.PageName = $scope.sequenceSection.section.name;
-                        $scope.elementParentEdit = $scope.sequenceSectionPart;
-                        $scope.container = $scope.sequenceSectionPart.container || { "w": $scope.container.w, "h": 385 };
-                        $scope.resizeWidth();
+                        $scope.sequenceSection = JSON.parse($scope.sequence[$scope.dataJstree.sequenceSectionIndex]);
+                        $scope.sequenceSection.sequenceSectionIndex = $scope.dataJstree.sequenceSectionIndex;
+                        $scope.sequenceSection.sequenceSectionPartIndex = $scope.dataJstree.partId;
+                        $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] || {};
+                        $scope.elementParentEdit = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
+                        $scope.container = $scope.elementParentEdit.container || { "w": $scope.container.w, "h": 385 };
+                        refreshElements($scope.elementParentEdit.elements);
                         break;
                     case 'openMoment':
-                        $scope.moment = findMoment($scope.moment.order);
-                        $scope.PageName = 'Momento ' + $scope.moment.order;
+                        $scope.moment = findMoment($scope.dataJstree.momentIndex);
                         $scope.elementParentEdit = $scope.moment;
-                        break;
+                    break;
                     case 'openMomentSectionPart':
-                        $scope.moment = findMoment($scope.moment.order);
-                        $scope.momentSection = $scope.moment.sections[Number($scope.momentSection.momentSectionIndex)];
-                        $scope.PageName = $scope.momentSection.section.name;
-                        $scope.momentSectionPart = $scope.momentSection[$scope.momentSectionPart.momentSectionPartIndex];
+                        $scope.moment = findMoment($scope.dataJstree.momentIndex);
+                        $scope.momentSection = $scope.moment.sections[Number($scope.dataJstree.momentSectionIndex)];
+                        
+                        $scope.momentSectionPart = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] || {};
+                        $scope.momentSectionPart.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
                         $scope.elementParentEdit = $scope.momentSectionPart;
-                        $scope.container = $scope.momentSectionPart.container || { "w": $scope.container.w, "h": 385 };
-                        $scope.resizeWidth();
+                        $scope.container = $scope.elementParentEdit.container || { "w": $scope.container.w, "h": 385 };
+                        refreshElements($scope.elementParentEdit.elements);
                         break;
                 }
-
-                $timeout(function () {
-                    InitializeJstree();
-                    $scope.resizeWidth();
-                }, 10);
+                if($scope.dataJstree.type === 'openSequence') {
+                    $timeout(function () {
+                        InitializeJstree();
+                    }, 10);
+                }
 
             }).catch(function(err){
                 swal('Conexiones','Error consultando secuencia: ' + err,'error');
@@ -480,14 +475,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     };
 
     $scope.deleteBackgroundSection = function () {
-
-        if ($scope.dataJstree.type === 'openSequenceSectionPart') {
-            $scope.sequenceSectionPart.background_image = '';
-        }
-        else if ($scope.dataJstree.type === 'openMomentSectionPart') {
-            $scope.momentSectionPart.background_image = '';
-        }
-
+        $scope.elementParentEdit.background_image = '';
         $scope.applyChange = true;
     }
 
@@ -567,10 +555,10 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         $scope.onClickElement(parent, element, title, element.type);
     }
     
-    $scope.copyElements = function(indexElement) {
+    $scope.onCopyElements = function(indexElement) {
         
-        var elementsSelected = 
-        typeof indexElement !== 'undefined' ? [$scope.elementParentEdit.elements[indexElement]] :
+        var elementsSelected =  typeof indexElement !== 'undefined' ? 
+            [$scope.elementParentEdit.elements[indexElement]] :
             $scope.elementParentEdit.elements.filter(function(value){
                 return value.selected;
             });
@@ -590,14 +578,43 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             }
         }
         
-        $scope.showCopyButton = false;
+        $scope.showCopyButton = $scope.showDeleteButton = false;
     }
-    
-    $scope.pasteElements = function() {
+
+    $scope.onDeleteSelectedElements = function() {
         
+        var list = $scope.elementParentEdit.elements.filter(function(value){
+            return !value.selected;
+        }) 
+        refreshElements(list);
+        
+        $scope.copyCache  = null;
+        $scope.showCopyButton = $scope.showDeleteButton = false;
+        $scope.applyChange = true;
+    }
+
+    function getId_forElement() {
+        var id = null;
+        do{
+            next = false;
+            id = Number(moment().format('YYYYMMDDHHmmssSSS'));
+            for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
+                elem = $scope.elementParentEdit.elements[i];
+                if(elem.id === id) {
+                    next = true;
+                    break;
+                }
+            }
+        }
+        while(next);
+        return id;
+    }
+
+    $scope.onPasteElements = function() {
+       
         for(var i=0, copyElement= null; i< $scope.copyCache.length; i++) {
             copyElement = $scope.copyCache[i];
-            copyElement.id = moment().format('YYYYMMDDHHmmssSSS');
+            copyElement.id = getId_forElement();
             for(var j=0, elm; j<$scope.elementParentEdit.elements.length; j++) {
                 elm = $scope.elementParentEdit.elements[j];
                 if(copyElement.ml === elm.ml && copyElement.mt == elm.mt    ) {
@@ -617,13 +634,30 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             elem.selected = false;
         }
         
-        $scope.showCopyButton = false;
+        $scope.showCopyButton = $scope.showDeleteButton = false;
         
-        $scope.copyCache = [];
+        $scope.copyCache = null;
+        $scope.applyChange = true;
+
         $timeout(function () {
             $scope.resizeWidth();
         }, 10);
+    }
 
+    $scope.onCopyBackground = function() {
+        $scope.copyBackground = {}
+        $scope.copyBackground.background_image   = $scope.elementParentEdit.background_image;
+        $scope.copyBackground.height   = $scope.container.h;
+        $scope.typeEdit='';
+    }
+
+    $scope.onPasteBackground = function() {
+        $scope.elementParentEdit.background_image = $scope.copyBackground.background_image;
+        $scope.container.h = $scope.copyBackground.height;
+        $scope.elementParentEdit.container.h = $scope.container.h;
+        $scope.onChangeHeight();
+        $scope.copyBackground  = null;
+        $scope.applyChange = true;
     }
 
     $scope.onChangeElementSelected = function() {
@@ -632,7 +666,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 return value.selected;
             });
             
-        $scope.showCopyButton = elementsSelected && elementsSelected.length > 0;    
+        $scope.showCopyButton = elementsSelected && elementsSelected.length > 0;   
+        $scope.showDeleteButton = elementsSelected && elementsSelected.length > 0;     
     }
     
     $scope.changeFormatDate = function (elementParentEdit, elementEdit, format) {
@@ -661,6 +696,13 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             image.src = '/'+field.url_image;
             image.onload = function () {
                 $scope.elementEdit.url_image = field.url_image;
+                if(this.width > 500) {
+                    this.height = 500 * this.height  / this.width ;
+                    this.width = 500;
+                }
+  
+    
+
                 $scope.elementEdit.w = this.width;
                 $scope.elementEdit.h = this.height;
                 $scope.widthOriginal = $scope.elementEdit.w;
@@ -674,7 +716,6 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         else {
             if ($scope.dataJstree.type === 'openSequenceSectionPart') {
                 $scope.elementParentEdit[$scope.elementEdit] = field.url_image;
-                $scope.sequence[$scope.sequenceSectionIndex] = angular.toJson($scope.elementParentEdit);
             }
             else {
                 $scope.elementParentEdit[$scope.elementEdit] = field.url_image;
@@ -739,36 +780,38 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         });
     }
 
-    $scope.newElement = function (typeItem) {
+    $scope.onNewElement = function (typeItem) {
         $scope.applyChange = true;
+        var newElement = null;
+        var id = getId_forElement();
 
-        var id = moment().format('YYYYMMDDHHmmssSSS');
-
-        var parentElement = $scope.dataJstree.type === 'openMomentSectionPart' ? $scope.momentSectionPart : $scope.elementParentEdit;
         if (typeItem === 'text-element') {
-            parentElement.elements = parentElement.elements || [];
-            parentElement.elements.push({ 'id': id, 'type': typeItem, 'fs': 11, 'ml': 10, 'mt': 76, 'w': 100, 'h': 26, 'text': '--texto de guía--' });
+            newElement = { 'id': id, 'type': typeItem, 'fs': 11, 'ml': 10, 'mt': 76, 'w': 100, 'h': 26, 'text': '--texto de guía--' };
         }
         else if (typeItem === 'text-area-element') {
-            parentElement.elements = parentElement.elements || [];
-            parentElement.elements.push({ 'id': id, 'type': typeItem, 'fs': 11, 'ml': 100, 'mt': 76, 'w': 100, 'h': 100, 'text': '--Parrafo 1--' });
+            newElement = { 'id': id, 'type': typeItem, 'fs': 11, 'ml': 100, 'mt': 76, 'w': 100, 'h': 100, 'text': '--Parrafo 1--' };
         }
         else if (typeItem === 'image-element') {
-            parentElement.elements = parentElement.elements || [];
-            parentElement.elements.push({ 'id': id, 'type': typeItem, 'url_image': 'images/icons/NoImageAvailable.jpeg', 'w': 135, 'h': 115, 'ml': 150, 'mt': 76 });
+            newElement = { 'id': id, 'type': typeItem, 'url_image': 'images/icons/NoImageAvailable.jpeg', 'w': 135, 'h': 115, 'ml': 150, 'mt': 76 };
         }
         else if (typeItem === 'video-element') {
-            parentElement.elements = parentElement.elements || [];
-            parentElement.elements.push({ 'id': id, 'type': typeItem, 'url_vimeo': 'https://player.vimeo.com/video/286898202', 'w': 210, 'h': 151, 'ml': 260, 'mt': 170 });
+            newElement = { 'id': id, 'type': typeItem, 'url_vimeo': 'https://player.vimeo.com/video/286898202', 'w': 210, 'h': 151, 'ml': 260, 'mt': 170 };
         }
         else if (typeItem === 'button-element') {
-            parentElement.elements = parentElement.elements || [];
-            parentElement.elements.push({ 'id': id, 'type': typeItem, 'fs': 11, 'ml': 210, 'mt': 176, 'w': 130, 'h': 26, 'text': '--texto de guía--', 'class': 'btn-sm btn-primary' });
+            newElement = { 'id': id, 'type': typeItem, 'fs': 11, 'ml': 210, 'mt': 176, 'w': 130, 'h': 50, 'text': '--texto de guía--', 'class': 'btn-sm btn-primary' };
         }
         else if (typeItem === 'evidence-element') {
-            parentElement.elements = parentElement.elements || [];
-            parentElement.elements.push({ 'id': id, 'type': typeItem, 'questionEditType': "1",'fs': 11, 'ml': 210, 'mt': 176, 'w': 277, 'h': 58, 'text': 'Abrir evidencias de aprendizaje', 'class': '', 'subtitle':'Evidencias de aprendizaje','icon': 'images/designerAdmin/icons/evidenciasAprendizajeIcono.png', 'questions': [] });
+            newElement = { 'id': id, 'type': typeItem, 'questionEditType': "1",'fs': 11, 'ml': 210, 'mt': 176, 'w': 277, 'h': 58, 'text': 'Abrir evidencias de aprendizaje', 'class': '', 'subtitle':'Evidencias de aprendizaje','icon': 'images/designerAdmin/icons/evidenciasAprendizajeIcono.png', 'questions': [] };
         }
+
+        for(var j=0, elm; j<$scope.elementParentEdit.elements.length; j++) {
+            elm = $scope.elementParentEdit.elements[j];
+            if(newElement.ml === elm.ml && newElement.mt == elm.mt    ) {
+                newElement.ml += 20;
+                newElement.mt += 20;
+             }
+        }
+        $scope.elementParentEdit.elements.push(newElement);
         
         $timeout(function () {
             $scope.resizeWidth();
@@ -776,27 +819,17 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
     }
 
-    $scope.deleteElement = function (parentElement, $index, mbDelete) {
+    $scope.onDeleteElement = function (parentElement, $index, mbDelete) {
         if ($index || $index === 0) {
             $scope.mbDelete = mbDelete;
             $scope.elementEdit = null;
             $scope.indexElement = null;
             $scope.typeEdit = '';
             $scope.applyChange = true;
-            if (parentElement && parentElement.elements) {
-                var newElements = [];
-                for (var i = 0; i < parentElement.elements.length; i++) {
-                    if (i !== $index)
-                        newElements.push(Object.assign({}, parentElement.elements[i]));
-                }
-            }
-            parentElement.elements = [];
-            parentElement.elements = newElements;
-            
-
-            $timeout(function () {
-                $scope.resizeWidth();
-            }, 10);
+            var list = $scope.elementParentEdit.elements.filter(function(value,index){
+                return  (index !== $index)
+            });
+            refreshElements(list);
         }
         else {
             if (parentElement.background_image) {
@@ -908,13 +941,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     
                 if(sectionPart.elements.length === 0) {
                     finishCallback();
-                }
-    
-            /*}, function (reason) {
-                var message = (reason && reason.data) ? reason.data.message : '';
-                countElements = 0;
-                finishCallback('Error invocando el servicio register_update_question:['+message+']');
-            });*/
+                } 
         }
         else {
             countElements = 0;
@@ -941,7 +968,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
         var sectionNumber = Number($scope.sequenceSection.sequenceSectionIndex.replace('section_', ''));
         
-        saveEvidence($scope.sequenceSectionPart,function(){
+        saveEvidence($scope.elementParentEdit,function(){
             var data = {
                 'id': $scope.sequence.id,
                 'section_number': sectionNumber,
@@ -991,7 +1018,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         //var sectionNumber = Number($scope.momentSectionPart.momentSectionPartIndex.replace('part_',''));
         var sectionNumber = Number($scope.momentSection.momentSectionIndex) + 1;
 
-        saveEvidence($scope.momentSectionPart,function(){
+        saveEvidence($scope.elementParentEdit,function(){
             var data = {
                 'id': $scope.moment.id,
                 'section_number': sectionNumber,
@@ -1070,9 +1097,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             confirmButtonClass: 'mr-4',
             cancelButtonColor: '#2c7be5',
             confirmButtonText: "Deshacer cambios",
-            cancelButtonText: "Ok",
-            closeOnConfirm: true,
-            closeOnCancel: false
+            cancelButtonText: "Ok", 
         })
         .then((result) => {
             if (result) {
@@ -1083,8 +1108,6 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                   confirmButtonClass: "btn-danger",
                   confirmButtonText: "Confirmar",
                   cancelButtonText: "Cancelar",
-                  closeOnConfirm: false,
-                  closeOnCancel: false
                 })
                 .then((isConfirm) => {
                     if (isConfirm) {
@@ -1120,10 +1143,11 @@ MyApp.directive('conxDraggable', function () {
                     start: function (event, ui) {
                         $scope.startEvent = event;
                         $scope.position = ui.position;
+                        $scope.$parent.mbDraggable = true;
                     },
                     stop: function (event, ui) {
-                        $scope.$parent.mbDraggable = true;
                         $scope.$parent.applyChange = true;
+
                         var deltaY = event.clientY - $scope.startEvent.clientY;
                         var deltaX = event.clientX - $scope.startEvent.clientX;
 
