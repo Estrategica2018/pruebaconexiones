@@ -1,4 +1,4 @@
-<nav id="sideMenu" class="navbar-vertical navbar-glass navbar navbar-expand-xl navbar-light max-width-sidemenu"
+<nav ng-controller="navbarController"  id="sideMenu" class="navbar-vertical navbar-glass navbar navbar-expand-xl navbar-light max-width-sidemenu"
    style="display:none">
    <div class="collapse show navbar-collapse" aria-expanded="true" style="">
       <div class="ScrollbarsCustom trackYVisible"
@@ -132,12 +132,9 @@
 						 </li>
 						 @endif						 
 						 <li class="mt-1 nav-item">
-							<a class="my-3 btn btn-primary btn-sm btn-block" href="{{ route('user.logout') }}"
-							   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar
-							   Sesión</a>
-							<form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
-							   @csrf
-							</form>
+                   <button class="my-3 btn btn-primary btn-sm btn-block" href="{{ route('user.logout') }}"
+                     ng-click="closeSession('{{ route('user.logout') }}')">Cerrar Sesión
+                  </button> 
 						 </li>
                      @else
                      <li class="nav-item">

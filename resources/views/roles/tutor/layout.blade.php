@@ -8,7 +8,7 @@
 
         @include('roles/tutor/tutor_navbar')
 
-        <div class="row p-lg-4 p-md-3 p-sm-2 sticky-margin-top-ie">
+        <div ng-controller="navbarController"  class="row p-lg-4 p-md-3 p-sm-2 sticky-margin-top-ie">
             <div class="container">
                 <div class="content">
                     <div class="row">
@@ -126,12 +126,10 @@
                                             </a>
                                         </li>
                                         <li class="nav-item nav-item-tutor">
-                                            <a class="avatar avatar-3xl tutor-button-head" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <a class="avatar avatar-3xl tutor-button-head" ng-click="closeSession('{{ route('user.logout') }}')">
                                                 <img src="{{asset('images/icons/portal-padres/salir-01.png')}}" class="ml-auto mr-auto" width="auto" height="42px"  style="width: auto;height: 42px;"/>
                                                 <small class="fs--2 mb-1 text-700 font-weight-bold"> Salir</small>
-                                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
-                                                   @csrf
-                                                </form>
+                                               
                                             </a>
                                         </li>
                                     </ul>

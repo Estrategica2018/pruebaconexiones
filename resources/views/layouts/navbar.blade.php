@@ -1,4 +1,4 @@
-<nav id="navbar" class="pb-0 navbar-glass sticky-top-ie row navbar-top sticky-kit navbar navbar-expand-lg navbar-light" ng-controller="navbarController">
+<nav ng-controller="navbarController" id="navbar" class="pb-0 navbar-glass sticky-top-ie row navbar-top sticky-kit navbar navbar-expand-lg navbar-light">
   <button aria-label="Toggle navigation" id="toggleMenu" type="button" class="navbar-toggler">
   <span class="navbar-toggler-icon"></span>
   </button>  
@@ -40,11 +40,10 @@
         </div>
         @else
         <div class="ml-1 ml-auto mr-auto d-flex">
-            <a class="my-3 btn btn-primary btn-sm btn-block" href="{{ route('user.logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
-            <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
-               @csrf
-            </form>
+            <button class="my-3 btn btn-primary btn-sm btn-block" href="{{ route('user.logout') }}"
+               ng-click="closeSession('{{ route('user.logout') }}')">Cerrar Sesión
+            </button>
+         
         </div>
         @endif
 

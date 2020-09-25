@@ -1,4 +1,4 @@
-<nav id="sideMenu" class="navbar-vertical navbar-glass navbar navbar-expand-xl navbar-light max-width-sidemenu"
+<nav  ng-controller="navbarController"  id="sideMenu" class="navbar-vertical navbar-glass navbar navbar-expand-xl navbar-light max-width-sidemenu"
    style="display:none">
    <div class="collapse show navbar-collapse" aria-expanded="true" style="">
       <div class="ScrollbarsCustom trackYVisible"
@@ -46,16 +46,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                               aria-expanded="false" href="{{ route('student.available_sequences',auth('afiliadoempresa')->user()->company_name()) }}" >
+                            <a class="nav-link" ng-click="closeSession('{{ route('user.logout') }}')"
+                               aria-expanded="false" >
                                <div class="d-flex align-items-center">
                                   <span class="ml-2 mr-2 nav-link-icon">
                                      <i class="fas fa-door-open fs-1" style="color:#35af7e;"></i>
                                   </span>
                                    Salir
-                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
-                                   @csrf
-                                </form>
                                </div>
                             </a>
                         </li>

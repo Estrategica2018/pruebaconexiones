@@ -1,5 +1,5 @@
 <div ng-controller="timelineSequencesStudentCtrl" ng-init=init(1,"{{$account_service_id}}","{{$sequence_id}}") class="row">
-    <div class="col-5 pr-0" style="height: 106px;">
+    <div ng-controller="navbarController" class="col-5 pr-0" style="height: 106px;">
         <a href="{{asset('/')}}"><img href="" class="mr-2 avatar-logo" src="{{ asset('images/icons/iconosoloConexiones-01.png') }}" alt="Logo" width="40"></a>
         
         @if(isset(auth('afiliadoempresa')->user()->url_image)) 
@@ -50,7 +50,7 @@
                 <img src="{{asset('images/icons/portal-estudiante/perfil_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
                 <span class="tooltiptext">perf&iacute;l</span>
             </a>
-            <a class="ml-1 cursor-pointer image-tooltip" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a class="ml-1 cursor-pointer image-tooltip" href="#" ng-click="closeSession('{{ route('user.logout') }}')">
                 <img src="{{asset('images/icons/portal-estudiante/salir_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
                 <span class="tooltiptext">salir</span>
             </a>

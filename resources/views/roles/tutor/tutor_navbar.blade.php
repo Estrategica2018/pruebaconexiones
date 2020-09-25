@@ -1,4 +1,4 @@
-<nav id="navbar" class="pb-0 navbar-glass sticky-top-ie row navbar-top sticky-kit navbar navbar-expand-lg navbar-light" ng-controller="navbarController">
+<nav ng-controller="navbarController" id="navbar" class="pb-0 navbar-glass sticky-top-ie row navbar-top sticky-kit navbar navbar-expand-lg navbar-light">
   <button aria-label="Toggle navigation" id="toggleMenu" type="button" class="navbar-toggler">
   <span class="navbar-toggler-icon"></span>
   </button>

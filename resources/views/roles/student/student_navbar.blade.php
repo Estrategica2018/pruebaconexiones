@@ -1,4 +1,4 @@
-<nav id="navbar" class="pb-0 navbar-glass sticky-top-ie row navbar-top sticky-kit navbar navbar-expand-lg navbar-light" ng-controller="navbarController">
+<nav ng-controller="navbarController" id="navbar" class="pb-0 navbar-glass sticky-top-ie row navbar-top sticky-kit navbar navbar-expand-lg navbar-light">
   <button aria-label="Toggle navigation" id="toggleMenu" type="button" class="navbar-toggler">
   <span class="navbar-toggler-icon"></span>
   </button>
@@ -41,7 +41,7 @@
            <i class="fas fa-star fs-1" style="color:#5f347c;"></i>
         </li>
         <li class="nav-item ml-lg-14 col-2 d-flex">
-           <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link  mr-2 p-0 pb-1" >
+           <a href="#" ng-click="closeSession('{{ route('user.logout') }}')" class="nav-link  mr-2 p-0 pb-1" >
               Salir
            </a>
            <i class="fas fa-door-open fs-1" style="color:#35af7e;"></i>
