@@ -119,11 +119,11 @@ class RegisterController extends Controller
             session_start();
         }
 
-        ShoppingCart:: where('session_id', session_id())
+        $update = ShoppingCart:: where('session_id', session_id())
             ->where('payment_status_id', 1)
             ->update(['company_affiliated_id' => $afiliado_empresa->id, 'session_id' => 'NULL']);
 
-        if (isset($data['redirect_to_shoppingcart'])) {
+        if (isset($data['redirect_to_shoppingcart']) && count($update)>0) {
             $this->redirectTo = 'carrito_de_compras';
         }
 

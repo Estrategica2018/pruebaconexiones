@@ -82,7 +82,8 @@ class AffiliatedCompanyController extends DefaultLoginController
         $rol = $request->rol;
         $user_name = $request->user_name;
         $company = $request->company;
-        Auth::logout();
+         
+        
 		session(['rol_trans' => $rol]);
 		
         $user = DB::table('afiliado_empresas')
@@ -119,7 +120,13 @@ class AffiliatedCompanyController extends DefaultLoginController
                     session(['status_validation_free_plan' => 2]);
                 }
             }
-
+            
+            //Auth::logout();
+            if(auth('afiliadoempresa')->user()) {
+                Auth::guard('afiliadoempresa')->logout();
+                $request->session()->flush();
+            }
+            
             $this->validateLogin($request);
 
             if (method_exists($this, 'hasTooManyLoginAttempts') &&

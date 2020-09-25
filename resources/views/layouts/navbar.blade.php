@@ -20,7 +20,7 @@
         <div class="nav-item ml-auto mr-auto p-0"><a href="{{ route('contactus') }}" class="nav-link p-0 pb-1 @if(\Route::current()->getName() == 'contactus') selected @endif">Contáctenos</a></div>
         @guest('afiliadoempresa')
         <div class="nav-item ml-auto mr-auto p-0 text-align-right">
-           <a class="btn btn-primary btn-sm badge-pill fs-lg--1 font-weight-bold" href="{{ route('user.login') }}">Inicio de Sesión</a>
+           <a class="btn btn-primary btn-sm badge-pill fs-lg--1 font-weight-bold" href="{{ route('user.showLogin') }}">Inicio de Sesión</a>
         </div>
         <div class="nav-item p-0 ml-auto mr-auto">
            <a class="btn btn-warning btn-sm badge-pill fs-lg--1 font-weight-bold" href="{{ route('registerForm') }}">Registro</a>

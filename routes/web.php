@@ -85,7 +85,7 @@ Route::prefix('user')
     ->group(function() {
         Route::namespace('Auth\Login')
             ->group(function() {
-                Route::get('login/{empresa?}', 'AffiliatedCompanyController@showLoginForm')->name('login');
+                Route::get('login/{empresa?}', 'AffiliatedCompanyController@showLoginForm')->name('showLogin');
                 Route::post('login/{rol?}', 'AffiliatedCompanyController@login')->name('login');
                 Route::post('logout', 'AffiliatedCompanyController@logout')->name('logout');
             });
