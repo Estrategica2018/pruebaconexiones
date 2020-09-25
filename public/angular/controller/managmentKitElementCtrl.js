@@ -304,6 +304,9 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
             $('#exampleModalKit').modal('show');
         }else{
             $http.get('/conexiones/admin/get_kit/'+id, { 'id': id }).then(function (response) {
+                console.log(response.data.data.url_slider_images,response.data.data.init_date)
+                $scope.directoryPath = response.data.data.url_image
+                $scope.directoryPath2 = response.data.data.url_slider_images
                 $scope.kit.id = response.data.data.id
                 $scope.kit.name = response.data.data.name
                 $scope.kit.cost = response.data.data.price
@@ -350,6 +353,7 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
                 $scope.createOrUpdateKitService(action)
             }else{
                 $http.post('/conexiones/admin/get_folder_image', { 'dir': $scope.directoryPath2 }).then(function (response) {
+                    console.log(response.data.directory)
                     $scope.kit.url_slider_images = response.data.directory  + '/'; 
                     $scope.createOrUpdateKitService(action)
                 })
@@ -375,6 +379,7 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         }
     }
     $scope.createOrUpdateElementService = (action) => {
+        console.log($scope.element.init_date)
         var data = new FormData();
         data.append('id',$scope.element.id);
         data.append('name',$scope.element.name);
@@ -383,8 +388,11 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         data.append('url_image',$scope.cover);
         data.append('url_slider_images',$scope.element.url_slider_images);
         data.append('description',$scope.element.description);
-        let new_startDate= new Date($scope.element.init_date);
-        let date = moment(new_startDate).format('YYYY-MM-DD');
+        let date = $scope.element.init_date
+        if($scope.element.init_date != null){
+            let new_startDate= new Date($scope.element.init_date);
+            let date = moment(new_startDate).format('YYYY-MM-DD');
+        }
         data.append('init_date',date)
         data.append('arraySequenceMoment',JSON.stringify($scope.arraySequenceMoment));
         data.append('action',action );
@@ -428,8 +436,11 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         data.append('url_image',$scope.cover);
         data.append('url_slider_images',$scope.kit.url_slider_images);
         data.append('description',$scope.kit.description);
-        let new_startDate= new Date($scope.kit.init_date);
-        let date = moment(new_startDate).format('YYYY-MM-DD');
+        let date = $scope.kit.init_date
+        if($scope.kit.init_date != null){
+            let new_startDate= new Date($scope.kit.init_date);
+            let date = moment(new_startDate).format('YYYY-MM-DD');
+        }
         data.append('init_date',date)
         data.append('arraySequenceMoment',JSON.stringify($scope.arraySequenceMoment));
         data.append('elements',JSON.stringify($scope.elementsSelected));
