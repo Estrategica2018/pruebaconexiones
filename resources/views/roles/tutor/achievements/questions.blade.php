@@ -46,8 +46,8 @@
             <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
             @endif  
             @if(isset($sequence['performance'])) 
+               <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
                @if($sequence['performance'] >= 0 )
-                     <label class="" style="margin-left: -41px;"><strong> Desempeño</strong></label> 
                      @if($sequence['performance']>=90)
                      <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold ">Superior > 90% </label>
                      @endif
@@ -196,7 +196,7 @@
                   @endif
                </div>
                <div class="col-7 col-md-6 p-0">  
-                  <span>Preguntas de 
+                  <span>Preguntas de {{json_encode($rating['element'],true)}}
                   @if(isset($rating['element']['subtitle']))
                   {{$rating['element']['subtitle']}}  
                   @endif

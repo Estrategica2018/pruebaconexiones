@@ -101,10 +101,7 @@ MyApp.controller("tutorProfileCtrl", ["$scope", "$http", "$timeout", function($s
         $scope.tutor.password2 = ''
         $scope.newRegisterForm=false
         $('.d-none-result.d-none').removeClass('d-none');
-        $scope.initCountries();
-
-        
-
+        $scope.initCountries(); 
         if(statusValidationFreePlan == 1){
             swal({
                 text:'El plan ha sido registrado correctamente, los estudiantes inscritos puden acceder a este plan' ,

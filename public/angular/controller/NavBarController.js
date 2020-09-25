@@ -1,35 +1,34 @@
 MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) {
-     
+    
+    $scope.initNumberShoppingCart = function() { 
+        $('.notification-indicator-number').html('!');
+        $http({
+            url: "/get_shopping_cart/",
+            method: "GET",
+        }).
+        then(function (response) {
+            $('.d-none-result.d-none').removeClass('d-none');
+            $scope.shopping_carts = response.data.data;
+            var length = response.data && response.data.data ? response.data.data.length : 0;
+            if(response.data.data)
+            for(var i=0;i<response.data.data.length;i++) {
+                if(response.data.data[i].type_product_id === 3 ||
+                    response.data.data[i].type_product_id === 4) {
+                        length --;
+                        length += response.data.data[i].shopping_cart_product.length;
+                }
+            }
+            if(length>0) {
+                $('.notification-indicator-number').html(length);
+            }
+        }).catch(function (e) {
+            $('.d-none-result.d-none').removeClass('d-none');
+            $scope.errorMessage = 'Error consultando el carrito de compras, compruebe su conexión a internet';
+        }); 
+    }
     $scope.initSearch = function () {
 
         $scope.shoppingCartLength = null;
-
-        getShoppingCart();
-        
-        function getShoppingCart() {
-            $('.notification-indicator-number').html('!');
-            $http({
-                url: "/get_shopping_cart/",
-                method: "GET",
-            }).
-            then(function (response) {
-                $('.d-none-result.d-none').removeClass('d-none');
-                $scope.shopping_carts = response.data.data;
-                var length = response.data && response.data.data ? response.data.data.length : 0;
-                if(response.data.data)
-                for(var i=0;i<response.data.data.length;i++) {
-                    if(response.data.data[i].type_product_id === 3 ||
-                       response.data.data[i].type_product_id === 4) {
-                           length --;
-                           length += response.data.data[i].shopping_cart_product.length;
-                    }
-                }
-                $('.notification-indicator-number').html(length);
-            }).catch(function (e) {
-                $('.d-none-result.d-none').removeClass('d-none');
-                $scope.errorMessage = 'Error consultando el carrito de compras, compruebe su conexión a internet';
-            });
-        }
 
         $scope.searchList = [];
         $http.get('/get_company_sequences/' + 1)
@@ -75,7 +74,6 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
 
         
     }
-
     $scope.closeSession = function(url) {
         $http({
             url: url,

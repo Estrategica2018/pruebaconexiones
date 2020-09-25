@@ -123,7 +123,7 @@ class RegisterController extends Controller
             ->where('payment_status_id', 1)
             ->update(['company_affiliated_id' => $afiliado_empresa->id, 'session_id' => 'NULL']);
 
-        if (isset($data['redirect_to_shoppingcart']) && count($update)>0) {
+        if ($update > 0) {
             $this->redirectTo = 'carrito_de_compras';
         }
 
@@ -140,11 +140,19 @@ class RegisterController extends Controller
     {
 
         $free_rating_plan_id = $request->session()->get('free_rating_plan_id');
-        $redirect_to_shoppingcart = $request->session()->pull('redirect_to_shoppingcart'); //remove cache to session
         $status_validation_free_plan = false;
         if($request->session()->has('status_validation_free_plan')){
             $status_validation_free_plan = true;
+        } 
+        if (session_id() == "") {
+            session_start();
         }
+
+        $shoppingCart = ShoppingCart:: where('session_id', session_id())
+            ->where('payment_status_id', 1)->count();
+
+        $redirect_to_shoppingcart = $shoppingCart > 0;
+
         return view('auth.register',
             [
                 'free_rating_plan_id' => $free_rating_plan_id,

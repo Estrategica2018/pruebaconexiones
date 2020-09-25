@@ -82,14 +82,14 @@
                                    </div>
                               </div>
                               @endif
-                              @if(old('redirect_to_shoppingcart') || isset($redirect_to_shoppingcart))
+                              @if($redirect_to_shoppingcart)
                               <div class="form-group">
                                    <div class="register-band-addon">
                                       Podrás realizar el pago de tus productos luego del registro
                                    </div>
                               </div>
                               @endif
-                              @if(!old('redirect_to_shoppingcart') && !isset($redirect_to_shoppingcart) && !old('free_rating_plan_id') && !isset($free_rating_plan_id))
+                              @if(!$redirect_to_shoppingcart && !old('free_rating_plan_id') && !isset($free_rating_plan_id))
                               <div class="form-group d-none d-md-block">
                                    <div class="p-4">
                                    </div>
@@ -143,10 +143,7 @@
                                  <input type="hidden" name="password" id="password" value="password" />
                                  @if(isset($free_rating_plan_id))
                                  <input class="d-none-result d-none" ng-show="false" type="text" name="free_rating_plan_id" value="{{$free_rating_plan_id}}"/>
-                                 @endif
-                                 @if(isset($redirect_to_shoppingcart))
-                                 <input class="d-none-result d-none" ng-show="false" type="text" name="redirect_to_shoppingcart" value="{{$redirect_to_shoppingcart}}"/>
-                                 @endif
+                                 @endif 
                                  <input class="d-none-result d-none" ng-show="false" type="text" name="department_id" id="department_id" ng-model="departmentId" />
                                  <input class="d-none-result d-none" ng-show="false" type="text" name="city_id" id="city_id"
                                     ng-required="showCitySelect" ng-model="city_id" />
@@ -192,11 +189,6 @@
                            <input class="d-none-result d-none" ng-show="false"  name="free_rating_plan_id" value="{{$free_rating_plan_id}}"/>
                         @endif
                         
-                        @if(old('redirect_to_shoppingcart'))
-                            <input ng-show="false" class="d-none-result d-none" type="text" name="redirect_to_shoppingcart" value="{{old('redirect_to_shoppingcart')}}"/>
-                        @elseif(isset($redirect_to_shoppingcart))
-                           <input ng-show="false" class="d-none-result d-none" type="text" name="redirect_to_shoppingcart" value="{{$redirect_to_shoppingcart}}"/>
-                        @endif
                      </form>
                   </div>
                </div>
