@@ -1,12 +1,10 @@
 MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", function ($scope, $http, $timeout) {
     $scope.ratingPlan = null;
-    $scope.sequences = [];
+    $scope.sequences = null;
     $scope.sequenceForAdd = null;
     $scope.elementsKits = [];
     $scope.meshDirectory = null;
     $scope.totalMoments = 0;
-
-    
     var type_sequence = 1;
     var type_moment = 2;
     var type_experience = 3;
@@ -24,24 +22,37 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
     
     function clickSelected(totalSequences, ratingPlanCount) {
       
-      
-      if($scope.ratingPlan.type_rating_plan_id === type_sequence) {
-          var textm = ratingPlanCount > 0 ? ' de las ' + ratingPlanCount : '';
-         $scope.messageToast = 'Has seleccionado ' + totalSequences + textm + '  secuencias.';
-      }
-      else if($scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
-          var textm = ratingPlanCount > 0 ? ' de los ' + ratingPlanCount : '';
-         $scope.messageToast = 'Has seleccionado ' + totalSequences + textm + '  momentos';
-      }
- 
-      if(!$mbDelayCtrlFlag) {
-        $mbDelayCtrlFlag = true;
-        $("#toast-name-1").fadeIn(400).delay(1000).fadeOut(400);
-        setTimeout(function(){ $mbDelayCtrlFlag = false;}, 1000);
-        $("#toast-name-1").css('top',scrollOrig + $(window).scrollTop());
-      }
-
-    };
+       
+        if($scope.ratingPlan.type_rating_plan_id === type_sequence) {
+            if(totalSequences === 0) {
+                var textm = ratingPlanCount > 0 ? 'las '+ratingPlanCount+' secuencias ' : 'la secuencia';
+                $scope.messageToast = 'Seleccciona '+ textm +' que deseas incluir'; 
+            }
+            else {
+                if(ratingPlanCount > 1 ) {
+                    $scope.messageToast = 'Has seleccionado ' + totalSequences  + ' de las ' + ratingPlanCount + ' secuencias permitidas';
+                }
+                else {
+                    $scope.messageToast = 'Has seleccionado ' + totalSequences   + ' secuencia permitida';
+                }
+                
+            }
+        }
+        else if($scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
+            var textm = ratingPlanCount > 0 ? ' de los ' + ratingPlanCount : '';
+            $scope.messageToast = 'Has seleccionado ' + totalSequences + textm + '  momento(s)';
+        }
+       
+        if(!$mbDelayCtrlFlag) {
+            $mbDelayCtrlFlag = true;
+            $("#toast-name-1").fadeIn(400).delay(1000).fadeOut(400);
+            setTimeout(function(){ $mbDelayCtrlFlag = false;}, 1000); 
+            $("#toast-name-1").css('position','fixed');
+            $("#toast-name-1").css('bottom',30);
+            $("#toast-name-1").css('top','');
+            $("#toast-name-1").removeClass('position-absolute');
+        }
+    }
 
     $scope.init = function(company_id, ratingPlanId, sequence_id) {
         $scope.defaultCompanySequences = company_id;
@@ -55,22 +66,19 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             method: "GET",
         }).
         then(function (response) {
+            
             $scope.ratingPlan = response.data ? response.data.data || response.data : response;
             $scope.ratingPlan = ( $scope.ratingPlan && $scope.ratingPlan.length ) ? $scope.ratingPlan[0] : $scope.ratingPlan;
             $scope.requiredMoment = $scope.ratingPlan.type_rating_plan_id === 2;
             $scope.requiredExperience = $scope.ratingPlan.type_rating_plan_id === 3;
-
-            if($scope.ratingPlan === 1) {
-                $scope.messageToastPrice = 'Precio del plan $' + $scope.ratingPlan.price + ' USD';
-            }
-            
+ 
             if(( $scope.requiredExperience || $scope.requiredMoment ) && sequence_id) { 
                 $('#moment_div_responsive_ForAdd').addClass('show');
             }
 
             getSequences(company_id,sequence_id);
 
-        }).catch(function (e) {
+        }).catch(function (e) { 
             $scope.errorMessageFilter = 'Error consultando los planes de acceso, compruebe su conexión a internet';
         });
     }
@@ -185,6 +193,7 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
                     $('.confirm_rating').removeClass("btn-primary");
                     $('.confirm_rating').addClass("btn-outline-primary");
                 }
+                $scope.messageToast = 'Seleccciona los momentos que deseas incluir';
                 
                 clickSelected(totalSequences, $scope.ratingPlan.count);
             }
@@ -193,7 +202,6 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
         else if($scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
 
             $scope.totalMoments = 0;
-            
             
             if(sequenceIdForAdd) {
                 $('#moment_div_responsive_ForAdd').addClass('show');
@@ -223,6 +231,9 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
 
             if($scope.totalMoments===0) {
                 $scope.messageToastPrice = null;
+                $scope.selectComplete = 0;
+                $scope.messageToast = 'Seleccciona los momentos que deseas incluir';
+                
             }
             else {
                 if($scope.totalMoments > $scope.ratingPlan.count && $scope.ratingPlan.count > 0) {

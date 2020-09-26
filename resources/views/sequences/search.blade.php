@@ -214,7 +214,7 @@
                     preguntas exploradoras de saberes, experiencias científicas, explicaciones de
                     ciencias en contexto e ideas para + conexiones.
                     </li>
-                    <li><strong>Uno</strong> o <strong>varios momentos</strong> o etapas de una misma guía de aprendizaje o de varias.
+                    <li><strong>Uno</strong> o <strong>varios momentos</strong> de una misma guía de aprendizaje o de varias.
                     </li>
                     <li> <strong>Una</strong> o <strong>varias experiencias</strong> científicas, con los videos orientadores para su
                     realización.

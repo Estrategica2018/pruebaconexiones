@@ -5,6 +5,7 @@ MyApp.controller("pedagogyCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.init = function (companyId, sequenceId, accountServiceId) {
         $('.d-none-result').removeClass('d-none');
         $scope.loadFinished = true;
+        $scope.setIconPedagogy('central_question');
     }
     
     $scope.setIconPedagogy = function (iconPedagogy) {

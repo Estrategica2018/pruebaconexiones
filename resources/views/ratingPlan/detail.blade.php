@@ -10,11 +10,11 @@
       <span class="col">@{{ errorMessageFilter }}</span>
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></i></a></span>
     </div>
-    <div id="loading" class="fade show p-3 border-lg-y col-lg-2 w-100 card card-body" ng-hide="ratingPlan"
-       style="min-height: 43vw; border: 0.4px solid grey; min-width: 100%">
-       cargando...
+    <div id="loading" class="text-align border-lg-y col-lg-2 w-100 card card-body" ng-hide="sequences"
+       style="min-height: 30vw; border: 0.4px solid grey; min-width: 100%; padding: 30%;">
+       cargando...  
     </div>
-    <div class="mb-3 card col-12" ng-show="ratingPlan">
+    <div class="mb-3 card col-12" ng-show="sequences">
       <div class="card-body w-100">
         <div class="row d-none-result d-none">
              <div class="mb-3">

@@ -63,9 +63,7 @@ class LoginController extends Controller
         if (isset($request->free_rating_plan_id)) {
             session(['free_rating_plan_id' => $request->free_rating_plan_id]);
         }
-        if (isset($request->redirect_to_shoppingcart)) {
-            session(['redirect_to_shoppingcart' => $request->redirect_to_shoppingcart]);
-        }
+        
         $this->rol = decrypt($rol);
         $this->rolLogin();
         session(['name_company' => 'conexiones']);
@@ -99,12 +97,12 @@ class LoginController extends Controller
                 if (session_id() == "") {
                     session_start();
                 }
-                ShoppingCart:: where('session_id', session_id())
+                $update = ShoppingCart:: where('session_id', session_id())
                     ->where('payment_status_id', 1)
                     ->update(['company_affiliated_id' => $afiliadoempresa->id, 'session_id' => 'NULL']);
 
-                $redirect_shoppingcart = session()->pull('redirect_to_shoppingcart');
-                if ($redirect_shoppingcart) {
+                
+                if ($update > 0) {
                     return redirect()->route('shoppingCart');
                 }
 
@@ -178,8 +176,7 @@ class LoginController extends Controller
                 $redirect_to_portal = session('redirect_to_portal');
 
                 $free_rating_plan_id = session()->pull('free_rating_plan_id');
-                $redirect_shoppingcart = session()->pull('redirect_to_shoppingcart');
-
+               
                 if ($free_rating_plan_id) {
                     $ratingPlan = RatingPlan::find($free_rating_plan_id);
                     if ($ratingPlan->is_free) {

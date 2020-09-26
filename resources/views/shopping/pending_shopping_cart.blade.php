@@ -50,7 +50,7 @@
          <div class="col-12 row">
             <div ng-show="shopping_cart.type_product_id === 1" 
                 ng-repeat="shopping_cart_product in shopping_cart.shopping_cart_product" 
-               class="col-6 d-flex pl-0">
+               class="col-12 col-md-6 d-flex pl-0">
                <div class="p-3" ng-show="shopping_cart_product.sequence">
                  <img class="col-rounded" src="{{asset('/')}}@{{shopping_cart_product.sequence.url_image}}" width="80px"/>
                </div>
