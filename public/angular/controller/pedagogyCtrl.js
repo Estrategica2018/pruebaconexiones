@@ -11,7 +11,7 @@ MyApp.controller("pedagogyCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.setIconPedagogy = function (iconPedagogy) {
         $scope.icon_pedagogy = $scope.icon_pedagogy === iconPedagogy ? '' : iconPedagogy;
         if($scope.icon_pedagogy === '') {
-            $('.background-sequence-card').attr('h','4524');
+            $('.background-sequence-card').attr('h','4724');
         }
         else {
             $('.background-sequence-card').attr('h','5024');
@@ -88,4 +88,16 @@ function resizeSequenceCard() {
             $(this).css('height', h + 'px');
         }
     });
+
+    $(card).find('[border-w]').each(function (value, key) {
+         
+        var border = $(this).attr('border-w').split(' ');
+        var ini = Number(border[0]) * deltaX;
+        var mid = Number(border[1]) * deltaX;
+        var end = Number(border[2]) * deltaX;
+        $(this).addClass('position-absolute');
+        $(this).css('border-width', ini+'px '+mid+'px '+end+'px');  
+    });
+
+    
 }

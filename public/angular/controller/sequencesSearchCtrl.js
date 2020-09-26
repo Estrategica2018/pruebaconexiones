@@ -16,14 +16,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
     {
         $scope.defaultCompanySequences = company_id;
         $('.d-none-result').removeClass('d-none');
-        $('[icon-pedagogy]').each(function(index){
-            var left = $(this).position().left - ($(this).width()/2);
-            var top = $(this).position().top + 130;
-            if($(this).attr('id') ==="pedagogy7" ) left = left - left * 10/100;
-            if($(this).attr('id') ==="pedagogy8" ) left = left - left * 20/100;
-            $(this).next().next().css('left',left);
-            $(this).next().next().css('top',top);
-        });
+        resizeIcons();
         
         //retrive plan
         $http({
@@ -45,35 +38,32 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
     };
     
     $(window).resize(function () {
+        resizeIcons();
+    });
+
+    function resizeIcons() {
         $('[icon-pedagogy]').each(function(index){
-            
-            
-            if($(this).attr('id') ==="pedagogy8" ) {
-                $(this).position();
-                
-            }
-
-
             var left = $(this).position().left - ($(this).width()/2);
             var top = $(this).position().top + 130 ;
-            if($(this).attr('id') ==="pedagogy7" ) {
-                left = left - left * 20/100;
-                var arrow = $(this).next().next().find('div')[0];
-                $(arrow).css('left','58%');
-                $(this).find('div').css('left',left);
-            }
-            
-            if($(this).attr('id') ==="pedagogy8" ) {
-                left = left - left * 20/100;
-                var arrow = $(this).next().next().find('div')[0];
-                $(arrow).css('left','40%');
-                $(this).find('div').css('left',left);
-            }
-            $(this).next().next().css('left',left);
             $(this).next().next().css('top',top);
             
+            if($(this).attr('id') ==="pedagogy7") {
+                left = $(this).position().left - 395  + 100 ;
+                $(this).next().next().css('left', left);
+                $(this).next().next().css('right',0);
+            }
+            else if($(this).attr('id') ==="pedagogy8" ) {
+                left = $(this).position().left - 395  + 80 ;
+                $(this).next().next().css('left', left);
+                $(this).next().next().css('right',0);
+            }
+            else {
+                $(this).next().next().css('left',left);
+            }
+            
+            
         });
-    });
+    }
     
     function searchArea(areaName) {
         for (var i = 0; i < $scope.areas.length; i++) {
