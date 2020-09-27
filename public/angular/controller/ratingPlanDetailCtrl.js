@@ -178,7 +178,7 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             if(totalSequences > $scope.ratingPlan.count) {
                 sequence.isSelected = false;
                 swal({
-                  title: "Has excedido en número máximo de guías de aprendizaje permitidas en el plan seleccionado.",
+                  html: "<strong>Has excedido en número máximo de guías de aprendizaje permitidas en el plan seleccionado.</strong>",
                   buttons: true,
                   dangerMode: true,
                 })
@@ -273,9 +273,9 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
                 message = 'Recuerda que debes seleccionar algún momento antes de continuar con la compra.';
             }
             swal({
-                html: '<div class="fs-0 w-lg-50 m-auto">' + message + '</div>',
-                width: '50%',
-                showConfirmButton: false, showCancelButton: false
+                html: '<strong>' + message + '</strong>',
+                buttons: true,
+                dangerMode: true
             }).catch(swal.noop);
             return;        
         }
@@ -380,7 +380,7 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
     
 		if($scope.elementsKits.length == 0 ) {
 			swal({
-				text: 'Confirma para continuar con la compra',
+				html: '<strong>Confirma para continuar con la compra</strong>',
 				showConfirmButton: true, showCancelButton: true,
 				confirmButtonColor: '#2c7be5',
 				confirmButtonText: "Continuar compra",
@@ -505,9 +505,7 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
                         $scope.meshDirectory.push(src);
                         htmlImg += '<div id="id-image-'+i+'"><img src="/'+src+'" width="'+width+'px" height="auto"></div>';    
                         i++;
-                    }
-                    
-                    
+                    } 
                 }
                 
                 var html = '<div ng-init="idElement=0;">' + 

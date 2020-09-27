@@ -46,7 +46,7 @@
       <span class="col">@{{ errorMessageFilter }}</span>
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
    </div>
-   <div class="mb-3 card" ng-show="sequence">
+   <div class="mb-3 card" >
       <div class="card-body">
          <div class="no-gutters row">
             <div class="d-none-result2 d-none row w-100 mt-3">
@@ -104,8 +104,8 @@
                  </div>
             </div>
 
-            <div id="loading" class="fade show p-3 border-lg-y col-lg-2 w-100" ng-hide="sequence"
-               style="min-height: 43vw; border: 0.4px solid grey; min-width: 100%">
+            <div id="loading" class="p-10 w-100 text-align" ng-hide="sequence"
+               style="min-height: 23vw; border: 0.4px solid grey;">
                cargando...
             </div>
 

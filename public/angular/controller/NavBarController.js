@@ -1,7 +1,7 @@
 MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) {
     
     $scope.initNumberShoppingCart = function() { 
-        $('.notification-indicator-number').html('!');
+        $('.notification-indicator-warning').removeClass('fill');
         $http({
             url: "/get_shopping_cart/",
             method: "GET",
@@ -20,6 +20,7 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
             }
             if(length>0) {
                 $('.notification-indicator-number').html(length);
+                $('.notification-indicator-warning').addClass('fill');
             }
         }).catch(function (e) {
             $('.d-none-result.d-none').removeClass('d-none');

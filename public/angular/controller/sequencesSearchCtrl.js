@@ -242,9 +242,9 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 }
                var name = rt.name ? rt.name.replace(/\s/g,'_').toLowerCase() : '';
                var href = '/plan_de_acceso/' + rt.id + '/' + name + '/' + sequence.id;
-               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-75 trapecio-top position-absolute card-rating-button-id-'+ (i+1)  +'" style= "right: 12%;box-shadow: 0px 0px 0px 0px rgb(255 255 255), 0px -2px 0px rgba(255, 255, 255, 0.3);">'+
-               '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0 mt-2" style="position: absolute;top: -30px;color: white; ">Adquirir</span> </a> </div> ';
-               
+               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-100 trapecio-top  card-rating-button-id-'+ (i+1)  +'" style= "right: 12%;box-shadow: 0px 0px 0px 0px rgb(255 255 255), 0px -2px 0px rgba(255, 255, 255, 0.3);">'+
+               '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0" style="color: white;top: -23px;position: relative;">Adquirir</span> </a> </div> ';
+
                var message = 'por '+rt.count+' guía de aprendizaje';
                if(rt.type_plan.id === 2) {
                    message = 'Por momentos individuales';
@@ -253,76 +253,22 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                    message = 'Por experiencias individuales';
                }
 
-               ratingPlans += '<div class="mt-3 col-12 col-md-6 col-lg-4 p-4"><div class="card-header card-rating-background-id-' + (i+1) + ' mt-3 fs--3 flex-100 box-shadow ">'+
-                '<h5 class="card-title pl-lg-3 pr-lg-3 font-weight-bold card-rating-plan-id-'+ (i+1) +'" style="color: white;">'+rt.name+'</h5></div>'+
-                '<div class="card-body bg-light ratinPlanCard pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 165px;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
+               ratingPlans += '<div class="pb-3 pl-3 pr-3 card-rating-id-' + (i+1) + ' "><div class="card-header card-rating-background-id-' + (i+1) + ' mt-3 fs--3 flex-100 box-shadow ">'+
+                '<h5 class="card-title pl-lg-3 pr-lg-3 mb-0 font-weight-bold card-rating-plan-id-'+ (i+1) +'" style="color: white;">'+rt.name+'</h5></div>'+
+                '<div class="card-body bg-light ratinPlanCard pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 165px;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul></div>'+
                 '<div class="row no-gutters card-footer card-rating-background-id-' + (i+1) + ' font-weight-bold text-align box-shadow " style="color: white;">'+
-                ' <div class="col-5"> $'+rt.price+' USD  </div> <div class="pl-lg-1 pr-lg-1 col-7 font-14px" style="    max-width: 176px; margin-top:-10px"> '+ message +' </div></div></div>';
+                ' <div class="col-5"> $'+rt.price+' USD  </div> <div class="pl-lg-1 pr-lg-1 col-7 font-14px" style="    max-width: 176px; margin-top:-10px"> '+ message +' </div></div>'+  button+'</div>';
             }
         }
         var html = '<div class="row justify-content-center p-3">' + ratingPlans + '</div>';
         swal({
             html: html,
-            width: '75%',
+            customClass: 'container-alert-plans m-auto',
+            width: '100%',
             showConfirmButton: false, showCancelButton: false
         }).catch(swal.noop);
         $('.swal2-show').css('background-color','transparent');
-
-
-        setTimeout(function () {
-            marginLeftText();
-         }, 300);
-  
-         function marginLeftText() {
-             
-              var maxHeight = 0;
-              var maxHeightTitle = 0;
-              var minHeight = 999;
-              
-              $('.ratinPlanCard ul').each(function(){
-                var height =  Number($(this).css('height').replace('px',''));
-                if(maxHeight < height) {
-                    maxHeight = height;
-                }
-              });
-              $('.card-footer').each(function(){
-                var height =  Number($(this).css('height').replace('px',''));
-                if(minHeight > height) {
-                    minHeight = height;
-                }
-              });
-              
-              $('.card-title').each(function(){
-                var height =  Number($(this).css('height').replace('px',''));
-                if(maxHeightTitle < height) {
-                    maxHeightTitle = height;
-                }
-              });
-              
-              $('.ratinPlanCard ul').each(function(){
-                $(this).css('height',maxHeight);
-              });
-              
-              $('.card-title').each(function(){
-                $(this).css('height',maxHeightTitle);
-              });
-              
-              $('.card-footer').each(function(){
-                $(this).css('height',minHeight);
-              });
-                 
-              $('.trapecio-top').each(function(){ 
-                  var width  = $(this).width(); 
-                  $(this).find('a span').each(function(){ 
-                       var delta =  (width) - $(this).width();
-                       $(this).css('margin-left',(delta/2)+'px');  
-                  });
-              }); 
-         }
-  
-         $( window ).resize(function() {
-            marginLeftText();
-         });
+ 
     }
     
     $scope.setPositionScroll = function () {

@@ -52,7 +52,7 @@
         
          <div class="nav-item">
            <a class="px-0 notification-indicator notification-indicator-warning notification-indicator-fill nav-link" href="{{route('shoppingCart')}}">
-              <span class="notification-indicator-number" ng-init="initNumberShoppingCart()">!</span>
+              <span class="notification-indicator-number" ng-init="initNumberShoppingCart()"></span>
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="shopping-cart" class="svg-inline--fa fa-shopping-cart fa-w-18 fs-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="transform-origin: 0.5625em 0.5em;">
                  <g transform="translate(288 256)">
                     <g transform="translate(0, 0)  scale(0.5625, 0.5625)  rotate(0 0 0)">

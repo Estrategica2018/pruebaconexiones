@@ -9771,7 +9771,7 @@ button.bg-dark:focus {
 
 .mt-2,
 .my-2 {
-    margin-top: .5rem !important
+    margin-top: .5rem !important;
 }
 
 .mr-2,
@@ -16885,7 +16885,7 @@ label {
     background-color: #2c7be5
 }
 
-.notification-indicator-warning::before {
+.notification-indicator-warning.fill::before {
     background-color: #f5803e
 }
 
@@ -22130,15 +22130,10 @@ footer .navbar-light {
 }
 
 .trapecio-top {
-    width: 50%;
-    height: 0px;
     border-right: 26px solid transparent;
     border-left: 24px solid transparent;
     border-top: 25px solid #428bca;
-    padding-left: 11px;
-    bottom: 4px;
-    right: 25%;
-    text-align: left;
+    text-align: center;
     font-weight: bold;
     cursor: pointer;
 }
@@ -23201,4 +23196,16 @@ footer .navbar-light {
 
 .color-dark-blue {
     color: #3587C8;
+}
+
+div[class*="card-rating-id-"]  {
+    width: 323px;
+    min-width: 277px;
+}
+    
+
+@media (min-width:1200px) {
+    .container-alert-plans {
+        width: 1213px!important;
+    }
 }
