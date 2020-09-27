@@ -8,7 +8,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
     $scope.sequenceName = window.location.href.split('/')[params.length - 1];
     $scope.sequenceId = window.location.href.split('/')[params.length - 2];
 
-    $scope.init = function () {
+    $scope.init = function (companyId) {
         $http({
             url: '/get_rating_plans/',
             method: "GET",
@@ -26,12 +26,12 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
             });        
         
         $http({
-            url: '/get_sequence/' + $scope.sequenceId,
+            url: '/get_company_sequences/' + companyId + '/' + $scope.sequenceId,
             method: "GET",
         }).
             then(function (response) {
 
-                $scope.sequence = response.data[0];
+                $scope.sequence = response.data.companySequences[0];
                 $scope.sequence.images = [];
                 if ($scope.sequence.url_slider_images) {
                     $scope.sequence.images = $scope.sequence.url_slider_images.split('|');
@@ -172,7 +172,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
     
     $scope.buyKitElement = function(kitElement) {
         
-        if(kitElement.quantity === 0) {
+        if(kitElement.status === 'sold-out' || kitElement.status === 'no-available') {
             swal({
               text: 'Este producto no se encuentra disponible actualmente',
               type: "warning",

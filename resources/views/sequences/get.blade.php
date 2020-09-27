@@ -39,7 +39,7 @@
    }
 </style>
 
-<div ng-controller="sequencesGetCtrl" ng-init="init()" class="w-100">
+<div ng-controller="sequencesGetCtrl" ng-init="init('1')" class="w-100">
    <div ng-show="errorMessageFilter" id="errorMessageFilter"
       class="fade-message d-none-result d-none alert alert-danger p-1 pl-2 row">
 
@@ -95,7 +95,6 @@
                                     <a ng-show="kit_element.type==='kit'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="../../kit_de_laboratorio/@{{kit_element.id}}/@{{kit_element.name_url_value}}">Detalle</a>
                                     <a ng-show="kit_element.type==='element'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="../../elemento_de_laboratorio/@{{kit_element.id}}/@{{kit_element.name_url_value}}">Detalle</a>
                                     <button ng-class="{'disabled': kit_element.quantity === 0}" class="pl-3 mt-1 btn btn-outline-primary fs--2" ng-click="buyKitElement(kit_element)">Agregar</button>
-                                    
                                  </div>
                             </div>
                           </div>

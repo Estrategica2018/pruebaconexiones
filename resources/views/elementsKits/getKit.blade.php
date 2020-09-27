@@ -93,7 +93,11 @@
                   </h5>
                   @{{kit.description}} 
                   <div class="col-12 pl-0 mt-3" >
-                     <button ng-click="onAddShoppingCart(kit)" ng-disabled="kit.status === 'sold-out' || kit.status === 'no-available'" class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                     <button ng-click="onAddShoppingCart(kit)" 
+                        ng-class="{'disabled':kit.status === 'sold-out' || kit.status === 'no-available'}"
+                        class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6">
+                        <i class="fas fa-shopping-cart"></i> Comprar
+                     </button>
                   </div>
                </div>
                <div class="col-12 mt-4 mt-3" ng-show="listSequence.length > 0">
@@ -113,7 +117,9 @@
                               </div>
                               <div class="pl-3 mt-3 mb-3 text-aling-left">
                                  <a class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2"  ng-href="/guia_de_aprendizaje/@{{sequence.id}}/@{{sequence.name_url_value}}" >Detalle</a>
-                                 <a class="pl-3 mt-1 btn btn-outline-primary fs--2" href="#" ng-click="onSequenceBuy(sequence)"  class="col-6">Agregar</a>
+                                 <a class="pl-3 mt-1 btn btn-outline-primary fs--2" href="#" ng-click="onSequenceBuy(sequence)"  class="col-6">
+                                    <i class="fas fa-shopping-cart"></i> Comprar
+                                 </a>
                               </div>
                            </div>
                         </div>

@@ -3,29 +3,32 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     $scope.errorMessageFilter = '';
     $scope.searchText = '';
 
-    $scope.ratingPlans = [];
+    
     if($('#main-card').position()) {
         var top = $('#main-card').position().top;
         $('#loading').css('top',top);
     }
-    
-    //retrive plan
-    $http({
-        url: '/get_rating_plans/',
-        method: "GET",
-    }).
-    then(function (response) {
-        var data = response.data.data || response.data;
-        $scope.ratingPlans = data.filter(function(value){
-            //return !value.is_free && ( (value.type_plan.id === 1 && value.count === 1) || value.type_plan.id === 2 || value.type_plan.id === 3    );
-            return !value.is_free ;
-        })
 
-    }).catch(function (e) {
-        $('.d-none-result').removeClass('d-none');
-        $('#loading').removeClass('show');
-        $scope.errorMessageFilter = 'Error consultando las secuencias, compruebe su conexión a internet';
-    });  
+    function getRatingPlans() { 
+        $scope.ratingPlans = [];
+        //retrive plan
+        $http({
+            url: '/get_rating_plans/',
+            method: "GET",
+        }).
+        then(function (response) {
+            var data = response.data.data || response.data;
+            $scope.ratingPlans = data.filter(function(value){
+                //return !value.is_free && ( (value.type_plan.id === 1 && value.count === 1) || value.type_plan.id === 2 || value.type_plan.id === 3    );
+                return !value.is_free ;
+            })
+
+        }).catch(function (e) {
+            $('.d-none-result').removeClass('d-none');
+            $('#loading').removeClass('show');
+            $scope.errorMessageFilter = 'Error consultando las secuencias, compruebe su conexión a internet';
+        });  
+    }
     
     $scope.allKits = function() {
         $('.d-none-result').removeClass('d-none');
@@ -62,6 +65,8 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         var params = window.location.href.split('/');
         var kitName = window.location.href.split('/')[params.length - 1];
         var kitId = window.location.href.split('/')[params.length - 2];
+        
+        getRatingPlans();
 
         $('.d-none-result').removeClass('d-none');
             $http({
@@ -110,6 +115,8 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         var elementName = window.location.href.split('/')[params.length - 1];
         var elementId = window.location.href.split('/')[params.length - 2];
 
+        getRatingPlans();
+
         $('.d-none-result').removeClass('d-none');
             $http({
             url:"/get_kit_element/element/" + elementId,
@@ -147,26 +154,38 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     };    
     
     $scope.onAddShoppingCart = function (kitElement) {
-        swal({
-          title: "Añadir elemento al carrito?",
-          text: "Confirmas que deseas adicionar este kit de laboratorio al carrito",
-          type: "warning",
-          cancelButtonText: 'Cancelar',
-          showCancelButton: true,
-          showConfirmButton: true,
-          dangerMode: false,
-        })
-        .then((willConfirm) => {
-          if (willConfirm) {
-            var data = {};
-            data.type_product_id = kitElement.type === 'kit' ?  4 : kitElement.type === 'element' ?  5 : 0;
-            data.products = [kitElement];
-            addShoppingCart([data]);
-          }
-        }).catch(swal.noop);
+        if(kitElement.status === 'sold-out' || kitElement.status === 'no-available') {
+            swal({
+              text: 'Este producto no se encuentra disponible actualmente',
+              type: "warning",
+              showCancelButton: true,
+              showCancelButton: false,
+              cancelButtonClass: "btn-danger",
+              cancelButtonText: "Cancelar"
+            }).catch(swal.noop);                
+        }
+        else {
+            swal({
+            title: "Añadir elemento al carrito?",
+            text: "Confirmas que deseas adicionar este kit de laboratorio al carrito",
+            type: "warning",
+            cancelButtonText: 'Cancelar',
+            showCancelButton: true,
+            showConfirmButton: true,
+            dangerMode: false,
+            })
+            .then((willConfirm) => {
+            if (willConfirm) {
+                var data = {};
+                data.type_product_id = kitElement.type === 'kit' ?  4 : kitElement.type === 'element' ?  5 : 0;
+                data.products = [kitElement];
+                createShoppingCart([data]);
+            }
+            }).catch(swal.noop);
+        }
     }
     
-    function addShoppingCart(data) {
+    function createShoppingCart(data) {
         $http({
             url:"/create_shopping_cart",
             method: "POST",

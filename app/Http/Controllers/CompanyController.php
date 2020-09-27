@@ -67,11 +67,17 @@ class CompanyController extends Controller
         }
         $dt = new \DateTime();
         $companySequence = CompanySequence::select('id', 'name', 'description', 'url_image', 'keywords', 'areas', 'themes', 'objectives', 'mesh', 'url_vimeo')->with(
-            ['moments' => function ($query) {
-                $query->select('id', 'sequence_company_id', 'order', 'name', 'description', 'objectives')
-                    ->with(['experiences' => function ($query) {
-                        $query->select('id', 'sequence_moment_id', 'title', 'decription', 'objectives');
-                    }, 'moment_kit.kit.kit_elements.element', 'moment_kit.element']);
+            ['moments' => function ($queryMoments) {
+                $queryMoments->select('id', 'sequence_company_id', 'order', 'name', 'description', 'objectives')
+                    ->with(['experiences' => function ($queryExp) {
+                        $queryExp->select('id', 'sequence_moment_id', 'title', 'decription', 'objectives');
+                    }, 
+                    'moment_kit.kit' => function($queryKits) {
+                        $queryKits->select('kits.*',DB::raw('(CASE WHEN kits.quantity = 0 THEN "sold-out" ELSE CASE WHEN kits.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
+                        ->with(['kit_elements.element'=>function($queryElem){
+                            $queryElem->select('elements.*',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'));
+                        }]);
+                    }, 'moment_kit.element']);
             }]
         ) 
             ->where('company_id', $company_id)

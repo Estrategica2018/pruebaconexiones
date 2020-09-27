@@ -100,7 +100,10 @@
                     </h5>
                     @{{element.description}}
                     <div class="col-12 pl-0 mt-3" >
-                      <button ng-click="onAddShoppingCart(element)" ng-disabled="element.status === 'sold-out' || element.status === 'no-available'" class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                      <button ng-click="onAddShoppingCart(element)" 
+                        ng-class="{'disabled':element.status === 'sold-out' || element.status === 'no-available'}"
+                        class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6">
+                         <i class="fas fa-shopping-cart"></i> Comprar</button>
                      </div>
                  </div>
                
@@ -121,7 +124,9 @@
                                  </div>
                                  <div class="p-0 mt-3 mb-3 text-aling-left">
                                     <a class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="/guia_de_aprendizaje/@{{sequence.id}}/@{{sequence.name_url_value}}">Detalle</a>
-                                    <a class="pl-3 mt-1 btn btn-outline-primary fs--2" href="#" ng-click="onSequenceBuy(sequence)" class="col-6">Comprar</a>
+                                    <a class="pl-3 mt-1 btn btn-outline-primary fs--2" href="#" ng-click="onSequenceBuy(sequence)"
+                                     class="col-6"> <i class="fas fa-shopping-cart"></i> Comprar</a>
+                                    
                                  </div>
                               </div>
                           </div>

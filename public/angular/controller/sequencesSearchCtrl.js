@@ -124,11 +124,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
 
         
         initAutocompleteList();
-        
-        setTimeout(function(){
-            ellipsizeTextBox();
-        }, 1000);
-        
+         
 
     }).catch(function (e) {
         $scope.errorMessageFilter = 'Error consultando las secuencias, compruebe su conexión a internet';
@@ -148,17 +144,13 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 }
             };
         }
-        setTimeout(function(){
-            ellipsizeTextBox();
-        }, 100);
+        
     };
     $scope.onSeachChange = function () {
         $scope.areaName = null;
         $scope.themeName = null;
         $scope.sequences = $scope.responseData;
-        setTimeout(function(){
-            ellipsizeTextBox();
-        }, 100);
+        
     };
     $scope.onAreaChange = function () {
         $scope.searchText = '';
@@ -174,9 +166,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 }
             };
         }    
-        setTimeout(function(){
-            ellipsizeTextBox();
-        }, 100);    
+         
     };
 
     function initAutocompleteList() {
@@ -213,23 +203,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
             $scope.wordList = null;
         }
     }
-
-    function ellipsizeTextBox() {
-        /*if($scope.sequences && $scope.sequences.length ){
-            for(var i=0;i<$scope.sequences.length;i++) {
-                var el = document.getElementById('sequence-description-'+$scope.sequences[i].id);
-                if(!el) continue;
-                var wordArray = el.innerHTML.split(' ');
-                while(el.scrollHeight > el.offsetHeight) {
-                    wordArray.pop();
-                    el.innerHTML = wordArray.join(' ') + '...';
-                 }
-            }
-            
-        }*/
-        
-    }
-    
+ 
     $scope.onSequenceBuy = function (sequence) {
         var ratingPlans = '';
         for(var i = 0; i < $scope.ratingPlans.length; i++) {
