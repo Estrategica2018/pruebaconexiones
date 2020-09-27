@@ -152,13 +152,13 @@
                                     {{ __('Guardar registro y continuar') }}
                                  </button>
                                  <div class="row">
-                                    <div id="formFacebook" action="{{ route('user.redirectfacebook',[encrypt(3),'register']) }}" class="col-6 mt-2"  style="height:43px">
+                                    <div class="col-12 col-lg-6 mt-2" id="formFacebook" action="{{ route('user.redirectfacebook',[encrypt(3),'register']) }}" style="height:43px">
                                         <button type="button" class="btn btn-primary btn-block d-flex h-100" ng-click="goToFacebook()">
                                             <i class="fab fa-facebook fs-3 mr-2"></i>
                                             <span class="fs--1">Registrar con Facebook</span>
                                         </button>
                                     </div>
-                                    <div id="formGmail" action="{{ route('user.redirectgmail',[encrypt(3),'register']) }}" class="col-6" style="height:43px">
+                                    <div class="col-12 col-lg-6" id="formGmail" action="{{ route('user.redirectgmail',[encrypt(3),'register']) }}" style="height:43px">
                                         <button type="button" class="btn btn-primary btn-block  d-flex mt-2 h-100" 
                                         style="background-color: #dd4b39;border-color: rgb(221, 75, 57);" ng-click="goToGmail()">
                                           <i class="fab fa-google fs-2 mr-2"></i>

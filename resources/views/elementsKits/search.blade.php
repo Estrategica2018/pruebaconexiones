@@ -12,7 +12,12 @@
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
    </div>
 
-   <div class="mb-3 card w-100">
+   <div class="p-10 card card-body w-100 text-align"
+      style="min-height: 23vw;" ng-hide="kit_elements">
+      cargando...
+   </div>
+            
+   <div class="mb-3 card w-100 d-none-result d-none " ng-show="kit_elements">
       <div class="card-body">
          <div class="no-gutters row">
             <div class="mb-3 col-12">
@@ -20,8 +25,7 @@
                   <div class="text-center col-sm-auto card-header boder-header p-2 ml-3">
                      <h5 class="d-inline-block">Implementos de laboratorio</h5>
                   </div>
-                  <div
-                     class="d-none-result d-none d-flex flex-center fs--1 mt-1 mt-sm-0 col-sm-auto d-none-result d-none">
+                  <div class="d-flex flex-center fs--1 mt-1 mt-sm-0 col-sm-auto">
                      <input ng-change="onSeachChange()" placeholder="Buscar..." aria-label="Search" type="search"
                         ng-model="searchText" name="searchText" id="searchText" ng-keyup="complete($event, searchText)"
                         ng-blur="fillTextbox($event,searchText)" class="mr-2 rounded-pill search-input form-control"
@@ -50,17 +54,10 @@
                   </div> 
                </div>
             </div>
-
-            <div class="p-3 border-lg-y col-lg-2 w-100"
-               style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-hide="kit_elements">
-               cargando...
-            </div>
-            
             <div class="d-none-result d-none p-3 border-lg-y col-lg-2 w-100"
                style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="searchText.length > 0 && kit_elements.length > 0">
                No se encontraron implementos de laboratorio que coincidan con la búsqueda @{{searchText}}
             </div>
-
          </div>
       </div>
    </div>

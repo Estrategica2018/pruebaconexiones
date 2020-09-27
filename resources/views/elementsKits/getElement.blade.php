@@ -76,7 +76,7 @@
       <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
    </div>
 
-   <div class="mb-3 card w-100" style="min-width:400px; min-height:400px">
+   <div id="main-card" class="mb-3 card w-100">
       <div class="card-body">
       <div class="no-gutters row">
             <div class="d-none-result d-none row w-100">
@@ -131,6 +131,11 @@
             </div>
          </div>
       </div>
+   </div>
+
+   <div id="loading" class="z-index-10 position-absolute card card-body p-10 w-100 text-align" ng-hide="element"
+      style="min-height: 23vw;">
+      cargando...
    </div>
 </div>
 

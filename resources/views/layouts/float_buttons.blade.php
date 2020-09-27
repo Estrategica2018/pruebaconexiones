@@ -1,4 +1,4 @@
-<a class="float result-finish-done d-none col-10 col-md-6 col-xl-4 text-align-right w-auto"  ng-controller="frequentQuestionCtrl" ng-init="init()">
+<div class="float result-finish-done d-none col-10 col-md-6 col-xl-4 text-align-right w-auto"  ng-controller="frequentQuestionCtrl" ng-init="init()">
     <img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/chat.png')}}" width="80px" height="auto" ng-click="toogleChatPanel=true">
     <div class="card text-align-justify" ng-show="toogleChatPanel">
 		<div class="card-header fs--1 pr-5">
@@ -36,5 +36,5 @@
 			</div>
 		</div>
 	</div>
-</a>
+</div>
  

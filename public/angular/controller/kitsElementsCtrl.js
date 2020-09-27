@@ -4,7 +4,11 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     $scope.searchText = '';
 
     $scope.ratingPlans = [];
-
+    if($('#main-card').position()) {
+        var top = $('#main-card').position().top;
+        $('#loading').css('top',top);
+    }
+    
     //retrive plan
     $http({
         url: '/get_rating_plans/',
@@ -12,10 +16,10 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     }).
     then(function (response) {
         var data = response.data.data || response.data;
-        // $scope.ratingPlans = data.filter(function(value){
-        //         return !value.is_free && ( (value.type_plan.id === 1 && value.count === 1) || value.type_plan.id === 2 || value.type_plan.id === 3    );
-        // })
-        $scope.ratingPlans = data;
+        $scope.ratingPlans = data.filter(function(value){
+            //return !value.is_free && ( (value.type_plan.id === 1 && value.count === 1) || value.type_plan.id === 2 || value.type_plan.id === 3    );
+            return !value.is_free ;
+        })
 
     }).catch(function (e) {
         $('.d-none-result').removeClass('d-none');
@@ -54,14 +58,14 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     };
     
     $scope.getKits = function() { 
-
+        
         var params = window.location.href.split('/');
-        var kidName = window.location.href.split('/')[params.length - 1];
-        var kidId = window.location.href.split('/')[params.length - 2];
+        var kitName = window.location.href.split('/')[params.length - 1];
+        var kitId = window.location.href.split('/')[params.length - 2];
 
         $('.d-none-result').removeClass('d-none');
             $http({
-            url:"/get_kit_element/kit/" + kidId,
+            url:"/get_kit_element/kit/" + kitId,
             method: "GET",
         }).
         then(function (response) {
@@ -87,6 +91,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
             
             $scope.kit.type = 'kit';
             
+            
             $timeout(function() {
                 $('#loading').removeClass('show');
                 $('.d-none-result').removeClass('d-none');
@@ -100,6 +105,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     };
     
     $scope.getElement = function() {
+
         var params = window.location.href.split('/');
         var elementName = window.location.href.split('/')[params.length - 1];
         var elementId = window.location.href.split('/')[params.length - 2];
@@ -196,12 +202,13 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                 var listItem = rt.description_items.split('|');
                 var items = '';
                 for(var j=0;j<listItem.length;j++) {
-                    items += '<li style="line-height: 17px;" class="card-rating-plan-id-'+ (i) +' fs-2 small pr-0 mt-4 ml-3"><span class="color-gray-dark font-14px font-family ">' + listItem[j] + '</span></li>';
+                    items += '<li style="line-height: 17px;" class="card-rating-plan-id-'+ (i+1) +' fs-2 small pr-0 mt-4 ml-3"><span class="color-gray-dark font-14px font-family ">' + listItem[j] + '</span></li>';
                 }
                var name = rt.name ? rt.name.replace(/\s/g,'_').toLowerCase() : '';
                var href = '/plan_de_acceso/' + rt.id + '/' + name + '/' + sequence.id;
-               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-75 trapecio-top position-absolute card-rating-button-id-'+ (i)  +'" style= "right: 12%;box-shadow: 0px 0px 0px 0px rgb(255 255 255), 0px -2px 0px rgba(255, 255, 255, 0.3);">'+
-               '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0 mt-2" style="position: absolute;top: -30px;color: white; ">Adquirir</span> </a> </div> ';
+            
+               var button =   '<div onclick="location=\''+href+'\'" class="cursor-pointer w-100 trapecio-top  card-rating-button-id-'+ (i+1)  +'" style= "right: 12%;box-shadow: 0px 0px 0px 0px rgb(255 255 255), 0px -2px 0px rgba(255, 255, 255, 0.3);">'+
+               '<a href="'+href+'" style="margin-left: -14px;"> <span class="fs-0" style="color: white;top: -23px;position: relative;">Adquirir</span> </a> </div> ';
 
                var message = 'por '+rt.count+' guía de aprendizaje';
                if(rt.type_plan.id === 2) {
@@ -211,81 +218,22 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                    message = 'Por experiencias individuales';
                }
                
-               ratingPlans += '<div class="mt-3 col-12 col-md-6 col-lg-4 p-4"><div class="card-header card-rating-background-id-' + (i) + ' mt-3 fs--3 flex-100 box-shadow ">'+
-                '<h5 class="card-title pl-lg-3 pr-lg-3 font-weight-bold card-rating-plan-id-'+ (i) +'" style="color: white;">'+rt.name+'</h5></div>'+
-                '<div class="card-body bg-light ratinPlanCard pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 165px;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul>'+  button+'</div>'+
-                '<div class="row no-gutters card-footer card-rating-background-id-' + (i) + ' font-weight-bold text-align box-shadow " style="color: white;">'+
-                ' <div class="col-5"> $'+rt.price+' USD  </div> <div class="pl-lg-1 pr-lg-1 col-7 font-14px" style="    max-width: 176px;margin-top:-10px"> '+ message +' </div></div></div>';
+               ratingPlans += '<div class="pb-3 pl-3 pr-3 card-rating-id-' + (i+1) + ' "><div class="card-header card-rating-background-id-' + (i+1) + ' mt-3 fs--3 flex-100 box-shadow ">'+
+                '<h5 class="card-title pl-lg-3 pr-lg-3 mb-0 font-weight-bold card-rating-plan-id-'+ (i+1) +'" style="color: white;">'+rt.name+'</h5></div>'+
+                '<div class="card-body bg-light ratinPlanCard pr-2 pl-2 pb-0 w-100 box-shadow " style="min-height: 165px;"><ul class=" p-0 ml-2 text-left fs-2 mb-auto">' + items + '</ul></div>'+
+                '<div class="row no-gutters card-footer card-rating-background-id-' + (i+1) + ' font-weight-bold text-align box-shadow " style="color: white;">'+
+                ' <div class="col-5"> $'+rt.price+' USD  </div> <div class="pl-lg-1 pr-lg-1 col-7 font-14px" style="    max-width: 176px;margin-top:-10px"> '+ message +' </div></div>'+  button+'</div>';
             }
         }
         var html = '<div class="row justify-content-center">' + ratingPlans + '</div>';
         swal({
             html: html,
-            width: '75%',
+            customClass: 'container-alert-plans m-auto',
+            width: '100%',
             showConfirmButton: false, showCancelButton: false
         }).catch(swal.noop);
         $('.swal2-show').css('background-color','transparent');
-
-
-        setTimeout(function () {
-            marginLeftText();
-         }, 300);
-         
-         
-         function marginLeftText() {
-             
-              var maxHeight = 0;
-              var maxHeightTitle = 0;
-              var minHeight = 999;
-              
-              $('.ratinPlanCard ul').each(function(){
-                var height =  Number($(this).css('height').replace('px',''));
-                if(maxHeight < height) {
-                    maxHeight = height ;
-                }
-              });
-              $('.card-footer').each(function(){
-                var height =  Number($(this).css('height').replace('px',''));
-                if(minHeight > height) {
-                    minHeight = height;
-                }
-              });
-              
-              $('.card-title').each(function(){
-                var height =  Number($(this).css('height').replace('px',''));
-                if(maxHeightTitle < height) {
-                    maxHeightTitle = height;
-                }
-              });
-              
-              $('.ratinPlanCard ul').each(function(){
-                $(this).css('height',maxHeight);
-              });
-              
-              $('.card-title').each(function(){
-                $(this).css('height',maxHeightTitle);
-              });
-              
-              $('.card-footer').each(function(){
-                $(this).css('height',minHeight);
-              });
-                 
-              $('.trapecio-top').each(function(){ 
-                  var width  = $(this).width(); 
-                  $(this).find('a span').each(function(){ 
-                       var delta =  (width) - $(this).width();
-                       $(this).css('margin-left',(delta/2)+'px');  
-                  });
-              }); 
-         }
-  
-         $( window ).resize(function() {
-          marginLeftText();
-        });
-
     }
-
-
 
 });
  

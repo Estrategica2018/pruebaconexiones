@@ -105,7 +105,7 @@
             </div>
 
             <div id="loading" class="p-10 w-100 text-align" ng-hide="sequence"
-               style="min-height: 23vw; border: 0.4px solid grey;">
+               style="min-height: 23vw;">
                cargando...
             </div>
 
