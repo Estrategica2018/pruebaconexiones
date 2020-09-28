@@ -9,11 +9,12 @@ MyApp.controller("availableExperiencesStudentCtrl", ["$scope", "$http", function
         $scope.sequenceId = secuence_id;
         $('.d-none-result').removeClass('d-none');
         $http({
-            url:"/conexiones/get_avalible_experiences/"+$scope.defaultCompanySequences+"/"+$scope.secuence_id,
+            url:"/get_avalible_experiences/"+company_id+"/"+secuence_id,
             method: "GET",
         }).
         then(function (response) {
             $scope.accountServices = response.data;
+            console.log($scope.accountServices);
         }).catch(function (e) {
             $scope.errorMessage = 'Error consultando las experiencias, compruebe su conexión a internet';
             swal('Conexiones',$scope.errorMessage,'error');

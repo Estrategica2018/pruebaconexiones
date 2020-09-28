@@ -6012,6 +6012,28 @@ input[type=button].btn-block {
     }
 }
 
+.card-columns-b .card {
+    margin-bottom: 1rem
+}
+
+@media(min-width:576px) {
+    .card-columns-b {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 1;
+        -webkit-column-gap: 1.25rem;
+        -moz-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1
+    }
+
+    .card-columns-b .card {
+        display: inline-block;
+        width: 100%
+    }
+}
+
 .accordion>.card {
     overflow: hidden
 }
