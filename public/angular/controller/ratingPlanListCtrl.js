@@ -34,14 +34,6 @@ MyApp.controller("ratingPlanListCtrl", ["$scope", "$http", function ($scope, $ht
           $('.ratinPlanCard ul').each(function(){
             $(this).css('height',maxHeight);
           });
-          
-          $('.trapecio-top').each(function(){ 
-              var width  = $(this).width();  
-              $(this).find('a span').each(function(){ 
-                  var delta =  (width) -  $(this).width();
-                  //$(this).css('margin-left',(delta/2)+'px');  
-              });
-          }); 
        }
 
        $( window ).resize(function() {

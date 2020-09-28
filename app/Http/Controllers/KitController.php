@@ -15,26 +15,31 @@ use Illuminate\Http\Request;
 class KitController extends Controller
 {
 
-   //
     /**
      * @param Request $request
-     * @return Kit[]|\Illuminate\Database\Eloquent\Collection
+     * @param $kit_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showKitDetail(Request $request, $kit_id)
     {
         $kit = Kit::find($kit_id);
-        $homeDirectory = 'images/designerAdmin/';
-        $directory = env('ADMIN_DESIGN_PATH') . '/' . str_replace($homeDirectory,'',$kit->url_slider_images);
-        if ( file_exists($directory)) {
-            $scanned_directory = array_diff(scandir($directory), array('.'));
-            $files = [];
-            foreach($scanned_directory as $filename) {
-                if(strpos($filename, '.png') || strpos($filename, '.jpg')  ||  strpos($filename, '.jpge')  )    {
-                    array_push(  $files , $filename);
-                }  
+        if($kit) {
+            $homeDirectory = 'images/designerAdmin/';
+            $directory = env('ADMIN_DESIGN_PATH') . '/' . str_replace($homeDirectory,'',$kit->url_slider_images);
+            if ( file_exists($directory)) {
+                $scanned_directory = array_diff(scandir($directory), array('.'));
+                $files = [];
+                foreach($scanned_directory as $filename) {
+                    if(strpos($filename, '.png') || strpos($filename, '.jpg')  ||  strpos($filename, '.jpge')  )    {
+                        array_push(  $files , $filename);
+                    }  
+                }
             }
+            return view('elementsKits.getKit', [ 'kit' => $kit ,'directory'=>$kit->url_slider_images,'files'=> $files]);
         }
-        return view('elementsKits.getKit', [ 'kit' => $kit ,'directory'=>$kit->url_slider_images,'files'=> $files]);
+        else {
+            return view('page404',['message'=>'Implemento de laboratorio no encontrado']);
+        }
     }
 
     //

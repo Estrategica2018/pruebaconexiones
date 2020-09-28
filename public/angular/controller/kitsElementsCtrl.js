@@ -81,21 +81,21 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
             if($scope.kit.moment_kits)
             for(var i=0;i<$scope.kit.moment_kits.length;i++) {
                 moment = $scope.kit.moment_kits[i].moment;
-                mbSeq = false; 
+                mbSeq = moment.sequence !== null;
+                if(mbSeq) 
                 for(var j=0;j<$scope.listSequence.length;j++) {
-                    if($scope.listSequence[j].id === moment.sequence.id) {
-                        mbSeq = true;
+                    if( $scope.listSequence[j].id === moment.sequence.id ) {
+                        mbSeq = false;
                         break;
                     }
                 }
-                if(!mbSeq) {
+                if(mbSeq) {
                     moment.sequence.name_url_value = moment.sequence.name.replace(/\s/g,'_').toLowerCase();
                     $scope.listSequence.push(moment.sequence);
                 }
             }
             
             $scope.kit.type = 'kit';
-            
             
             $timeout(function() {
                 $('#loading').removeClass('show');
@@ -131,14 +131,15 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
             if($scope.element.element_in_moment)
             for(var i=0;i<$scope.element.element_in_moment.length;i++) {
                 moment = $scope.element.element_in_moment[i].moment;
-                mbSeq = false; 
+                mbSeq = moment.sequence !== null;
+                if(mbSeq) 
                 for(var j=0;j<$scope.listSequence.length;j++) {
                     if($scope.listSequence[j].id === moment.sequence.id) {
-                        mbSeq = true;
+                        mbSeq = false;
                         break;
                     }
                 }
-                if(!mbSeq) {
+                if(mbSeq) {
                     moment.sequence.name_url_value = moment.sequence.name.replace(/\s/g,'_').toLowerCase();
                     $scope.listSequence.push(moment.sequence);
                 }

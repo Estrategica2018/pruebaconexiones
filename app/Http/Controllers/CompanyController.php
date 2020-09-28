@@ -17,19 +17,15 @@ use DB;
  */
 class CompanyController extends Controller
 {
-    //
-
     /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function get_companies()
     {
-
-        return response()->json(
+           return response()->json(
             ['data' => Companies::all()],
             200
         );
-
     }
 
     /**
@@ -109,9 +105,7 @@ class CompanyController extends Controller
      */
     public function get_company_groups(Request $request, $company_id)
     {
-
         return CompanyGroup::where('company_id', $company_id)->get();
-
     }
 
     /**
@@ -121,7 +115,6 @@ class CompanyController extends Controller
      */
     public function get_teachers_company(Request $request, $company_id)
     {
-
         return DB::table('afiliado_empresas')
             ->join('affiliated_company_roles', 'afiliado_empresas.id', '=', 'affiliated_company_roles.affiliated_company_id')
             ->where('affiliated_company_roles.company_id', $company_id)
@@ -130,4 +123,23 @@ class CompanyController extends Controller
             ->get();
     }
 
+    /**
+     * @param Request $request
+     * @param $sequence_id
+     * @param $sequence_name
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_company_sequences(Request $request, $sequence_id, $sequence_name, $company_id = 1)
+    {   $dt = new \DateTime();
+        $sequence = CompanySequence::
+                    where('id',$sequence_id)
+                    ->where('company_id',$company_id)
+                    ->where(function ($query) use ($dt) {
+                        $query->where('company_sequences.expiration_date', '>=', $dt->format('Y-m-d'))
+                            ->orWhereNull('company_sequences.expiration_date'); 
+                    })->where('company_sequences.init_date', '<=', $dt->format('Y-m-d'))
+                    ->get();
+        
+        return count($sequence) == 1 ? view('sequences.get') : view('page404',['message'=>'Guía de aprendizaje no encontrada']);
+    }
 }

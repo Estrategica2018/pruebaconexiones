@@ -19,13 +19,25 @@ use Yajra\DataTables\DataTables;
 class RatingPlanController extends Controller
 {
 
+    
+    /**
+     * @param Request $request
+     * @param $rating_plan_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRatingPlan(Request $request, $rating_plan_id)
+    {
+        $ratingPlan = RatingPlan::find($rating_plan_id);
+        return $ratingPlan ? view('ratingPlan.detail',['rating_plan_id'=>$request->rating_plan_id,'sequence_id'=>$request->sequence_id])
+            : view('page404',['message'=>'Plan de acceso no encontrado']);
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function get_rating_plans(Request $request)
     {
-
         $ratingPlan = RatingPlan::where('expiration_date', '<', Carbon::now()->format('Y-m-d'))->orWhere('expiration_date', NULL)->with('type_plan')->get();
 
         return response()->json(['data' => $ratingPlan], 200);
@@ -146,7 +158,6 @@ class RatingPlanController extends Controller
      */
     public function get_types_plans()
     {
-
         $typesRatingPlans = TypesRatingPlan::all();
         return response()->json(['data' => $typesRatingPlans], 200);
 

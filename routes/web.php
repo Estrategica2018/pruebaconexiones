@@ -42,9 +42,7 @@ Route::get('/guias_de_aprendizaje', function () {
     return view('sequences.search');
 })->name('sequences.search');
 
-Route::get('/guia_de_aprendizaje/{sequence_id}/{sequence_name}', function () {
-    return view('sequences.get');
-})->name('sequences.get');
+Route::get('/guia_de_aprendizaje/{sequence_id}/{sequence_name}', 'CompanyController@show_company_sequences')->name('show_company_sequences');
 
 Route::get('/implementos_de_laboratorio', function () {
     return view('elementsKits.search');
@@ -63,9 +61,7 @@ Route::get('/planes_de_acceso', function () {
     return view('ratingPlan.list');
 })->name('ratingPlan.list');
 
-Route::get('/plan_de_acceso/{rating_plan_id}/{rating_name}/{sequence_id?}', function (Request $request) {
-    return view('ratingPlan.detail',['rating_plan_id'=>$request->rating_plan_id,'sequence_id'=>$request->sequence_id]);
-})->name('ratingPlan.detailSequence');
+Route::get('/plan_de_acceso/{rating_plan_id}/{rating_name}/{sequence_id?}', 'RatingPlanController@showRatingPlan')->name('ratingPlan.detailSequence');
 
 Route::get('page500', function(){
     return view('page500',['companies'=>Companies::all()]);

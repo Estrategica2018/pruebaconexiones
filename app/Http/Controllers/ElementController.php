@@ -18,23 +18,30 @@ class ElementController extends Controller
      
     /**
      * @param Request $request
-     * @return Kit[]|\Illuminate\Database\Eloquent\Collection
+     * @param $element_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showElementDetail(Request $request, $element_id)
     {
         $element = Element::find($element_id);
-        $homeDirectory = 'images/designerAdmin/';
-        $directory = env('ADMIN_DESIGN_PATH') . '/' . str_replace($homeDirectory,'',$element->url_slider_images);
-        if ( file_exists($directory)) {
-            $scanned_directory = array_diff(scandir($directory), array('.'));
-            $files = [];
-            foreach($scanned_directory as $filename) {
-                if(strpos($filename, '.png') || strpos($filename, '.jpg')  ||  strpos($filename, '.jpge')  )    {
-                    array_push(  $files , $filename);
-                }  
+        if($element) {
+            $homeDirectory = 'images/designerAdmin/';
+            $directory = env('ADMIN_DESIGN_PATH') . '/' . str_replace($homeDirectory,'',$element->url_slider_images);
+            if ( file_exists($directory)) {
+                $scanned_directory = array_diff(scandir($directory), array('.'));
+                $files = [];
+                foreach($scanned_directory as $filename) {
+                    if(strpos($filename, '.png') || strpos($filename, '.jpg')  ||  strpos($filename, '.jpge')  )    {
+                        array_push(  $files , $filename);
+                    }  
+                }
             }
+            return view('elementsKits.getElement', [ 'element' => $element ,'directory'=>$element->url_slider_images,'files'=> $files]);
         }
-        return view('elementsKits.getElement', [ 'element' => $element ,'directory'=>$element->url_slider_images,'files'=> $files]);
+        else {
+            return view('page404',['message'=>'Implemento de laboratorio no encontrado']);
+        }
+       
     }
     /**
      * @param Request $request
