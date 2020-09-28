@@ -5,8 +5,6 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
     $scope.ratingPlans = null;
     
     $scope.init = function() {
-        
-        
         $('.d-none-result').removeClass('d-none');
         
         $http({
@@ -56,25 +54,7 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
               return value;
             });
             
-        
-            setTimeout(function () {
-                marginLeftText();
-             }, 300);
-      
-             function marginLeftText() {
-                $('.trapecio-top').each(function(){ 
-                    var width  = $(this).width(); 
-                    $(this).find('a span').each(function(){ 
-                        var delta =  (width) - $(this).width();
-                        $(this).css('margin-left',(delta/4)+'px');  
-                    });
-                }); 
-             }
-      
-             $( window ).resize(function() {
-              marginLeftText();
-            });
-
+         
 
           
 

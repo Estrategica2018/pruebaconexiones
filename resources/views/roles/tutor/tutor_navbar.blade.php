@@ -23,7 +23,7 @@
   @endauth
   @guest('afiliadoempresa')
      <ul class="ml-1 nav collapse navbar-collapse row text-align fs--1 font-weight-semi-bold">
-        <li class="nav-item col-1 p-0 nav-small-fs--1"><a href="{{ route('home') }}" class="nav-link p-0 pb-1 @if(\Route::current()->getName() == 'home' || Route::current()->getName() == '') selected @endif">Inicio</a></li>
+        <li class="nav-item col-1 p-0 nav-small-fs--1"><a href="{{ route('home') }}" class="nav-link p-0 pb-1 @if(\Route::current()->getName() == 'home' || Route::current()->getName() == '/') selected @endif">Inicio</a></li>
         <li class="nav-item col-1-5 p-0 "><a href="{{ route('aboutus') }}" class="nav-link p-0 pb-1 @if(\Route::current()->getName() == 'aboutus') selected @endif">Acerca de conexiones</a></li>
         <li class="nav-item col-1-5 p-0"><a href="{{ route('sequences.search') }}" class="nav-link p-0 pb-1 
         @if(\Route::current()->getName() == 'sequences.search') selected @endif

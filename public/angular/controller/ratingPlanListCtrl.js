@@ -39,7 +39,7 @@ MyApp.controller("ratingPlanListCtrl", ["$scope", "$http", function ($scope, $ht
               var width  = $(this).width();  
               $(this).find('a span').each(function(){ 
                   var delta =  (width) -  $(this).width();
-                  $(this).css('margin-left',(delta/2)+'px');  
+                  //$(this).css('margin-left',(delta/2)+'px');  
               });
           }); 
        }
