@@ -28,7 +28,11 @@
                          <span class="col-auto"><a ng-click="errorMessage = null"><i class="far fa-times-circle"></a></i></span>
                         </div>
 
-                        <div class="mb-3 card">
+                        <div class="p-10 card card-body text-align" style="min-height: 13vw;" ng-hide="accountServices">
+                           cargando...
+                        </div>
+
+                        <div class="mb-3 card d-none-result d-none" ng-show="accountServices">
                             <div class="card-body">
                                <div class="justify-content-between align-items-center row">
                                     <h5 class="ml-2">Guías de aprendizaje</h5>
@@ -53,14 +57,7 @@
                                           Prueba gratuita
                                     </div>
                                    </a>
-                                   
                                 </div>
-                              
-                                 
-                                 
-                                <div class="p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="accountServices === null">
-                                  cargando...
-                               </div>
                                <div class="d-none-result d-none  p-3 border-lg-y col-lg-2 w-100" style="min-height: 23vw; border: 0.4px solid grey; min-width: 100%" ng-show="accountService.length === 0">
                                   No se encontraron secuencias activas...
                                </div>
