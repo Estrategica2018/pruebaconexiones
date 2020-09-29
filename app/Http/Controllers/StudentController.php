@@ -797,6 +797,7 @@ class StudentController extends Controller
         with('rating_plan')->whereHas('company_affiliated', function ($query) use ($tutor_id) {
             $query->where('id', $tutor_id->tutor_company_id);
         })->where([
+            //['id',$account_service_id],
             ['init_date', '<=', Carbon::now()],
             ['end_date', '>=', Carbon::now()]
         ])->pluck('id');
@@ -811,43 +812,53 @@ class StudentController extends Controller
         $datas ['moments'] = [];
         foreach($sequences as $sequence) {
             $moment = SequenceMoment::find($sequence->moment_id);
-            $data['data'] = [];
+            $data['parts'] = [];
+            $part = [];
             $dataVideo = [];
             $flag = false;
             foreach([1,2,3,4] as $section_id) {
                     $section = json_decode($moment['section_'.$section_id], true);
-                    foreach([1,2,3,4,5] as $part_id) {
-                        if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
-                            if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
-                                $elements = $section['part_'.$part_id]['elements'];
-                                $videos = [];
-                                foreach($elements as $element) {
-                                    if($element['type'] =='video-element') {
-                                        $flag = true;
-                                        $dataVideo['section_part'] = $section_id;
-                                        $dataVideo['section_name'] = $section['section']['name'];
-                                        $dataVideo['title'] = '';
-                                        if(isset($section['title']))
-                                            $dataVideo['title'] = $section['title'];
-                                        $dataVideo['part_id'] = $part_id;
-                                        array_push( $videos,$element);
-                                        $dataVideo['video'] = $videos;
+                    if($section['section']['type'] == 3){
+                        foreach([1,2,3,4,5] as $part_id) {
+                            $flagPart = false;
+                            if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
+                                if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
+                                    $elements = $section['part_'.$part_id]['elements'];
+                                    $videos = [];
+                                    $dataVideo['section_part'] = $section_id;
+                                    $dataVideo['section_name'] = $section['section']['name'];
+                                    $dataVideo['title'] = '';
+                                    if(isset($section['title']))
+                                        $dataVideo['title'] = $section['title'];
+                                    $dataVideo['part_id'] = $part_id;
+                                    foreach($elements as $element) {
+                                        if($element['type'] =='video-element') {
+                                            $flagPart = true;
+                                            $flag = true;
+                                            array_push( $videos,$element);
+                                            $dataVideo['video'] = $videos;
+                                        }
                                     }
                                 }
                             }
+                            if($flagPart)
+                                array_push( $part,$dataVideo);
                         }
                     }
+
                 }
             if($flag){
+                $data['order'] = $moment->order;
                 $data['moment_id'] = $moment->id;
                 $data['moment_name'] = $moment->name;
                 $data['url_image_experience'] = $moment->url_image_experience;
-                $data['data'] = $dataVideo;
+                $data['parts'] = $part;
                 array_push($datas ['moments'],$data);
             }
 
         }
-
+        $keys = array_column($datas ['moments'], 'order');
+        array_multisort($keys, SORT_ASC, $datas ['moments']);
 
         return response()->json([
             'status' => 'successfull',
