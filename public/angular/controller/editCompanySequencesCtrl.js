@@ -313,7 +313,10 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] || {};
                     $scope.elementParentEdit = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
                     $scope.PageName = $scope.sequenceSection.section.name; 
-                    $scope.container = $scope.elementParentEdit.container || { "w": $scope.container.w, "h": 385 };
+                    if(!$scope.elementParentEdit.container) {
+                        $scope.elementParentEdit.container =  { "w": $scope.container.w, "h": 385 }
+                    }
+                    $scope.container = $scope.elementParentEdit.container;
                     refreshElements($scope.elementParentEdit.elements);
 
                     $('#sidemenu-sequences .overflow-auto').addClass('height_235').removeClass('height_337');
@@ -343,7 +346,10 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 
                     $scope.elementParentEdit = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] || {};
                     $scope.elementParentEdit.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
-                    $scope.container = $scope.elementParentEdit.container || { "w": $scope.container.w, "h": 385 };
+                    if(!$scope.elementParentEdit.container) {
+                        $scope.elementParentEdit.container = { "w": $scope.container.w, "h": 385 };
+                    }
+                    $scope.container =  $scope.elementParentEdit.container; 
                     refreshElements($scope.elementParentEdit.elements);
                     $('#sidemenu-sequences .overflow-auto').addClass('height_235').removeClass('height_337');
                     break;

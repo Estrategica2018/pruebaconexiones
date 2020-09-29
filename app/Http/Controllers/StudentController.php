@@ -582,6 +582,9 @@ class StudentController extends Controller
             $section_3 = json_decode($moment->section_3, true);
             $section_4 = json_decode($moment->section_4, true);
             $part = json_decode($moment['section_' . $section_id], true)['part_' . $part_id];
+			if( !isset($part['elements']) || count($part['elements']) <= 0 ) {
+				return $this->finishValidate('Página no encontrada');	
+			}
             
             $buttonBack = 'none';
             if ($part_id > 1) {

@@ -19,10 +19,10 @@ class PaymentConfirmationController extends Controller
 {
    
     public function payment_confirmation_test(Request $request) {
-        $this->payment_confirmation($request);
+        $this->payment_confirmation();
     }
 
-    public function payment_confirmation(Request $request)
+    public function payment_confirmation()
     {
         ///LOG
         $log_path = public_path(). '/payments-logs/';
