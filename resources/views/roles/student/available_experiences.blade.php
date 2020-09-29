@@ -4,7 +4,7 @@
     <div class="container ">
         <div class="content">
             <div ng-controller="availableExperiencesStudentCtrl" ng-init="init({{auth('afiliadoempresa')->user()->company_id()}},
-				{{10}})">
+				{{$sequence_id}}, {{$account_service_id}})">
            		<div class="mb-3 card">
 	            	<div class="bg-light card-body">
 		            	<div class="mb-3">

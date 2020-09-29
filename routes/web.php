@@ -134,7 +134,7 @@ Route::group(['middleware' =>['auth:afiliadoempresa', 'companyaffiliated', 'comp
     Route::get('{empresa}/student/avatar', 'AvatarController@index')->middleware('role:student','company')->name('student.avatar');
     Route::post('{empresa}/student/update_avatar', 'AvatarController@update_avatar')->middleware('role:student')->name('update_avatar');
     Route::get('{empresa}/student/secuencias', 'StudentController@show_available_sequences')->middleware('role:student')->name('student.available_sequences');
-    Route::get('{empresa}/student/experiencias', 'StudentController@show_available_experiences')->middleware('role:student')->name('student.available_experiences');
+    Route::get('{empresa}/student/secuencia/{sequence_id}/experiencia_cientifica/{account_service_id}', 'StudentController@show_available_experiences')->middleware('role:student')->name('student.available_experiences');
 
     Route::get('{empresa}/student/logros', 'StudentController@show_achievements')->middleware('role:student')->name('student.achievements');
     Route::get('{empresa}/student/logros_por_secuencia/{affiliated_account_service_id}/{sequence_id}', 'StudentController@show_achievements_sequence')->middleware('role:student')->name('student.achievements.sequence');
@@ -263,7 +263,7 @@ Route::group([],function (){
 });
 //servcios preguntas frecuentes
 Route::get('get_frequent_questions', 'FrequentQuestionController@get_frequent_questions')->name('get_frequent_questions');
-Route::get('get_avalible_experiences/{company_id}/{sequence_id}', 'StudentController@get_avalible_experiences')->name('get_avalible_experiences');
+Route::get('get_available_experiences/{company_id}/{sequence_id}/{account_service_id}', 'StudentController@get_available_experiences')->middleware('role:student')->name('get_available_experiences');
 
 Route::post('user-logout', 'Auth\LogoutController@close_session')->name('user.logout');
 

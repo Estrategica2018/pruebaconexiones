@@ -73,10 +73,10 @@ class StudentController extends Controller
         return view('roles.student.available_sequences');
     }
 
-    public function show_available_experiences(Request $request)
+    public function show_available_experiences(Request $request, $empresa, $sequence_id, $account_service_id)
     {
         $request->user('afiliadoempresa')->authorizeRoles(['student']);
-        return view('roles.student.available_experiences');
+        return view('roles.student.available_experiences',['sequence_id'=>$sequence_id,'account_service_id'=>$account_service_id]);
     }
     
 
@@ -781,7 +781,7 @@ class StudentController extends Controller
 
     }
 
-    public function get_avalible_experiences(Request $request,$company_id,$sequence_id){
+    public function get_available_experiences(Request $request,$company_id,$sequence_id,$account_service_id){
 
 
         $tutor_id = ConectionAffiliatedStudents::select('id', 'tutor_company_id')
