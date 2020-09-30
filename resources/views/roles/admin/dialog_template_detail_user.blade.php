@@ -92,9 +92,9 @@
                 </div>
                 <div>
                     <div>Fecha de Pago</div>
-                    <div class="ml-2">@{{response.transaction.payment_init_date}}</div>
+                    <div class="ml-2">@{{ response.transaction.payment_process_date || response.transaction.updated_at}}</div>
                 </div>
-                <div>
+                <div ng-show="response.transaction.approval_code">
                     <div>Cod. Aprobación</div>
                     <div class="ml-2">@{{response.transaction.approval_code}}</div>
                 </div>
@@ -102,7 +102,7 @@
                     <div>Medio de pago</div>
                     <div class="ml-2">@{{response.transaction.payment_method}}</div>
                 </div>
-                <div ng-show="response.transaction.rating_plan">
+                <div>
                     <div>Descripción</div>
                     <div class="ml-2">@{{response.transaction.description}}</div>
                 </div>
@@ -172,8 +172,8 @@
                        <td ng-show="shoppingCart.shopping_cart_product[0].kiStruct.name" class="selection-cell" style="border: 0px; vertical-align: middle;">
                        @{{ shoppingCart.shopping_cart_product[0].kiStruct.name }}
                        </td>
-                       <td ng-show="shoppingCart.shopping_cart_product[0].elementStruct.name" class="selection-cell" style="border: 0px; vertical-align: middle;">
-                       @{{ shoppingCart.shopping_cart_product[0].elementStruct.name }}
+                       <td ng-show="shoppingCart.shopping_cart_product[0].elementStruct[0].name" class="selection-cell" style="border: 0px; vertical-align: middle;">
+                       @{{ shoppingCart.shopping_cart_product[0].elementStruct[0].name }}
                        </td>
                    </tr>
                 </tbody>

@@ -289,7 +289,6 @@ class AdminController extends Controller
     {
         
         $user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($user_id);
-        
 
         $rol_id = AffiliatedCompanyRole::where([
             ['affiliated_company_id', $user->id],
@@ -301,13 +300,13 @@ class AdminController extends Controller
             ['tutor_company_id', $rol_id->id]
         ])->get();
         
-        
         $shoppingCarts = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','payment_status')
             ->where('payment_status_id', '!=',1)
             ->whereHas('affiliate', function ($query) use ($user_id) {
                  $query->where('id','=',$user_id);
             })
+			->orderBy('updated_at','desc')
             ->get();
         $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
 
@@ -319,17 +318,17 @@ class AdminController extends Controller
      */
     public function get_user_shoppingCart(Request $request, $transaction_id)
     {   
-        $shoppingCart = ShoppingCart::
+        $shoppingCartsForTransaction = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','payment_status')
             ->where([['payment_status_id', '!=',1],
 					 ['payment_transaction_id',$transaction_id]])
             ->get();
 			
-        if(count($shoppingCart)>0) {
+        if(count($shoppingCartsForTransaction)>0) {
 			
-			$shoppingCart = $this->relation_rating_plan($shoppingCart);
+			$shoppingCartsForTransaction = $this->relation_rating_plan($shoppingCartsForTransaction);
 			
-			$user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($shoppingCart[0]->affiliate->id);
+			$user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($shoppingCartsForTransaction[0]->affiliate->id);
 			$user_id = $user->id;
 			
 			$rol_id = AffiliatedCompanyRole::where([
@@ -348,10 +347,35 @@ class AdminController extends Controller
 				->whereHas('affiliate', function ($query) use ($user_id) {
 					 $query->where('id','=',$user_id);
 				})
+				->orderBy('updated_at','desc')
 				->get();
 			$shoppingCarts = $this->relation_rating_plan($shoppingCarts);
 			
-			return response()->json(['transaction'=>$shoppingCart, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);	
+			$groupShoppingCarts = ['total_price'=>0, 'description'=>''];
+			
+			
+			foreach($shoppingCartsForTransaction as $shoppingCart) {
+				
+				$groupShoppingCarts['payment_transaction_id'] =  $shoppingCart['payment_transaction_id'];
+				$groupShoppingCarts['payment_method'] =  $shoppingCart['payment_method'];
+				$groupShoppingCarts['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
+				$groupShoppingCarts['payment_status'] =  $shoppingCart['payment_status'];
+				if(strlen($groupShoppingCarts['description']) > 0 ) {
+					$groupShoppingCarts['description'] .=  ' + ';	
+				}
+				if(isset($shoppingCart['rating_plan']['name'])) {
+					$groupShoppingCarts['description'] .=  $shoppingCart['rating_plan']['name'];
+				}
+				
+				
+				$groupShoppingCarts['affiliate'] =  $shoppingCart['affiliate'];
+				$groupShoppingCarts['approval_code'] =  $shoppingCart['approval_code'];
+				$groupShoppingCarts['payment_process_date'] =  $shoppingCart['payment_process_date'];
+				$groupShoppingCarts['payment_init_date'] =  $shoppingCart['payment_init_date'];
+				$groupShoppingCarts['updated_at'] =  $shoppingCart['updated_at'];
+			}
+
+			return response()->json(['transaction'=>$groupShoppingCarts, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);	
 		}
         
     }
