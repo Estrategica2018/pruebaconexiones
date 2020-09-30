@@ -69,13 +69,12 @@
                               <table class="table table-dashboard table-sm fs--1 border-bottom border-200 mb-0 table-dashboard-th-nowrap">
                                  <thead>
                                     <tr class="bg-200 text-900 border-y border-200">
-                                       <th tabindex="0" class="border-0" style="min-width: 78px;">Fecha</th>
-                                       <th tabindex="0" class="border-0" style="min-width: 121px;">Afiliado</th>
+                                       <th tabindex="0" class="border-0" style="min-width: 138px;">Fecha</th>
+                                       <th tabindex="0" class="border-0" style="min-width: 171px;">Afiliado</th>
                                        <th tabindex="0" class="border-0">Email</th>
-                                       <th tabindex="0" class="border-0" style="min-width: 121px;">Producto</th>
-                                       <th tabindex="0" class="border-0">Cód.Aprobación</th>
-                                       <th tabindex="0" class="border-0" style="width: 21px;">Estado</th>
-                                       <th tabindex="0" class="border-0" style="text-align: right; min-width:100px;">Precio</th>
+                                       <th tabindex="0" class="border-0" style="min-width: 17    0px;">Producto</th>
+                                       <th tabindex="0" class="border-0" style="">Estado</th>
+                                       <th tabindex="0" class="border-0" style="text-align: right; min-width:80px;">Precio</th>
                                        <th tabindex="0" class="border-0"></th>
                                     </tr>
                                  </thead>
@@ -94,7 +93,6 @@
                                        </td>
                                        <td class="border-0 align-middle">{{$shoppingCart['affiliate']->email}}</td>
                                        <td class="border-0 align-middle">{{$shoppingCart['description']}}</td>
-                                       <td class="border-0 align-middle">{{$shoppingCart['approval_code']}}</td>
                                        <td class="border-0 align-middle fs-0">
                                          @if($shoppingCart['payment_status']->id == 2)
                                           <span class="rounded-capsule badge badge-soft-warning">

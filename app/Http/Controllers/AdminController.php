@@ -53,9 +53,18 @@ class AdminController extends Controller
 		$shoppingCarts = $this->relation_rating_plan($shoppingCarts);
 			
 		$groupShoppingCarts = [];
+		$countShoppingCart = 0;
+		$payment_transaction_ant = 0;
+		
 		foreach($shoppingCarts as $shoppingCart) {
 			
 			$payment_transaction_id = $shoppingCart['payment_transaction_id'];
+			if($payment_transaction_ant != $payment_transaction_id) {
+				$countShoppingCart ++;
+				if($countShoppingCart  === 11 ) {
+					break;
+				}
+			}
 			if(!isset($groupShoppingCarts[$payment_transaction_id]))
 				$groupShoppingCarts[$payment_transaction_id] = ['total_price'=>0, 'description'=>''];
 			$groupShoppingCarts[$payment_transaction_id]['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
@@ -77,7 +86,7 @@ class AdminController extends Controller
 			
         $totalSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->get()->sum('rating_plan_price');
         $countShoppingCarts = count($groupShoppingCarts);
-        $totalShoppingCarts = ShoppingCart::where('payment_status_id', '!=',1)->count();
+        $totalShoppingCarts = count(ShoppingCart::select('payment_transaction_id')->where('payment_status_id', '!=',1)->groupBy('payment_transaction_id')->get());
 		
 		//-----------
         $fist_day_previous = date("Y-n-j", strtotime("first day of previous month"));
@@ -308,37 +317,42 @@ class AdminController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get_user_shoppingCart(Request $request, $idShoppingCart)
+    public function get_user_shoppingCart(Request $request, $transaction_id)
     {   
         $shoppingCart = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','payment_status')
-            ->where([['payment_status_id', '!=',1],['id',$idShoppingCart]])
+            ->where([['payment_status_id', '!=',1],
+					 ['payment_transaction_id',$transaction_id]])
             ->get();
-            
-        $shoppingCart = $this->relation_rating_plan($shoppingCart)[0];    
+			
+        if(count($shoppingCart)>0) {
+			
+			$shoppingCart = $this->relation_rating_plan($shoppingCart);
+			
+			$user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($shoppingCart[0]->affiliate->id);
+			$user_id = $user->id;
+			
+			$rol_id = AffiliatedCompanyRole::where([
+				['affiliated_company_id', $user->id],
+				['rol_id', 3],//familiar
+				['company_id', 1]//conexiones
+			])->first();
+			
+			$kidSelected = ConectionAffiliatedStudents::with('student_family.retrive_afiliado_empresa')->where([
+				['tutor_company_id', $rol_id->id]
+			])->get();
+			
+			$shoppingCarts = ShoppingCart::
+				with('rating_plan', 'shopping_cart_product','payment_status')
+				->where('payment_status_id', '!=',1)
+				->whereHas('affiliate', function ($query) use ($user_id) {
+					 $query->where('id','=',$user_id);
+				})
+				->get();
+			$shoppingCarts = $this->relation_rating_plan($shoppingCarts);
+			
+			return response()->json(['transaction'=>$shoppingCart, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);	
+		}
         
-        $user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($shoppingCart->affiliate->id);
-        $user_id = $user->id;
-        
-        $rol_id = AffiliatedCompanyRole::where([
-            ['affiliated_company_id', $user->id],
-            ['rol_id', 3],//familiar
-            ['company_id', 1]//conexiones
-        ])->first();
-        
-        $kidSelected = ConectionAffiliatedStudents::with('student_family.retrive_afiliado_empresa')->where([
-            ['tutor_company_id', $rol_id->id]
-        ])->get();
-        
-        $shoppingCarts = ShoppingCart::
-            with('rating_plan', 'shopping_cart_product','payment_status')
-            ->where('payment_status_id', '!=',1)
-            ->whereHas('affiliate', function ($query) use ($user_id) {
-                 $query->where('id','=',$user_id);
-            })
-            ->get();
-        $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
-        
-        return response()->json(['transaction'=>$shoppingCart, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);
     }
 }

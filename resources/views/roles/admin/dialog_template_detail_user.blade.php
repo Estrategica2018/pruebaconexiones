@@ -78,10 +78,6 @@
          </ul>
          <div class="tab-content border-x border-bottom p-3" id="myTabContent">
             <div ng-show="response.transaction" id="tabTrax" class="tab-pane fade" ng-class="{'show active': tabSelected === 'tranaction'}">
-                <div>
-                    <div>Id</div>
-                    <div class="ml-2">@{{response.transaction.id}}</div>
-                </div>
                 <div ng-hide="response.transaction.payment_status.id === 4 || response.transaction.payment_status.id === 5">
                     <div>Código de transacción</div>
                     <div class="ml-2"> @{{ (response.transaction.payment_transaction_id.length === 14  ? 'Pago Simulado' : 'MercadoPago - ' + response.transaction.payment_transaction_id )  }}</div>
@@ -108,20 +104,12 @@
                 </div>
                 <div ng-show="response.transaction.rating_plan">
                     <div>Descripción</div>
-                    <div class="ml-2">@{{response.transaction.rating_plan.name}}</div>
-                </div>
-                <div ng-show="response.transaction.shopping_cart_product[0].kiStruct.name">
-                    <div>Descripción</div>
-                    <div class="ml-2">@{{response.transaction.shopping_cart_product[0].kiStruct.name}}</div>
-                </div>
-                <div ng-show="response.transaction.shopping_cart_product[0].elementStruct.name">
-                    <div>Descripción</div>
-                    <div class="ml-2">@{{response.transaction.shopping_cart_product[0].elementStruct.name}}</div>
+                    <div class="ml-2">@{{response.transaction.description}}</div>
                 </div>
                 <div>
                     <div>Precio</div>
                     <div class="ml-2">  
-                        <span ng-show="response.transaction.rating_plan_price>0"> $ @{{response.transaction.rating_plan_price}} USD <span>
+                        <span ng-show="response.transaction.total_price>0"> $ @{{response.transaction.total_price}} USD <span>
                     </div>
                 </div>
             </div>
