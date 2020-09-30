@@ -215,8 +215,28 @@ class TutorController extends Controller
         ])->orderBy('payment_init_date', 'DESC')->get();
 
         $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
-        //return $shoppingCarts;
-        return response()->json(['data' => $shoppingCarts], 200);
+		
+		
+		$groupShoppingCarts = [];
+		foreach($shoppingCarts as $shoppingCart) {
+			$payment_transaction_id = $shoppingCart['payment_transaction_id'];
+			if(!isset($groupShoppingCarts[$payment_transaction_id]))
+				$groupShoppingCarts[$payment_transaction_id] = ['total_price'=>0, 'description'=>''];
+			$groupShoppingCarts[$payment_transaction_id]['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
+			$groupShoppingCarts[$payment_transaction_id]['payment_status'] =  $shoppingCart['payment_status'];
+			if(strlen($groupShoppingCarts[$payment_transaction_id]['description']) > 0 ) {
+				$groupShoppingCarts[$payment_transaction_id]['description'] .=  ' + ';	
+			}
+			$groupShoppingCarts[$payment_transaction_id]['description'] .=  $shoppingCart['rating_plan']['name'];
+			$groupShoppingCarts[$payment_transaction_id]['approval_code'] =  $shoppingCart['approval_code'];
+			$groupShoppingCarts[$payment_transaction_id]['payment_process_date'] =  $shoppingCart['payment_process_date'];
+			$groupShoppingCarts[$payment_transaction_id]['payment_init_date'] =  $shoppingCart['payment_init_date'];
+			$groupShoppingCarts[$payment_transaction_id]['updated_at'] =  $shoppingCart['updated_at'];
+			
+		}
+		//dd($groupShoppingCarts);
+        //return 
+        return response()->json(['data' => $groupShoppingCarts], 200);
     }
 
     /**

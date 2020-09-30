@@ -16,7 +16,6 @@
             <table id="myTable" class="display-1 table table-sm table-dashboard data-table no-wrap mb-0 fs--1 w-100" style="width: 100%">
                 <thead class="bg-200">
                 <tr>
-                    <th class="sort">id</th>
                     <th class="sort">Fecha</th>
                     <th class="sort">Descripción</th>
                     <th class="sort">Precio</th>

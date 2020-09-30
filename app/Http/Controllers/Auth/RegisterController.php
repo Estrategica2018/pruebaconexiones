@@ -151,7 +151,12 @@ class RegisterController extends Controller
         $shoppingCart = ShoppingCart:: where('session_id', session_id())
             ->where('payment_status_id', 1)->count();
 
-        $redirect_to_shoppingcart = $shoppingCart > 0;
+		$redirect_to_shoppingcart = null;
+		
+        if($shoppingCart > 0) { 
+			$redirect_to_shoppingcart = true;
+		}
+		
 
         return view('auth.register',
             [

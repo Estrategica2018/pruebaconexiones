@@ -72,39 +72,26 @@ MyApp.controller("tutorHistoryCtrl", ["$scope", "$http", function($scope, $http)
                     'dataSrc': function (json) {
                       var return_data = new Array();
                       var row = product = null;
-                      for(var i=0 ; i<json.data.length; i++){
-                            row = json.data[i];
-                            product = row.shopping_cart_product ? row.shopping_cart_product[0] : null;
-                            return_data.push({
-                              'id': row.id,
+					  for(indx in json.data ) {
+						    row = json.data[indx];
+					        return_data.push({
                               'date': row.payment_process_date || row.payment_init_date || row.updated_at,
-                              'shipping_price': row.shipping_price,
-                              'description': row.rating_plan ? row.rating_plan.name : 
-                                         product && product.kiStruct ? product.kiStruct.name : 
-                                         product && product.elementStruct ? product.elementStruct[0].name : '',
+                              'description': row.description,
                               'status': row.payment_status.name,
-                              'price': row.rating_plan ? 
-                              
-                              row.rating_plan.type_rating_plan_id === 1 ? '$'+row.rating_plan.price+' COP' : 
-                              '$'+row.shipping_price+' COP'
-
-                              :
-                                       product && product.kiStruct ? '$'+product.kiStruct.price+' COP' :
-                                       product && product.elementStruct ? '$'+product.elementStruct[0].price+' COP' : '' ,
-                              'payment_transaction_id': row.approval_code
-                            })
+                              'price': '$'+row.total_price+' COP',
+                              'approval_code': row.approval_code
+                            });
                         
                       }
                       return return_data;
                     }
                   },
                   'columns': [
-                    {data: 'id', className: 'text-center', visible: false },
                     {data: 'date', className: 'text-left'},
                     {data: 'description', className: 'text-left'},
                     {data: 'price', className: 'text-right'},
                     {data: 'status', className: 'text-center'},
-                    {data: 'payment_transaction_id', className: 'text-right'},
+                    {data: 'approval_code', className: 'text-right'},
                     
                 ]
             });
