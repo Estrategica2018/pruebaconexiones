@@ -20,7 +20,8 @@ use DateTime;
  */
 class AdminController extends Controller
 {
-    use RelationRatingPlan;
+ 
+   use RelationRatingPlan;
     
     /**
      * @param Request $request
@@ -30,7 +31,7 @@ class AdminController extends Controller
     {
 
         $request->user('afiliadoempresa')->authorizeRoles(['admin']);
-        $affiliated = AfiliadoEmpresa::whereHas('company_teacher_rol', function ($query) {
+        $totalAffiliated = AfiliadoEmpresa::whereHas('company_teacher_rol', function ($query) {
             $query->where('rol_id','=','3');
         })->with('company_teacher_rol')->count();
         
@@ -41,21 +42,47 @@ class AdminController extends Controller
             ]);
         })->count();
         
-        $shoppingCarts = ShoppingCart::
+		//-----------
+		$shoppingCarts = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
             ->where('payment_status_id', '!=',1)
             ->orderBy('updated_at', 'DESC')
-            ->skip(0)->take(10)
+            //->skip(0)->take(10)
             ->get();
-            
+		
+		$shoppingCarts = $this->relation_rating_plan($shoppingCarts);
+			
+		$groupShoppingCarts = [];
+		foreach($shoppingCarts as $shoppingCart) {
+			
+			$payment_transaction_id = $shoppingCart['payment_transaction_id'];
+			if(!isset($groupShoppingCarts[$payment_transaction_id]))
+				$groupShoppingCarts[$payment_transaction_id] = ['total_price'=>0, 'description'=>''];
+			$groupShoppingCarts[$payment_transaction_id]['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
+			$groupShoppingCarts[$payment_transaction_id]['payment_status'] =  $shoppingCart['payment_status'];
+			if(strlen($groupShoppingCarts[$payment_transaction_id]['description']) > 0 ) {
+				$groupShoppingCarts[$payment_transaction_id]['description'] .=  ' + ';	
+			}
+			if(isset($shoppingCart['rating_plan']['name'])) {
+				$groupShoppingCarts[$payment_transaction_id]['description'] .=  $shoppingCart['rating_plan']['name'];
+			}
+			$groupShoppingCarts[$payment_transaction_id]['payment_transaction_id'] =  $payment_transaction_id;
+			
+			$groupShoppingCarts[$payment_transaction_id]['affiliate'] =  $shoppingCart['affiliate'];
+			$groupShoppingCarts[$payment_transaction_id]['approval_code'] =  $shoppingCart['approval_code'];
+			$groupShoppingCarts[$payment_transaction_id]['payment_process_date'] =  $shoppingCart['payment_process_date'];
+			$groupShoppingCarts[$payment_transaction_id]['payment_init_date'] =  $shoppingCart['payment_init_date'];
+			$groupShoppingCarts[$payment_transaction_id]['updated_at'] =  $shoppingCart['updated_at'];
+		}
+			
+        $totalSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->get()->sum('rating_plan_price');
+        $countShoppingCarts = count($groupShoppingCarts);
         $totalShoppingCarts = ShoppingCart::where('payment_status_id', '!=',1)->count();
-        
-        $payments = ShoppingCart::where('payment_status_id', '=',3)->get();
-        
+		
+		//-----------
         $fist_day_previous = date("Y-n-j", strtotime("first day of previous month"));
         $end_day_previous =  date("Y-n-j", strtotime("last day of previous month"));
         $lastSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->where([['updated_at','>=',$fist_day_previous],['updated_at','<=',$end_day_previous]])->get()->sum('rating_plan_price');
-        
         
         $fist_day_now = date("Y-n-j", strtotime("first day of this month"));
         $end_day_now =  date("Y-n-j", strtotime("last day of this month"));
@@ -65,14 +92,8 @@ class AdminController extends Controller
         if($lastSumPrices > 0 && $nowSumPrices > 0) {
             $progressPrice = round($nowSumPrices/$lastSumPrices,2);
         }
-        //dd($lastSumPrices, $nowSumPrices, $progressPrice);
         
-        $totalSumPrices =  $payments->sum('rating_plan_price');
-        
-        
-            
-        $countShoppingCarts = count($shoppingCarts);
-        return view('roles.admin.index',['affiliated'=>$affiliated,'companyAffiliated'=>$companyAffiliated, 'shoppingCarts'=>$shoppingCarts, 'countShoppingCarts'=>$countShoppingCarts, 'totalShoppingCarts'=>$totalShoppingCarts, 'totalSumPrices'=>$totalSumPrices, 'progressPrice'=>$progressPrice]);
+        return view('roles.admin.index',['totalAffiliated'=>$totalAffiliated,'companyAffiliated'=>$companyAffiliated, 'shoppingCarts'=>$groupShoppingCarts, 'countShoppingCarts'=>$countShoppingCarts, 'totalShoppingCarts'=>$totalShoppingCarts, 'totalSumPrices'=>$totalSumPrices, 'progressPrice'=>$progressPrice]);
     }
 
     /**
