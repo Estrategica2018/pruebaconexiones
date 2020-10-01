@@ -14,7 +14,7 @@ trait RelationRatingPlan
     public function relation_rating_plan ($shoppingCarts){
         //cache()->flush();
         $sequencesCache = cache()->tags('connection_sequences_redis')->rememberForever('sequences_redis',function(){
-            return CompanySequence::all();
+            return CompanySequence::select('id','company_id','name','description','url_image','url_slider_images')->get();
         });
         $momentsCache = cache()->tags('connection_moments_redis')->rememberForever('moments_redis',function(){
             return SequenceMoment::all();

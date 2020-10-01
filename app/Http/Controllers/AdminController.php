@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 use App\Traits\RelationRatingPlan;
 use DateTime;
+use App\Models\CompanySequence;
+
 /**
  * Class AdminController
  * @package App\Http\Controllers
@@ -287,8 +289,15 @@ class AdminController extends Controller
      */
     public function get_user(Request $request, $user_id)
     {
-        
-        $user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($user_id);
+		$user = AfiliadoEmpresa::with('country','affiliated_account_services.rating_plan','affiliated_account_services.affiliated_content_account_service')->find($user_id);
+		foreach($user->affiliated_account_services as $account_services) {
+			$sequences = [];
+			foreach($account_services->affiliated_content_account_service as $content) {
+				$seq = CompanySequence::find($content->sequence_id);
+				$sequences['seq'.$seq->id] = $seq;
+			}
+			$account_services['sequences'] = $sequences;
+		}
 
         $rol_id = AffiliatedCompanyRole::where([
             ['affiliated_company_id', $user->id],
@@ -328,8 +337,17 @@ class AdminController extends Controller
 			
 			$shoppingCartsForTransaction = $this->relation_rating_plan($shoppingCartsForTransaction);
 			
-			$user = AfiliadoEmpresa::with('country','affiliated_account_services')->find($shoppingCartsForTransaction[0]->affiliate->id);
+			$user = AfiliadoEmpresa::with('country','affiliated_account_services.rating_plan','affiliated_account_services.affiliated_content_account_service')->find($shoppingCartsForTransaction[0]->affiliate->id);
 			$user_id = $user->id;
+			
+			foreach($user->affiliated_account_services as $account_services) {
+				$sequences = [];
+				foreach($account_services->affiliated_content_account_service as $content) {
+					$seq = CompanySequence::find($content->sequence_id);
+					$sequences['seq'.$seq->id] = $seq;
+				}
+				$account_services['sequences'] = $sequences;
+			}
 			
 			$rol_id = AffiliatedCompanyRole::where([
 				['affiliated_company_id', $user->id],
@@ -349,10 +367,10 @@ class AdminController extends Controller
 				})
 				->orderBy('updated_at','desc')
 				->get();
+
 			$shoppingCarts = $this->relation_rating_plan($shoppingCarts);
 			
 			$groupShoppingCarts = ['total_price'=>0, 'description'=>''];
-			
 			
 			foreach($shoppingCartsForTransaction as $shoppingCart) {
 				
@@ -366,9 +384,6 @@ class AdminController extends Controller
 				if(isset($shoppingCart['rating_plan']['name'])) {
 					$groupShoppingCarts['description'] .=  $shoppingCart['rating_plan']['name'];
 				}
-				
-				
-				$groupShoppingCarts['affiliate'] =  $shoppingCart['affiliate'];
 				$groupShoppingCarts['approval_code'] =  $shoppingCart['approval_code'];
 				$groupShoppingCarts['payment_process_date'] =  $shoppingCart['payment_process_date'];
 				$groupShoppingCarts['payment_init_date'] =  $shoppingCart['payment_init_date'];
