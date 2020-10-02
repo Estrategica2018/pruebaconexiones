@@ -44,53 +44,53 @@ class AdminController extends Controller
             ]);
         })->count();
         
-		//-----------
-		$shoppingCarts = ShoppingCart::
+        //-----------
+        $shoppingCarts = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
             ->where('payment_status_id', '!=',1)
             ->orderBy('updated_at', 'DESC')
             //->skip(0)->take(10)
             ->get();
-		
-		$shoppingCarts = $this->relation_rating_plan($shoppingCarts);
-			
-		$groupShoppingCarts = [];
-		$countShoppingCart = 0;
-		$payment_transaction_ant = 0;
-		
-		foreach($shoppingCarts as $shoppingCart) {
-			
-			$payment_transaction_id = $shoppingCart['payment_transaction_id'];
-			if($payment_transaction_ant != $payment_transaction_id) {
-				$countShoppingCart ++;
-				if($countShoppingCart  === 11 ) {
-					break;
-				}
-			}
-			if(!isset($groupShoppingCarts[$payment_transaction_id]))
-				$groupShoppingCarts[$payment_transaction_id] = ['total_price'=>0, 'description'=>''];
-			$groupShoppingCarts[$payment_transaction_id]['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
-			$groupShoppingCarts[$payment_transaction_id]['payment_status'] =  $shoppingCart['payment_status'];
-			if(strlen($groupShoppingCarts[$payment_transaction_id]['description']) > 0 ) {
-				$groupShoppingCarts[$payment_transaction_id]['description'] .=  ' + ';	
-			}
-			if(isset($shoppingCart['rating_plan']['name'])) {
-				$groupShoppingCarts[$payment_transaction_id]['description'] .=  $shoppingCart['rating_plan']['name'];
-			}
-			$groupShoppingCarts[$payment_transaction_id]['payment_transaction_id'] =  $payment_transaction_id;
-			
-			$groupShoppingCarts[$payment_transaction_id]['affiliate'] =  $shoppingCart['affiliate'];
-			$groupShoppingCarts[$payment_transaction_id]['approval_code'] =  $shoppingCart['approval_code'];
-			$groupShoppingCarts[$payment_transaction_id]['payment_process_date'] =  $shoppingCart['payment_process_date'];
-			$groupShoppingCarts[$payment_transaction_id]['payment_init_date'] =  $shoppingCart['payment_init_date'];
-			$groupShoppingCarts[$payment_transaction_id]['updated_at'] =  $shoppingCart['updated_at'];
-		}
-			
+        
+        $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
+            
+        $groupShoppingCarts = [];
+        $countShoppingCart = 0;
+        $payment_transaction_ant = 0;
+        
+        foreach($shoppingCarts as $shoppingCart) {
+            
+            $payment_transaction_id = $shoppingCart['payment_transaction_id'];
+            if($payment_transaction_ant != $payment_transaction_id) {
+                $countShoppingCart ++;
+                if($countShoppingCart  === 11 ) {
+                    break;
+                }
+            }
+            if(!isset($groupShoppingCarts[$payment_transaction_id]))
+                $groupShoppingCarts[$payment_transaction_id] = ['total_price'=>0, 'description'=>''];
+            $groupShoppingCarts[$payment_transaction_id]['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
+            $groupShoppingCarts[$payment_transaction_id]['payment_status'] =  $shoppingCart['payment_status'];
+            if(strlen($groupShoppingCarts[$payment_transaction_id]['description']) > 0 ) {
+                $groupShoppingCarts[$payment_transaction_id]['description'] .=  ' + ';    
+            }
+            if(isset($shoppingCart['rating_plan']['name'])) {
+                $groupShoppingCarts[$payment_transaction_id]['description'] .=  $shoppingCart['rating_plan']['name'];
+            }
+            $groupShoppingCarts[$payment_transaction_id]['payment_transaction_id'] =  $payment_transaction_id;
+            
+            $groupShoppingCarts[$payment_transaction_id]['affiliate'] =  $shoppingCart['affiliate'];
+            $groupShoppingCarts[$payment_transaction_id]['approval_code'] =  $shoppingCart['approval_code'];
+            $groupShoppingCarts[$payment_transaction_id]['payment_process_date'] =  $shoppingCart['payment_process_date'];
+            $groupShoppingCarts[$payment_transaction_id]['payment_init_date'] =  $shoppingCart['payment_init_date'];
+            $groupShoppingCarts[$payment_transaction_id]['updated_at'] =  $shoppingCart['updated_at'];
+        }
+            
         $totalSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->get()->sum('rating_plan_price');
         $countShoppingCarts = count($groupShoppingCarts);
         $totalShoppingCarts = count(ShoppingCart::select('payment_transaction_id')->where('payment_status_id', '!=',1)->groupBy('payment_transaction_id')->get());
-		
-		//-----------
+        
+        //-----------
         $fist_day_previous = date("Y-n-j", strtotime("first day of previous month"));
         $end_day_previous =  date("Y-n-j", strtotime("last day of previous month"));
         $lastSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->where([['updated_at','>=',$fist_day_previous],['updated_at','<=',$end_day_previous]])->get()->sum('rating_plan_price');
@@ -289,15 +289,15 @@ class AdminController extends Controller
      */
     public function get_user(Request $request, $user_id)
     {
-		$user = AfiliadoEmpresa::with('country','affiliated_account_services.rating_plan','affiliated_account_services.affiliated_content_account_service')->find($user_id);
-		foreach($user->affiliated_account_services as $account_services) {
-			$sequences = [];
-			foreach($account_services->affiliated_content_account_service as $content) {
-				$seq = CompanySequence::find($content->sequence_id);
-				$sequences['seq'.$seq->id] = $seq;
-			}
-			$account_services['sequences'] = $sequences;
-		}
+        $user = AfiliadoEmpresa::with('country','affiliated_account_services.rating_plan','affiliated_account_services.affiliated_content_account_service')->find($user_id);
+        foreach($user->affiliated_account_services as $account_services) {
+            $sequences = [];
+            foreach($account_services->affiliated_content_account_service as $content) {
+                $seq = CompanySequence::find($content->sequence_id);
+                $sequences['seq'.$seq->id] = $seq;
+            }
+            $account_services['sequences'] = $sequences;
+        }
 
         $rol_id = AffiliatedCompanyRole::where([
             ['affiliated_company_id', $user->id],
@@ -315,7 +315,7 @@ class AdminController extends Controller
             ->whereHas('affiliate', function ($query) use ($user_id) {
                  $query->where('id','=',$user_id);
             })
-			->orderBy('updated_at','desc')
+            ->orderBy('updated_at','desc')
             ->get();
         $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
 
@@ -330,68 +330,68 @@ class AdminController extends Controller
         $shoppingCartsForTransaction = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','payment_status')
             ->where([['payment_status_id', '!=',1],
-					 ['payment_transaction_id',$transaction_id]])
+                     ['payment_transaction_id',$transaction_id]])
             ->get();
-			
+            
         if(count($shoppingCartsForTransaction)>0) {
-			
-			$shoppingCartsForTransaction = $this->relation_rating_plan($shoppingCartsForTransaction);
-			
-			$user = AfiliadoEmpresa::with('country','affiliated_account_services.rating_plan','affiliated_account_services.affiliated_content_account_service')->find($shoppingCartsForTransaction[0]->affiliate->id);
-			$user_id = $user->id;
-			
-			foreach($user->affiliated_account_services as $account_services) {
-				$sequences = [];
-				foreach($account_services->affiliated_content_account_service as $content) {
-					$seq = CompanySequence::find($content->sequence_id);
-					$sequences['seq'.$seq->id] = $seq;
-				}
-				$account_services['sequences'] = $sequences;
-			}
-			
-			$rol_id = AffiliatedCompanyRole::where([
-				['affiliated_company_id', $user->id],
-				['rol_id', 3],//familiar
-				['company_id', 1]//conexiones
-			])->first();
-			
-			$kidSelected = ConectionAffiliatedStudents::with('student_family.retrive_afiliado_empresa')->where([
-				['tutor_company_id', $rol_id->id]
-			])->get();
-			
-			$shoppingCarts = ShoppingCart::
-				with('rating_plan', 'shopping_cart_product','payment_status')
-				->where('payment_status_id', '!=',1)
-				->whereHas('affiliate', function ($query) use ($user_id) {
-					 $query->where('id','=',$user_id);
-				})
-				->orderBy('updated_at','desc')
-				->get();
+            
+            $shoppingCartsForTransaction = $this->relation_rating_plan($shoppingCartsForTransaction);
+            
+            $user = AfiliadoEmpresa::with('country','affiliated_account_services.rating_plan','affiliated_account_services.affiliated_content_account_service')->find($shoppingCartsForTransaction[0]->affiliate->id);
+            $user_id = $user->id;
+            
+            foreach($user->affiliated_account_services as $account_services) {
+                $sequences = [];
+                foreach($account_services->affiliated_content_account_service as $content) {
+                    $seq = CompanySequence::find($content->sequence_id);
+                    $sequences['seq'.$seq->id] = $seq;
+                }
+                $account_services['sequences'] = $sequences;
+            }
+            
+            $rol_id = AffiliatedCompanyRole::where([
+                ['affiliated_company_id', $user->id],
+                ['rol_id', 3],//familiar
+                ['company_id', 1]//conexiones
+            ])->first();
+            
+            $kidSelected = ConectionAffiliatedStudents::with('student_family.retrive_afiliado_empresa')->where([
+                ['tutor_company_id', $rol_id->id]
+            ])->get();
+            
+            $shoppingCarts = ShoppingCart::
+                with('rating_plan', 'shopping_cart_product','payment_status')
+                ->where('payment_status_id', '!=',1)
+                ->whereHas('affiliate', function ($query) use ($user_id) {
+                     $query->where('id','=',$user_id);
+                })
+                ->orderBy('updated_at','desc')
+                ->get();
 
-			$shoppingCarts = $this->relation_rating_plan($shoppingCarts);
-			
-			$groupShoppingCarts = ['total_price'=>0, 'description'=>''];
-			
-			foreach($shoppingCartsForTransaction as $shoppingCart) {
-				
-				$groupShoppingCarts['payment_transaction_id'] =  $shoppingCart['payment_transaction_id'];
-				$groupShoppingCarts['payment_method'] =  $shoppingCart['payment_method'];
-				$groupShoppingCarts['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
-				$groupShoppingCarts['payment_status'] =  $shoppingCart['payment_status'];
-				if(strlen($groupShoppingCarts['description']) > 0 ) {
-					$groupShoppingCarts['description'] .=  ' + ';	
-				}
-				if(isset($shoppingCart['rating_plan']['name'])) {
-					$groupShoppingCarts['description'] .=  $shoppingCart['rating_plan']['name'];
-				}
-				$groupShoppingCarts['approval_code'] =  $shoppingCart['approval_code'];
-				$groupShoppingCarts['payment_process_date'] =  $shoppingCart['payment_process_date'];
-				$groupShoppingCarts['payment_init_date'] =  $shoppingCart['payment_init_date'];
-				$groupShoppingCarts['updated_at'] =  $shoppingCart['updated_at'];
-			}
+            $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
+            
+            $groupShoppingCarts = ['total_price'=>0, 'description'=>''];
+            
+            foreach($shoppingCartsForTransaction as $shoppingCart) {
+                
+                $groupShoppingCarts['payment_transaction_id'] =  $shoppingCart['payment_transaction_id'];
+                $groupShoppingCarts['payment_method'] =  $shoppingCart['payment_method'];
+                $groupShoppingCarts['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
+                $groupShoppingCarts['payment_status'] =  $shoppingCart['payment_status'];
+                if(strlen($groupShoppingCarts['description']) > 0 ) {
+                    $groupShoppingCarts['description'] .=  ' + ';    
+                }
+                if(isset($shoppingCart['rating_plan']['name'])) {
+                    $groupShoppingCarts['description'] .=  $shoppingCart['rating_plan']['name'];
+                }
+                $groupShoppingCarts['approval_code'] =  $shoppingCart['approval_code'];
+                $groupShoppingCarts['payment_process_date'] =  $shoppingCart['payment_process_date'];
+                $groupShoppingCarts['payment_init_date'] =  $shoppingCart['payment_init_date'];
+                $groupShoppingCarts['updated_at'] =  $shoppingCart['updated_at'];
+            }
 
-			return response()->json(['transaction'=>$groupShoppingCarts, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);	
-		}
+            return response()->json(['transaction'=>$groupShoppingCarts, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);    
+        }
         
     }
 }

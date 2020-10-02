@@ -7,6 +7,7 @@ use App\Models\Companies;
 use App\Models\CompanyGroup;
 use App\Models\CompanySequence;
 use App\Models\ShoppingCart;
+use App\Traits\RelationRatingPlan;
 
 use Illuminate\Http\Request;
 use DB;
@@ -17,6 +18,9 @@ use DB;
  */
 class CompanyController extends Controller
 {
+    
+    use RelationRatingPlan;
+    
     /**
      * @return \Illuminate\Http\JsonResponse
      */
@@ -38,17 +42,20 @@ class CompanyController extends Controller
         $activesPlan = [];
         if (auth('afiliadoempresa')->user()) {
             $userId = auth('afiliadoempresa')->user()->id;
+            
+            //consulta planes activos
             $activesPlan = AfiliadoEmpresa::
             with('affiliated_account_services.affiliated_content_account_service')
                 ->whereHas('affiliated_account_services', function ($query) {
                     $dt = new \DateTime();
                     $end_date = date('Y-m-d', strtotime('+ 1 day'));
                     $query->where([
-                        ['init_date', '>=', $dt->format('Y-m-d')],
-                        ['end_date', '<=', $end_date]
+                        ['init_date', '<=', $dt->format('Y-m-d')],
+                        ['end_date', '>=', $end_date]
                     ]);
                 })->find($userId);
-            $shoppingCartPlan = ShoppingCart::with('shopping_cart_product')->where([
+            //consulta carrito de compra activo
+            $shoppingCarts = ShoppingCart::with('shopping_cart_product')->where([
                 ['company_affiliated_id', $userId],
                 ['payment_status_id', 1]
             ])->get();
@@ -56,11 +63,16 @@ class CompanyController extends Controller
             if (session_id() == "") {
                 session_start();
             }
-            $shoppingCartPlan = ShoppingCart::with('shopping_cart_product')->where([
+            $shoppingCarts = ShoppingCart::with('shopping_cart_product')->where([
                 ['session_id', session_id()],
                 ['payment_status_id', 1]
             ])->get();
         }
+        
+        //Obtiene elementos de carrito de compra
+        $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
+        
+        
         $dt = new \DateTime();
         $companySequence = CompanySequence::select('id', 'name', 'description', 'url_image', 'keywords', 'areas', 'themes', 'objectives', 'mesh', 'url_vimeo')->with(
             ['moments' => function ($queryMoments) {
@@ -93,7 +105,7 @@ class CompanyController extends Controller
             } 
         return response()->json([
             'activesPlan' => $activesPlan,
-            'shoppingCartPlan' => $shoppingCartPlan,
+            'shoppingCarts' => $shoppingCarts,
             'companySequences' => $companySequence
         ], 200);
     }
