@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Auth::routes();
 
 Route::get('put', function() {
-    Storage::cloud()->put('test.txt', 'Hello World');
+    app(\App\Http\Controllers\BackupDatabase::class)->mysqlDump();
     return 'File was saved to Google Drive';
 });
 
