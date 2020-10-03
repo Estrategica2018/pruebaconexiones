@@ -253,7 +253,7 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
             $('.swal2-show').css('background-color','transparent');            
         }
     }
-    
+
     function validateSequencesActivate(sequence_id, shoppingCarts, activesPlan) {
          return new Promise(resolve => {
             var mbControl = false; 
@@ -273,7 +273,9 @@ MyApp.controller("sequencesSearchCtrl", ["$scope", "$http", function ($scope, $h
                 sc = shoppingCarts[i];
                 for(var j=0, product=null;j<sc.shopping_cart_product.length; j++) {
                     product = sc.shopping_cart_product[j];
-                    if(product.sequence && product.sequence.id === sequence_id){
+                    if( ( product.sequence && product.sequence.id === sequence_id) || 
+                        ( product.sequenceStruct_experience && product.sequenceStruct_experience.id === sequence_id )
+                        ( product.sequenceStruct_moment && product.sequenceStruct_moment.id === sequence_id )) {
                         mbControl = true; 
                         message = 'Ya tienes asignada esta guía en el carrito de compras, deseas adicionarla de nuevo?';
                         break;

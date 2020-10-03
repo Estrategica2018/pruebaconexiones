@@ -1,6 +1,9 @@
 MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", function ($scope, $http, $timeout) {
     $scope.ratingPlan = null;
     $scope.sequences = null;
+    $scope.shoppingCarts = [];
+    $scope.activesPlan = [];
+
     $scope.sequenceForAdd = null;
     $scope.elementsKits = [];
     $scope.meshDirectory = null;
@@ -21,11 +24,10 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
     var $mbDelayCtrlFlag = false;
     
     function clickSelected(totalSequences, ratingPlanCount) {
-      
        
         if($scope.ratingPlan.type_rating_plan_id === type_sequence) {
             if(totalSequences === 0) {
-                var textm = ratingPlanCount > 0 ? 'las '+ratingPlanCount+' secuencias ' : 'la secuencia';
+                var textm = ratingPlanCount > 1 ? 'las '+ratingPlanCount+' secuencias ' : 'la secuencia';
                 $scope.messageToast = 'Seleccciona '+ textm +' que deseas incluir'; 
             }
             else {
@@ -91,6 +93,8 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
         }).
         then(function (response) {
             $scope.sequences = response.data.companySequences;
+            $scope.shoppingCarts = response.data.shoppingCarts;
+            $scope.activesPlan = response.data.activesPlan;
             var listTemp = [];
             
             for(var i=0;i<$scope.sequences.length;i++) {
@@ -120,14 +124,17 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
                 }
                 else {
                     if((sequence_id && $scope.ratingPlan.count > 1) || !sequence_id) {
-                       listTemp.push($scope.sequences[i]); 
+                       listTemp.push($scope.sequences[i]);
                     }
                 }
             }
+            
+            if(!sequence_id) {
+                clickSelected(0, $scope.ratingPlan.count);
+            }
             $scope.sequences = listTemp;
             
-            
-            $scope.resizeWidth = function() {
+            function resizeWidth() {
                 var maxHeight = 0;
                     $('.card-boody-sequence').each(function(){
                         var height =  Number($(this).css('height').replace('px',''));
@@ -145,107 +152,50 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             }
             
             $(window).resize(function () {
-                $scope.resizeWidth();    
+                resizeWidth();    
             });
             
             $timeout(function () {
-                $scope.resizeWidth();        
+                resizeWidth();        
             }, 300);
-              
-            
             
         }).catch(function (e) {
             $scope.errorMessageFilter = 'Error consultando las guías de aprendizaje, compruebe su conexión a internet' + e;
         });
     }
     
-    $scope.onCheckChange = function(sequence,moment,sequenceIdForAdd) {
-        
-        if(!$scope.ratingPlan) return;
-        
-        //Rating plan for sequence
-        if( $scope.ratingPlan.type_rating_plan_id === type_sequence) {
-            var totalSequences = 0;
-            
-            if($scope.sequenceForAdd && $scope.sequenceForAdd.isSelected ) {
-                totalSequences++;
-            }
-            
-            angular.forEach($scope.sequences, function(sequenceTmp, key) {
-              if(sequenceTmp.isSelected) totalSequences++;
-            });
-            
-            if(totalSequences > $scope.ratingPlan.count) {
-                sequence.isSelected = false;
-                swal({
-                  html: "<strong>Has excedido en número máximo de guías de aprendizaje permitidas en el plan seleccionado.</strong>",
-                  buttons: true,
-                  dangerMode: true,
-                })
-            }
-            else {
-                $scope.selectComplete = totalSequences === $scope.ratingPlan.count;
-                if($scope.selectComplete) {
-                    $('.confirm_rating').addClass("btn-primary");
-                    $('.confirm_rating').removeClass("btn-outline-primary");
-                }
-                else {
-                    $('.confirm_rating').removeClass("btn-primary");
-                    $('.confirm_rating').addClass("btn-outline-primary");
-                }
-                $scope.messageToast = 'Seleccciona los momentos que deseas incluir';
-                
-                clickSelected(totalSequences, $scope.ratingPlan.count);
-            }
+    $scope.onCheckChange = async function(sequence,moment,sequenceIdForAdd) {
+
+        var _continue = true;
+        if( (sequence && sequence.isSelected) ||  (moment && moment.isSelected) ) {
+            _continue = await validateSequencesActivate(sequence.id, $scope.shoppingCarts, $scope.activesPlan);  
         }
-        //Rating plan for moment or experience
-        else if($scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
-
-            $scope.totalMoments = 0;
-            
-            if(sequenceIdForAdd) {
-                $('#moment_div_responsive_ForAdd').addClass('show');
-            }
-            else {
-                if(!$scope.sequenceForAdd) {
-                    $('#moment_div_responsive_ForAdd').removeClass('show');
+        
+        if(_continue) {
+            //Rating plan for sequence
+            if( $scope.ratingPlan.type_rating_plan_id === type_sequence) {
+                var totalSequences = 0;
+                
+                if($scope.sequenceForAdd && $scope.sequenceForAdd.isSelected ) {
+                    totalSequences++;
                 }
                 
-                    $('#moment_div_responsive_'+sequence.id).addClass('show');
+                angular.forEach($scope.sequences, function(sequenceTmp, key) {
+                  if(sequenceTmp.isSelected) totalSequences++;
+                });
                 
-            }
-            
-            angular.forEach($scope.sequences, function(sequenceTmp, key) {
-              
-                angular.forEach(sequenceTmp.moments, function(momentTmp, key) {
-                    if(momentTmp.isSelected) $scope.totalMoments++;
-                });
-              
-            });
-            
-            if($scope.sequenceForAdd) {
-                angular.forEach($scope.sequenceForAdd.moments, function(momentTmp, key) {
-                    if(momentTmp.isSelected) $scope.totalMoments++;
-                });
-            }
+                
+                if(totalSequences > $scope.ratingPlan.count) {
+                    sequence.isSelected = false;
 
-            if($scope.totalMoments===0) {
-                $scope.messageToastPrice = null;
-                $scope.selectComplete = 0;
-                $scope.messageToast = 'Seleccciona los momentos que deseas incluir';
-                
-            }
-            else {
-                if($scope.totalMoments > $scope.ratingPlan.count && $scope.ratingPlan.count > 0) {
-                    
                     swal({
-                      title: "Has excedido en número máximo de momentos de aprendizaje permitidos en el plan seleccionado",
+                      html: "<strong>Has excedido en número máximo de guías de aprendizaje permitidas en el plan seleccionado.</strong>",
                       buttons: true,
                       dangerMode: true,
                     })
                 }
-                else { 
-                    $scope.selectComplete = $scope.totalMoments === $scope.ratingPlan.count || $scope.ratingPlan.count === 0
+                else {
+                    $scope.selectComplete = totalSequences === $scope.ratingPlan.count;
                     if($scope.selectComplete) {
                         $('.confirm_rating').addClass("btn-primary");
                         $('.confirm_rating').removeClass("btn-outline-primary");
@@ -254,16 +204,134 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
                         $('.confirm_rating').removeClass("btn-primary");
                         $('.confirm_rating').addClass("btn-outline-primary");
                     }
-                    clickSelected($scope.totalMoments, $scope.ratingPlan.count);
-                    var price = Math.round10($scope.totalMoments * $scope.ratingPlan.price,-2 );
-                    $scope.messageToastPrice = 'Precio del plan $' + price + ' USD';
+                    $scope.messageToast = 'Seleccciona los momentos que deseas incluir';
+                    
+                    clickSelected(totalSequences, $scope.ratingPlan.count);
                 }
             }
-             
+            //Rating plan for moment or experience
+            else if($scope.ratingPlan.type_rating_plan_id === type_moment || $scope.ratingPlan.type_rating_plan_id === type_experience) {
+
+                $scope.totalMoments = 0;
+                
+                if(sequenceIdForAdd) {
+                    $('#moment_div_responsive_ForAdd').addClass('show');
+                }
+                else {
+                    if(!$scope.sequenceForAdd) {
+                        $('#moment_div_responsive_ForAdd').removeClass('show');
+                    }
+                    
+                        $('#moment_div_responsive_'+sequence.id).addClass('show');
+                    
+                }
+                
+                angular.forEach($scope.sequences, function(sequenceTmp, key) {
+                  
+                    angular.forEach(sequenceTmp.moments, function(momentTmp, key) {
+                        if(momentTmp.isSelected) $scope.totalMoments++;
+                    });
+                  
+                });
+                
+                if($scope.sequenceForAdd) {
+                    angular.forEach($scope.sequenceForAdd.moments, function(momentTmp, key) {
+                        if(momentTmp.isSelected) $scope.totalMoments++;
+                    });
+                }
+
+                if($scope.totalMoments===0) {
+                    $scope.messageToastPrice = null;
+                    $scope.selectComplete = 0;
+                    $scope.messageToast = 'Seleccciona los momentos que deseas incluir';
+                    
+                }
+                else {
+                    if($scope.totalMoments > $scope.ratingPlan.count && $scope.ratingPlan.count > 0) {
+                        
+                        swal({
+                          title: "Has excedido en número máximo de momentos de aprendizaje permitidos en el plan seleccionado",
+                          buttons: true,
+                          dangerMode: true,
+                        })
+                    }
+                    else { 
+                        $scope.selectComplete = $scope.totalMoments === $scope.ratingPlan.count || $scope.ratingPlan.count === 0
+                        if($scope.selectComplete) {
+                            $('.confirm_rating').addClass("btn-primary");
+                            $('.confirm_rating').removeClass("btn-outline-primary");
+                        }
+                        else {
+                            $('.confirm_rating').removeClass("btn-primary");
+                            $('.confirm_rating').addClass("btn-outline-primary");
+                        }
+                        clickSelected($scope.totalMoments, $scope.ratingPlan.count);
+                        var price = Math.round10($scope.totalMoments * $scope.ratingPlan.price,-2 );
+                        $scope.messageToastPrice = 'Precio del plan $' + price + ' USD';
+                    }
+                }
+            }
         }
-    
+        else {
+            if(sequence) { sequence.isSelected = false; }
+            if(moment) { moment.isSelected = false; }
+        }
+		
+		$scope.$apply();
     }
     
+    function validateSequencesActivate(sequence_id, shoppingCarts, activesPlan) {
+         return new Promise(resolve => {
+            var mbControl = false; 
+            var message = '';
+            if(activesPlan && activesPlan.affiliated_account_services) {
+                for(var i=0, account;i<activesPlan.affiliated_account_services.length; i++) {
+                    account = activesPlan.affiliated_account_services[i];
+                    if(account.affiliated_content_account_service[0].sequence_id === sequence_id){
+                        mbControl = true; 
+                        message = 'Ya tienes contratada esta guía de aprendizaje, deseas adquirirla de nuevo?';
+                        break;
+                    }
+                }
+            }
+            if(!mbControl)
+            for(var i=0, sc=null;i<shoppingCarts.length; i++) {
+                sc = shoppingCarts[i];
+                for(var j=0, product=null;j<sc.shopping_cart_product.length; j++) {
+                    product = sc.shopping_cart_product[j];
+                    if( ( product.sequence && product.sequence.id === sequence_id) || 
+                        ( product.sequenceStruct_experience && product.sequenceStruct_experience.id === sequence_id )
+                        ( product.sequenceStruct_moment && product.sequenceStruct_moment.id === sequence_id )) {
+                        mbControl = true; 
+                        message = 'Ya tienes asignada esta guía en el carrito de compras, deseas adicionarla de nuevo?';
+                        break;
+                    }
+                }
+            }
+            
+            if(mbControl) {
+                swal({
+                    html: '<strong> '+ message+' </strong>',
+                    type: 'warning',
+                    showCancelButton: true,
+                    cancelButtonColor: '#748194',
+                    confirmButtonClass: 'mr-4',
+                    confirmButtonColor: '#2c7be5',
+                    confirmButtonText: 'Aceptar',
+                    cancelButtonText: 'Cancelar'
+                })
+                .then((result) => {
+                    resolve(result);
+                }).catch(function(res){
+                    resolve(false);
+                });                
+            }
+            else {
+                resolve(true);
+            }
+        });
+    }
+
     $scope.onContinueElements = function() {
         
         if(!$scope.selectComplete){
@@ -378,21 +446,21 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             }
         }
     
-		if($scope.elementsKits.length == 0 ) {
-			swal({
-				html: '<strong>Confirma para continuar con la compra</strong>',
-				showConfirmButton: true, showCancelButton: true,
-				confirmButtonColor: '#2c7be5',
-				confirmButtonText: "Continuar compra",
-				cancelButtonText: "Cancelar",
-			})
-			.then((result) => {
-				if (result) {
-					$scope.onContinuePayment();
-				}
-			}).catch(swal.noop);
-		}
-	}
+        if($scope.elementsKits.length == 0 ) {
+            swal({
+                html: '<strong>Confirma para continuar con la compra</strong>',
+                showConfirmButton: true, showCancelButton: true,
+                confirmButtonColor: '#2c7be5',
+                confirmButtonText: "Continuar compra",
+                cancelButtonText: "Cancelar",
+            })
+            .then((result) => {
+                if (result) {
+                    $scope.onContinuePayment();
+                }
+            }).catch(swal.noop);
+        }
+    }
     
     $scope.onContinuePayment = function() {
         
