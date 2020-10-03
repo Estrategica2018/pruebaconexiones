@@ -9,8 +9,6 @@ use File;
 class BackupDatabase extends Controller
 {
     /**
-     * 
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -26,10 +24,6 @@ class BackupDatabase extends Controller
             $db_password = env('DB_PASSWORD');
             $dump = new IMysqldump\Mysqldump('mysql:host='.$db_host.';dbname='.$db_database, $db_username, $db_password);
             $dump->start(public_path() . '/backups/work/dump_'.$strDate.'.sql');
-			
-			//include_once(dirname(__FILE__) . '/vendor/ifsnop/mysqldump-php/src/Ifsnop/Mysqldump/Mysqldump.php');
-			//$dump = new Mysqldump('mysql:host='.$db_host.';dbname='.$db_database, $db_username, $db_password);
-			//$dump->start(public_path() . '/backups/work/dump_'.$strDate.'.sql');
 			
             $filePath = public_path() .'/backups/logs';
             $filename = $filePath . '/log_'.$strDate.'.txt';
