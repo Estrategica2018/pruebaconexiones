@@ -7,7 +7,7 @@ use Ifsnop\Mysqldump as IMysqldump;
 use File;
 use Storage;
 
-class BackupDatabase extends Controller
+class BackupController extends Controller
 {
     /**
      * @param  \Illuminate\Http\Request  $request
@@ -31,19 +31,53 @@ class BackupDatabase extends Controller
             Storage::cloud()->put('dump_'.$strDate.'.sql', 
                 file_get_contents($sqlFile));
             
-            Storage::cloud()->put('dump_'.$strDate.'.sql2', 
-                file_get_contents('/backups/work/dump_'.$strDate.'.sql'));
-            
             $filePath = public_path() .'/backups/logs';
             $filename = $filePath . '/log_'.$strDate.'.txt';
             $this->writeLog($filename,'finaliza mysqldump-php');
             
-            
-            
-
         } catch (\Exception $e) {
             echo 'mysqldump-php error: ' . $e->getMessage();
         }
+    }
+    
+    function getDirContents($dir, &$results = array()) {
+        $files = scandir($dir);
+
+        foreach ($files as $key => $value) {
+            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            if (!is_dir($path)) {
+                $results[] = $path;
+            } else if ($value != "." && $value != "..") {
+                $this->getDirContents($path, $results);
+                $results[] = $path;
+            }
+        }
+        return $results;
+    }
+
+    public function imageFolder() {
+        // Enter the name of directory 
+        $pathdir = public_path() . '/images/designerAdmin/';
+        // Enter the name to creating zipped directory 
+        $strDate = date('YmdHis');
+        $zipcreated = public_path() . '/backups/work/designerAdmin_'.$strDate.'.zip'; 
+        // Create new zip class 
+        $zip = new \ZipArchive(); 
+        
+        if($zip -> open($zipcreated, \ZipArchive::CREATE ) === TRUE) {
+            $files = $this->getDirContents($pathdir);
+            $ix = 0;
+            foreach($files as $file) { 
+                if(is_file($file)) {
+                    $fileName = (str_replace(str_replace('\\','/',$pathdir),'',str_replace('\\','/',$file)));
+                    $zip->addFile($file, $fileName);
+                    $ix = $ix  + 1;
+                }
+            }
+            $zip->close(); 
+        }
+        
+        Storage::cloud()->put('designerAdmin_'.$strDate.'.zip', file_get_contents($zipcreated));
     }
     
     public function writeLog($filename, $string) {
