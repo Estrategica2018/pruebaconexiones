@@ -28,7 +28,7 @@ class BackupController extends Controller
             }
             
             $strDate = date('YmdHis');
-            $backupDirectory = public_path() .'/backups/work/'.$strDate.'/';
+            $backupDirectory = public_path() .'/backups/work/'.$folderName.'/';
             File::isDirectory($backupDirectory) or File::makeDirectory($backupDirectory, 0777, true, true);
             
             $db_host = env('DB_HOST');
@@ -85,7 +85,7 @@ class BackupController extends Controller
         $pathdir = env('ADMIN_DESIGN_PATH').'/';
         
         $strDate = date('YmdHis');
-        $backupDirectory = public_path() .'/backups/work/'.$strDate.'/';
+        $backupDirectory = public_path() .'/backups/work/'.$folderName.'/';
         File::isDirectory($backupDirectory) or File::makeDirectory($backupDirectory, 0777, true, true);
         
         $zipcreated = $backupDirectory.'/designerAdmin_'.$strDate.'.zip'; 
