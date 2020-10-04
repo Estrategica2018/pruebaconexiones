@@ -17,18 +17,29 @@ class BackupController extends Controller
     {
         try {
             
-            File::isDirectory(public_path() .'/backups/work') or File::makeDirectory(public_path() .'/backups/work', 0777, true, true);
-            $strDate = date("YmdHis");
+            //Consulta la carpeta backup en el Drive
+            $folderName = date('Ymd');
+            $contents = collect(Storage::cloud()->listContents('/', false));
+            $dir = $contents->where('type', '=', 'dir')
+                ->where('filename', '=', $folderName)
+                ->first(); // There could be duplicate directory names!
+            if ( ! $dir) {
+                dd('error consultando carpeta backup');
+            }
+            
+            $strDate = date('YmdHis');
+            $backupDirectory = public_path() .'/backups/work/'.$strDate.'/';
+            File::isDirectory($backupDirectory) or File::makeDirectory($backupDirectory, 0777, true, true);
+            
             $db_host = env('DB_HOST');
             $db_database = env('DB_DATABASE');
             $db_username = env('DB_USERNAME');
             $db_password = env('DB_PASSWORD');
             $dump = new IMysqldump\Mysqldump('mysql:host='.$db_host.';dbname='.$db_database, $db_username, $db_password);
-            $sqlFile = public_path() . '/backups/work/dump_'.$strDate.'.sql';
+            $sqlFile = $backupDirectory.'/dump_'.$strDate.'.sql';
             $dump->start($sqlFile);
             
-            
-            Storage::cloud()->put('dump_'.$strDate.'.sql', 
+            Storage::cloud()->put($dir['path'].'/dump_'.$strDate.'.sql', 
                 file_get_contents($sqlFile));
             
             $filePath = public_path() .'/backups/logs';
@@ -74,9 +85,8 @@ class BackupController extends Controller
         $pathdir = env('ADMIN_DESIGN_PATH').'/';
         
         $strDate = date('YmdHis');
-
-        $backupDirectory = public_path() .'/backups/work/designerAdmin_'.$strDate.'/';
-        File::makeDirectory($backupDirectory, 0777, true, true);
+        $backupDirectory = public_path() .'/backups/work/'.$strDate.'/';
+        File::isDirectory($backupDirectory) or File::makeDirectory($backupDirectory, 0777, true, true);
         
         $zipcreated = $backupDirectory.'/designerAdmin_'.$strDate.'.zip'; 
         // Create new zip class 

@@ -15,12 +15,6 @@ use Illuminate\Http\Request;
 */
 Auth::routes();
 
-Route::get('backup', function() {
-    app(\App\Http\Controllers\BackupController::class)->mysqlDump();
-    app(\App\Http\Controllers\BackupController::class)->imageFolder();
-    return 'File was saved to Google Drive';
-});
-
 Route::get('/', 'WelcomeController@index')->name('/');
 Route::get('/login', 'WelcomeController@index')->name('login');
 
