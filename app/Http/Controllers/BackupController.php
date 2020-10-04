@@ -44,7 +44,9 @@ class BackupController extends Controller
         $files = scandir($dir);
 
         foreach ($files as $key => $value) {
+            
             $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            
             if (!is_dir($path)) {
                 $results[] = $path;
             } else if ($value != "." && $value != "..") {
@@ -56,8 +58,7 @@ class BackupController extends Controller
     }
 
     public function imageFolder() {
-        // Enter the name of directory 
-        $pathdir = public_path() . '/images/designerAdmin/';
+        $pathdir = env('ADMIN_DESIGN_PATH');
         // Enter the name to creating zipped directory 
         $strDate = date('YmdHis');
         $zipcreated = public_path() . '/backups/work/designerAdmin_'.$strDate.'.zip'; 
@@ -66,12 +67,10 @@ class BackupController extends Controller
         
         if($zip -> open($zipcreated, \ZipArchive::CREATE ) === TRUE) {
             $files = $this->getDirContents($pathdir);
-            $ix = 0;
             foreach($files as $file) { 
                 if(is_file($file)) {
                     $fileName = (str_replace(str_replace('\\','/',$pathdir),'',str_replace('\\','/',$file)));
                     $zip->addFile($file, $fileName);
-                    $ix = $ix  + 1;
                 }
             }
             $zip->close(); 
