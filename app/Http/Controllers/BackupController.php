@@ -58,25 +58,59 @@ class BackupController extends Controller
     }
 
     public function imageFolder() {
-        $pathdir = env('ADMIN_DESIGN_PATH');
+        
+        //Consulta la carpeta backup en el Drive
+        $folderName = date('Ymd');
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        $dir = $contents->where('type', '=', 'dir')
+            ->where('filename', '=', $folderName)
+            ->first(); // There could be duplicate directory names!
+        if ( ! $dir) {
+            dd('error consultando carpeta backup');
+        }
+        
+
         // Enter the name to creating zipped directory 
+        $pathdir = env('ADMIN_DESIGN_PATH').'/';
+        
         $strDate = date('YmdHis');
-        $zipcreated = public_path() . '/backups/work/designerAdmin_'.$strDate.'.zip'; 
+
+        $backupDirectory = public_path() .'/backups/work/designerAdmin_'.$strDate.'/';
+        File::makeDirectory($backupDirectory, 0777, true, true);
+        
+        $zipcreated = $backupDirectory.'/designerAdmin_'.$strDate.'.zip'; 
         // Create new zip class 
         $zip = new \ZipArchive(); 
         
         if($zip -> open($zipcreated, \ZipArchive::CREATE ) === TRUE) {
             $files = $this->getDirContents($pathdir);
-            foreach($files as $file) { 
+            $ix = 1;
+            foreach($files as $file) {
+                if($ix % 50 == 0) {
+                    $zip->close();
+                    $zipcreated = $backupDirectory.'/designerAdmin_'.$strDate.'-'.$ix.'.zip'; 
+                    // Create new zip class 
+                    $zip = new \ZipArchive();
+                    if($zip -> open($zipcreated, \ZipArchive::CREATE ) === FALSE) {
+                        dd('error');
+                    }
+                }
                 if(is_file($file)) {
                     $fileName = (str_replace(str_replace('\\','/',$pathdir),'',str_replace('\\','/',$file)));
+                    print_r($fileName.'<br>');
                     $zip->addFile($file, $fileName);
+                    $ix = $ix  + 1;
                 }
             }
-            $zip->close(); 
+            $zip->close();
         }
         
-        Storage::cloud()->put('designerAdmin_'.$strDate.'.zip', file_get_contents($zipcreated));
+        $filesZipped = $this->getDirContents($backupDirectory);
+        $indx = 1;
+        foreach($filesZipped as $file) {
+            Storage::cloud()->put($dir['path'].'/designerAdmin_'.$strDate.'-'.$indx.'.zip', file_get_contents($file));
+            $indx = $indx + 1 ;
+        }
     }
     
     public function writeLog($filename, $string) {
