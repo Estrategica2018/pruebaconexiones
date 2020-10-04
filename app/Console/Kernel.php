@@ -26,9 +26,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         
-        // Lanza comando par creacion de backups
-        $schedule->command('create:backup')->daily()->at('08:00');
-        
         /*Lanza tarea de consulta de notificaciones pendientes*/
         //app(\App\Http\Controllers\Payment\PaymentConfirmationController::class)->payment_confirmation();
     }
