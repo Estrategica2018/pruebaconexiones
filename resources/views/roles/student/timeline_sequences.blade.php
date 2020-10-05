@@ -60,6 +60,7 @@
         </div>
     </div>
     <div class="col-auto d-none d-lg-block lineTimeLine">
+        @if($rating_plan_type != 3)
         <div>
             @for($j = 1; $j < 9 ; $j++)
                 @for($i = 1; $i < 5 ; $i++)
@@ -92,6 +93,7 @@
                 </svg>
             @endfor
         </div>
+        @endif
     </div>
     <div class="col-auto d-md-block d-lg-none lineTimeLine small">
         <div>
