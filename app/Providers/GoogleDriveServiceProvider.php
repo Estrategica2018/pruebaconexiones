@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Carbon\Carbon;
 
 class GoogleDriveServiceProvider extends ServiceProvider
 {
@@ -69,11 +70,9 @@ class GoogleDriveServiceProvider extends ServiceProvider
             $folderName = date('Ymd');
             $filesystem = new \League\Flysystem\Filesystem($adapter);
             $contents = collect($filesystem->listContents('/', false));
-            
             $dir = $contents->where('type', '=', 'dir')
                 ->where('filename', '=', $folderName)
                 ->first(); // There could be duplicate directory names!
-            
             // Si no existe lo crea
             if (!$dir) {
                 $fileMetadata = new \Google_Service_Drive_DriveFile(
@@ -84,6 +83,15 @@ class GoogleDriveServiceProvider extends ServiceProvider
                 );
             }
             
+            //Borra ficheros anteriores
+            $oldFolderName = Carbon::now()->subDays(2)->format('Ymd');
+            $contents = collect($filesystem->listContents('/', false));
+            $dir = $contents->where('type', '=', 'dir')
+                ->where('filename', '=', $oldFolderName)
+                ->first(); // There could be duplicate directory names!
+            if ($dir) {
+                $file = $service->files->delete($dir['path']);
+            }
             return $filesystem;
         });
     }

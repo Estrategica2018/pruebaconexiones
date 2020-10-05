@@ -48,7 +48,7 @@ class BackupController extends Controller
             $this->writeLog($filename,'finaliza mysqldump-php');
             
         } catch (\Exception $e) {
-            echo 'mysqldump-php error: ' . $e->getMessage();
+            echo 'mysqldump-php error: ' . $e->getMessage(). '\n';
         }
     }
     
@@ -93,8 +93,11 @@ class BackupController extends Controller
         // Create new zip class 
         $zip = new \ZipArchive(); 
         
+        echo 'Consultando directorio '.$pathdir .'\n';
+        
         if($zip -> open($zipcreated, \ZipArchive::CREATE ) === TRUE) {
             $files = $this->getDirContents($pathdir);
+            echo 'Comprimiendo '.count($files).' archivos '.'\n';
             $ix = 1;
             foreach($files as $file) {
                 if($ix % 50 == 0) {
@@ -108,7 +111,6 @@ class BackupController extends Controller
                 }
                 if(is_file($file)) {
                     $fileName = (str_replace(str_replace('\\','/',$pathdir),'',str_replace('\\','/',$file)));
-                    print_r($fileName.'<br>');
                     $zip->addFile($file, $fileName);
                     $ix = $ix  + 1;
                 }
@@ -117,6 +119,7 @@ class BackupController extends Controller
         }
         
         $filesZipped = $this->getDirContents($backupDirectory);
+        echo 'subiendo directorio '.$backupDirectory.'\n';
         $indx = 1;
         foreach($filesZipped as $file) {
             Storage::cloud()->put($dir['path'].'/designerAdmin_'.$strDate.'-'.$indx.'.zip', file_get_contents($file));
@@ -124,14 +127,17 @@ class BackupController extends Controller
         }
         
         $this->deleteTemp();
+        
+        echo 'Finaliza proceso de backup'.'\n';
     }
     
     public function deleteTemp() {
         
-        $folderName = Carbon::now()->subDays(1)->format('Ymd');
+        $folderName = Carbon::now()->subDays(2)->format('Ymd');
         $delDirectory = public_path() .'/backups/work/'.$folderName.'/';
         
         if(File::exists($delDirectory)) {
+            echo 'Borrando directorio '.$delDirectory. '******';
             File::deleteDirectory($delDirectory);
         }
         
