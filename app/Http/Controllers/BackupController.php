@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Ifsnop\Mysqldump as IMysqldump;
 use File;
 use Storage;
+use Carbon\Carbon;
 
 class BackupController extends Controller
 {
@@ -121,6 +122,19 @@ class BackupController extends Controller
             Storage::cloud()->put($dir['path'].'/designerAdmin_'.$strDate.'-'.$indx.'.zip', file_get_contents($file));
             $indx = $indx + 1 ;
         }
+        
+        $this->deleteTemp();
+    }
+    
+    public function deleteTemp() {
+        
+        $folderName = Carbon::now()->subDays(1)->format('Ymd');
+        $delDirectory = public_path() .'/backups/work/'.$folderName.'/';
+        
+        if(File::exists($delDirectory)) {
+            File::deleteDirectory($delDirectory);
+        }
+        
     }
     
     public function writeLog($filename, $string) {
