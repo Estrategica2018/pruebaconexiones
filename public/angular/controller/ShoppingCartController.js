@@ -123,20 +123,54 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
 
     $scope.simulator = function () {
         $('.btn-spinner').removeClass('d-none');
-        $http({
-            url: "/get_preference_simulator/",
-            method: "GET",
-        }).
-            then(function (response) {
-                document.getElementById('preference_id').value = response.data.preference_id;
-                document.getElementById('external_reference').value = response.data.preference_id;
-                document.getElementById('simulate-form').submit();
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "user_mail_validation/",
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'GET',
+            type: 'GET',
+            success: function (response, xhr, request) {
+                if(response.status === 'successfull'){
+                    $http({
+                        url: "/get_preference_simulator/",
+                        method: "GET",
+                    }).
+                    then(function (response) {
+                        document.getElementById('preference_id').value = response.data.preference_id;
+                        document.getElementById('external_reference').value = response.data.preference_id;
+                        document.getElementById('simulate-form').submit();
+                        $('.btn-spinner').addClass('d-none');
+                    }).catch(function (e) {
+                        $scope.errorMessage = 'Error registrando preferencia de compra:'+ JSON.stringify(e);
+                        swal('Conexiones', $scope.errorMessage, 'error');
+                        $('.btn-spinner').addClass('d-none');
+                    });
+                }else{
+                    swal({
+                        text: 'Debe validar el correo, se ha enviado un correo de para validar el correo registrado.',
+                        type: "warning",
+                        showCancelButton: false,
+                        showConfirmButton: false
+                    }).catch(swal.noop);
+                    $('.btn-spinner').addClass('d-none');
+                }
+
+            },
+            error: function (response, xhr, request) {
+                swal({
+                    text: 'No se pudo realizar la acción, vuelva a intentarlo',
+                    type: "error",
+                    showCancelButton: false,
+                    showConfirmButton: false
+                }).catch(swal.noop);
                 $('.btn-spinner').addClass('d-none');
-            }).catch(function (e) {
-                $scope.errorMessage = 'Error registrando preferencia de compra:'+ JSON.stringify(e);
-                swal('Conexiones', $scope.errorMessage, 'error');
-                $('.btn-spinner').addClass('d-none');
-            });
+            }
+        });
+
     }
 
     $scope.onDelete = function (idShoppingCart) {

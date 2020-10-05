@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendChangesProfileStudent;
+use App\Mail\SendConfirmMailNotification;
 use App\Models\AfiliadoEmpresa;
 use App\Models\ConectionAffiliatedStudents;
 use Illuminate\Http\Request;
@@ -185,6 +186,23 @@ class AffiliatedCompanyController extends Controller
         } else {
             return response()->json(['data' => true], 200);
         }
+    }
+
+    public function user_mail_validation(Request $request){
+        if(auth('afiliadoempresa')->user()->confirm_email){
+            return response()->json(['status' => 'successfull', 'message' => 'El usario ha validado el correo'], 200);
+        }
+        else{
+            try {
+                Mail::to('cristianjojoa01@gmail.com')->send(
+                    new SendConfirmMailNotification());
+            } catch (\Exception $ex) {
+
+                return response()->json(['status' => 'unsuccessfull', 'message' => 'no se ha podido enviar el correo'], 200);
+            }
+            return response()->json(['status' => 'unsuccessfull', 'message' => 'El usuario no ha validado el correo'], 200);
+        }
+
     }
 
 }

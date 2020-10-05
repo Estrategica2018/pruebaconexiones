@@ -262,3 +262,5 @@ Route::get('get_available_experiences/{company_id}/{sequence_id}/{account_servic
 
 Route::post('user-logout', 'Auth\LogoutController@close_session')->name('user.logout');
 
+Route::get('notification/plan_expiration', 'Notification\NotificationController@plan_expiration')->name('plan_expiration');
+Route::get('user_mail_validation/', 'AffiliatedCompanyController@user_mail_validation')->name('user_mail_validation');
