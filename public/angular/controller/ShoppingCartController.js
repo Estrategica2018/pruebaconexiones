@@ -151,7 +151,7 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
                     });
                 }else{
                     swal({
-                        text: 'Debe validar el correo, se ha enviado un correo de para validar el correo registrado.',
+                        text: 'Debe validar el correo, se ha enviado una notificación al correo registrado.',
                         type: "warning",
                         showCancelButton: false,
                         showConfirmButton: false

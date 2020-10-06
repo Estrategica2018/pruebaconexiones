@@ -16,9 +16,11 @@ class SendConfirmMailNotification extends Mailable
      *
      * @return void
      */
+    public $userId;
     public function __construct()
     {
         //
+        $this->userId = auth('afiliadoempresa')->user()->id;
     }
 
     /**

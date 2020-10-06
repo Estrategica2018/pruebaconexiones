@@ -205,4 +205,17 @@ class AffiliatedCompanyController extends Controller
 
     }
 
+    public function confirm_mail (Request $request, $userId){
+
+       $user =  AfiliadoEmpresa::where('id',$userId)->first();
+
+        if($user != null){
+            $user->confirm_email = true;
+            $user->save();
+            return redirect()->route('shoppingCart');
+        }
+
+
+    }
+
 }
