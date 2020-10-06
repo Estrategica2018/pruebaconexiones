@@ -161,7 +161,9 @@
         })
         .then((willConfirm) => {
           if (willConfirm) {
+            @if(auth('afiliadoempresa')->user() === null || !auth('afiliadoempresa')->user()->hasAnyRole('tutor'))
             swal({text:'Serás redireccionado al registro',showConfirmButton: false,showCancelButton: false});
+            @endif
             window.location='/validate_registry_free_plan/'+ratingPlanId;
           }
         });
