@@ -49,7 +49,7 @@ class SendPlanExpirationEmails extends Command
             try {
                 $email_to = env('APP_ENV') == 'production' ? 
                     $user->company_affiliated->retrive_afiliado_empresa->email :
-                    $user->company_affiliated->retrive_afiliado_empresa->email.'prueba'
+                    $user->company_affiliated->retrive_afiliado_empresa->email.'prueba';
 					
                 Mail::to($email_to)->send(new SendPlanExpirationNotification());
 
