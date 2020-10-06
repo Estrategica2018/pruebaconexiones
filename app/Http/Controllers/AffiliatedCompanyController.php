@@ -194,7 +194,7 @@ class AffiliatedCompanyController extends Controller
         }
         else{
             try {
-                Mail::to('cristianjojoa01@gmail.com')->send(
+                Mail::to(auth('afiliadoempresa')->user()->email)->send(
                     new SendConfirmMailNotification());
             } catch (\Exception $ex) {
 
