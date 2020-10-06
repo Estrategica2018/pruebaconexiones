@@ -38,7 +38,7 @@ class SendContactus extends Mailable
                     ->subject('Conexiones - Notificación contáctenos');
         }
         return
-            $this->from('contacto@educonexiones.com')
+            $this->from(env('EMAIL_OPERATION'))
                 ->markdown('vendor.notifications.registerContactus', ['data' => $this->data])
                 ->subject('Conexiones - Notificación contáctenos');
     }

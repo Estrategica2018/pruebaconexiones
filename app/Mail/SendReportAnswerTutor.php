@@ -54,7 +54,7 @@ class SendReportAnswerTutor extends Mailable
     public function build()
     {
         return
-            $this->from('contacto@educonexiones.com')
+            $this->from(env('EMAIL_OPERATION'))
                 ->markdown('vendor.notifications.reportStudentAnswer',
                     [
                         'family' => $this->family,

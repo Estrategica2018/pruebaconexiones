@@ -36,7 +36,7 @@ class SendRegisterStudent extends Mailable
     public function build()
     {
         return
-            $this->from('contacto@educonexiones.com')
+            $this->from(env('EMAIL_OPERATION'))
                 ->markdown('vendor.notifications.registerStudent', ['family' => $this->family, 'student' => $this->student])
                 ->subject('Conexiones - Registro estudiante');
 

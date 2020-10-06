@@ -37,7 +37,7 @@ class SendChangesProfileStudent extends Mailable
     public function build()
     {
         return
-            $this->from('contacto@educonexiones.com')
+            $this->from(env('EMAIL_OPERATION'))
                 ->markdown('vendor.notifications.changesProfileStudent',
                     ['data' => $this->data,'family' => $this->family,'student'=>$this->student])
                 ->subject('Educonexiones - Notificación de actulización rol estudiante');

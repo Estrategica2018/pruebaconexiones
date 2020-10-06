@@ -42,7 +42,7 @@ class SendChangeDateExpirationContent extends Mailable
     public function build()
     {
         return
-            $this->from('contacto@educonexiones.com')
+            $this->from(env('EMAIL_OPERATION'))
                 ->markdown('vendor.notifications.changeDateExpirationContent',
                     [
                         'originalEndDate' => $this->originalEndDate,
