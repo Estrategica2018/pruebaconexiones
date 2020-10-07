@@ -4,43 +4,44 @@
 # {{ $greeting }}
 <br>
 <p>
-    Estás recibiendo este mensaje porque acabas de registrarte en Conexiones,
-    experiencias científicas para comprender el mundo natural.
-    Nuestra propuesta educativa y plataforma on line, han sido especialmente diseñadas para que las niñas,
-    los niños y jóvenes, integren diferentes saberes en su proceso de aprendizaje,
-    con la intención de promover el desarrollo de pensamiento científico.
+    Estás recibiendo este mensaje porque acabas de registrarte en <strong>Conexiones</strong>, experiencias científicas para comprender
+    el mundo natural. Nuestra <strong>propuesta educativa</strong> y <strong>plataforma on line</strong>, han sido especialmente diseñadas para que las niñas,
+    los niños y jóvenes,<strong> integren diferentes saberes en su proceso de aprendizaje</strong>, con la intención de promover el desarrollo
+    de <strong>pensamiento científico.</strong>
 </p>
 <br>
 <p>
-    En coherencia con esto, todos los recursos didácticos que hacen parte de Conexiones,
-    están orientados a establecer relaciones entre saberes:
-</p>
-<br>
-<br>
-<p>
-    Te damos la bienvenida a Conexiones,
-    nuestro equipo pedagógico y técnico está disponible para facilitar la apropiación de los contenidos
-    y el uso de la plataforma. De acuerdo con los datos suministrados, en este momento tienes acceso la prueba gratuita,
-    esta opción ofrece 15 días para aprovecharla al máximo los recursos didácticos que estamos compartiendo:
-    acceso a la situación generadora y contenidos del Momento 1 de la ruta propuesta en la guía de aprendizaje:
-    Energía súper poderosa
+    Te invitamos a conocer más sobre los recursos didácticos dispuestos para nuestros
+    estudiantes y demás características de nuestra propuesta educativa en el siguiente
+    vínculo <a href="{{route('/')}}">https://educonexiones.com/</a>
+
 </p>
 <br>
 <p>
-    Es importante tener presente que los estudiantes que registre desde su perfil(opción inscripciones),
-    podrán acceder a preguntas para explorar saberes previos,
-    prácticas experimentales, explicaciones científicas contextualizadas y recursos en la web sugeridos para ampliar sus comprensiones.
-    Durante todo el proceso de exploración de los contenidos,
-    encontrará preguntas abiertas que tienen la intención de estimular habilidades científicas y que no tienen respuesta única, pero al finalizar cada sesión,
-    habrá un test de preguntas cerradas que permite identificar cómo avanza en el proceso de aprendizaje, las fortalezas y aspectos susceptibles de mejora.
+    Te damos la bienvenida a <strong>Conexiones</strong>, nuestro equipo pedagógico y técnico está disponible para facilitar
+    la apropiación de los contenidos y el uso de la plataforma. De acuerdo con los datos suministrados,
+    en este momento tienes acceso a la <strong>muestra gratuita</strong>, esta opción ofrece <strong>15 días</strong> para aprovechar al
+    máximo los recursos didácticos que estamos compartiendo.
 </p>
 <br>
 <p>
-Si quieres conocer más sobre nuestro enfoque pedagógico, puedes ingresar a:
+    Al acceder a la plataforma con esta opción, tendrás a disposición: un video introductorio a la <strong>situación generadora</strong>
+    y contenidos del <strong>Momento 1</strong> de la ruta propuesta en la guía de aprendizaje: <strong>Energía súper poderosa.</strong>
+</p>
 <br>
-Para tener más detalles sobre la estructura de las guías de aprendizaje, puedes ver
-<br>
-Si tienes preguntas o sugerencias, puedes contactarnos por este medio
+<p>
+    Es importante tener presente que con este plan podrán acceder a preguntas para <strong>explorar saberes previos,
+        prácticas experimentales, explicaciones científicas contextualizadas y recursos en la web sugeridos</strong> para
+    ampliar sus comprensiones.
+</p>
+<p>
+    Durante todo el proceso de exploración de los contenidos, encontrarán <strong>preguntas abiertas</strong> que tienen la
+    intención de estimular habilidades científicas y que no tienen respuesta única,
+    pero al finalizar cada sesión, habrá un <strong>test de preguntas</strong> cerradas que permite identificar cómo
+    avanza en el proceso de aprendizaje, las fortalezas y aspectos susceptibles de mejora.
+</p>
+<p>
+    Si tienes preguntas o sugerencias, puedes contactarnos dando click <a href="{{route('contactus')}}">aqui</a>
 </p>
 <hr>
 @else

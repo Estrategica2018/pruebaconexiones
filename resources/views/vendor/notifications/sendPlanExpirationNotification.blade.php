@@ -4,7 +4,7 @@
 <p>En Conexiones queremos que aprovechen al máximo los recursos educativos que hemos creado para fortalecer los saberes y
     el desarrollo de pensamiento científico, por eso queremos avisarte que el
     {{$data->end_date}}
-    termina el permiso de acceso a {{$data->rating_plan->name}}</p>
+    termina el permiso de acceso a {{$sequence}}/{{$data->rating_plan->name}}</p>
 <br>
 Hasta pronto,
 <br>

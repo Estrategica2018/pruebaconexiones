@@ -42,8 +42,10 @@ class SendPlanExpirationEmails extends Command
     public function handle()
     {
         $expiration_date = Carbon::now()->addDays(4)->format('Y-m-d');
-        
-        $users = AffiliatedAccountService::with('rating_plan','company_affiliated.retrive_afiliado_empresa','affiliated_content_account_service.sequence')
+
+        $users = AffiliatedAccountService::with(['rating_plan','company_affiliated.retrive_afiliado_empresa','affiliated_content_account_service'=>function($query){
+            $query->with('sequence')->groupBy('sequence_id');
+        }])
         ->where('end_date',$expiration_date)->each(function ($user) {
             try {
                 $email_to = env('APP_ENV') == 'production' ? 

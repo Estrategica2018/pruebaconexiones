@@ -18,11 +18,16 @@ class SendPlanExpirationNotification extends Mailable
      */
 
     public $data;
-
+    public $sequence='';
     public function __construct($user)
     {
         //
         $this->data = $user;
+        foreach($this->data->affiliated_content_account_service as $relationSequence){
+            $this->sequence = $this->sequence.','.$relationSequence->sequence->name;
+        }
+
+
     }
 
     /**
