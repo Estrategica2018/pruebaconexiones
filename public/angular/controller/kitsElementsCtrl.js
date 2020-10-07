@@ -51,8 +51,13 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                     $scope.kit_elements.push(element);    
                 }
             }
-            $('#loading').removeClass('show');
-            $('.d-none-result').removeClass('d-none');
+            
+            $timeout(function() {
+                $('#loading').removeClass('show');
+                $('.d-none-result').removeClass('d-none');
+                renderDisabledKit();
+            },10);
+            
         }).catch(function (e) {
             $scope.errorMessageFilter = 'Error consultando las secuencias';
             $('#loading').removeClass('show');
@@ -100,6 +105,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
             $timeout(function() {
                 $('#loading').removeClass('show');
                 $('.d-none-result').removeClass('d-none');
+                renderDisabledKit();
               },1000);
             
         }).catch(function (e) {
@@ -254,6 +260,22 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         }).catch(swal.noop);
         $('.swal2-show').css('background-color','transparent');
     }
+    
+    function renderDisabledKit() {
+        $('.kit-imagen.disabled').each(function(){
+            //$(this).next().removeClass('d-none');
+            $(this).next().css('width',$(this).width()/1.5);
+            $(this).next().css('height',$(this).height()/5);
+            $(this).next().css('top',$(this).position().top * 3.5);
+            $(this).next().css('left',72 + ($(this).parent().width() - $(this).width())/2);
+        });
+    }
+    
+    $(window).resize(function () {
+        $timeout(function() {
+            renderDisabledKit();
+        },10);
+    });
 
 });
  

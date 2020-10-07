@@ -21658,6 +21658,14 @@ footer .navbar-light {
     text-align: justify;
 }
 
+.kit-imagen-sold-out {
+    background-color: #B22222;
+    color: white;
+    padding: 5px;
+    position: absolute;
+    opacity: 0.6;
+}
+
 .swal-title {
     margin: 0px;
     font-size: 16px;
@@ -23231,3 +23239,4 @@ div[class*="card-rating-id-"]  {
         width: 1213px!important;
     }
 }
+
