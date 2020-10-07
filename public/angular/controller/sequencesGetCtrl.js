@@ -129,7 +129,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                 for(var j=0, product=null;j<sc.shopping_cart_product.length; j++) {
                     product = sc.shopping_cart_product[j];
                     if( ( product.sequence && product.sequence.id === sequence_id) || 
-                        ( product.sequenceStruct_experience && product.sequenceStruct_experience.id === sequence_id )
+                        ( product.sequenceStruct_experience && product.sequenceStruct_experience.id === sequence_id ) ||
                         ( product.sequenceStruct_moment && product.sequenceStruct_moment.id === sequence_id )) {
                         mbControl = true; 
                         message = 'Ya tienes asignada esta guía en el carrito de compras, deseas adicionarla de nuevo?';
@@ -229,7 +229,7 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
     
     $scope.buyKitElement = function(kitElement) {
         
-        if(kitElement.status === 'sold-out' || kitElement.status === 'no-available') {
+        if(kitElement.quantity === 0) {
             swal({
               text: 'Este producto no se encuentra disponible actualmente',
               type: "warning",
