@@ -36,42 +36,43 @@ trait RelationRatingPlan
                     foreach ($shoppingCarts[$i]['shopping_cart_product'] as $sequenceA){
                         //dd($sequencesCache->where('id', $sequenceA['product_id']));
                         foreach ($sequencesCache->where('id', $sequenceA['product_id']) as $dataArray){
-                            $sequenceA['sequence'] = [];
-                            $sequenceA['sequence']['id'] = $dataArray['id'];
-                            $sequenceA['sequence']['company_id'] = $dataArray['company_id'];
-                            $sequenceA['sequence']['name'] = $dataArray['name'];
-                            $sequenceA['sequence']['description'] = $dataArray['description'];
-                            $sequenceA['sequence']['url_image'] = $dataArray['url_image'];
-                            $sequenceA['sequence']['url_slider_images'] = $dataArray['url_slider_images'];
+                            $sequenceA['sequence'] = [
+                                'id'=>$dataArray['id'],
+                                'company_id'=>$dataArray['company_id'],
+                                'name'=>$dataArray['name'],
+                                'description'=>$dataArray['description'],
+                                'url_image'=>$dataArray['url_image'],
+                                'url_slider_images'=>$dataArray['url_slider_images']
+                            ];
                         }
-
                     }
-
                     break;
                 case 2://moment
                     foreach ($shoppingCarts[$i]['shopping_cart_product'] as $sequenceA){
                         $id = $momentsCache->where('id', $sequenceA['product_id'])->pluck('sequence_company_id')->toArray();
                         foreach ($sequencesCache->whereIn('id', $id) as $sequenceB){
-                            $sequenceA['sequenceStruct_moment'] = [];
-                            $sequenceA['sequenceStruct_moment']['id'] = $sequenceB['id'];
-                            $sequenceA['sequenceStruct_moment']['company_id'] = $sequenceB['company_id'];
-                            $sequenceA['sequenceStruct_moment']['name'] = $sequenceB['name'];
-                            $sequenceA['sequenceStruct_moment']['description'] = $sequenceB['description'];
-                            $sequenceA['sequenceStruct_moment']['url_image'] = $sequenceB['url_image'];
-                            $sequenceA['sequenceStruct_moment']['url_slider_images'] = $sequenceB['url_slider_images'];
+                            $sequenceA['sequenceStruct_moment'] = [
+                                'id'=>$sequenceB['id'],
+                                'company_id'=>$sequenceB['company_id'],
+                                'name'=>$sequenceB['name'],
+                                'description'=>$sequenceB['description'],
+                                'url_image'=>$sequenceB['url_image'],
+                                'url_slider_images'=>$sequenceB['url_slider_images']    
+                            ];
                         }
                     }
                     break;
                 case 3://experience
                     foreach ($shoppingCarts[$i]['shopping_cart_product'] as $sequenceA){
                         foreach ($sequencesCache->whereIn('id', $momentsCache->whereIn('id', $sequenceA['product_id'])->pluck('sequence_company_id')->toArray()) as $sequenceB){
-                            $sequenceA['sequenceStruct_experience'] = [];
-                            $sequenceA['sequenceStruct_experience']['id'] = $sequenceB['id'];
-                            $sequenceA['sequenceStruct_experience']['company_id'] = $sequenceB['company_id'];
-                            $sequenceA['sequenceStruct_experience']['name'] = $sequenceB['name'];
-                            $sequenceA['sequenceStruct_experience']['description'] = $sequenceB['description'];
-                            $sequenceA['sequenceStruct_experience']['url_image'] = $sequenceB['url_image'];
-                            $sequenceA['sequenceStruct_experience']['url_slider_images'] = $sequenceB['url_slider_images'];
+                            $sequenceA['sequenceStruct_experience'] = [
+                                'id'=>$sequenceB['id'],
+                                'company_id'=>$sequenceB['company_id'],
+                                'name'=>$sequenceB['name'],
+                                'description'=>$sequenceB['description'],
+                                'url_image'=>$sequenceB['url_image'],
+                                'url_slider_images'=>$sequenceB['url_slider_images']    
+                            ];
                         }
                     }
                     break;
