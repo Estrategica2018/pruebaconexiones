@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\AffiliatedAccountService;
 use App\Models\Companies;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /*
@@ -265,3 +267,15 @@ Route::post('user-logout', 'Auth\LogoutController@close_session')->name('user.lo
 //Route::get('notification/plan_expiration', 'Notification\NotificationController@plan_expiration')->name('plan_expiration');
 Route::get('user_mail_validation/', 'AffiliatedCompanyController@user_mail_validation')->name('user_mail_validation');
 Route::get('confirm_mail/{user_id}', 'AffiliatedCompanyController@confirm_mail')->name('confirm_mail');
+
+/*
+
+Route::get('registryWithPendingShoppingCart2', function(){
+    $expiration_date = Carbon::now()->addDays(4)->format('Y-m-d');
+    $users = AffiliatedAccountService::with('rating_plan','company_affiliated.retrive_afiliado_empresa','affiliated_content_account_service.sequence')
+        ->where('end_date',$expiration_date)->each(function ($user) {
+            dd($user);
+        });
+})->name('registryWithPendingShoppingCart2');
+
+*/

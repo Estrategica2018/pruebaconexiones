@@ -45,13 +45,12 @@ class SendPlanExpirationEmails extends Command
         
         $users = AffiliatedAccountService::with('rating_plan','company_affiliated.retrive_afiliado_empresa','affiliated_content_account_service.sequence')
         ->where('end_date',$expiration_date)->each(function ($user) {
-
             try {
                 $email_to = env('APP_ENV') == 'production' ? 
                     $user->company_affiliated->retrive_afiliado_empresa->email :
                     $user->company_affiliated->retrive_afiliado_empresa->email.'prueba';
 					
-                Mail::to($email_to)->send(new SendPlanExpirationNotification());
+                Mail::to($email_to)->send(new SendPlanExpirationNotification($user));
 
             } catch (\Exception $ex) {
                 return $ex;

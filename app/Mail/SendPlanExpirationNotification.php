@@ -16,9 +16,13 @@ class SendPlanExpirationNotification extends Mailable
      *
      * @return void
      */
-    public function __construct()
+
+    public $data;
+
+    public function __construct($user)
     {
         //
+        $this->data = $user;
     }
 
     /**
