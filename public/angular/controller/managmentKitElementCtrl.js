@@ -233,11 +233,13 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         $scope.arraySequenceMoment.splice(index,1)
     }
     $scope.actionModalElement = (action, id=false) => {
+        $scope.showSequencesDetail = false;
         $scope.arraySequenceMoment = []
         if(action === 'Crear'){
             $scope.element={}
             $scope.element.id = ''
             $scope.actionElement = 'Crear'
+            $scope.cover = ''
             $scope.arraySequenceMomentEdit = []
             $('#exampleModal').modal('show');
         }else{
@@ -249,9 +251,9 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
                 $scope.element.cost = response.data.data.price
                 $scope.element.quantity = response.data.data.quantity
                 $scope.element.description = response.data.data.description
-                $scope.element.cover = response.data.data.url_image
+                $scope.cover = response.data.data.url_image
                 $scope.element.url_slider_images = response.data.data.url_slider_images
-                $scope.element.init_date = new Date(response.data.data.init_date+' 00:00:00');
+                $scope.element.end_date = new Date(response.data.data.end_date+' 00:00:00');
                 angular.forEach(response.data.data.element_in_moment, function (keyword, key) {
                     $scope.arraySequenceMomentEdit.push({
                         id:keyword.moment.id,
@@ -288,6 +290,7 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         });
     }
     $scope.actionModalKit = (action,id=false) => {
+        $scope.showSequencesDetailExp = false;
         $http({
             url:$scope.route_get_elements,
             method: "GET",
@@ -301,10 +304,10 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         $scope.arraySequenceMomentEdit= []
         if(action === 'Crear'){
             $scope.actionKit = 'Crear'
+            $scope.cover = response.data.data.url_image
             $('#exampleModalKit').modal('show');
         }else{
             $http.get('/conexiones/admin/get_kit/'+id, { 'id': id }).then(function (response) {
-                console.log(response.data.data.url_slider_images,response.data.data.init_date)
                 $scope.directoryPath = response.data.data.url_image
                 $scope.directoryPath2 = response.data.data.url_slider_images
                 $scope.kit.id = response.data.data.id
@@ -312,9 +315,9 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
                 $scope.kit.cost = response.data.data.price
                 $scope.kit.quantity = response.data.data.quantity
                 $scope.kit.description = response.data.data.description
-                $scope.kit.cover = response.data.data.url_image
+                $scope.cover = response.data.data.url_image
                 $scope.kit.url_slider_images = response.data.data.url_slider_images
-                $scope.kit.init_date = new Date(response.data.data.init_date+' 00:00:00');
+                $scope.kit.end_date = new Date(response.data.data.end_date+' 00:00:00');
                 angular.forEach(response.data.data.moment_kits, function (keyword, key) {
                     $scope.arraySequenceMomentEdit.push({
                         id:keyword.moment.id,
@@ -353,7 +356,6 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
                 $scope.createOrUpdateKitService(action)
             }else{
                 $http.post('/conexiones/admin/get_folder_image', { 'dir': $scope.directoryPath2 }).then(function (response) {
-                    console.log(response.data.directory)
                     $scope.kit.url_slider_images = response.data.directory  + '/'; 
                     $scope.createOrUpdateKitService(action)
                 })
@@ -379,7 +381,6 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         }
     }
     $scope.createOrUpdateElementService = (action) => {
-        console.log($scope.element.init_date)
         var data = new FormData();
         data.append('id',$scope.element.id);
         data.append('name',$scope.element.name);
@@ -388,12 +389,13 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         data.append('url_image',$scope.cover);
         data.append('url_slider_images',$scope.element.url_slider_images);
         data.append('description',$scope.element.description);
-        let date = $scope.element.init_date
-        if($scope.element.init_date != null){
-            let new_startDate= new Date($scope.element.init_date);
-            let date = moment(new_startDate).format('YYYY-MM-DD');
+        $scope.element.end_date = typeof $scope.element.end_date === 'undefined' ? null : $scope.element.end_date;
+        let date = $scope.element.end_date
+        if( $scope.element.end_date != null){
+            let new_startDate= new Date($scope.element.end_date);
+            date = moment(new_startDate).format('YYYY-MM-DD');
         }
-        data.append('init_date',date)
+        data.append('end_date',date)
         data.append('arraySequenceMoment',JSON.stringify($scope.arraySequenceMoment));
         data.append('action',action );
         $.ajax({
@@ -436,12 +438,13 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         data.append('url_image',$scope.cover);
         data.append('url_slider_images',$scope.kit.url_slider_images);
         data.append('description',$scope.kit.description);
-        let date = $scope.kit.init_date
-        if($scope.kit.init_date != null){
-            let new_startDate= new Date($scope.kit.init_date);
-            let date = moment(new_startDate).format('YYYY-MM-DD');
+        $scope.kit.end_date = typeof $scope.kit.end_date === 'undefined' ? null : $scope.kit.end_date;
+        let date = $scope.kit.end_date
+        if($scope.kit.end_date != null){
+            let new_startDate= new Date($scope.kit.end_date);
+            date = moment(new_startDate).format('YYYY-MM-DD');
         }
-        data.append('init_date',date)
+        data.append('end_date',date)
         data.append('arraySequenceMoment',JSON.stringify($scope.arraySequenceMoment));
         data.append('elements',JSON.stringify($scope.elementsSelected));
         data.append('description',$scope.kit.description);

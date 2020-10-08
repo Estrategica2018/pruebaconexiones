@@ -22,12 +22,16 @@ class KitElementController extends Controller
      */
     public function get_kit_elements(Request $request)
     {
-        return Kit::with('kit_elements')
-        ->with(['kit_elements.element' => function($query) {
-            $query->select('elements.*',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'));
-        }])
-        ->select('kits.*',DB::raw('(CASE WHEN kits.quantity = 0 THEN "sold-out" ELSE CASE WHEN kits.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
+        $kits = Kit::
+        where('kits.end_date', '>=', date('Y-m-d'))
+        ->orWhereNull('kits.end_date')
         ->get();
+        
+        $elements = Element::where('end_date', '>=', date('Y-m-d'))
+        ->orWhereNull('end_date')
+        ->get();
+        
+        return response()->json(['kits'=>$kits, 'elements'=>$elements],200);
     }
 
     /**
@@ -55,7 +59,7 @@ class KitElementController extends Controller
             $query->select(['moment_kits.id','moment_kits.*']);
         }])
         ->with('kit_elements', 'kit_elements.element')
-        ->select('kits.*',DB::raw('(CASE WHEN kits.quantity = 0 THEN "sold-out" ELSE CASE WHEN kits.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
+        ->where('end_date', '>=', date('Y-m-d'))
         ->find($kid_id);
     }
 
@@ -88,12 +92,8 @@ class KitElementController extends Controller
 
     public function get_kit_element_dt (){
 
-        $kitsElements['kits'] = Kit::
-        select('kits.*',DB::raw('(CASE WHEN kits.quantity = 0 THEN "sold-out" ELSE CASE WHEN kits.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
-        ->get();
-        $kitsElements['elements'] = Element::
-        select('elements.*',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
-        ->get();
+        $kitsElements['kits'] = Kit::get();
+        $kitsElements['elements'] = Element::get();
 
         return response()->json($kitsElements,200);
 

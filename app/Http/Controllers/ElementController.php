@@ -94,17 +94,23 @@ class ElementController extends Controller
                 $element->url_slider_images = $data['url_slider_images'];
                 $element->price = $data['price'];
                 $element->quantity = $data['quantity'];
-                $element->init_date = $data['init_date'];
+                if ( $data['end_date'] == 'null' || $data['end_date'] == null ) {
+                    $element->end_date = null;
+                }
+                else {
+                    $element->end_date = $data['end_date'];
+                }
                 $element->save();
-                $element_json = @json_decode($data['arraySequenceMoment']);
-                foreach ($element_json as $sequenceMoment){
-                    foreach ($sequenceMoment->moments as $moment){
-                        $momentKits = new MomentKits();
-                        $momentKits->element_id = $element->id;
-                        $momentKits->sequence_moment_id = $moment->id;
-                        $momentKits->save();
+                if(isset($data['arraySequenceMoment'])) {
+                    $element_json = @json_decode($data['arraySequenceMoment']);
+                    foreach ($element_json as $sequenceMoment){
+                        foreach ($sequenceMoment->moments as $moment){
+                            $momentKits = new MomentKits();
+                            $momentKits->element_id = $element->id;
+                            $momentKits->sequence_moment_id = $moment->id;
+                            $momentKits->save();
+                        }
                     }
-
                 }
                 return response()->json([
                         'status' => 'successfull',
@@ -119,15 +125,22 @@ class ElementController extends Controller
             $element->url_slider_images = $data['url_slider_images'];
             $element->price = $data['price'];
             $element->quantity = $data['quantity'];
-            $element->init_date = $data['init_date'];
+            if ( $data['end_date'] == 'null' || $data['end_date'] == null ) {
+                    $element->end_date = null;
+                }
+                else {
+                    $element->end_date = $data['end_date'];
+                }
             $element->save();
-            $element_json = @json_decode($data['arraySequenceMoment']);
-            foreach ($element_json as $sequenceMoment){
-                foreach ($sequenceMoment->moments as $moment){
-                    $momentKits = new MomentKits();
-                    $momentKits->element_id = $element->id;
-                    $momentKits->sequence_moment_id = $moment->id;
-                    $momentKits->save();
+            if(isset($data['arraySequenceMoment'])) {
+                $element_json = @json_decode($data['arraySequenceMoment']);
+                foreach ($element_json as $sequenceMoment){
+                    foreach ($sequenceMoment->moments as $moment){
+                        $momentKits = new MomentKits();
+                        $momentKits->element_id = $element->id;
+                        $momentKits->sequence_moment_id = $moment->id;
+                        $momentKits->save();
+                    }
                 }
             }
             return response()->json([
@@ -169,7 +182,6 @@ class ElementController extends Controller
                  
             }]);
         }])
-        ->select('elements.*',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
         ->find($id);
         return response()->json([
             'status' => 'successfull',

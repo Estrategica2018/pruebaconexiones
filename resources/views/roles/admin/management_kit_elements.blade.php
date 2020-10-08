@@ -22,19 +22,33 @@
                         <form>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="name">Nombre</label>
+                                    <label for="name"><strong>Nombre</strong></label>
                                     <input class="form-control" id="name" ng-model="element.name" type="text" placeholder="Nombre">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect1">Cantidad</label>
+                                    <label for="exampleFormControlSelect1"><strong>Cantidad</strong></label>
                                     <input class="form-control" id="quantity" type="number" ng-model="element.quantity" placeholder="Cantidad">
                                 </div>
                             </div>
+							<div class="row">
+                                <div class="col-md-6 input-group mb-3 mt-4">
+                                    <div class="input-group-prepend"><span class="input-group-text">Precio ($) </span></div><input class="form-control"  ng-model="element.cost" type="text" aria-label="Amount (to the nearest dollar)">
+                                    <div class="input-group-append"><span class="input-group-text">.00</span></div>
+                                </div>
+								<div class="form-group col-md-6">
+                                    <label class=""><strong>{{ __('Fecha de expiración') }}</strong></label>
+									<div class="d-flex">
+										<input placeholder="día/mes/año" type="date" name="end_date" ng-model="element.end_date"
+											   class="form-control w-90 mr-2"/>
+										<a ng-click="element.end_date = null"><i class="far fa-times-circle cursor-pointer"></i></a>
+									</div>
+                                </div>
+                            </div>
+							<div class="line-separator"></div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <div>
-                                        <label for="exampleFormControlSelect2">Cáratula (Seleccione imagen)</label>
-                                        <div class="line-separator"></div>
+									<div>
+                                        <label for="exampleFormControlSelect2"><strong>Cáratula</strong> (Seleccione imagen)</label>
                                         <div class="col-12 d-flex">
                                             <h6 class="p-2 mt-3 cursor-pointer conex-table card-header w-100" style="border: 1px solid;"
                                                 ng-click="mbImageShow=!mbImageShow">Directorio: <small>@{{directoryPath}}</small>
@@ -63,12 +77,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="line-separator"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect2">Carrusel imagenes (Seleccione directorio)</label>
-                                    <div class="line-separator"></div>
+									<label for="exampleFormControlSelect2"><strong>Carrusel imagenes</strong> (Seleccione directorio)</label>
                                     <div class="col-12 d-flex">
                                         <h6 class="p-2 mt-3 cursor-pointer conex-table card-header w-100" style="border: 1px solid;"
                                             ng-click="mbImageShow2=!mbImageShow2">Directorio: <small>@{{directoryPath2}}</small>
@@ -97,75 +109,79 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="line-separator"></div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 input-group mb-3 mt-4">
-                                    <div class="input-group-prepend"><span class="input-group-text">Precio ($) </span></div><input class="form-control"  ng-model="element.cost" type="text" aria-label="Amount (to the nearest dollar)">
-                                    <div class="input-group-append"><span class="input-group-text">.00</span></div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="">{{ __('Fecha de expiración') }}</label>
-                                    <input placeholder="día/mes/año" type="date" name="init_date" ng-model="element.init_date"
-                                           class="form-control"/>
-                                </div>
-                            </div>
-                            <div class="line-separator"></div>
-                            <br>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect1">Secuencia</label>
-                                    <select id="selectCity"
-                                            ng-class="{'select2_group':true, 'form-control':true}"
-                                            class="select2_group form-control selectpicker" ng-model="sequenceSelected" ng-change="sequenceChange(sequenceSelected)">
-                                        <option></option>
-                                        <option ng-repeat="x in sequences" value="@{{x.id}}|@{{x.name}}">@{{x.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect1">Momento</label>
-                                    <select class="form-control selectpicker" id="exampleFormControlSelect1"
-                                            ng-model="momentSelected" multiple>
-                                        <option></option>
-                                        <option ng-repeat="x in moments" value="@{{x.id}}|@{{x.name}}">@{{x.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn btn-success btn-sm btn-block" ng-click="addSequenceMoment()">Agregar</button>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row" ng-repeat="x in arraySequenceMomentEdit">
-                                <div class="col-md-5" >
-                                    <label for="name">Secuencia</label>
-                                    <input class="form-control" type="text" placeholder="nombre" ng-model="x.sequence_name">
-                                </div>
-                                <div class="col-md-5">
-                                    <label for="exampleFormControlTextarea1">Momento</label>
-                                    <input class="form-control" type="text" placeholder="nombre" ng-model="x.moment_name">
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <button class="btn btn-sm btn-warning mt-4" ng-click="deleteSequenceMomentEdit(x.id,$index,x.id_moment_kit)"> - </button>
-                                </div>
-                            </div>
-                            <div class="row" ng-repeat="x in arraySequenceMoment">
-                                <div class="col-md-5" >
-                                    <label for="name">Secuencia</label>
-                                    <input class="form-control" type="text" placeholder="Descripción" ng-model="x.name">
-                                </div>
-                                <div class="col-md-5">
-                                    <label for="exampleFormControlTextarea1">Momentos</label>
-                                    <textarea class="form-control" id="description" rows="1" ng-model="x.moments_name"></textarea>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <button class="btn btn-sm btn-warning mt-4" ng-click="deleteSequenceMoment($index)"> - </button>
-                                </div>
-                            </div>
-                            <div class="line-separator"></div>
+                            <div class="line-separator mt-0"></div>
+                            <div class="mt-3" style="border: 1px solid;">
+								<div class="col-12 d-flex pt-2 " ng-click="showSequencesDetail=!showSequencesDetail">
+									<h6 class="cursor-pointer w-100">
+										Configuración por secuencias y momentos
+									</h6>
+									<div ng-show="!showSequencesDetail" class="cursor-pointer"
+										 style="position: absolute;right: 35px;top: 3px;">
+										<i class="fas fa-caret-down"></i>
+									</div>
+									<div ng-hide="!showSequencesDetail" class="cursor-pointer" 
+										 style="position: absolute;right: 35px;top: 3px;">
+										<i class="fas fa-caret-up"></i>
+									</div>
+								</div>  
+								<div ng-show="showSequencesDetail" class="col-12 border">
+									<div class="row">
+										<div class="form-group col-md-6">
+											<label for="exampleFormControlSelect1">Secuencia</label>
+											<select id="selectCity"
+													ng-class="{'select2_group':true, 'form-control':true}"
+													class="select2_group form-control selectpicker" ng-model="sequenceSelected" ng-change="sequenceChange(sequenceSelected)">
+												<option></option>
+												<option ng-repeat="x in sequences" value="@{{x.id}}|@{{x.name}}">@{{x.name}}</option>
+											</select>
+										</div>
+										<div class="form-group col-md-6">
+											<label for="exampleFormControlSelect1">Momento</label>
+											<select class="form-control selectpicker" id="exampleFormControlSelect1"
+													ng-model="momentSelected" multiple>
+												<option></option>
+												<option ng-repeat="x in moments" value="@{{x.id}}|@{{x.name}}">@{{x.name}}</option>
+											</select>
+										</div>
+										<div class="col-md-12">
+											<button class="btn btn-success btn-sm btn-block" ng-click="addSequenceMoment()">Agregar</button>
+										</div>
+									</div>
+									<br>
+									<div class="row" ng-repeat="x in arraySequenceMomentEdit">
+										<div class="col-md-5" >
+											<label for="name">Secuencia</label>
+											<input class="form-control" type="text" placeholder="nombre" ng-model="x.sequence_name">
+										</div>
+										<div class="col-md-5">
+											<label for="exampleFormControlTextarea1">Momento</label>
+											<input class="form-control" type="text" placeholder="nombre" ng-model="x.moment_name">
+										</div>
+										<div class="form-group col-md-2">
+											<button class="btn btn-sm btn-warning mt-4" ng-click="deleteSequenceMomentEdit(x.id,$index,x.id_moment_kit)"> - </button>
+										</div>
+									</div>
+									<div class="row" ng-repeat="x in arraySequenceMoment">
+										<div class="col-md-5" >
+											<label for="name">Secuencia</label>
+											<input class="form-control" type="text" placeholder="Descripción" ng-model="x.name">
+										</div>
+										<div class="col-md-5">
+											<label for="exampleFormControlTextarea1">Momentos</label>
+											<textarea class="form-control" id="description" rows="1" ng-model="x.moments_name"></textarea>
+										</div>
+										<div class="form-group col-md-2">
+											<button class="btn btn-sm btn-warning mt-4" ng-click="deleteSequenceMoment($index)"> - </button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="line-separator"></div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="exampleFormControlTextarea1">Descripción</label>
+                                    <label for="exampleFormControlTextarea1"><strong>Descripción</strong></label>
                                     <textarea class="form-control" ng-model="element.description" id="description" rows="3"></textarea>
                                 </div>
                             </div>
@@ -188,19 +204,33 @@
                         <form>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="name">Nombre</label>
+                                    <label for="name"><strong>Nombre</strong></label>
                                     <input class="form-control" id="nameKit" ng-model="kit.name" type="text" placeholder="Nombre">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect1">Cantidad</label>
+                                    <label for="exampleFormControlSelect1"><strong>Cantidad</strong></label>
                                     <input class="form-control" id="quantityKit" type="number" ng-model="kit.quantity" placeholder="Cantidad">
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-6 input-group mb-3 mt-4">
+                                    <div class="input-group-prepend"><span class="input-group-text">Precio ($) </span></div><input class="form-control"  ng-model="kit.cost" type="text" aria-label="Amount (to the nearest dollar)">
+                                    <div class="input-group-append"><span class="input-group-text">.00</span></div>
+                                </div>
                                 <div class="form-group col-md-6">
-                                    <div>
-                                        <label for="exampleFormControlSelect2">Cáratula (Seleccione imagen)</label>
-                                        <div class="line-separator"></div>
+                                    <label class=""><strong>{{ __('Fecha de expiración') }}</strong></label>
+									<div class="d-flex">
+										<input placeholder="día/mes/año" type="date" name="end_date" ng-model="kit.end_date"
+											   class="form-control w-90 mr-2"/>
+										<a ng-click="kit.end_date = null"><i class="far fa-times-circle cursor-pointer"></i></a>
+									</div>
+                                </div>
+                            </div>
+							<div class="line-separator"></div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+								    <div>
+										<label for="exampleFormControlSelect2"><strong>Cáratula</strong> (Seleccione imagen)</label>
                                         <div class="col-12 d-flex">
                                             <h6 class="p-2 mt-3 cursor-pointer conex-table card-header w-100" style="border: 1px solid;"
                                                 ng-click="mbImageShow=!mbImageShow">Directorio: <small>@{{directoryPath}}</small>
@@ -229,12 +259,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="line-separator"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect2">Carrusel imagenes (Seleccione directorio)</label>
-                                    <div class="line-separator"></div>
+                                    <label for="exampleFormControlSelect2"><strong>Carrusel imagenes</strong> (Seleccione directorio)</label>
                                     <div class="col-12 d-flex">
                                         <h6 class="p-2 mt-3 cursor-pointer conex-table card-header w-100" style="border: 1px solid;"
                                             ng-click="mbImageShow2=!mbImageShow2">Directorio: <small>@{{directoryPath2}}</small>
@@ -263,76 +291,80 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="line-separator"></div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 input-group mb-3 mt-4">
-                                    <div class="input-group-prepend"><span class="input-group-text">Precio ($) </span></div><input class="form-control"  ng-model="kit.cost" type="text" aria-label="Amount (to the nearest dollar)">
-                                    <div class="input-group-append"><span class="input-group-text">.00</span></div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="">{{ __('Fecha de expiración') }}</label>
-                                    <input placeholder="día/mes/año" type="date" name="init_date" ng-model="kit.init_date"
-                                           class="form-control"/>
-                                </div>
-                            </div>
-                            <div class="line-separator"></div>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect1">Secuencia</label>
-                                    <select id="selectCity"
-                                            ng-class="{'select2_group':true, 'form-control':true}"
-                                            class="select2_group form-control selectpicker" ng-model="sequenceSelected" ng-change="sequenceChange(sequenceSelected)">
-                                        <option></option>
-                                        <option ng-repeat="x in sequences" value="@{{x.id}}|@{{x.name}}">@{{x.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect1">Momento</label>
-                                    <select class="form-control selectpicker" id="exampleFormControlSelect1"
-                                            ng-model="momentSelected" multiple>
-                                        <option></option>
-                                        <option ng-repeat="x in moments" value="@{{x.id}}|@{{x.name}}">@{{x.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn btn-success btn-sm btn-block" ng-click="addSequenceMoment()">Agregar</button>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="row" ng-repeat="x in arraySequenceMomentEdit">
-                                <div class="col-md-5" >
-                                    <label for="name">Secuencia</label>
-                                    <input class="form-control" type="text" placeholder="nombre" ng-model="x.sequence_name">
-                                </div>
-                                <div class="col-md-5">
-                                    <label for="exampleFormControlTextarea1">Momento</label>
-                                    <input class="form-control" type="text" placeholder="nombre" ng-model="x.moment_name">
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <button class="btn btn-sm btn-warning mt-4" ng-click="deleteSequenceMomentEdit(x.id,$index,x.id_moment_kit)"> - </button>
-                                </div>
-                            </div>
-                            <div class="row" ng-repeat="x in arraySequenceMoment">
-                                <div class="col-md-5" >
-                                    <label for="name">Secuencia</label>
-                                    <input class="form-control" type="text" placeholder="Descripción" ng-model="x.name">
-                                </div>
-                                <div class="col-md-5">
-                                    <label for="exampleFormControlTextarea1">Momentos</label>
-                                    <textarea class="form-control" id="description" rows="1" ng-model="x.moments_name"></textarea>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <button class="btn btn-sm btn-warning mt-4" ng-click="deleteSequenceMoment($index)"> - </button>
-                                </div>
-                            </div>
-
-                            <div class="line-separator"></div>
+                            <div class="line-separator mt-0"></div>
+                            <div class="mt-3" style="border: 1px solid;">
+								<div class="col-12 d-flex pt-2 " ng-click="showSequencesDetailExp=!showSequencesDetailExp">
+									<h6 class="cursor-pointer w-100">
+										Configuración por secuencias y momentos
+									</h6>
+									<div ng-show="!showSequencesDetailExp" class="cursor-pointer"
+										 style="position: absolute;right: 35px;top: 3px;">
+										<i class="fas fa-caret-down"></i>
+									</div>
+									<div ng-hide="!showSequencesDetailExp" class="cursor-pointer" 
+										 style="position: absolute;right: 35px;top: 3px;">
+										<i class="fas fa-caret-up"></i>
+									</div>
+								</div>
+								<div ng-show="showSequencesDetailExp" class="col-12 border">
+									<div class="row">
+										<div class="form-group col-md-6">
+											<label for="exampleFormControlSelect1">Secuencia</label>
+											<select id="selectCity"
+													ng-class="{'select2_group':true, 'form-control':true}"
+													class="select2_group form-control selectpicker" ng-model="sequenceSelected" ng-change="sequenceChange(sequenceSelected)">
+												<option></option>
+												<option ng-repeat="x in sequences" value="@{{x.id}}|@{{x.name}}">@{{x.name}}</option>
+											</select>
+										</div>
+										<div class="form-group col-md-6">
+											<label for="exampleFormControlSelect1">Momento</label>
+											<select class="form-control selectpicker" id="exampleFormControlSelect1"
+													ng-model="momentSelected" multiple>
+												<option></option>
+												<option ng-repeat="x in moments" value="@{{x.id}}|@{{x.name}}">@{{x.name}}</option>
+											</select>
+										</div>
+										<div class="col-md-12">
+											<button class="btn btn-success btn-sm btn-block" ng-click="addSequenceMoment()">Agregar</button>
+										</div>
+									</div>
+									<br>
+									<br>
+									<div class="row" ng-repeat="x in arraySequenceMomentEdit">
+										<div class="col-md-5" >
+											<label for="name">Secuencia</label>
+											<input class="form-control" type="text" placeholder="nombre" ng-model="x.sequence_name">
+										</div>
+										<div class="col-md-5">
+											<label for="exampleFormControlTextarea1">Momento</label>
+											<input class="form-control" type="text" placeholder="nombre" ng-model="x.moment_name">
+										</div>
+										<div class="form-group col-md-2">
+											<button class="btn btn-sm btn-warning mt-4" ng-click="deleteSequenceMomentEdit(x.id,$index,x.id_moment_kit)"> - </button>
+										</div>
+									</div>
+									<div class="row" ng-repeat="x in arraySequenceMoment">
+										<div class="col-md-5" >
+											<label for="name">Secuencia</label>
+											<input class="form-control" type="text" placeholder="Descripción" ng-model="x.name">
+										</div>
+										<div class="col-md-5">
+											<label for="exampleFormControlTextarea1">Momentos</label>
+											<textarea class="form-control" id="description" rows="1" ng-model="x.moments_name"></textarea>
+										</div>
+										<div class="form-group col-md-2">
+											<button class="btn btn-sm btn-warning mt-4" ng-click="deleteSequenceMoment($index)"> - </button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="line-separator"></div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="exampleFormControlSelect1">Vincular elementos</label>
+                                    <label for="exampleFormControlSelect1"><strong>Vincular elementos</strong></label>
                                     <select class="form-control selectpicker" id="exampleFormControlSelect1prue"
                                             ng-model="elementsSelected" multiple>
                                         <option></option>
@@ -342,7 +374,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="exampleFormControlTextarea1">Descripción</label>
+                                    <label for="exampleFormControlTextarea1"><strong>Descripción</strong></label>
                                     <textarea class="form-control" ng-model="kit.description" id="description" rows="3"></textarea>
                                 </div>
                             </div>

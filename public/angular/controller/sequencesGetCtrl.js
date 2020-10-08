@@ -50,7 +50,9 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                             prevEl: '.swiper-button-prev',
                         },
                     });
-                }, 100);
+                    resizeMiniCard();
+                    renderDisabledKit();
+                }, 1000);
 
 
                 function searchElementKit(elementKit) {
@@ -78,12 +80,14 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                                     if (!searchElementKit(kit)) {
                                         $scope.elementsKits.push(kit);
                                     }
-                                    if (kit.elementsKits && kit.elementsKits[0]) {
-                                        element = kit.elementsKits[0].element;
-                                        element.type = "element";
-                                        element.name_url_value = element.name.replace(/\s/g, '_').toLowerCase();
-                                        if (!searchElementKit(element)) {
-                                            $scope.elementsKits.push(element);
+                                    if (kit.kit_elements) {
+                                        for(var k=0; k<kit.kit_elements.length;k++) {
+                                            element = kit.kit_elements[k].element;
+                                            element.type = "element";
+                                            element.name_url_value = element.name.replace(/\s/g, '_').toLowerCase();
+                                            if (!searchElementKit(element)) {
+                                                $scope.elementsKits.push(element);
+                                            }
                                         }
                                     }
                                 }
@@ -337,6 +341,39 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
         }
     }
 
+    function renderDisabledKit() {
+        
+        $('.kit_element.disabled').each(function(){
+            //$(this).next().removeClass('d-none');
+            $(this).next().css('width',$(this).width()/1.5);
+            $(this).next().css('height',$(this).height()/4);
+            $(this).next().css('top',$(this).height() / 2);
+            $(this).next().css('left',$(this).width()/4);
+            $(this).next().css('font-size',$(this).width()/20);
+        });
+    }
+    
+    function resizeMiniCard() {
+        var minHeight = 0;
+        $('.mini-card').each(function(){
+            var height = $(this).css('height').replace('px','');
+            if(Number(height) > minHeight ) {
+                minHeight = Number(height);
+            }
+        });
+        $('.mini-card').each(function(){
+            $(this).css('height',minHeight + 'px');
+        });
+    }
+    
+    $(window).resize(function () {
+        $timeout(function() {
+            resizeMiniCard();
+            renderDisabledKit();
+        },10);
+    });
+    
+    
 });
 
 

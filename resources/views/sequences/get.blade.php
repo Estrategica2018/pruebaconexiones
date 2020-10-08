@@ -59,11 +59,11 @@
                    <div class="col-sm-7 m-auto col-md-4 col-lg-3 text-center">
                         <img src="/@{{sequence.url_image}}" width="70%" height="auto" class="mr-auto ml-auto">
                    </div>
-                   <div class="col-sm-7  ml-auto mr-auto col-md-4  col-lg-5 mt-3 mt-md-0">
+                   <div class="col-sm-12 ml-auto mr-auto col-md-6 col-lg-5 mt-3 mt-md-0">
                           <iframe src="sequence.url_vimeo" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                    </div>
-                   <div class="col-12 mt-3 mt-md-0 col-md-4  col-lg-4">
+                   <div class="col-12 mt-3 mt-md-0 col-md-12 mt-md-2 mt-lg-0 col-lg-4">
                      <strong>Punto de encuentro: </strong>@{{sequence.description}}
                      <p>
                         <a ng-click="showMash(sequence)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
@@ -78,23 +78,26 @@
                  
                  <div class="col-12 ml-2 mt-3" ng-show="elementsKits.length > 0">
                    <h5 class="pl-3 mt-4 mb-3 boder-header">Esta guía requiere instrumentos y materiales de laboratorio </h5>
-                   <div class="row">
-                       <div class="col-xl-4 col-md-6" ng-repeat="kit_element in elementsKits" style="border: 6px solid white;">
-                          <div class="card-body bg-light text-center p-1 row">
+                   <div class="row  mt-4">
+                       <div class="col-xl-4 col-lg-6 col-md-8" ng-repeat="kit_element in elementsKits" style="border: 6px solid white;">
+                          <div class="card-body bg-light text-center p-1 row mini-card" style="min-width: 391px;">
                              <div class="col-6">
-                                <img class="p-0" ng-src="/@{{kit_element.url_image}}" width="100%" height="auto" style="margin-top: 17px;"/>
+                                <img ng-class="{'disabled':kit_element.quantity === 0}" class="kit_element mt-3 p-0" ng-src="/@{{kit_element.url_image}}" width="100%" height="auto" style="margin-top: 17px;"/>
+                                <div class="d-none kit-imagen-sold-out">
+                                    Agotado
+                                 </div>
                             </div>
-                             <div class="col-6">
-                                 <div class="mt-3 kit-description" id="sequence-description-@{{kit_element.id}}">
+                             <div class="col-6" style="min-height:210px">
+                                 <div class="mt-3 kit-description mb-5" id="sequence-description-@{{kit_element.id}}">
                                     <h6 class="boder-header p-1 text-left fs-0">
                                        @{{kit_element.name}}
                                     </h6>
                                     @{{kit_element.description}}
                                  </div>
-                                 <div class="p-0 mt-3 text-aling-left">
-                                    <a ng-show="kit_element.type==='kit'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="../../kit_de_laboratorio/@{{kit_element.id}}/@{{kit_element.name_url_value}}">Detalle</a>
-                                    <a ng-show="kit_element.type==='element'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2" ng-href="../../elemento_de_laboratorio/@{{kit_element.id}}/@{{kit_element.name_url_value}}">Detalle</a>
-                                    <button ng-class="{'disabled': kit_element.quantity === 0}" class="pl-3 mt-1 btn btn-outline-primary fs--2" ng-click="buyKitElement(kit_element)">Agregar</button>
+                                 <div class="p-0 text-aling-left" style="position: absolute;bottom: 5px;">
+                                    <a ng-show="kit_element.type==='kit'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--1" ng-href="../../kit_de_laboratorio/@{{kit_element.id}}/@{{kit_element.name_url_value}}">Detalle</a>
+                                    <a ng-show="kit_element.type==='element'" class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--1" ng-href="../../elemento_de_laboratorio/@{{kit_element.id}}/@{{kit_element.name_url_value}}">Detalle</a>
+                                    <button ng-class="{'disabled': kit_element.quantity === 0}" class="pl-3 mt-1 btn btn-outline-primary fs--1" ng-click="buyKitElement(kit_element)"><i class="fas fa-shopping-cart"></i> Comprar</button>
                                  </div>
                             </div>
                           </div>

@@ -185,8 +185,6 @@ class RegisterController extends Controller
                 $affiliatedContentAccountService->affiliated_account_service_id = $affiliatedAccountService->id;
                 $affiliatedContentAccountService->type_product_id = $ratingPlanFree->type_rating_plan_id;;
                 $affiliatedContentAccountService->sequence_id = $ratingPlanFree->sequence_free_id;
-                $affiliatedAccountService->init_date = date('Y-m-d');
-                $affiliatedAccountService->end_date = date('Y-m-d', strtotime('+ ' . $ratingPlanFree->days . ' day'));
                 $affiliatedContentAccountService->save();
 
             } else {

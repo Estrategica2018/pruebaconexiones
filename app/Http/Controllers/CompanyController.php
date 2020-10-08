@@ -77,32 +77,43 @@ class CompanyController extends Controller
         $companySequence = CompanySequence::select('id', 'name', 'description', 'url_image', 'keywords', 'areas', 'themes', 'objectives', 'mesh', 'url_vimeo')->with(
             ['moments' => function ($queryMoments) {
                 $queryMoments->select('id', 'sequence_company_id', 'order', 'name', 'description', 'objectives')
-                    ->with(['experiences' => function ($queryExp) {
-                        $queryExp->select('id', 'sequence_moment_id', 'title', 'decription', 'objectives');
-                    }, 
-                    'moment_kit.kit' => function($queryKits) {
-                        $queryKits->select('kits.*',DB::raw('(CASE WHEN kits.quantity = 0 THEN "sold-out" ELSE CASE WHEN kits.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
-                        ->with(['kit_elements.element'=>function($queryElem){
-                            $queryElem->select('elements.*',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'));
-                        }]);
-                    }, 'moment_kit.element']);
+                    ->with(['moment_kit.kit' => function($queryKits) {
+                        $queryKits->with(['kit_elements.element'=>function($queryElem){
+                            $queryElem->where(function($validateElement) {
+                                $validateElement->where('elements.end_date', '>=', date('Y-m-d'))
+                                ->orWhereNull('elements.end_date');    
+                            });
+                        }])
+                        ->where(function($validateKit) {
+                            $validateKit->where('kits.end_date', '>=', date('Y-m-d'))
+                            ->orWhereNull('kits.end_date');
+                        });
+                    }, 'moment_kit.element' =>function($queryElem){
+                           $queryElem->where(function($validateElement) {
+                                $validateElement->where('elements.end_date', '>=', date('Y-m-d'))
+                                ->orWhereNull('elements.end_date');    
+                            });
+                    } ]);
             }]
         ) 
-            ->where('company_id', $company_id)
-            ->where(function ($query) {
+        ->where('company_id', $company_id)
+        ->where(function ($query) {
+            $query->where(function($validateSequence) {
                 $dt = new \DateTime();
-                $query->where('expiration_date', '>=', $dt->format('Y-m-d'))
-                    ->orWhereNull('expiration_date'); 
-            })
-            ->where('init_date', '<=', $dt->format('Y-m-d'));
+                $validateSequence->where('expiration_date', '>=', $dt->format('Y-m-d'))
+                ->orWhereNull('expiration_date');
+            });
+        })
+        ->where('init_date', '<=', $dt->format('Y-m-d'));
 
-            if($sequence_id > 0) {
-                $companySequence = $companySequence->find($sequence_id);
-                $companySequence  = [$companySequence];
-            }
-            else {
-                $companySequence = $companySequence->get();
-            } 
+        if($sequence_id > 0) {
+            $companySequence = $companySequence->find($sequence_id);
+            $companySequence  = [$companySequence];
+        }
+        else {
+            $companySequence = $companySequence->get();
+        }
+        
         return response()->json([
             'activesPlan' => $activesPlan,
             'shoppingCarts' => $shoppingCarts,

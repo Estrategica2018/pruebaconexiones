@@ -61,12 +61,12 @@
     }
 
   </style>
-<div ng-controller="kitsElementsCtrl" ng-init="getKits()">
+<div ng-controller="kitsElementsCtrl" ng-init="getKit()">
 
    <div ng-show="errorMessageFilter" id="errorMessageFilter"
       class="fade-message d-none-result d-none alert alert-danger p-1 pl-2 row">
       <span class="col">@{{ errorMessageFilter }}</span>
-      <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
+      <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></i></a></span>
    </div>
 
     <div id="main-card" class="mb-3 card w-100">
@@ -76,10 +76,13 @@
                <div class="p-3">
                @if(isset($files))
                   <div class="swiper-container">
-                     <div class="swiper-wrapper">
+                     <div class="swiper-wrapper kit" ng-class="{'disabled':kit.quantity === 0}">
                      @foreach($files as $file)
                         <div class="swiper-slide" style="background-image:url(/{{ $directory }}/{{$file}});"></div> 
-                     @endforeach   
+                     @endforeach
+                     </div>
+                     <div class="d-none kit-imagen-sold-out">
+                        Agotado
                      </div>
                      <!-- Add Arrows -->
                      <div class="swiper-button-next" style="color: #007aff;"></div>
@@ -94,7 +97,7 @@
                   @{{kit.description}} 
                   <div class="col-12 pl-0 mt-3" >
                      <button ng-click="onAddShoppingCart(kit)" 
-                        ng-class="{'disabled':kit.status === 'sold-out' || kit.status === 'no-available'}"
+                        ng-class="{'disabled':kit.quantity === 0}"
                         class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6">
                         <i class="fas fa-shopping-cart"></i> Comprar
                      </button>
@@ -104,20 +107,20 @@
                   <h5 class="fs-1 pl-3 boder-header">Guías de aprendizaje que te pueden interesar</h5>
                   <div class="row  mt-4">
                      <div class="col-xl-4 col-lg-6 col-md-8" ng-repeat="sequence in listSequence" style="border: 6px solid white;">
-                        <div class="card-body bg-light p-1 row">
+                        <div class="card-body bg-light mini-card p-1 row" style="min-width: 376px;">
                            <div class="col-auto">
                               <img class="mt-3 p-0" ng-src="/@{{sequence.url_image}}" style="width:92px;height:auto;">
                            </div>
-                           <div class="col-8">
+                           <div class="col-8" style="min-height:210px">
                               <div class="mt-3 kit-description">
                                  <h6 class="boder-header pl-3 fs-0 text-left ">
                                     @{{sequence.name}}
                                  </h6>
                                  @{{sequence.description}}
                               </div>
-                              <div class="pl-3 mt-3 mb-3 text-aling-left">
-                                 <a class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--2"  ng-href="/guia_de_aprendizaje/@{{sequence.id}}/@{{sequence.name_url_value}}" >Detalle</a>
-                                 <a class="pl-3 mt-1 btn btn-outline-primary fs--2" href="#" ng-click="onSequenceBuy(sequence)"  class="col-6">
+                              <div class="p-0 text-aling-left" style="position: absolute;bottom: 5px;">
+                                 <a class="ml-auto mr-auto mt-1 btn btn-outline-primary fs--1"  ng-href="/guia_de_aprendizaje/@{{sequence.id}}/@{{sequence.name_url_value}}" >Detalle</a>
+                                 <a class="pl-3 mt-1 btn btn-outline-primary fs--1" href="#" ng-click="onSequenceBuy(sequence)"  class="col-6">
                                     <i class="fas fa-shopping-cart"></i> Comprar
                                  </a>
                               </div>

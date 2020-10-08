@@ -15,7 +15,7 @@
     background-color: #e6edf5;
     min-width: 139px;
     padding-left: 13px;
-	font-weight: bold;
+    font-weight: bold;
     font-size: 12px;
 }
 
@@ -33,7 +33,7 @@
     background-color: #e6edf5;
     min-width: 139px;
     padding-left: 13px;
-	font-weight: bold;
+    font-weight: bold;
     font-size: 12px;
 }
 
@@ -152,9 +152,9 @@
                     </tr>
                  </thead>
                  <tbody ng-repeat="account_services in response.affiliate.affiliated_account_services">
-					<tr class="btn-reveal-trigger border-top border-200" >
+                    <tr class="btn-reveal-trigger border-top border-200" >
                        <td class="selection-cell" style="border: 0px;">
-					   @{{account_services.init_date}}
+                       @{{account_services.init_date}}
                        </td>
                        <td class="selection-cell" style="border: 0px;">
                        @{{account_services.end_date}}
@@ -163,13 +163,13 @@
                        @{{ account_services.rating_plan.name }}
                        </td>
                    </tr>
-				   <tr class="btn-reveal-trigger border-top border-200" ng-repeat="sequence in account_services.sequences">
+                   <tr class="btn-reveal-trigger border-top border-200" ng-repeat="sequence in account_services.sequences">
                        <td colspan="3" class="selection-cell" style="border: 0px;">
-					   @{{sequence.name}}
+                       @{{sequence.name}}
                        </td>
                    </tr>
                 </tbody>
-			   </table>
+               </table>
             </div>
             <div id="payment" class="tab-pane fade" ng-class="{'show active': tabSelected === 'payment'}">
                 <table class="table table-dashboard table-sm fs--1 border-bottom border-200 mb-0 table-dashboard-th-nowrap">
@@ -179,8 +179,8 @@
                        <th tabindex="0" class="border-0">Precio</th>
                        <th tabindex="0" class="border-0">Estado</th>
                        <th tabindex="0" class="border-0" style="min-width: 121px;">Producto</th>
-					   <th tabindex="0" class="border-0" style="min-width: 121px;"># Aprobación</th>
-					   <th tabindex="0" class="border-0" style="min-width: 121px;">MercadoPago</th>
+                       <th tabindex="0" class="border-0" style="min-width: 121px;"># Aprobación</th>
+                       <th tabindex="0" class="border-0" style="min-width: 121px;">MercadoPago</th>
                     </tr>
                  </thead>
                  <tbody>
@@ -203,11 +203,11 @@
                        <td ng-show="shoppingCart.shopping_cart_product[0].elementStruct[0].name" class="text-align-left selection-cell" style="border: 0px;">
                        @{{ shoppingCart.shopping_cart_product[0].elementStruct[0].name }}
                        </td>
-					   <td class="selection-cell" style="border: 0px;">
+                       <td class="selection-cell" style="border: 0px;">
                        @{{ shoppingCart.approval_code }}
                        </td>
-					   <td class="text-align-left selection-cell" style="border: 0px;">
-					   @{{ (shoppingCart.payment_transaction_id.length === 14  ? 'Pago Simulado' : 'MercadoPago - ' + shoppingCart.payment_transaction_id )  }}
+                       <td class="text-align-left selection-cell" style="border: 0px;">
+                       @{{ (shoppingCart.payment_transaction_id.length === 14  ? 'Pago Simulado' : 'MercadoPago - ' + shoppingCart.payment_transaction_id )  }}
                        </td>
                    </tr>
                 </tbody>

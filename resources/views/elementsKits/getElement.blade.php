@@ -73,7 +73,7 @@
    <div ng-show="errorMessageFilter" id="errorMessageFilter"
       class="fade-message d-none-result d-none alert alert-danger p-1 pl-2 row">
       <span class="col">@{{ errorMessageFilter }}</span>
-      <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></a></i></span>
+      <span class="col-auto"><a ng-click="errorMessageFilter = null"><i class="far fa-times-circle"></i></a></span>
    </div>
 
    <div id="main-card" class="mb-3 card w-100">
@@ -101,7 +101,7 @@
                     @{{element.description}}
                     <div class="col-12 pl-0 mt-3" >
                       <button ng-click="onAddShoppingCart(element)" 
-                        ng-class="{'disabled':element.status === 'sold-out' || element.status === 'no-available'}"
+                        ng-class="{'disabled':element.quantity === 0}"
                         class="mt-3 btn btn-sm btn-outline-primary fs-0" href="#" class="col-6">
                          <i class="fas fa-shopping-cart"></i> Comprar</button>
                      </div>

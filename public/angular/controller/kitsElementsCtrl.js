@@ -30,7 +30,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         });  
     }
     
-    $scope.allKits = function() {
+    $scope.allKitElements = function() {
         $('.d-none-result').removeClass('d-none');
         $http({
             url:"/get_kit_elements",
@@ -38,18 +38,20 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         }).
         then(function (response) {
             $scope.kit_elements = [];
-            var kits = response.data;
+            var kits = response.data.kits;
             for(var i=0; i<kits.length; i++){
                 var kit = kits[i];
                 kit.type="kit";
                 kit.name_url_value = kit.name.replace(/\s/g,'_').toLowerCase();
                 $scope.kit_elements.push(kit);
-                if(kit.kit_elements && kit.kit_elements[0] ) {
-                    var element = kit.kit_elements[0].element;
-                    element.type="element";
-                    element.name_url_value = element.name.replace(/\s/g,'_').toLowerCase();
-                    $scope.kit_elements.push(element);    
-                }
+            }
+            
+            var elements = response.data.elements;
+            for(var i=0; i<elements.length; i++){
+                var element = elements[i];
+                element.type="element";
+                element.name_url_value = element.name.replace(/\s/g,'_').toLowerCase();
+                $scope.kit_elements.push(element);
             }
             
             $timeout(function() {
@@ -65,7 +67,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         });
     };
     
-    $scope.getKits = function() { 
+    $scope.getKit = function() { 
         
         var params = window.location.href.split('/');
         var kitName = window.location.href.split('/')[params.length - 1];
@@ -106,7 +108,8 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                 $('#loading').removeClass('show');
                 $('.d-none-result').removeClass('d-none');
                 renderDisabledKit();
-              },1000);
+                resizeMiniCard();
+              },100);
             
         }).catch(function (e) {
             $scope.errorMessageFilter = 'Error consultando los kits de laboratorio. ['+e+']';
@@ -151,8 +154,12 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
                 }
             }
 
-            $('#loading').removeClass('show');
-            $('.d-none-result').removeClass('d-none');
+            $timeout(function() {
+                $('#loading').removeClass('show');
+                $('.d-none-result').removeClass('d-none');
+                renderDisabledKit();
+            },100);
+            
         }).catch(function (e) {
             $scope.errorMessageFilter = 'Error consultando el elemento de laboratorio';
             $('#loading').removeClass('show');
@@ -161,7 +168,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     };    
     
     $scope.onAddShoppingCart = function (kitElement) {
-        if(kitElement.status === 'sold-out' || kitElement.status === 'no-available') {
+        if(kitElement.quantity === 0) {
             swal({
               text: 'Este producto no se encuentra disponible actualmente',
               type: "warning",
@@ -262,20 +269,47 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
     }
     
     function renderDisabledKit() {
+        
+        $('.swiper-wrapper.kit.disabled').each(function(){
+            //$(this).next().removeClass('d-none');
+            $(this).next().css('width',$(this).width()/1.5);
+            $(this).next().css('height',$(this).height()/5);
+            $(this).next().css('top',$(this).height()/2.5);
+            $(this).next().css('left',$(this).width()/7);
+            $(this).next().css('font-size',$(this).width()/20);
+        });
+        
         $('.kit-imagen.disabled').each(function(){
             //$(this).next().removeClass('d-none');
             $(this).next().css('width',$(this).width()/1.5);
             $(this).next().css('height',$(this).height()/5);
             $(this).next().css('top',$(this).position().top * 3.5);
             $(this).next().css('left',72 + ($(this).parent().width() - $(this).width())/2);
+            $(this).next().css('font-size',$(this).width()/15);
+        });
+    }
+    
+    function resizeMiniCard() {
+        var minHeight = 0;
+        $('.mini-card').each(function(){
+            var height = $(this).css('height').replace('px','');
+            if(Number(height) > minHeight ) {
+                minHeight = Number(height);
+            }
+        });
+        $('.mini-card').each(function(){
+            $(this).css('height',minHeight + 'px');
         });
     }
     
     $(window).resize(function () {
         $timeout(function() {
             renderDisabledKit();
+            resizeMiniCard();
         },10);
     });
+    
+    
 
 });
  
