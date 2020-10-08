@@ -42,6 +42,7 @@ class KitElementController extends Controller
     public function get_kit(Request $request, $kid_id)
     {
         $dt = new \DateTime();
+        
         return Kit::
         with(['moment_kits' => function($query) use ($dt) {
             $query->with(['moment'=>function($moment) use ($dt) {
@@ -53,13 +54,15 @@ class KitElementController extends Controller
                     });
                     $sequence->where('company_sequences.init_date', '<=', $dt->format('Y-m-d'));
                 }]);
-                //$moment->select('*');
                 $moment->select(['sequence_moments.id','sequence_moments.id','sequence_moments.sequence_company_id','sequence_moments.order']);
             }]);
             $query->select(['moment_kits.id','moment_kits.*']);
         }])
         ->with('kit_elements', 'kit_elements.element')
-        ->where('end_date', '>=', date('Y-m-d'))
+        ->where(function($validateKit){
+            $validateKit->where('end_date', '>=', date('Y-m-d'))
+            ->orWhereNull('end_date');
+        })
         ->find($kid_id);
     }
 
