@@ -60,7 +60,7 @@
                         <img src="/@{{sequence.url_image}}" width="70%" height="auto" class="mr-auto ml-auto">
                    </div>
                    <div class="col-sm-12 ml-auto mr-auto col-md-6 col-lg-5 mt-3 mt-md-0">
-                          <iframe src="sequence.url_vimeo" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
+                          <iframe id="vimeo-player" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                    </div>
                    <div class="col-12 mt-3 mt-md-0 col-md-12 mt-md-2 mt-lg-0 col-lg-4">
@@ -118,5 +118,7 @@
 
 <script src="{{ asset('/falcon/js/swiper.min.js') }}" defer></script>
 <script src="{{ asset('/../angular/controller/sequencesGetCtrl.js') }}" defer></script>
+<script src="{{ asset('/js/vimeo-player.min.js') }}" defer></script>
+
 
 @endsection

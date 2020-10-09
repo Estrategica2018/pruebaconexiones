@@ -42,6 +42,14 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                 }
 
                 $timeout(function () {
+                    var params = $scope.sequence.url_vimeo.split('/');
+                    
+                    var options = {
+                        id: params[params.length - 1]
+                    };
+                    
+                    var madeInNy = new Vimeo.Player('vimeo-player', options);
+                    
                     $('#loading').removeClass('show');
                     $('.d-none-result2').removeClass('d-none');
                     new Swiper('.swiper-container', {
