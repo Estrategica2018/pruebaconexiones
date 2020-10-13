@@ -45,19 +45,35 @@ MyApp.controller("ratingPlanListCtrl", ["$scope", "$http", function ($scope, $ht
         $scope.errorMessageFilter = 'Error consultando las secuencias, compruebe su conexión a internet';
     });
     
-    $scope.onRatingPlanFree = function(ratingPlanId) {
+    $scope.onRatingPlanFree = function(ratingPlanId, isTutor) {
 
-        swal({
-          text: "Confirma para acceder a nuestra prueba gratuita",
-          type: "warning",
-          showConfirmButton: true,showCancelButton: true
-        })
-        .then((willConfirm) => {
-          if (willConfirm) {
-            swal({text:'Serás redireccionado al registro',showConfirmButton: false,showCancelButton: false});
-            window.location='/validate_registry_free_plan/'+ratingPlanId;
-          }
-        });
+        if(isTutor) {
+            swal({
+              text: "Confirma para acceder a nuestra prueba gratuita",
+              type: "warning",
+              showConfirmButton: true,showCancelButton: true
+            })
+            .then((willConfirm) => {
+              if (willConfirm) {
+                window.location='/validate_registry_free_plan/'+ratingPlanId;
+              }
+            });
+        }
+        else {
+            swal({
+              text: "Para acceder a la prueba gratuita, primero debes registrarte",
+              type: "warning",
+              confirmButtonText: "Ir a Registro",
+              cancelButtonText: "Cancelar", 
+              showConfirmButton: true,
+              showCancelButton: true
+            })
+            .then((willConfirm) => {
+              if (willConfirm) {
+                window.location='/validate_registry_free_plan/'+ratingPlanId;
+              }
+            });
+        }
     };
     
 }]);
