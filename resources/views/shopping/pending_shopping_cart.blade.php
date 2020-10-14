@@ -17,9 +17,11 @@
        @endguest
        @auth('afiliadoempresa')
        <h5 ng-show="shopping_carts.length > 0" class="mb-2 justify-content-end col-12">
-         <a class="btn btn-outline-primary" href="#" ng-click="getPreferenceInitPoint()">
-            <span class="fs--1"><i class="btn-spinner d-none fa fa-spinner fa-spin"></i>Continuar Compra</span>
-         </a>
+         <button class="btn btn-outline-primary">
+            <span class="fs--1" ng-click="getPreferenceInitPoint()">
+              <i class="btn-spinner d-none fa fa-spinner fa-spin"></i>Continuar Compra
+            </span>
+         </button>
        </h5>
        @endauth
      </div>
@@ -55,10 +57,10 @@
                  <img class="col-rounded" src="{{asset('/')}}@{{shopping_cart_product.sequence.url_image}}" width="80px"/>
                </div>
                <div class="pr-3 pb-0 col-lg-6 col-md-9 pl-0" ng-show="shopping_cart_product.sequence">
-                 <h6 class="text-900">@{{shopping_cart_product.sequence.name}}</h6>
-                 <p class="col-12 fs-0 text-900 pl-0">
+                 <h6>@{{shopping_cart_product.sequence.name}}</h6>
+                 <div class="col-12 fs-0 pl-0">
                    <small>@{{shopping_cart_product.sequence.description}}</small>
-                 </p>
+                 </div>
                </div>
             </div>
          </div>
@@ -93,50 +95,54 @@
             </div>
          </div>
        </div>
-       <div ng-show="shopping_cart.type_product_id === 4" class="row p-3" ng-repeat="shopping_cart_product in shopping_cart.shopping_cart_product">
-            <div class="col-8">
-            <div class="align-items-center media" class="col-3 ml-4">
-              <img class="rounded mr-3" src="@{{shopping_cart_product.kiStruct.url_image}}" width="80px"/>
-              <div class="media-body">
-                <h5 class="fs-0"><a class="text-900">@{{shopping_cart_product.kiStruct.name}}</a></h5>
-                <h4 class="fs-0"><a class="text-600">@{{shopping_cart_product.kiStruct.description}}</a></h4>
-                <div class="fs--2 fs-md--1 text-danger cursor-pointer" ng-click="onDelete(shopping_cart.id)">Remover</div>
-              </div>
-            </div>
-            </div>
-            <div class="col-4">
-               <div class="ml-auto pl-0 pr-2 pr-md-3 order-0 order-md-1 mb-2 mb-md-0 text-600 col-md-4">$@{{shopping_cart_product.kiStruct.price}}</div>
-              </div>
+       
+       <div ng-show="shopping_cart.type_product_id === 4" 
+                ng-repeat="shopping_cart_product in shopping_cart.shopping_cart_product" 
+               class="col-12 d-flex pl-0 mt-3 row ml-2">
+           <div class="p-3" ng-show="shopping_cart_product.kiStruct">
+             <img class="col-rounded" src="/@{{shopping_cart_product.kiStruct.url_image}}" width="80px"/>
+           </div>
+           <div class="pr-3 pb-0 col-lg-8 col-md-7 col-6 pl-0 mb-3" ng-show="shopping_cart_product.kiStruct">
+             <h5 class="fs-0"><a class="text-900">@{{shopping_cart_product.kiStruct.name}}</a></h5>
+             <div class="fs--1 text-danger cursor-pointer" ng-click="onDelete(shopping_cart.id)">Remover</div>
+             
+             <div class="col-12 fs-0 pl-0">
+               <small>@{{shopping_cart_product.kiStruct.description}}</small>
+             </div>
+           </div>
+           <div class="p-3 ml-auto text-align-right mr-4">
+               $@{{shopping_cart.rating_plan_price}} USD
+           </div>
        </div>
-       <div ng-show="shopping_cart.type_product_id === 5" class="row p-3" 
-            ng-repeat="shopping_cart_product in shopping_cart.shopping_cart_product">
-            <div class="col-8">
-            <div class="align-items-center media" class="col-3 ml-4">
-              <img class="rounded mr-3" src="@{{shopping_cart_product.elementStruct[0].url_image}}" width="80px"/>
-              <div class="media-body">
-                <h5 class="fs-0"><a class="text-900">@{{shopping_cart_product.elementStruct[0].name}}</a></h5>
-                <h4 class="fs-0"><a class="text-600">@{{shopping_cart_product.elementStruct[0].description}}</a></h4>
-                <div class="fs--2 fs-md--1 text-danger cursor-pointer" ng-click="onDelete(shopping_cart.id)">Remover</div>
-              </div>
-            </div>
-            </div>
-            <div class="col-4">
-               <div class="ml-auto pl-0 pr-2 pr-md-3 order-0 order-md-1 mb-2 mb-md-0 text-600 col-md-4">$@{{shopping_cart_product.elementStruct[0].price}}</div>
-              </div>
+       
+       <div ng-show="shopping_cart.type_product_id === 5" 
+                ng-repeat="shopping_cart_product in shopping_cart.shopping_cart_product" 
+               class="col-12 d-flex pl-0 mt-3 row ml-2">
+           <div class="p-3" ng-show="shopping_cart_product.elementStruct[0]">
+             <img class="col-rounded" src="/@{{shopping_cart_product.elementStruct[0].url_image}}" width="80px"/>
+           </div>
+           <div class="pr-3 pb-0 col-lg-8 col-md-7 col-6 pl-0 mb-3" ng-show="shopping_cart_product.elementStruct[0]">
+             <h5 class="fs-0"><a class="text-900">@{{shopping_cart_product.elementStruct[0].name}}</a></h5>
+             <div class="fs--1 text-danger cursor-pointer" ng-click="onDelete(shopping_cart.id)">Remover</div>
+             <div class="col-12 fs-0 pl-0">
+               <small>@{{shopping_cart_product.elementStruct[0].description}}</small>
+             </div>
+           </div>
+           <div class="p-3 ml-auto text-align-right mr-4">
+               $@{{shopping_cart.rating_plan_price}} USD
+           </div>
        </div>
+       
      </div>
      <div ng-show="shopping_carts.length === 0" class="m-4 align-items-center px-1 border-bottom border-200 no-gutters row fs-0">
       No hay elementos en el carrito de compras
      </div> 
 
-     <div ng-show="shopping_carts.length > 0" class="font-weight-bold px-1 no-gutters row">
-      <div class="py-2 px-md-3 ml-auto text-900 col-9 col-md-8">Total</div>
-      <div class="px-3 col">
-         <div class="row">
-            <div class="py-2 d-none d-md-block text-center col-md-8">(@{{numberOfItems}} Elementos)</div>
-            <div ng-show="totalPrices >= 0" class="col-12 col-md-4 ml-auto py-2 pr-md-3 pl-0 col">$ @{{totalPrices}} USD</div>
+     <div ng-show="shopping_carts.length > 0" class="font-weight-bold no-gutters col-12">
+         <div class="d-flex mt-2 mb-2" ng-show="totalPrices >= 0">
+            <div class="ml-auto ">(@{{numberOfItems}} Elementos)</div>
+            <div class="ml-3">Total $ @{{totalPrices}} USD</div>
          </div>
-      </div>
      </div>
      
      <div class="px-1 no-gutters row text-right">

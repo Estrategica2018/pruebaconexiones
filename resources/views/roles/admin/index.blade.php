@@ -25,15 +25,15 @@
                      <div class="mb-3 overflow-hidden card" style="min-width: 12rem;">
                         <div class="bg-holder bg-card"></div>
                         <div class="position-relative card-body">
-                           <h6>Pagos
+                           <h6>Recaudo
                            <span class="badge rounded-capsule ml-2" ng-class="{ 'badge-soft-success':{{$progressPrice}}  >= 1, 'badge-soft-warning':{{$progressPrice}}  < 1  }">
                            {{$progressPrice}} % 
-                           <i ng-show="{{$progressPrice}} >= 1 " class="fa fa-chevron-up" aria-hidden="true"></i>
-                           <i ng-show="{{$progressPrice}} < 1" class="fa fa-chevron-down" aria-hidden="true"></i>
+                           
+                           <i ng-class="{'fa fa-chevron-up': {{$progressPrice}} >= 1, 'fa fa-chevron-down': {{$progressPrice}} < 1 } " aria-hidden="true"></i>
                            </span>
                            <small>respecto al mes pasasdo</small>
                            </h6>
-                           <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif"><span>${{ $totalSumPrices }} USD</span></div>
+                           <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif"><span>${{ $totalSumPrices }} USD <small class="fs--1">En el mes</small></span></div>
                         </div>
                      </div>
                      <div class="mb-3 overflow-hidden card" style="min-width: 12rem;">

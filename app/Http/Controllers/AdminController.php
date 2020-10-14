@@ -47,7 +47,8 @@ class AdminController extends Controller
         //-----------
         $shoppingCarts = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
-            ->where('payment_status_id', '!=',1)
+            ->where('payment_status_id', '!=',1,)
+            ->whereNotNull('payment_transaction_id')
             ->orderBy('updated_at', 'DESC')
             //->skip(0)->take(10)
             ->get();
@@ -63,6 +64,7 @@ class AdminController extends Controller
             $payment_transaction_id = $shoppingCart['payment_transaction_id'];
             if($payment_transaction_ant != $payment_transaction_id) {
                 $countShoppingCart ++;
+                $payment_transaction_ant = $payment_transaction_id;
                 if($countShoppingCart  === 11 ) {
                     break;
                 }
@@ -86,7 +88,7 @@ class AdminController extends Controller
             $groupShoppingCarts[$payment_transaction_id]['updated_at'] =  $shoppingCart['updated_at'];
         }
             
-        $totalSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->get()->sum('rating_plan_price');
+        //$totalSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->get()->sum('rating_plan_price');
         $countShoppingCarts = count($groupShoppingCarts);
         $totalShoppingCarts = count(ShoppingCart::select('payment_transaction_id')->where('payment_status_id', '!=',1)->groupBy('payment_transaction_id')->get());
         
@@ -99,6 +101,7 @@ class AdminController extends Controller
         $end_day_now =  date("Y-n-j", strtotime("last day of this month"));
         $nowSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->where([['updated_at','>=',$fist_day_now],['updated_at','<=',$end_day_now]])->get()->sum('rating_plan_price');
         
+        $totalSumPrices = $nowSumPrices;
         $progressPrice = '0%';
         if($lastSumPrices > 0 && $nowSumPrices > 0) {
             $progressPrice = round($nowSumPrices/$lastSumPrices,2);

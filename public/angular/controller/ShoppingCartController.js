@@ -41,9 +41,11 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
                                 var scp = sc.shopping_cart_product[l];
                                 if (sc.type_product_id == 4) {
                                     $scope.totalPrices += scp.kiStruct.price;//parseInt(scp.kiStruct.price);
+                                    $scope.numberOfItems++;
                                 } else if (sc.type_product_id == 5) {
                                     for (var k = 0; k < scp.elementStruct.length; k++) {
                                         $scope.totalPrices += scp.elementStruct[k].price;
+                                        $scope.numberOfItems++;
                                     }
                                 }
                             }

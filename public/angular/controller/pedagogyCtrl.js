@@ -11,10 +11,10 @@ MyApp.controller("pedagogyCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.setIconPedagogy = function (iconPedagogy) {
         $scope.icon_pedagogy = $scope.icon_pedagogy === iconPedagogy ? '' : iconPedagogy;
         if($scope.icon_pedagogy === '') {
-            $('.background-sequence-card').attr('h','4724');
+            $('.background-sequence-card').attr('h','4324');
         }
         else {
-            $('.background-sequence-card').attr('h','5024');
+            $('.background-sequence-card').attr('h','4624');
         }
         resizeSequenceCard();        
     }

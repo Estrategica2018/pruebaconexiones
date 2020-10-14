@@ -34,7 +34,7 @@
          </div>
          <div class="about-body text-center">
             <p class="about-body text-left">Esta propuesta ha sido concebida como material complementario para la enseñanza y aprendizaje de las ciencias, y se destaca por cuatro razones:.</p>
-            <img class="ml-auto mr-auto img-thumbnail img-fluid mb-3 shadow-sm" src="{{ asset('images/acercaConexiones/Captura de Pantalla 2020-03-13 a la(s) 4.43.29 p. m.png') }}" alt="">
+            <img class="pr-4 pl-4 pr-md-6 pl-md-6 ml-auto mr-auto img-thumbnail img-fluid mb-3" src="{{ asset('images/acercaConexiones/porqueConexiones-02.png') }}" alt="">
          </div>
       </div>
       <div class="col-lg-12">

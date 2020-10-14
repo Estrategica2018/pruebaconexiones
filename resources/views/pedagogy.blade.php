@@ -5,7 +5,7 @@
       style="min-height: 23vw;" ng-hide="loadFinished">
       cargando...
    </div>
-   <div class="d-none-result d-none background-sequence-card mt-3 ml-3 pt-2 row card card-body" w="1519" h="4524" ng-show="loadFinished">
+   <div class="d-none-result d-none background-sequence-card mt-3 ml-3 pt-2 row card card-body" w="1519" h="4124" ng-show="loadFinished">
       <div mt="20" ml="40" fs="30" class="boder-header p-2" >
          <h5 class="mb-0">Enfoque pedagógico</h5>
       </div>
@@ -66,10 +66,10 @@
       <div mt="1480" ml="40" fs="30" class="boder-header p-2 " >
          <h5>Estructura de las guías de aprendizaje</h5>
       </div>
-      <div class="z-index-1" mt="1560" ml="60">
-         <img src="{{ asset('images/acercaConexiones/estructura_guias_aprendizaje.png') }}"  w="562" h="auto"/>
+      <div class="z-index-1" mt="1510" ml="60">
+         <img src="{{ asset('images/acercaConexiones/educacion2.png') }}"  w="562" h="auto"/>
       </div>
-      <div class="text-justify"  mt="1550" ml="690" w="732"  fs="18">
+      <div class="text-justify"  mt="1570" ml="690" w="732"  fs="18">
          <p>Las guías de aprendizaje que hacen parte de <strong>Conexiones</strong>, usan la metáfora de recorrido o
             camino para organizar y presentar los contenidos que los y las estudiantes son invitados a
             explorar. A diferencia de los recursos educativos convencionales, nuestras guías de aprendizaje
@@ -79,10 +79,10 @@
             relaciones entre estos para así ampliar las fronteras del conocimiento.
          </p>
       </div>
-      <div mt="2330" ml="40" fs="30" class="boder-header p-2 " >
+      <div mt="1930" ml="40" fs="30" class="boder-header p-2 " >
          <h5>Situación generadora</h5>
       </div>
-      <div class="text-justify"  mt="2400" ml="60" w="600"  fs="18">
+      <div class="text-justify"  mt="2000" ml="60" w="600"  fs="18">
          <p>En lugar de proponer objetivos anclados a conceptos, cada guía de aprendizaje inicia con la descripción
             de una situación generadora
             o de interés, que tiene la intención pedagógica de movilizar la curiosidad de los estudiantes y las
@@ -94,24 +94,24 @@
             la Luna y las estrellas, para deducir la relación que estos fenómenos naturales tienen con la medida del tiempo.
          </p>
       </div>
-      <div mt="2360" ml="745" >
+      <div mt="1960" ml="745" >
          <iframe w="700" h="441" src="https://www.youtube.com/embed/u1iBFJIsIhw" frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen=""></iframe>
       </div>
-      <div mt="2800" ml="40" class="boder-header p-2 " >
+      <div mt="2400" ml="40" class="boder-header p-2 " >
          <h5>Ruta de viaje</h5>
       </div>
-      <div class="z-index-1" mt="2870" ml="40">
+      <div class="z-index-1" mt="2470" ml="40">
          <img src="{{ asset('images/acercaConexiones/Ruta_de_viaje.png') }}"  w="962" h="auto"/>
       </div>
-      <div mt="3500" ml="40" w="962">
+      <div mt="3100" ml="40" w="962">
          <span class="text-justify"  fs="14" style="font-size: 9px;display: inline-flex;"> Este es el ejemplo de la ruta de viaje de la
          guía de aprendizaje: Nuestro cuerpo: vida y movimiento, que está orientada a reconocer cómo funciona el
          cuerpo, partes y procesos vitales que desempeñan, valorarlo y tomar decisiones para su cuidado
          </span>
       </div>
-      <div class="text-justify"  mt="2880" ml="1040" w="400"  fs="18">
+      <div class="text-justify"  mt="2480" ml="1040" w="400"  fs="18">
          <p>Cada guía de aprendizaje propone seguir una ruta de viaje organizada en ocho momentos o etapas
             secuenciales que, en conjunto,
             permiten ampliar la comprensión de los fenómenos naturales tratados y la conexión de estos con el mundo
@@ -120,10 +120,10 @@
             todos los contenidos.
          </p>
       </div>
-      <div mt="3590" ml="40" fs="30" class="boder-header p-2 " >
+      <div mt="3190" ml="40" fs="30" class="boder-header p-2 " >
          <h5>Guía de saberes</h5>
       </div>
-      <div mt="3660" ml="60" w="450" fs="18" class="text-justify">
+      <div mt="3260" ml="60" w="450" fs="18" class="text-justify">
          <p>Algo a tener en cuenta es que durante el desarrollo de cada guía de aprendizaje, las y los estudiantes
             despliegan un conjunto de
             acciones de pensamiento y producción que constituyen las evidencias de aprendizaje, y se reconocen por la
@@ -136,17 +136,17 @@
          </p>
          <p><strong  >Saber ser:</strong> desarrollo de compromisos personales y sociales.</p>
       </div>
-      <div class="z-index-1" mt="3580" ml="550">
+      <div class="z-index-1" mt="3180" ml="550">
          <img src="{{ asset('images/acercaConexiones/Guias_de_saberes.png') }}"  w="902" h="auto"/>
       </div>
-      <div mt="4170" ml="550" w="902" class="text-justify">
+      <div mt="3770" ml="550" w="902" class="text-justify">
          <span class="" fs="14"  style="font-size: 9px;display: inline-flex;"> Este es el ejemplo de algunos de los saberes
          que implican el desarrollo de la guía de aprendizaje: Agua para todos, a través de la cual
          se puede comprender función que tiene el agua en el sostenimiento de todos los seres vivos y promover
          acciones individuales y
          colectivas para su preservación.</span>
       </div>
-      <div mt="4220" ml="40" w="1425" class="col-12 mt-3" fs="18">
+      <div mt="3820" ml="40" w="1425" class="col-12 mt-3" fs="18">
          <p class="mt-3 text-justify">Cada momento de la ruta de viaje está conformado por: una pregunta central, de la que se derivan experiencias
             científicas, explicaciones de ciencia cotidiana y recursos recomendados para <strong>+conexiones</strong>, que movilizan la activación de
             diferentes acciones de pensamiento y producción esenciales para que las niñas, niños y jóvenes desarrollen pensamiento científico.

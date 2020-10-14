@@ -9,17 +9,21 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
         then(function (response) {
             $('.d-none-result.d-none').removeClass('d-none');
             $scope.shopping_carts = response.data.data;
-            var length = response.data && response.data.data ? response.data.data.length : 0;
-            if(response.data.data)
-            for(var i=0;i<response.data.data.length;i++) {
-                if(response.data.data[i].type_product_id === 3 ||
-                    response.data.data[i].type_product_id === 4) {
-                        length --;
-                        length += response.data.data[i].shopping_cart_product.length;
+            var numberOfItems = 0;
+            if(response.data.data) { 
+            console.log(response.data.data);
+                for(var i=0,sc = null;i<response.data.data.length;i++) {
+                    sc = response.data.data[i];
+                    if(sc.rating_plan) {
+                        numberOfItems += sc.rating_plan.count;
+                    }
+                    else {
+                        numberOfItems++;
+                    }
                 }
             }
-            if(length>0) {
-                $('.notification-indicator-number').html(length);
+            if(numberOfItems>0) {
+                $('.notification-indicator-number').html(numberOfItems);
                 $('.notification-indicator-warning').addClass('fill');
             }
         }).catch(function (e) {

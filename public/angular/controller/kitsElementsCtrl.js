@@ -208,7 +208,7 @@ MyApp.controller("kitsElementsCtrl", function ($scope, $http, $timeout) {
         then(function (response) {
             var message = response.data.message || 'Se ha registrado el producto correctamente';
             swal({
-              title: message,
+              html: '<h6>' + message + '</h6>',
               type: 'success',
               buttons: ['Continuar comprando', 'Ir al carrito'],
               dangerMode: false,

@@ -276,8 +276,8 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             if(sequence) { sequence.isSelected = false; }
             if(moment) { moment.isSelected = false; }
         }
-		
-		$scope.$apply();
+        
+        $scope.$apply();
     }
     
     function validateSequencesActivate(sequence_id, shoppingCarts, activesPlan) {
@@ -533,13 +533,23 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             if(response && response.data && typeof response.data === 'object') {
                 $('#move').removeClass('fa fa-spinner fa-spin');
                 var message = response.data.message || 'Se ha registrado el producto correctamente';
-                swal('Conexiones',message,'success');
+                swal({
+                  html: '<h5>' + message + '</h5>',
+                  type: 'success',
+                  buttons: false,
+                  dangerMode: false,
+                });
                 $('#move').next().removeClass('d-none');
-               window.location = '/carrito_de_compras';
+                window.location = '/carrito_de_compras';
             }
             else {
                 $scope.errorMessageFilter = 'Error agregando el pedido al carrito de compras, por favor intenta nuevamente';
-                swal('Conexiones',$scope.errorMessageFilter,'error');
+                swal({
+                  html: '<h6>' + $scope.errorMessageFilter + '</h6>',
+                  type: 'error',
+                  buttons: false,
+                  dangerMode: false,
+                });
                 $('#move').removeClass('fa fa-spinner fa-spin');
                 $('#move').next().removeClass('d-none');
             }

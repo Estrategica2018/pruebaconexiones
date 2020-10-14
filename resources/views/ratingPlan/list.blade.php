@@ -59,12 +59,12 @@
 
                   <div ng-show="ratingPlan.is_free" class="w-100 text-align trapecio-top card-rating-button-id-@{{$index}} " style="box-shadow: 0 6px 12px 0 rgb(255 255 255), 0 0 0 0 rgba(255, 255, 255, 0); bottom: -25px;">
                      <a ng-click="onRatingPlanFree(ratingPlan.id,
-					 @if(auth('afiliadoempresa')->user() === null || !auth('afiliadoempresa')->user()->hasAnyRole('tutor'))
-						 false
-					 @else
-						 true
-					 @endif
-					 )" class="col-auto">
+                     @if(auth('afiliadoempresa')->user() === null || !auth('afiliadoempresa')->user()->hasAnyRole('tutor'))
+                         false
+                     @else
+                         true
+                     @endif
+                     )" class="col-auto">
                         <span class="fs-0" style="position: absolute;top: -27px;left:-13px;color: white;">Adquirir</span>
                      </a>
                   </div> 
