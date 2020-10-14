@@ -47,7 +47,7 @@ class AdminController extends Controller
         //-----------
         $shoppingCarts = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
-            ->where('payment_status_id', '!=',1,)
+            ->where('payment_status_id', '!=',1)
             ->whereNotNull('payment_transaction_id')
             ->orderBy('updated_at', 'DESC')
             //->skip(0)->take(10)
