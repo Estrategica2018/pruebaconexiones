@@ -20182,6 +20182,10 @@ button.bg-soft-dark:focus {
         height: 25% !important
     }
 
+    .h-md-35 {
+        height: 35% !important
+    }
+
     .h-md-50 {
         height: 50% !important
     }

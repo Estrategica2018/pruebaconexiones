@@ -4,52 +4,51 @@
     <div class="container ">
         <div class="content">
             <div ng-controller="availableExperiencesStudentCtrl" ng-init="init({{auth('afiliadoempresa')->user()->company_id()}},
-				{{$sequence_id}}, {{$account_service_id}})">
-           		<div class="mb-3 card">
-	            	<div class="bg-light card-body">
-		            	<div class="mb-3">
-                    		<div class="card-deck">
-	                    		<div class="card">
-                        			<iframe w="727" h="409" src="https://www.youtube.com/embed/LFB9WJeBCdA" frameborder="0"
-                            			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            			allowfullscreen="" style="width: 100%;height: 310px;">
-                        			</iframe>
-	                    			<div class="card-body">
-	                    				<h5 class="card-title">@{{accountServices.data.sequence_name}}</h5>
-	                    				<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-	                    				<p class="text-muted"><small class="text-muted"> Last updated 45 mins ago</small></p>
-	                    			</div>
-	                    		</div>
-	                    		<div class="card">
-            						<div class="card-header">
-            							<h5 class="mb-0">Otras experiencias</h5>
-            						</div>
-            						<div class="bg-light card-body">
-            							<div class="mb-3">
-            								<div class="card-columns-b" ng-repeat = "moment in accountServices.data.moments">
-												<div class="card text-black card-body">
-													<div ng-show="moment.data.video" ng-repeat = "video in moment.data.video">
-														<span>
-															<img src="https://i.vimeocdn.com/video/281039191_260x146.jpg" style="float: left;">
-            												<div class="card-title">@{{moment.moment_name}}</div>
-															<p class="card-text">@{{moment.data.section_name}} . @{{moment.data.title}} </p>
-															@{{video.id}}
-                    										@{{video.url_vimeo}}
-														</span>
-													</div>	
-												</div>							
-            								</div>
-            							</div>
-            						</div>
-            					</div>
-							</div>
-						</div>
-					</div>
-				</div>
+                {{$sequence_id}}, {{$account_service_id}})">
+                <div class="row">
+                    <div id="loading" class="z-index-10 position-absolute card card-body p-10 w-100 text-align" ng-hide="sequence"
+                      style="min-height: 100%;" >
+                      cargando...
+                    </div>
+                    <div class="col-12 col-md-8 row" ng-show="sequence">
+                        <div class="h-100 h-md-35 w-100">
+                            <iframe class="col-12" id="vimeo-player" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
+                            
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                            </iframe>
+                            <div class="card-body d-flex col-12 row no-gutters">
+                                <div class="col-auto">
+                                    <img src="/@{{sequence.url_image}}" style="width:auto; height:auto;">
+                                </div>
+                                <div class="col-8">
+                                    <label class="ml-4 card-title">@{{momentPart.title}}</label>
+                                    <label class="ml-4 card-title fs-0">Momento @{{moment.order + '. ' + moment.moment_name}}</label>
+                                    <h6 class="ml-4 card-title">@{{sequence.name}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" card col-12 col-md-4 row card-body shadow-none">
+                        <div class="card-body bg-light mb-1" ng-repeat = "moment in moments">
+                            <div class="row ">
+                                <div class="col-2-3 col-md-5">
+                                    <img src="/@{{moment.url_image_experience || 'images/icons/NoImageAvailable.jpeg'}}" width="100%" height="auto">
+                                </div>
+                                <div class="col-7">
+                                    <h6>@{{moment.order}}. @{{moment.moment_name}}</h6>
+                                    <p class="card-text">
+                                        <small ng-repeat="part in moment.parts"> <a href="#" ng-click="changeVideo(part, moment)"> Parte @{{part.part_id }} <span ng-show="$index < moment.parts.length -1 ">|</span> </a> </small>
+                                    </p>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 @endsection
 @section('js')
     <script src="{{ asset('angular/controller/availableExperiencesStudentCtrl.js') }}" defer></script>
+    <script src="{{ asset('js/vimeo-player.min.js') }}" defer></script>
 @endsection

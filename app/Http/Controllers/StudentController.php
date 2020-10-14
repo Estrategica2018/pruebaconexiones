@@ -837,6 +837,7 @@ class StudentController extends Controller
         $companySequence = CompanySequence::find($sequences[0]->sequence_id);
         $datas ['sequence_id'] = $companySequence->id;
         $datas ['sequence_name'] = $companySequence->name;
+        $datas ['sequence_url_image'] = $companySequence->url_image;
         $datas ['moments'] = [];
         foreach($sequences as $sequence) {
             $moment = SequenceMoment::find($sequence->moment_id);
