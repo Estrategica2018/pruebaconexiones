@@ -56,6 +56,7 @@ class CheckForMaintenanceMode
             '186.80.23.116',
             '190.146.84.23',
             '94.76.222.166',
+            '190.252.133.128'
         ];
     protected $except =
         [
