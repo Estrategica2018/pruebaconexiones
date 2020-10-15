@@ -20182,10 +20182,6 @@ button.bg-soft-dark:focus {
         height: 25% !important
     }
 
-    .h-md-35 {
-        height: 35% !important
-    }
-
     .h-md-50 {
         height: 50% !important
     }
@@ -20287,9 +20283,17 @@ button.bg-soft-dark:focus {
     .w-lg-auto {
         width: auto !important
     }
+    
+    .h-lg-20 {
+        height: 20% !important
+    }
 
     .h-lg-25 {
         height: 25% !important
+    }
+    
+    .h-lg-35 {
+        height: 35% !important
     }
 
     .h-lg-50 {
@@ -23246,3 +23250,14 @@ div[class*="card-rating-id-"]  {
     }
 }
 
+@media(max-width: 1199px) { 
+    .conx-page {
+        min-width: 621px;
+    }
+}
+
+@media(min-width: 1200px) { 
+    .conx-page { 
+        min-width: 1136px;
+    }
+}
