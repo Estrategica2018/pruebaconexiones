@@ -11,7 +11,7 @@
                       cargando...
                     </div>
                     <div class="col-12 col-lg-8 row" ng-show="sequence">
-                        <div class="h-100 h-lg-35 w-100">
+                        <div class="h-100 h-lg-20 w-100">
                             <iframe class="col-12" id="vimeo-player" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
                             
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>

@@ -23254,10 +23254,17 @@ div[class*="card-rating-id-"]  {
     .conx-page {
         min-width: 621px;
     }
+    .conx-page.video {
+        min-height: 409px;
+    }
 }
 
 @media(min-width: 1200px) { 
     .conx-page { 
         min-width: 1136px;
+    }
+
+    .conx-page.video {
+        min-height: 509px;
     }
 }
