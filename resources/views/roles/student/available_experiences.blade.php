@@ -11,14 +11,14 @@
                       cargando...
                     </div>
                     <div class="col-12 col-lg-8 row" ng-show="sequence">
-                        <div class="h-100 h-lg-20 w-100">
+                        <div class="h-100 h-lg-35 w-100">
                             <iframe class="col-12" id="vimeo-player" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
                             
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
                             </iframe>
                             <div class="card-body d-flex col-12 row no-gutters">
                                 <div class="col-auto">
-                                    <img src="/@{{sequence.url_image}}" style="width:auto; height:auto; min-width: 90px;">
+                                    <img src="/@{{sequence.url_image}}" style="width:auto; height:auto;">
                                 </div>
                                 <div class="col-8">
                                     <label class="ml-4 card-title">@{{momentPart.title}}</label>
@@ -34,7 +34,7 @@
                         <div class="card-body bg-light mb-1" ng-repeat = "moment in moments">
                             <div class="row " style="min-height: 100px;">
                                 <div class="col-2-3 col-lg-5">
-                                    <img src="/@{{moment.url_image_experience || 'images/icons/NoImageAvailable.jpeg'}}" width="100%" height="auto">
+                                    <img src="/@{{moment.url_image_experience || 'images/icons/NoImageAvailable.jpeg'}}" width="100%" height="auto" style="min-width: 90px;">
                                 </div>
                                 <div class="col-7">
                                     <h6>@{{moment.order}}. @{{moment.moment_name}}</h6>
