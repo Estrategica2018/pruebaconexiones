@@ -84,8 +84,9 @@ class AdminController extends Controller
             $groupShoppingCarts[$payment_transaction_id]['affiliate'] =  $shoppingCart['affiliate'];
             $groupShoppingCarts[$payment_transaction_id]['approval_code'] =  $shoppingCart['approval_code'];
             $groupShoppingCarts[$payment_transaction_id]['payment_process_date'] =  $shoppingCart['payment_process_date'];
+            
             $groupShoppingCarts[$payment_transaction_id]['payment_init_date'] =  $shoppingCart['payment_init_date'];
-            $groupShoppingCarts[$payment_transaction_id]['updated_at'] =  $shoppingCart['updated_at'];
+            $groupShoppingCarts[$payment_transaction_id]['updated_at'] =  $shoppingCart['updated_at']->format('Y-m-d H:i:s');
         }
             
         //$totalSumPrices =  ShoppingCart::where('payment_status_id', '=',3)->get()->sum('rating_plan_price');
@@ -389,12 +390,73 @@ class AdminController extends Controller
                 }
                 $groupShoppingCarts['approval_code'] =  $shoppingCart['approval_code'];
                 $groupShoppingCarts['payment_process_date'] =  $shoppingCart['payment_process_date'];
+                
                 $groupShoppingCarts['payment_init_date'] =  $shoppingCart['payment_init_date'];
-                $groupShoppingCarts['updated_at'] =  $shoppingCart['updated_at'];
+                $groupShoppingCarts['updated_at'] =  $shoppingCart['updated_at']->format('Y-m-d H:i:s');
             }
 
             return response()->json(['transaction'=>$groupShoppingCarts, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);    
         }
         
+    }
+    
+    public function management_pages() {
+        return view('roles.admin.management_pages');
+    }
+    
+    public function get_pages() {
+        $page1 = ['name'=>'inicio','src'=>'{"elements":[]}'];
+        $page2 = ['name'=>'enfoque','src'=>'{"elements":[]}'];
+        $page3 = ['name'=>'acercade','src'=>'{"elements":[]}'];
+        $page4 = ['name'=>'tutorial','src'=>'{"elements":[]}'];
+        $pages = [$page1,$page2,$page3,$page4];
+        
+        return response()->json(['pages'=>$pages], 200);
+    }
+    
+    public function show_all_transaction() {
+                $shoppingCarts = ShoppingCart::
+            with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
+            ->where('payment_status_id', '!=',1)
+            ->whereNotNull('payment_transaction_id')
+            ->orderBy('updated_at', 'DESC')
+            //->skip(0)->take(10)
+            ->get();
+        
+        $shoppingCarts = $this->relation_rating_plan($shoppingCarts);
+            
+        $groupShoppingCarts = [];
+        $countShoppingCart = 0;
+        $payment_transaction_ant = 0;
+        
+        foreach($shoppingCarts as $shoppingCart) {
+            
+            $payment_transaction_id = $shoppingCart['payment_transaction_id'];
+            if($payment_transaction_ant != $payment_transaction_id) {
+                $countShoppingCart ++;
+                $payment_transaction_ant = $payment_transaction_id;
+            }
+            if(!isset($groupShoppingCarts[$payment_transaction_id]))
+                $groupShoppingCarts[$payment_transaction_id] = ['total_price'=>0, 'description'=>''];
+            $groupShoppingCarts[$payment_transaction_id]['total_price'] += $shoppingCart['rating_plan_price'] + $shoppingCart['shipping_price'];
+            $groupShoppingCarts[$payment_transaction_id]['payment_status'] =  $shoppingCart['payment_status'];
+            if(strlen($groupShoppingCarts[$payment_transaction_id]['description']) > 0 ) {
+                $groupShoppingCarts[$payment_transaction_id]['description'] .=  ' + ';    
+            }
+            if(isset($shoppingCart['rating_plan']['name'])) {
+                $groupShoppingCarts[$payment_transaction_id]['description'] .=  $shoppingCart['rating_plan']['name'];
+            }
+            $groupShoppingCarts[$payment_transaction_id]['payment_transaction_id'] =  $payment_transaction_id;
+            
+            $groupShoppingCarts[$payment_transaction_id]['affiliate'] =  $shoppingCart['affiliate'];
+            $groupShoppingCarts[$payment_transaction_id]['approval_code'] =  $shoppingCart['approval_code'];
+            $groupShoppingCarts[$payment_transaction_id]['payment_process_date'] =  $shoppingCart['payment_process_date'];
+            $groupShoppingCarts[$payment_transaction_id]['payment_init_date'] =  $shoppingCart['payment_init_date'];
+            $groupShoppingCarts[$payment_transaction_id]['updated_at'] =  $shoppingCart['updated_at'];
+        }
+        
+        $totalShoppingCarts = count($groupShoppingCarts);
+        
+        return view('roles.admin.all_transaction',['shoppingCarts'=>$groupShoppingCarts,'totalShoppingCarts'=>$totalShoppingCarts]);
     }
 }

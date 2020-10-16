@@ -20285,7 +20285,8 @@ button.bg-soft-dark:focus {
     }
     
     .h-lg-20 {
-        height: 20% !important
+        height: 20% !important;
+        min-height: 509px;
     }
 
     .h-lg-25 {

@@ -68,6 +68,10 @@ Route::get('/terminos_condiciones', function () {
     return view('terms-conditions-social');
 })->name('terms_conditions_social');
 
+Route::get('/tutoriales', function () {
+    return view('help-platform');
+})->name('help_platform');
+
 //routes login
 Route::get('validate_registry_free_plan/{ratingPlanId}', 'Auth\RegisterController@validate_registry_free_plan')->name('validate_registry_free_plan');
 Route::get('registro_afiliado/{error_email_social?}/{email?}', 'Auth\RegisterController@show_register')->name('registerForm');
@@ -112,7 +116,9 @@ Route::group(['middleware' =>['auth:afiliadoempresa']],function (){
     Route::get('conexiones/admin/get_all_users/', 'AdminController@get_all_users')->middleware('role:admin')->name('admin.get_all_users');
     Route::get('conexiones/admin/get_user/{user_id}', 'AdminController@get_user')->middleware('role:admin')->name('admin.get_user');
     Route::get('conexiones/admin/get_user_shoppingCart/{idShoppingCart}', 'AdminController@get_user_shoppingCart')->middleware('role:admin')->name('admin.get_user_shoppingCart');
-
+    Route::get('conexiones/admin/management_pages', 'AdminController@management_pages')->middleware('role:admin')->name('management_pages');
+    Route::get('conexiones/admin/get_pages', 'AdminController@get_pages')->middleware('role:admin')->name('admin.get_pages');
+    Route::get('conexiones/admin/transacciones', 'AdminController@show_all_transaction')->middleware('role:admin')->name('admin.show_all_transaction');
 });
 
 
@@ -229,7 +235,7 @@ Route::post('edit_rating_plan', 'RatingPlanController@update')->name('edit_ratin
 Route::get('get_types_plans', 'RatingPlanController@get_types_plans')->name('get_types_plans')->middleware('role:admin');
 
 //servicios secuencias
-Route::get('get_sequence/{sequence_id}', 'SequencesController@get')->name('get_sequence');
+Route::get('/admin/get_sequence/{sequence_id}', 'SequencesController@get')->name('get_sequence');
 Route::post('create_sequence', 'SequencesController@create')->name('create_sequence')->middleware('role:admin');
 Route::post('update_sequence', 'SequencesController@update')->name('update_sequence')->middleware('role:admin');
 Route::post('update_sequence_section', 'SequencesController@update_sequence_section')->name('update_sequence_section')->middleware('role:admin');

@@ -1,5 +1,6 @@
 @extends('layouts.app_side')
 @section('content')
+@include('layouts/float_buttons')
 <div class="container" style="min-width:661px;"  ng-controller="pedagogyCtrl" ng-init="init()">
    <div class="card card-body p-10 text-align border-lg-y w-100 h-100"
       style="min-height: 23vw;" ng-hide="loadFinished">

@@ -19,7 +19,7 @@ class NotifyFailureCallbackController extends Controller
         MercadoPago\SDK::setAccessToken('TEST-7394833091802936-031118-6efb7b3446ef18d20bccb024638e38f3-271000387');
 
         $merchant_order = null;
-		//dd($request);
+        //dd($request);
         if (isset($_GET["topic"])) {
             switch ($_GET["topic"]) {
                 case "payment":
@@ -38,18 +38,18 @@ class NotifyFailureCallbackController extends Controller
 
         if ($request->collection_status == 'rejected') {
             //$paid_amount += $payment['transaction_amount'];
-			$update = ShoppingCart::where([ ["company_affiliated_id", auth("afiliadoempresa")->user()->id],
-											['payment_status_id', 2 ],
-											['payment_transaction_id', $request->preference_id]])->
-			update(array(
-				'payment_status_id' => '4',
-				'payment_init_date' =>  date("Y-m-d H:i:s")
+            $update = ShoppingCart::where([ ["company_affiliated_id", auth("afiliadoempresa")->user()->id],
+                                            ['payment_status_id', 2 ],
+                                            ['payment_transaction_id', $request->preference_id]])->
+            update(array(
+                'payment_status_id' => '4',
+                'payment_init_date' =>  date("Y-m-d H:i:s")
             ));
             return redirect()->route('home');
         }
 
-		//Enviar correo
-		//Iniciar el tiempo de acceso a las secuencias 
+        //Enviar correo
+        //Iniciar el tiempo de acceso a las secuencias 
 
         if (isset($_GET["payment_transaction_id"])) {
 
@@ -59,20 +59,20 @@ class NotifyFailureCallbackController extends Controller
 
                 $afiliado_empresa = $request->user('afiliadoempresa');
 
-				$shoppingCarts = ShoppingCart::
-					with('rating_plan', 'shopping_cart_product')->
-					where([
-					['company_affiliated_id', $request->user('afiliadoempresa')->id],
-					['payment_transaction_id', $request->preference_id],
-					['payment_status_id', 3],
-				])->get();
+                $shoppingCarts = ShoppingCart::
+                    with('rating_plan', 'shopping_cart_product')->
+                    where([
+                    ['company_affiliated_id', $request->user('afiliadoempresa')->id],
+                    ['payment_transaction_id', $request->preference_id],
+                    ['payment_status_id', 3],
+                ])->get();
 
-				foreach ($shoppingCarts as $shoppingCart) {
-					$ratingPlan = $shoppingCart->rating_plan;
-					if ($ratingPlan) {
-						$this->addRatingPlanPaid($shoppingCart, $ratingPlan, $afiliado_empresa);
-					}
-				}
+                foreach ($shoppingCarts as $shoppingCart) {
+                    $ratingPlan = $shoppingCart->rating_plan;
+                    if ($ratingPlan) {
+                        $this->addRatingPlanPaid($shoppingCart, $ratingPlan, $afiliado_empresa);
+                    }
+                }
             }
             return redirect()->route('tutor', ['empresa' => 'conexiones']);
         }

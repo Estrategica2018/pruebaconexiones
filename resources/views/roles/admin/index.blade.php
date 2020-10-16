@@ -136,10 +136,10 @@
                         <div class="px-1 py-3 no-gutters row">
                            <div class="pl-3 fs--1 col">
                               <span>{{$countShoppingCarts}} de {{$totalShoppingCarts}} </span>
-                              <button type="button" class="px-0 font-weight-semi-bold btn btn-link btn-sm">
-                                    <label class="fs--1"> Ver todos  </label>
-                                    <i class="fas fa-angle-right"></i>
-                              </button>
+                              <a class="px-0 font-weight-semi-bold btn btn-link btn-sm fs--1 ml-2"
+                                href="{{route('admin.show_all_transaction')}}">
+                                    Ver todos <i class="fas fa-angle-right"></i>
+                              </a>
                            </div>
                         </div>
                      </div>

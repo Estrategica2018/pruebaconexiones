@@ -14,9 +14,6 @@
              style="background-image:url(images/sliderCarrucelHome/slide2.jpg?v.1);">
           </div>
           <div class="swiper-slide"
-             style="background-image:url(images/sliderCarrucelHome/slide3.jpg?v.1);">
-          </div>
-          <div class="swiper-slide"
              style="background-image:url(images/sliderCarrucelHome/slide4.jpg?v.1);">
           </div>
        </div>

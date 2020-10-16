@@ -96,7 +96,7 @@
                 </div>
                 <div>
                     <div>Fecha de Pago</div>
-                    <div class="ml-2">@{{ response.transaction.payment_process_date || response.transaction.updated_at}}</div>
+                    <div class="ml-2">@{{ response.transaction.payment_process_date || response.transaction.updated_at }}</div>
                 </div>
                 <div ng-show="response.transaction.approval_code">
                     <div>Cod. Aprobación</div>

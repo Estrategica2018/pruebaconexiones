@@ -390,7 +390,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
     function loadSequence(sequence_id) {
 
-        $http.get('/get_sequence/' + sequence_id)
+        $http.get('/admin/get_sequence/' + sequence_id)
             .then(function (response) {
 
                 $scope.sequence = response.data[0];

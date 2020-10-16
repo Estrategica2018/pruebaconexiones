@@ -10,12 +10,23 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
             $('.d-none-result.d-none').removeClass('d-none');
             $scope.shopping_carts = response.data.data;
             var numberOfItems = 0;
-            if(response.data.data) { 
-            console.log(response.data.data);
+            if(response.data.data) {
                 for(var i=0,sc = null;i<response.data.data.length;i++) {
                     sc = response.data.data[i];
-                    if(sc.rating_plan) {
+					console.log(sc);
+                    if(sc.rating_plan && sc.rating_plan.type_rating_plan_id === 1 ) {
                         numberOfItems += sc.rating_plan.count;
+                    }
+					if(sc.rating_plan && ( sc.rating_plan.type_rating_plan_id === 2  || sc.rating_plan.type_rating_plan_id === 3 ) ) {
+						var secList = {};
+                        for(var j=0,sec = null, id = null; j<sc.shopping_cart_product.length; j++) {
+							sec = sc.shopping_cart_product[j];
+							id = sec.sequenceStruct_moment.id;
+							secList[id] = sec.sequenceStruct_moment;
+						}
+						for(sec in secList) {
+							numberOfItems ++;
+						}
                     }
                     else {
                         numberOfItems++;

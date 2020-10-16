@@ -214,7 +214,7 @@ class SequencesController extends Controller
         $companySequences = CompanySequence::with('moments')->where('company_id', $companyId)
             ->where(function ($query) {
                 $dt = new \DateTime();
-                $query->where('expiration_date', '>', $dt->format('Y-m-d H:i:s'))
+                $query->where('expiration_date', '>', $dt->format('Y-m-d'))
                     ->orWhereNull('expiration_date');
             })->get();
 
