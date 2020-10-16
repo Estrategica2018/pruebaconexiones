@@ -17,6 +17,8 @@ MyApp.controller("availableExperiencesStudentCtrl", ["$scope", "$http", "$timeou
                 "name": response.data.data.sequence_name,
                 "url_image": response.data.data.sequence_url_image,
             }
+            $('.d-result.d-none').removeClass('d-none');
+            
             
             $scope.sequence_namesequence_url_image
             $scope.moments = response.data.data.moments;

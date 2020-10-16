@@ -10,7 +10,7 @@
                       style="min-height: 100%;" >
                       cargando...
                     </div>
-                    <div class="col-12 col-lg-8 row" ng-show="sequence">
+                    <div class="col-12 col-lg-8 row d-result d-none" ng-show="sequence">
                         <div class="h-100 h-lg-20 w-100">
                             <iframe class="col-12" id="vimeo-player" frameborder="0" width="100%" height="100%" refreshable="sequence.url_vimeo"
                             
@@ -21,11 +21,15 @@
                                     <img src="/@{{sequence.url_image}}" style="width:auto; height:auto;">
                                 </div>
                                 <div class="col-8">
-                                    <label class="ml-4 card-title">@{{momentPart.title}}</label>
-                                    <p>
-                                    <label class="ml-4 card-title fs-0">Momento @{{moment.order + '. ' + moment.moment_name}}</label>
+                                    <h6 class="ml-4 card-title">@{{momentPart.title}}</h6>
+                                    <p class="ml-4 card-text">
+                                        <small ng-repeat="part in moment.parts" ng-class="{'font-weight-bold':momentPart.part_id === part.part_id}"> 
+                                        <a href="#" ng-click="changeVideo(part, moment)"> Parte @{{part.part_id }} <span ng-show="$index < moment.parts.length -1 ">|</span> </a> 
+                                        </small>
                                     </p>
-                                    <h6 class="ml-4 card-title">@{{sequence.name}}</h6>
+                                    <p>
+                                    <label class="ml-4 card-title fs-0" style="color:#2c7be5;">Momento @{{moment.order + '. ' + moment.moment_name}}</label>
+                                    </p>
                                 </div>
                             </div>
                         </div>
