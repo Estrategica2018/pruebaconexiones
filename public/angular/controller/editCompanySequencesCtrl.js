@@ -12,7 +12,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     $scope.PageName = '';
 
     $scope.dataJstree = {};
-    $scope.elementParentEdit = null;
+    $scope.pageSelected = null;
     $scope.typeEdit = null;
     $scope.container = {};
     $scope.applyChange = false;
@@ -65,8 +65,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
     $scope.resizeEdit = function (scaleW) {
         function selectElement(id) { 
-            for(var i=0, ele = null;i<$scope.elementParentEdit.elements.length;i++) {
-                ele = $scope.elementParentEdit.elements[i];
+            for(var i=0, ele = null;i<$scope.pageSelected.elements.length;i++) {
+                ele = $scope.pageSelected.elements[i];
                 if(Number(ele.id) === Number(id)) {
                     return ele;
                 }
@@ -182,7 +182,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         background.css('width', $scope.container.w);
         background.css('height', $scope.container.h);
 
-        $scope.elementParentEdit.container = $scope.container;
+        $scope.pageSelected.container = $scope.container;
         $scope.applyChange = true;
     }
 
@@ -249,16 +249,16 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             elements[i].selected = false;
             newElements.push(Object.assign({}, elements[i]));
         } 
-        $scope.elementParentEdit.elements = $scope.elementParentEdit.elements || [];
-        var length = $scope.elementParentEdit.elements.length;
+        $scope.pageSelected.elements = $scope.pageSelected.elements || [];
+        var length = $scope.pageSelected.elements.length;
         for(var i=0;i<length; i++) {
-            $scope.elementParentEdit.elements.pop();
+            $scope.pageSelected.elements.pop();
         }
         
         $timeout(function () {
             for (var i = 0; i < newElements.length; i++) {
                 newElements[i].id = getId_forElement();
-                $scope.elementParentEdit.elements.push(newElements[i]);
+                $scope.pageSelected.elements.push(newElements[i]);
             } 
             $timeout(function () {
                 $scope.resizeWidth();
@@ -293,7 +293,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     break; 
                 case 'openSequence':
                     $scope.PageName = 'Guía de Aprendizaje';
-                    $scope.elementParentEdit = $scope.sequence;
+                    $scope.pageSelected = $scope.sequence;
                     $('#sidemenu-sequences .overflow-auto').addClass('height_337').removeClass('height_235');
                     break;
                 case 'openSequenceSection':
@@ -311,20 +311,20 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     $scope.sequenceSection.sequenceSectionIndex = $scope.dataJstree.sequenceSectionIndex;
                     $scope.sequenceSection.sequenceSectionPartIndex = $scope.dataJstree.partId;
                     $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] || {};
-                    $scope.elementParentEdit = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
+                    $scope.pageSelected = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
                     $scope.PageName = $scope.sequenceSection.section.name; 
-                    if(!$scope.elementParentEdit.container) {
-                        $scope.elementParentEdit.container =  { "w": $scope.container.w, "h": 385 }
+                    if(!$scope.pageSelected.container) {
+                        $scope.pageSelected.container =  { "w": $scope.container.w, "h": 385 }
                     }
-                    $scope.container = $scope.elementParentEdit.container;
-                    refreshElements($scope.elementParentEdit.elements);
+                    $scope.container = $scope.pageSelected.container;
+                    refreshElements($scope.pageSelected.elements);
 
                     $('#sidemenu-sequences .overflow-auto').addClass('height_235').removeClass('height_337');
                     break;
                 case 'openMoment':
                     $scope.moment = findMoment($scope.dataJstree.momentIndex);
                     $scope.PageName = 'Momento ' + $scope.moment.order;
-                    $scope.elementParentEdit = $scope.moment;
+                    $scope.pageSelected = $scope.moment;
                     $('#sidemenu-sequences .overflow-auto').addClass('height_337').removeClass('height_235');
                     var section = $('#' + data.selected[0]);
                     data.instance.toggle_node(section);
@@ -344,13 +344,13 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     $scope.momentSection.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
                     $scope.PageName = $scope.momentSection.section.name;
                 
-                    $scope.elementParentEdit = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] || {};
-                    $scope.elementParentEdit.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
-                    if(!$scope.elementParentEdit.container) {
-                        $scope.elementParentEdit.container = { "w": $scope.container.w, "h": 385 };
+                    $scope.pageSelected = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] || {};
+                    $scope.pageSelected.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
+                    if(!$scope.pageSelected.container) {
+                        $scope.pageSelected.container = { "w": $scope.container.w, "h": 385 };
                     }
-                    $scope.container =  $scope.elementParentEdit.container; 
-                    refreshElements($scope.elementParentEdit.elements);
+                    $scope.container =  $scope.pageSelected.container; 
+                    refreshElements($scope.pageSelected.elements);
                     $('#sidemenu-sequences .overflow-auto').addClass('height_235').removeClass('height_337');
                     break;
             }
@@ -369,7 +369,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         loadSequence(sequence_id);
         $scope.PageName = 'Secuencia';
         $scope.dataJstree.type = 'openSequence';
-        $scope.elementParentEdit = $scope.sequence;
+        $scope.pageSelected = $scope.sequence;
     }
     
     function loadFolderImage(parentElement,elementId,path) {
@@ -443,20 +443,20 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 
                 switch ($scope.dataJstree.type) {
                     case 'openSequence':
-                        $scope.elementParentEdit = $scope.sequence;
+                        $scope.pageSelected = $scope.sequence;
                         break;
                     case 'openSequenceSectionPart':
                         $scope.sequenceSection = JSON.parse($scope.sequence[$scope.dataJstree.sequenceSectionIndex]);
                         $scope.sequenceSection.sequenceSectionIndex = $scope.dataJstree.sequenceSectionIndex;
                         $scope.sequenceSection.sequenceSectionPartIndex = $scope.dataJstree.partId;
                         $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex] || {};
-                        $scope.elementParentEdit = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
-                        $scope.container = $scope.elementParentEdit.container || { "w": $scope.container.w, "h": 385 };
-                        refreshElements($scope.elementParentEdit.elements);
+                        $scope.pageSelected = $scope.sequenceSection[$scope.sequenceSection.sequenceSectionPartIndex];
+                        $scope.container = $scope.pageSelected.container || { "w": $scope.container.w, "h": 385 };
+                        refreshElements($scope.pageSelected.elements);
                         break;
                     case 'openMoment':
                         $scope.moment = findMoment($scope.dataJstree.momentIndex);
-                        $scope.elementParentEdit = $scope.moment;
+                        $scope.pageSelected = $scope.moment;
                     break;
                     case 'openMomentSectionPart':
                         $scope.moment = findMoment($scope.dataJstree.momentIndex);
@@ -464,9 +464,9 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                         
                         $scope.momentSectionPart = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] || {};
                         $scope.momentSectionPart.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
-                        $scope.elementParentEdit = $scope.momentSectionPart;
-                        $scope.container = $scope.elementParentEdit.container || { "w": $scope.container.w, "h": 385 };
-                        refreshElements($scope.elementParentEdit.elements);
+                        $scope.pageSelected = $scope.momentSectionPart;
+                        $scope.container = $scope.pageSelected.container || { "w": $scope.container.w, "h": 385 };
+                        refreshElements($scope.pageSelected.elements);
                         break;
                 }
                 if($scope.dataJstree.type === 'openSequence') {
@@ -481,7 +481,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     };
 
     $scope.deleteBackgroundSection = function () {
-        $scope.elementParentEdit.background_image = '';
+        $scope.pageSelected.background_image = '';
         $scope.applyChange = true;
     }
 
@@ -492,7 +492,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             return;
         }
         $scope.typeEdit = type;
-        $scope.elementParentEdit = parent;
+        $scope.pageSelected = parent;
         $scope.elementEdit = element;
         $scope.mbImageShow = false;
 
@@ -513,7 +513,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             dateControl.value = parent[element];
         }
         else if ($scope.typeEdit === 'img') {
-            var dir = $scope.elementParentEdit[$scope.elementEdit] || '/';
+            var dir = $scope.pageSelected[$scope.elementEdit] || '/';
             dir = getLastPath(dir);
             $scope.onChangeFolderImage(dir);
         }
@@ -526,8 +526,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             $scope.applyChangeEvidence = true;
         }
         else if ($scope.typeEdit === 'slide-images') {
-            if($scope.elementParentEdit[$scope.elementEdit] && $scope.elementParentEdit[$scope.elementEdit].length > 0) {
-                var dir = $scope.elementParentEdit[$scope.elementEdit];
+            if($scope.pageSelected[$scope.elementEdit] && $scope.pageSelected[$scope.elementEdit].length > 0) {
+                var dir = $scope.pageSelected[$scope.elementEdit];
                 
                 $scope.onChangeFolderImage(dir,function(data){
                     var images_str = '';
@@ -541,7 +541,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                         }
                     }
                     images_str = images_str.replace('//','/');
-                    //$scope.elementParentEdit[$scope.elementEdit] = images_str;
+                    //$scope.pageSelected[$scope.elementEdit] = images_str;
                 });
             }
             else {
@@ -564,8 +564,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     $scope.onCopyElements = function(indexElement) {
         
         var elementsSelected =  typeof indexElement !== 'undefined' ? 
-            [$scope.elementParentEdit.elements[indexElement]] :
-            $scope.elementParentEdit.elements.filter(function(value){
+            [$scope.pageSelected.elements[indexElement]] :
+            $scope.pageSelected.elements.filter(function(value){
                 return value.selected;
             });
         
@@ -578,8 +578,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         
         if(typeof indexElement !== 'undefined' ) { 
             $scope.typeEdit='';
-            for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
-                elem = $scope.elementParentEdit.elements[i];
+            for(var i=0, elem= null; i< $scope.pageSelected.elements.length; i++) {
+                elem = $scope.pageSelected.elements[i];
                 elem.selected = false;
             }
         }
@@ -589,7 +589,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
     $scope.onDeleteSelectedElements = function() {
         
-        var list = $scope.elementParentEdit.elements.filter(function(value){
+        var list = $scope.pageSelected.elements.filter(function(value){
             return !value.selected;
         }) 
         refreshElements(list);
@@ -604,8 +604,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         do{
             next = false;
             id = Number(moment().format('YYYYMMDDHHmmssSSS'));
-            for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
-                elem = $scope.elementParentEdit.elements[i];
+            for(var i=0, elem= null; i< $scope.pageSelected.elements.length; i++) {
+                elem = $scope.pageSelected.elements[i];
                 if(elem.id === id) {
                     next = true;
                     break;
@@ -621,22 +621,22 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         for(var i=0, copyElement= null; i< $scope.copyCache.length; i++) {
             copyElement = $scope.copyCache[i];
             copyElement.id = getId_forElement();
-            for(var j=0, elm; j<$scope.elementParentEdit.elements.length; j++) {
-                elm = $scope.elementParentEdit.elements[j];
+            for(var j=0, elm; j<$scope.pageSelected.elements.length; j++) {
+                elm = $scope.pageSelected.elements[j];
                 if(copyElement.ml === elm.ml && copyElement.mt == elm.mt    ) {
                     copyElement.ml += 20;
                     copyElement.mt += 20;
                  }
             }
             
-            $scope.elementParentEdit.elements.push(copyElement);
+            $scope.pageSelected.elements.push(copyElement);
             if(copyElement.type === "evidence-element" ) {
                $scope.applyChangeEvidence = true;
             }
         }
         
-        for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
-            elem = $scope.elementParentEdit.elements[i];
+        for(var i=0, elem= null; i< $scope.pageSelected.elements.length; i++) {
+            elem = $scope.pageSelected.elements[i];
             elem.selected = false;
         }
         
@@ -652,15 +652,15 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
     $scope.onCopyBackground = function() {
         $scope.copyBackground = {}
-        $scope.copyBackground.background_image   = $scope.elementParentEdit.background_image;
+        $scope.copyBackground.background_image   = $scope.pageSelected.background_image;
         $scope.copyBackground.height   = $scope.container.h;
         $scope.typeEdit='';
     }
 
     $scope.onPasteBackground = function() {
-        $scope.elementParentEdit.background_image = $scope.copyBackground.background_image;
+        $scope.pageSelected.background_image = $scope.copyBackground.background_image;
         $scope.container.h = $scope.copyBackground.height;
-        $scope.elementParentEdit.container.h = $scope.container.h;
+        $scope.pageSelected.container.h = $scope.container.h;
         $scope.onChangeHeight();
         $scope.copyBackground  = null;
         $scope.applyChange = true;
@@ -668,7 +668,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
     $scope.onChangeElementSelected = function() {
         var elementsSelected = 
-            $scope.elementParentEdit.elements.filter(function(value){
+            $scope.pageSelected.elements.filter(function(value){
                 return value.selected;
             });
             
@@ -676,20 +676,20 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         $scope.showDeleteButton = elementsSelected && elementsSelected.length > 0;     
     }
     
-    $scope.changeFormatDate = function (elementParentEdit, elementEdit, format) {
+    $scope.changeFormatDate = function (pageSelected, elementEdit, format) {
         try {
-            $scope.elementParentEdit[elementEdit] = moment($scope.elementParentEdit[elementEdit], "YYYY-MM-DD").format(format);
+            $scope.pageSelected[elementEdit] = moment($scope.pageSelected[elementEdit], "YYYY-MM-DD").format(format);
             $scope.applyChange = true;
-            $scope.elementParentEdit.isDateChange = true;
+            $scope.pageSelected.isDateChange = true;
         } catch (e) { console.log(e);}
     }
     
     $scope.clearChangeFormatDate = function ( ) {
-        $scope.elementParentEdit[$scope.elementEdit] = null;
+        $scope.pageSelected[$scope.elementEdit] = null;
         $scope.applyChange = true;
         var dateControl = document.querySelector('#typeEditDateInput');
         dateControl.value = '';
-        $scope.elementParentEdit.isDateChange = true;
+        $scope.pageSelected.isDateChange = true;
     }
 
     $scope.onImgChange = function (field) {
@@ -721,10 +721,10 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         }
         else {
             if ($scope.dataJstree.type === 'openSequenceSectionPart') {
-                $scope.elementParentEdit[$scope.elementEdit] = field.url_image;
+                $scope.pageSelected[$scope.elementEdit] = field.url_image;
             }
             else {
-                $scope.elementParentEdit[$scope.elementEdit] = field.url_image;
+                $scope.pageSelected[$scope.elementEdit] = field.url_image;
             }
 
         }
@@ -746,8 +746,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 }
             }
             images_str = images_str.replace('//','/');
-            $scope.elementParentEdit[$scope.elementEdit] = path;
-            $scope.elementParentEdit[$scope.elementEdit + 'ScannedDirectory'] = images_str;
+            $scope.pageSelected[$scope.elementEdit] = path;
+            $scope.pageSelected[$scope.elementEdit + 'ScannedDirectory'] = images_str;
             $scope.applyChange = true;
         });
     }
@@ -810,14 +810,14 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             newElement = { 'id': id, 'type': typeItem, 'questionEditType': "1",'fs': 11, 'ml': 210, 'mt': 176, 'w': 277, 'h': 58, 'text': 'Abrir evidencias de aprendizaje', 'class': '', 'subtitle':'Evidencias de aprendizaje','icon': 'images/designerAdmin/icons/evidenciasAprendizajeIcono.png', 'questions': [] };
         }
 
-        for(var j=0, elm; j<$scope.elementParentEdit.elements.length; j++) {
-            elm = $scope.elementParentEdit.elements[j];
+        for(var j=0, elm; j<$scope.pageSelected.elements.length; j++) {
+            elm = $scope.pageSelected.elements[j];
             if(newElement.ml === elm.ml && newElement.mt == elm.mt    ) {
                 newElement.ml += 20;
                 newElement.mt += 20;
              }
         }
-        $scope.elementParentEdit.elements.push(newElement);
+        $scope.pageSelected.elements.push(newElement);
         
         $timeout(function () {
             $scope.resizeWidth();
@@ -832,7 +832,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             $scope.indexElement = null;
             $scope.typeEdit = '';
             $scope.applyChange = true;
-            var list = $scope.elementParentEdit.elements.filter(function(value,index){
+            var list = $scope.pageSelected.elements.filter(function(value,index){
                 return  (index !== $index)
             });
             refreshElements(list);
@@ -974,7 +974,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
         var sectionNumber = Number($scope.sequenceSection.sequenceSectionIndex.replace('section_', ''));
         
-        saveEvidence($scope.elementParentEdit,function(){
+        saveEvidence($scope.pageSelected,function(){
             var data = {
                 'id': $scope.sequence.id,
                 'section_number': sectionNumber,
@@ -1024,7 +1024,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         //var sectionNumber = Number($scope.momentSectionPart.momentSectionPartIndex.replace('part_',''));
         var sectionNumber = Number($scope.momentSection.momentSectionIndex) + 1;
 
-        saveEvidence($scope.elementParentEdit,function(){
+        saveEvidence($scope.pageSelected,function(){
             var data = {
                 'id': $scope.moment.id,
                 'section_number': sectionNumber,
@@ -1181,7 +1181,7 @@ MyApp.directive('conxDraggable', function () {
 MyApp.directive('conxTextList', function () {
     return {
         restrict: 'E',
-        template: '<div ng-show="elementParentEdit" ng-repeat="split in elementParentEdit[elementEdit].split(\'|\') track by $index"> ' +
+        template: '<div ng-show="pageSelected" ng-repeat="split in pageSelected[elementEdit].split(\'|\') track by $index"> ' +
             '<span ng-show="showIndexLetter">{{letters[$index]}}).</span><input ng-change="onChangeSplit($index,split)" ng-model="split" class="mt-1 fs--1 w-75"/>  ' +
             '<a ng-click="delete($index)" style="marging-top: 8px:;"><i class="far fa-times-circle"></i><a/> </div> ' +
             '<input class="mt-1 w-75 fs--1" type="text" ng-model="newSplit"/>' +
@@ -1193,7 +1193,7 @@ MyApp.directive('conxTextList', function () {
 
                 $scope.applyChange = true;
 
-                var list = $scope.elementParentEdit[$scope.elementEdit].split('|');
+                var list = $scope.pageSelected[$scope.elementEdit].split('|');
                 var newList = '';
                 for (var i = 0; i < list.length; i++) {
                     if (i != $index) {
@@ -1203,11 +1203,11 @@ MyApp.directive('conxTextList', function () {
                         newList = newList + list[i];
                     }
                 }
-                $scope.elementParentEdit[$scope.elementEdit] = newList;
+                $scope.pageSelected[$scope.elementEdit] = newList;
             }
             $scope.onChangeSplit = function ($index, split) {
                 $scope.applyChange = true;
-                var list = $scope.elementParentEdit[$scope.elementEdit].split('|');
+                var list = $scope.pageSelected[$scope.elementEdit].split('|');
                 var newList = '';
                 for (var i = 0; i < list.length; i++) {
                     if (newList.length > 0) {
@@ -1220,16 +1220,16 @@ MyApp.directive('conxTextList', function () {
                         newList = newList + split;
                     }
                 }
-                $scope.elementParentEdit[$scope.elementEdit] = newList;
+                $scope.pageSelected[$scope.elementEdit] = newList;
             }
             $scope.onNewSplit = function () {
                 $scope.applyChange = true;
-                $scope.elementParentEdit[$scope.elementEdit] = $scope.elementParentEdit[$scope.elementEdit] || '';
+                $scope.pageSelected[$scope.elementEdit] = $scope.pageSelected[$scope.elementEdit] || '';
                 if ($scope.newSplit && $scope.newSplit.length > 0) {
-                    if ($scope.elementParentEdit[$scope.elementEdit].length > 0) {
-                        $scope.elementParentEdit[$scope.elementEdit] += '|';
+                    if ($scope.pageSelected[$scope.elementEdit].length > 0) {
+                        $scope.pageSelected[$scope.elementEdit] += '|';
                     }
-                    $scope.elementParentEdit[$scope.elementEdit] += $scope.newSplit;
+                    $scope.pageSelected[$scope.elementEdit] += $scope.newSplit;
                 }
                 $scope.newSplit = '';
             }
@@ -1431,7 +1431,7 @@ MyApp.directive('conxEvidenceOptions', function () {
 MyApp.directive('conxSlideImages', function () {
     return {
         restrict: 'E',
-        /*template: '<div ng-show="elementParentEdit && elementParentEdit[elementEdit].length > 0" ng-repeat="split in elementParentEdit[elementEdit].split(\'|\') track by $index"> ' +
+        /*template: '<div ng-show="pageSelected && pageSelected[elementEdit].length > 0" ng-repeat="split in pageSelected[elementEdit].split(\'|\') track by $index"> ' +
             '<input ng-change="onChangeSplit($index,split)" ng-model="split" class="mt-1 fs--1 w-90"/>  ' +
             '<a ng-click="delete($index)" style="marging-top: 8px:;"><i class="far fa-times-circle"></i><a/> </div> ' +
             '<input class="mt-1 w-90 fs--1" type="text" ng-model="newSplit"/> <a href="#" class="cursor-pointer" ng-click="onNewSplit()"> <i class="fas fa-plus"></i><a/>',
@@ -1442,7 +1442,7 @@ MyApp.directive('conxSlideImages', function () {
 
                 $scope.applyChange = true;
 
-                var list = $scope.elementParentEdit[$scope.elementEdit].split('|');
+                var list = $scope.pageSelected[$scope.elementEdit].split('|');
                 var newList = '';
                 for (var i = 0; i < list.length; i++) {
                     if (i != $index) {
@@ -1452,11 +1452,11 @@ MyApp.directive('conxSlideImages', function () {
                         newList = newList + list[i];
                     }
                 }
-                $scope.elementParentEdit[$scope.elementEdit] = newList;
+                $scope.pageSelected[$scope.elementEdit] = newList;
             }
             $scope.onChangeSplit = function ($index, split) {
                 $scope.applyChange = true;
-                var list = $scope.elementParentEdit[$scope.elementEdit].split('|');
+                var list = $scope.pageSelected[$scope.elementEdit].split('|');
                 var newList = '';
                 for (var i = 0; i < list.length; i++) {
                     if (newList.length > 0) {
@@ -1469,16 +1469,16 @@ MyApp.directive('conxSlideImages', function () {
                         newList = newList + split;
                     }
                 }
-                $scope.elementParentEdit[$scope.elementEdit] = newList;
+                $scope.pageSelected[$scope.elementEdit] = newList;
             }
             $scope.onNewSplit = function () {
                 $scope.applyChange = true;
-                $scope.elementParentEdit[$scope.elementEdit] = $scope.elementParentEdit[$scope.elementEdit] || '';
+                $scope.pageSelected[$scope.elementEdit] = $scope.pageSelected[$scope.elementEdit] || '';
                 if ($scope.newSplit && $scope.newSplit.length > 0) {
-                    if ($scope.elementParentEdit[$scope.elementEdit].length > 0) {
-                        $scope.elementParentEdit[$scope.elementEdit] += '|';
+                    if ($scope.pageSelected[$scope.elementEdit].length > 0) {
+                        $scope.pageSelected[$scope.elementEdit] += '|';
                     }
-                    $scope.elementParentEdit[$scope.elementEdit] += $scope.newSplit;
+                    $scope.pageSelected[$scope.elementEdit] += $scope.newSplit;
                 }
                 $scope.newSplit = '';
             }

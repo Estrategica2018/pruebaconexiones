@@ -2,6 +2,7 @@ MyApp.controller("managementPagesCtrl", ["$scope", "$http",'$timeout', function(
 
     $scope.errorMessage = null;
     $scope.pageSelected = null;
+    $scope.container = {};
     
     $scope.dataJstree = {};
     $scope.applyChange = false;
@@ -220,11 +221,18 @@ MyApp.controller("managementPagesCtrl", ["$scope", "$http",'$timeout', function(
                 default: 
                     $scope.pageSelected = $scope.pages[$scope.dataJstree.pageIndex];
                     $scope.pageSelected.index = $scope.dataJstree.pageIndex;
-                    var src = JSON.parse($scope.pageSelected.src);
-                    $scope.pageSelected.elements = src.elements || [];
+                    var src = JSON.parse($scope.pageSelected.section);
+                    $scope.pageSelected.elements = ( src ? src.elements : [] ) || [];
+                    $scope.pageSelected.background_image =  src && src.background_image ? src.background_image : '';
+                    
+                    var card = $('.background-page-card');
+                    var newW = Math.round(Number(card.css('width').replace('px', '')));
+                    $scope.pageSelected.container = src && src.container ? src.container : { "w": newW, "h": 385 };
+                    $scope.container = $scope.pageSelected.container;
                     break;
             }
             $scope.$apply();
+            $scope.resizeWidth();
 
         }).jstree({
             "core": {
@@ -255,16 +263,25 @@ MyApp.controller("managementPagesCtrl", ["$scope", "$http",'$timeout', function(
         });
     }
 
-    function loadPages() {
+    function loadPages(pageSelection) {
 
         $http.get('/conexiones/admin/get_pages')
             .then(function (response) {
 
                 $scope.pages = response.data.pages;
-                $scope.pageSelected = $scope.pages[0];
-                $scope.pageSelected.index = 0;
-                var src = JSON.parse($scope.pageSelected.src);
-                $scope.pageSelected.elements = src.elements || [];
+                pageSelection = pageSelection || 0;
+                $scope.pageSelected = $scope.pages[pageSelection];
+                $scope.pageSelected.index = Number(pageSelection);
+                var src = JSON.parse($scope.pageSelected.section);
+                
+                $scope.pageSelected.elements = ( src ? src.elements : [] ) || [];
+                $scope.pageSelected.background_image =  src && src.background_image ? src.background_image : '';
+                
+                var card = $('.background-page-card');
+                var newW = Math.round(Number(card.css('width').replace('px', '')));
+                $scope.pageSelected.container = src && src.container ? src.container : { "w": newW, "h": 385 };
+                $scope.container = $scope.pageSelected.container;
+                
                 $scope.showCopyButton = $scope.showDeleteButton = false;
                 $timeout(function () {
                     InitializeJstree();
@@ -464,6 +481,31 @@ MyApp.controller("managementPagesCtrl", ["$scope", "$http",'$timeout', function(
         dateControl.value = '';
         $scope.pageSelected.isDateChange = true;
     }
+    
+    $scope.onSavePage = function () {
+        var section = {
+            'elements': $scope.pageSelected.elements,
+            'container': $scope.container,
+            'background_image': $scope.pageSelected.background_image,
+        };
+        var data = {
+            'id': $scope.pageSelected.id,
+            'section': JSON.stringify(section),
+        };
+        $http.post('/conexiones/admin/update_page/', data)
+            .then(function (response) {
+                if (response && response.status === 200) {
+                    $scope.applyChange = false;
+                    swal('Conexiones', response.data.message, 'success');
+                    loadPages($scope.pageSelected.index);
+                }
+                else {
+                    swal('Conexiones', 'Error al modificar la secuencia', 'danger');
+                }
+            }).catch(function(reason) {
+                swal('Conexiones','Error al modificar la secuencia','danger');
+            });
+    }
 
     $scope.onImgChange = function (field) {
         $scope.applyChange = true;
@@ -650,12 +692,18 @@ MyApp.controller("managementPagesCtrl", ["$scope", "$http",'$timeout', function(
                 .then((isConfirm) => {
                     if (isConfirm) {
                         $scope.applyChange = false;
-                        loadSequence($scope.sequence.id);
+                        loadPages($scope.pageSelected.index);
                     }
                 }).catch(swal.noop);
             }
         }).catch(swal.noop);
     }
+    
+    $scope.deleteBackgroundSection = function () {
+        $scope.pageSelected.background_image = '';
+        $scope.applyChange = true;
+    }
+
 
 }]);
 
@@ -888,45 +936,43 @@ MyApp.directive('conxSlideImages', function () {
 //JASCRIPT JQUERY METHODS
 //TOOGLE MENU
 var hiddenSideMenu = function () {
-    $('#sidemenu-sequences-button').removeClass('fa-caret-square-left');
-    $('#sidemenu-sequences-button').addClass('fa-caret-square-right');
-    $('#sidemenu-sequences-empty').addClass('show');
-    $('#sidemenu-sequences-empty').removeClass('d-none');
-    $('#sidemenu-sequences-content').addClass('d-lg-none');
-  //  $('#sidemenu-sequences-content').removeClass("show"); 
-    //$('#sidemenu-tools-content').removeClass("show");
+    $('#sidemenu-page-button').removeClass('fa-caret-square-left');
+    $('#sidemenu-page-button').addClass('fa-caret-square-right');
+    $('#sidemenu-page-empty').addClass('show');
+    $('#sidemenu-page-empty').removeClass('d-none');
+    $('#sidemenu-page-content').addClass('d-lg-none');
     $('#sidemenu-tools-content').addClass("d-lg-none");
-    $('#sidemenu-sequences').addClass("col-lg-0_5");
-    $('#sidemenu-sequences').removeClass("col-lg-3");
-    $('#content-section-sequences').removeClass("col-lg-9");
-    $('#content-section-sequences').addClass("col-lg-11_5");
+    $('#sidemenu-page').addClass("col-lg-0_5");
+    $('#sidemenu-page').removeClass("col-lg-3");
+    $('#content-section-page').removeClass("col-lg-9");
+    $('#content-section-page').addClass("col-lg-11_5");
 };
 
 var showSideMenu = function () {
-    $('#sidemenu-sequences-empty').removeClass('show');
-    $('#sidemenu-sequences-empty').addClass('d-none');
+    $('#sidemenu-page-empty').removeClass('show');
+    $('#sidemenu-page-empty').addClass('d-none');
 
-    $('#sidemenu-sequences-content').removeClass('d-lg-none');
-    $('#sidemenu-sequences-content').addClass("show"); 
+    $('#sidemenu-page-content').removeClass('d-lg-none');
+    $('#sidemenu-page-content').addClass("show"); 
 
     $('#sidemenu-tools-content').removeClass('d-lg-none');
     $('#sidemenu-tools-content').addClass("show"); 
 
-    $('#sidemenu-sequences-button').addClass('fa-caret-square-left');
-    $('#sidemenu-sequences-button').removeClass('fa-caret-square-right');
+    $('#sidemenu-page-button').addClass('fa-caret-square-left');
+    $('#sidemenu-page-button').removeClass('fa-caret-square-right');
 
-    $('#sidemenu-sequences-hidden-side').removeClass("d-none");
-    $('#sidemenu-sequences-content').removeClass("d-none");
-    $('#sidemenu-sequences-empty').addClass("d-none");
+    $('#sidemenu-page-hidden-side').removeClass("d-none");
+    $('#sidemenu-page-content').removeClass("d-none");
+    $('#sidemenu-page-empty').addClass("d-none");
 
     $('#sidemenu-tools-content').addClass("show");
     $('#sidemenu-tools-content').removeClass("d-none");
 
-    $('#sidemenu-sequences').removeClass("col-lg-0_5");
-    $('#sidemenu-sequences').addClass("col-lg-3");
+    $('#sidemenu-page').removeClass("col-lg-0_5");
+    $('#sidemenu-page').addClass("col-lg-3");
 
-    $('#content-section-sequences').addClass("col-lg-9");
-    $('#content-section-sequences').removeClass("col-lg-11_5");
+    $('#content-section-page').addClass("col-lg-9");
+    $('#content-section-page').removeClass("col-lg-11_5");
 }
 
 function removeHashKey (appdata) {

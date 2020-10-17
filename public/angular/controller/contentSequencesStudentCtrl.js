@@ -162,6 +162,7 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
                 $('#loading').addClass('d-none');
             });
     }
+    
     $(window).resize(function () {
         resizeSequenceCard();
     });

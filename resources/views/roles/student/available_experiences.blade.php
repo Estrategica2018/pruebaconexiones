@@ -28,13 +28,14 @@
                                         </small>
                                     </p>
                                     <p>
-                                    <label class="ml-4 card-title fs-0" style="color:#2c7be5;">Momento @{{moment.order + '. ' + moment.moment_name}}</label>
+                                    <label class="ml-4 card-title fs-0 m-0" style="color:#1657af;">Momento @{{moment.order}}</label>
+                                    <h6 class="ml-4 card-title fs-0" style="color:#2c7be5;"> @{{moment.moment_name}} </h6>
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class=" card col-12 col-lg-4 row card-body shadow-none">
+                    <div class=" card col-12 col-lg-4 row card-body shadow-none d-result d-none">
                         <div class="card-body bg-light mb-1" ng-repeat = "moment in moments">
                             <div class="row " style="min-height: 100px;">
                                 <div class="col-2-3 col-lg-5">

@@ -7,11 +7,11 @@
 <div class="container" ng-controller="managementPagesCtrl" ng-init="init()">
    <div class="content">
       <div class="row">
-         <div class="col-lg-3 open" id="sidemenu-pages">
+         <div class="col-lg-3 open" id="sidemenu-page">
             <div ng-show="applyChange" class="position-absolute w-100 h-50vw cursor-not-allowed"
                ng-click="openChangeAlert()" style="top:0;">
             </div>
-            <div class="mb-3 card fade show p-3 overflow-auto row" id="sidemenu-pages-content">
+            <div class="mb-3 card fade show p-3 overflow-auto row" id="sidemenu-page-content">
                <div id="jstree" class="fs--1">
                 <ul>
                    <li ng-repeat="page in pages" data-jstree='{ 
@@ -270,7 +270,7 @@
                   ng-click="onCopyBackground()">
                   <i class="fa fa-trash" aria-hidden="true"></i> Copiar 
                </button>
-               <button ng-show="dataJstree.type==='openSequenceSectionPart' || dataJstree.type==='openMomentSectionPart' " class="btn btn-sm btn-outline-warning"
+               <button ng-show="indexElement" class="btn btn-sm btn-outline-warning"
                   ng-click="onDeleteElement(pageSelected, indexElement,false)">
                   <i class="fa fa-trash" aria-hidden="true"></i> Eliminar
                </button>

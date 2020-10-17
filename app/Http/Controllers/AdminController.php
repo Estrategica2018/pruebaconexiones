@@ -6,6 +6,7 @@ use App\Mail\SendChangeDateExpirationContent;
 use App\Models\AffiliatedAccountService;
 use App\Models\AfiliadoEmpresa;
 use App\Models\ShoppingCart;
+use App\Models\ManagementPages;
 use App\Models\AffiliatedCompanyRole;
 use App\Models\ConectionAffiliatedStudents;
 use Carbon\Carbon;
@@ -397,7 +398,6 @@ class AdminController extends Controller
 
             return response()->json(['transaction'=>$groupShoppingCarts, 'affiliate' => $user, 'shoppingCarts' => $shoppingCarts, 'kidSelected'=>$kidSelected], 200);    
         }
-        
     }
     
     public function management_pages() {
@@ -405,13 +405,16 @@ class AdminController extends Controller
     }
     
     public function get_pages() {
-        $page1 = ['name'=>'inicio','src'=>'{"elements":[]}'];
-        $page2 = ['name'=>'enfoque','src'=>'{"elements":[]}'];
-        $page3 = ['name'=>'acercade','src'=>'{"elements":[]}'];
-        $page4 = ['name'=>'tutorial','src'=>'{"elements":[]}'];
-        $pages = [$page1,$page2,$page3,$page4];
-        
+        $pages = ManagementPages::get();
         return response()->json(['pages'=>$pages], 200);
+    }
+    
+    public function update_page(Request $request) {
+        $result = ManagementPages::where('id', $request->id)
+            ->update([
+                'section' => $request->section
+            ]);
+        return response()->json(['message'=>'Página actualizada correctamente','result'=>$result], 200);
     }
     
     public function show_all_transaction() {

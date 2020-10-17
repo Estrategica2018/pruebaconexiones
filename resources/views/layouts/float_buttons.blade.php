@@ -1,6 +1,6 @@
 <div class="float result-finish-done d-none col-10 col-md-6 col-xl-4 text-align-right w-auto"  ng-controller="frequentQuestionCtrl" ng-init="init()">
     <img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/chat.png')}}" width="80px" height="auto" ng-click="toogleChatPanel=true">
-	<a href="{{route('help_platform')}}"><img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/help_icon.png')}}" width="80px" height="auto"></a>
+    <a href="{{route('help_platform')}}"><img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/help_icon.png')}}" width="80px" height="auto"></a>
     <div class="card text-align-justify" ng-show="toogleChatPanel">
         <div class="card-header fs--1 pr-5">
             <div ng-click="toogleChatPanel= false" class="position-absolute fs-2 cursor-pointer" style="top: 3px;right: 16px;text-align: right;"> 
@@ -13,7 +13,7 @@
         <div class="card-body mb-7" style="height: 55vw; max-height: 400px;overflow-y: auto;">
             <div ng-repeat="items in frequentQuestions"> 
                 <div ng-click="items.isShow=!items.isShow" class="cursor-pointer d-flex bg-secondary mt-1 mb-1 rounded bg-soft-dark-light p-3 ">
-                    <label>@{{items.question}}</label> 
+                    <label class="pr-2">@{{items.question}}</label> 
                     <div ng-show="items.isShow" class="ml-auto">  <i class="fas fa-arrow-up"></i> </div>
                     <div ng-hide="items.isShow" class="ml-auto">  <i ng-show="!items.isShow"  class="fas fa-arrow-right ml-auto"></i> </div>
                 </div>

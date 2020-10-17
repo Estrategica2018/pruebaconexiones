@@ -33,7 +33,25 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
                             }
                             else { 
                                 $scope.totalPrices += sc.rating_plan_price;
-                                $scope.numberOfItems++;
+                                var secList = {};
+                                for(var j=0,sec = null, id = null; j<sc.shopping_cart_product.length; j++) {
+                                    sec = sc.shopping_cart_product[j];
+                                    if(sec.sequenceStruct_moment) {
+                                        id = sec.sequenceStruct_moment.id;    
+                                        secList[id] = sec.sequenceStruct_moment;
+                                    }
+                                    if(sec.sequenceStruct_experience) {
+                                        id = sec.sequenceStruct_experience.id;    
+                                        secList[id] = sec.sequenceStruct_experience;
+                                    }
+                                    secList[id].moments = secList[id].moments || 0;
+                                    secList[id].moments ++;
+                                }
+                                sc.sequences = [];
+                                for(sec in secList) {
+                                    sc.sequences.push(secList[sec]);
+                                    $scope.numberOfItems ++;
+                                }
                             }
                         }
                         else {
@@ -64,24 +82,6 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
                                     }
                                     if (!mbControl) {
                                         sc.sequences.push(scp.sequenceStruct_moment);
-                                    }
-                                }
-                            }
-                        }
-                        if (sc.type_product_id === 3 && sc.shopping_cart_product) {
-                            sc.sequences = [];
-                            for (var j = 0; j < sc.shopping_cart_product.length; j++) {
-                                scp = sc.shopping_cart_product[j];
-                                if (scp.sequenceStruct_experience) {
-                                    mbControl = false;
-                                    for (var k = 0; k < sc.sequences.length; k++) {
-                                        if (sc.sequences[k].id === scp.sequenceStruct_experience.id) {
-                                            mbControl = true;
-                                            break;
-                                        }
-                                    }
-                                    if (!mbControl) {
-                                        sc.sequences.push(scp.sequenceStruct_experience);
                                     }
                                 }
                             }

@@ -60,7 +60,7 @@
                             <div class="pl-2 ml-3 ml-md-2">
                                <h5 class="pl-2 fs-0 boder-header text-align-left">@{{sequenceForAdd.name}}</h5>
                                <div class="mt-3 pr-2 pl-2 fs--1" style="min-height: 110px;">@{{sequenceForAdd.description}}</div>
-                               <div class="col-12 p-0" style="position:absolute; bottom: 9px;">
+                               <div class="col-12 p-0">
                                 <a ng-click="showMash(sequenceForAdd)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
                                      <i class="fas fa-search"></i> Ver detalle
                                  </a>
@@ -101,7 +101,7 @@
                                  <div class="pl-2 ml-3 ml-md-2">
                                  <h5 class="pl-2 fs-0 boder-header text-align-left">@{{sequence.name}}</h5>
                                  <div class="mt-3 pr-2 pl-2 fs--1" style="min-height: 110px;">@{{sequence.description}}</div>
-                                 <div class="col-12 p-0" style="position:absolute; bottom: 9px;">
+                                 <div class="col-12 p-0">
                                      <a ng-click="showMash(sequence)" class="ml-3 mt-3 btn btn-outline-primary fs--1" href="#" class="col-6">
                                          <i class="fas fa-search"></i> Ver detalle
                                      </a>

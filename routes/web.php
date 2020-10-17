@@ -68,9 +68,7 @@ Route::get('/terminos_condiciones', function () {
     return view('terms-conditions-social');
 })->name('terms_conditions_social');
 
-Route::get('/tutoriales', function () {
-    return view('help-platform');
-})->name('help_platform');
+Route::get('/tutoriales', 'HelpPlatformController@index')->name('help_platform');
 
 //routes login
 Route::get('validate_registry_free_plan/{ratingPlanId}', 'Auth\RegisterController@validate_registry_free_plan')->name('validate_registry_free_plan');
@@ -118,7 +116,9 @@ Route::group(['middleware' =>['auth:afiliadoempresa']],function (){
     Route::get('conexiones/admin/get_user_shoppingCart/{idShoppingCart}', 'AdminController@get_user_shoppingCart')->middleware('role:admin')->name('admin.get_user_shoppingCart');
     Route::get('conexiones/admin/management_pages', 'AdminController@management_pages')->middleware('role:admin')->name('management_pages');
     Route::get('conexiones/admin/get_pages', 'AdminController@get_pages')->middleware('role:admin')->name('admin.get_pages');
+    Route::post('conexiones/admin/update_page', 'AdminController@update_page')->middleware('role:admin')->name('update_page');
     Route::get('conexiones/admin/transacciones', 'AdminController@show_all_transaction')->middleware('role:admin')->name('admin.show_all_transaction');
+    
 });
 
 
