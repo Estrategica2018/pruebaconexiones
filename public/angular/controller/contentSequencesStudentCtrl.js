@@ -69,6 +69,16 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         question.optionSelected  = option;
     }
     
+    $scope.nextQuestion = function() {
+        $scope.indexQuestion++;
+        window.scrollTo( 0, 0 );
+    }
+    
+    $scope.backQuestion = function() {
+        $scope.indexQuestion--;
+        window.scrollTo( 0, 0 );
+    }
+    
     $scope.onFinishEvidence = function() {
         var questionsAnswers = [];
         var answer = null;

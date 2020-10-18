@@ -72,7 +72,7 @@
                  <img class="col-rounded" src="{{asset('/')}}@{{sequence.sequence.url_image}}" width="80px"/>
                </div>
                <div class="pr-3 pb-0 col-lg-6 col-md-9 pl-0">
-				 <h6 class="text-900">(@{{sequence.moments}}) @{{ sequence.moments.length > 1 ? 'Momentos' : 'Momento' }} de @{{sequence.sequence.name}}</h6>
+                 <h6 class="text-900">(@{{sequence.moments}}) @{{ sequence.moments.length > 1 ? 'Momentos' : 'Momento' }} de @{{sequence.sequence.name}}</h6>
                  <p class="col-12 fs-0 text-900 pl-0">
                    <small>@{{sequence.sequence.description}}</small>
                  </p>

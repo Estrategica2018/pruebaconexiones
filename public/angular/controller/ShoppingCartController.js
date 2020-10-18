@@ -39,21 +39,21 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
                                     if(sec.sequenceStruct_moment) {
                                         id = sec.sequenceStruct_moment.id;    
                                         secList[id] = secList[id] || {};
-										secList[id].sequence = sec.sequenceStruct_moment;
-										
+                                        secList[id].sequence = sec.sequenceStruct_moment;
+                                        
                                     }
                                     if(sec.sequenceStruct_experience) {
                                         id = sec.sequenceStruct_experience.id;    
-										secList[id] = secList[id] || {};
+                                        secList[id] = secList[id] || {};
                                         secList[id] = sec.sequenceStruct_experience;
                                     }
-									secList[id].moments = secList[id].moments  || 0;
-									secList[id].moments++;
-									
+                                    secList[id].moments = secList[id].moments  || 0;
+                                    secList[id].moments++;
+                                    
                                 }
                                 sc.sequences = [];
                                 for(sec in secList) {
-									sc.sequences.push(secList[sec]);
+                                    sc.sequences.push(secList[sec]);
                                     $scope.numberOfItems ++;
                                 }
                             }
