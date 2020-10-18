@@ -95,18 +95,52 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
     //invoca el servicio que construye la preferencia en mercado pago y retorna el link de pago    
     $scope.getPreferenceInitPoint = function () {
         $('.btn-spinner').removeClass('d-none');
-        $http({
-            url: "/get_preference_initPoint/",
-            method: "GET",
-        }).
-            then(function (response) {
-                window.location = response.data.initPoint;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "user_mail_validation/",
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'GET',
+            type: 'GET',
+            success: function (response, xhr, request) {
+                if(response.status === 'successfull'){
+                    $http({
+                        url: "/get_preference_initPoint/",
+                        method: "GET",
+                    }).
+                    then(function (response) {
+                        window.location = response.data.initPoint;
+                        $('.btn-spinner').addClass('d-none');
+                    }).catch(function (e) {
+                        $scope.errorMessage = 'Error registrando preferencia de compra';
+                        swal('Conexiones', $scope.errorMessage, 'error');
+                        $('.btn-spinner').addClass('d-none');
+                    });
+                }else{
+                    swal({
+                        text: 'Debe validar el correo, se ha enviado una notificación al correo registrado.',
+                        type: "warning",
+                        showCancelButton: false,
+                        showConfirmButton: false
+                    }).catch(swal.noop);
+                    $('.btn-spinner').addClass('d-none');
+                }
+
+            },
+            error: function (response, xhr, request) {
+                swal({
+                    text: 'No se pudo realizar la acción, vuelva a intentarlo',
+                    type: "error",
+                    showCancelButton: false,
+                    showConfirmButton: false
+                }).catch(swal.noop);
                 $('.btn-spinner').addClass('d-none');
-            }).catch(function (e) {
-                $scope.errorMessage = 'Error registrando preferencia de compra';
-                swal('Conexiones', $scope.errorMessage, 'error');
-                $('.btn-spinner').addClass('d-none');
-            });
+            }
+        });
+
     }
 
     $scope.simulator = function () {
