@@ -589,13 +589,13 @@ class StudentController extends Controller
         //Notificación al 100% de finalización de la guía
         $student = auth('afiliadoempresa')->user();
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliatedAccountService, $student->id, $sequence);
-		
-		$mbControlSendEmail = false;
-		if($result['sequence']['progress'] < 100) {
-			$mbControlSendEmail = true;
+        
+        $mbControlSendEmail = false;
+        if($result['sequence']['progress'] < 100) {
+            $mbControlSendEmail = true;
         }
-		
-		$item = AdvanceLine::updateOrCreate(
+        
+        $item = AdvanceLine::updateOrCreate(
             [
                 'affiliated_account_service_id' => $account_service_id,
                 'affiliated_company_id' => auth('afiliadoempresa')->user()->id,
@@ -608,14 +608,14 @@ class StudentController extends Controller
             ]
         );
         $item->save();
-		
-		if($mbControlSendEmail) {
-			$result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliatedAccountService, $student->id, $sequence);
-			if($result['sequence']['progress'] === 100) {
-					dd('send notify');
-			}
-		}
-		
+        
+        if($mbControlSendEmail) {
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliatedAccountService, $student->id, $sequence);
+            if($result['sequence']['progress'] === 100) {
+                    dd('send notify');
+            }
+        }
+        
         if ($moment['section_' . $section_id]) {
             $section = json_decode($moment['section_' . $section_id], true);
             $section_1 = json_decode($moment->section_1, true);
