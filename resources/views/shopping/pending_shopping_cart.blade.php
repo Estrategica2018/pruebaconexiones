@@ -68,13 +68,13 @@
             <div ng-show="shopping_cart.type_product_id === 2" 
                 ng-repeat="sequence in shopping_cart.sequences" 
                class="col-12 col-md-6 d-flex pl-0">
-               <div class="p-3" ng-show="sequence">
-                 <img class="col-rounded" src="{{asset('/')}}@{{sequence.url_image}}" width="80px"/>
+               <div class="p-3">
+                 <img class="col-rounded" src="{{asset('/')}}@{{sequence.sequence.url_image}}" width="80px"/>
                </div>
-               <div class="pr-3 pb-0 col-lg-6 col-md-9 pl-0" ng-show="sequence">
-                 <h6 class="text-900">@{{sequence.name}}</h6>
+               <div class="pr-3 pb-0 col-lg-6 col-md-9 pl-0">
+				 <h6 class="text-900">(@{{sequence.moments}}) @{{ sequence.moments.length > 1 ? 'Momentos' : 'Momento' }} de @{{sequence.sequence.name}}</h6>
                  <p class="col-12 fs-0 text-900 pl-0">
-                   <small>@{{sequence.description}}</small>
+                   <small>@{{sequence.sequence.description}}</small>
                  </p>
                </div>
             </div>
