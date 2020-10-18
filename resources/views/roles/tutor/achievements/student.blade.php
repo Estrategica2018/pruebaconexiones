@@ -44,7 +44,7 @@
                     </label>
                     @if(isset($accountService->sequence['progress']))
                         @if($accountService->sequence['progress']==0)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
                         @endif
                         @if($accountService->sequence['progress']>0 && $accountService->sequence['progress']<100)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="font-weight-bold">En proceso</label>
@@ -53,7 +53,7 @@
                         <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold">Concluida</label>
                         @endif
                     @else
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
+                        <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold">Sin iniciar</label>
                     @endif                 
                     
                      
@@ -79,7 +79,7 @@
                             <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold">Bajo < 40%</label>
                             @endif
                         @else  
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i><label class="">Sin iniciar</label>
                         @endif 
                         
                     @endif 

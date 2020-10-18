@@ -21,7 +21,7 @@
                      <label class="mt-md-fix" style="margin-left: -21px;"><strong> Progreso</strong></label> 
                     @if(isset($sequence['progress']))
                         @if($sequence['progress']==0)   
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
                         @endif
                         @if($sequence['progress']>0 && $sequence['progress']<100)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="font-weight-bold ">En proceso</label>
@@ -30,7 +30,7 @@
                         <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold ">Concluida</label>
                         @endif
                     @else
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
+                        <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
                     @endif  
                     
                     @if(isset($sequence['performance'])) 
@@ -52,7 +52,7 @@
                             <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> <label class="font-weight-bold ">Bajo < 40% </label>¡
                             @endif
                         @else  
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i>
                             <label class="font-weight-bold ">Sin iniciar</label>
                         @endif
                     @endif
@@ -135,7 +135,7 @@
                         <div class="ml-4 col-1" style="min-width: 168px;">
                         @if($moment['isAvailable'])
                             @if($moment['progress']==0)
-                            <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
+                            <i class="fa fa-circle mr-2 fs-2" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
                             @endif
                             @if($moment['progress']>0 && $moment['progress']<100)
                             <i class="fa fa-circle  mr-2 fs-2" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold ">En proceso</label> 
@@ -178,7 +178,7 @@
                                     <i class="fa fa-circle  mr-2" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold ">En proceso</label>
                                     @endif
                                 @else
-                                    <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
+                                    <i class="fa fa-circle mr-2" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
                                 @endif
                             </div> 
                             <div class="col-3 p-0 fs-0">  
@@ -201,7 +201,7 @@
                                         <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i> <label class=""><strong>Bajo < 40%</strong></label>
                                         @endif
                                     @else 
-                                        <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="">Sin iniciar</label>
+                                        <i class="fa fa-circle mr-2" style="color:#808080" aria-hidden="true"></i><label class="">Sin iniciar</label>
                                     @endif
                                 @endif
                             </div>

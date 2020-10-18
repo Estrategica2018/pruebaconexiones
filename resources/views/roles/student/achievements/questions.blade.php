@@ -21,7 +21,7 @@
                      <label class="mt-md-fix" style="margin-left: -21px;"><strong> Progreso</strong></label> 
                     @if(isset($sequence['progress']))
                         @if($sequence['progress']==0)   
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
                         @endif
                         @if($sequence['progress']>0 && $sequence['progress']<100)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i> <label class="font-weight-bold ">En proceso</label>
@@ -30,7 +30,7 @@
                         <i class="fa fa-circle mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i> <label class="font-weight-bold ">Concluida</label>
                         @endif
                     @else
-                        <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
+                        <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold ">Sin iniciar</label>
                     @endif  
                     
                     @if(isset($sequence['performance'])) 
@@ -52,7 +52,7 @@
                             <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i> <label class="font-weight-bold ">Bajo < 40% </label>¡
                             @endif
                         @else  
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#706B66" aria-hidden="true"></i>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#808080" aria-hidden="true"></i>
                             <label class="font-weight-bold ">Sin iniciar</label>
                         @endif
                     @endif
@@ -136,7 +136,7 @@
                         <div class="col-3 col-md-4">
                         @if($moment['isAvailable'])
                             @if($moment['progress']==0)
-                            <i class="fa fa-circle mr-2 fs-2" style="color:#706B66" aria-hidden="true"></i><span class="fs--1">Sin iniciar</span>
+                            <i class="fa fa-circle mr-2 fs-2" style="color:#808080" aria-hidden="true"></i><span class="fs--1">Sin iniciar</span>
                             @endif
                             @if($moment['progress']>0 && $moment['progress']<100)
                             <i class="fa fa-circle  mr-2 fs-2" style="color:#F9E538" aria-hidden="true"></i><span class="fs--1">En proceso</span> 
@@ -208,7 +208,7 @@
                                     <i class="fa fa-circle mr-2" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold fs-0">Bajo < 40%</label>
                                     @endif
                                 @else 
-                                    <i class="fa fa-circle mr-2" style="color:#706B66" aria-hidden="true"></i><label class="font-weight-bold fs-0">Sin iniciar</label>
+                                    <i class="fa fa-circle mr-2" style="color:#808080" aria-hidden="true"></i><label class="font-weight-bold fs-0">Sin iniciar</label>
                                 @endif
                             </div>
                            @if(isset($rating['evidences']['answers']))
@@ -237,7 +237,7 @@
                         <div class="row mt-3 @if($indexA%2==0) bg-soft-dark @endif rounded-sm pl-3 pb-3 pt-3 fs--1">
                             <div class="col-3 p-0 border-left-blue">{!!$answer['question']['order'] . '. ' .$answer['question']['title']!!}</div>
                             <div class="col-3 pl-3 border-left-blue">
-                            {{App\Http\Controllers\AchievementController::retriveAnswer($answer['question'],$answer['answer'])}}
+                            {!!App\Http\Controllers\AchievementController::retriveAnswer($answer['question'],$answer['answer'])!!}
                             </div>
                             <div class="col-3 p-0 border-left-blue text-center">
                                 @if($answer['feedback'] == 0)
@@ -247,7 +247,7 @@
                                     <span style="color:green;font-size: 23px;font-weight: bolder;margin-top: -16px;">✓</span>
                                 @endif
                             </div>
-                            <div class="col-3 pl-3">{{$answer['concept']}}</div>
+                            <div class="col-3 pl-3">{!!$answer['concept']!!}</div>
                         </div>
                         @endforeach
                     </div>
