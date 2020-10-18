@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PlanCompletion;
+use App\Mail\SendSuccessfulPaymentNotification;
 use App\Models\AdvanceLine;
 use App\Models\AffiliatedAccountService;
 use App\Models\AffiliatedCompanyRole;
@@ -19,6 +21,7 @@ use Illuminate\Http\Request;
 use App\Models\CompanySequence;
 use App\Models\SequenceMoment;
 use App\Models\Achievement;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class StudentController
@@ -608,14 +611,15 @@ class StudentController extends Controller
             ]
         );
         $item->save();
-        
+
         if($mbControlSendEmail) {
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliatedAccountService, $student->id, $sequence);
             if($result['sequence']['progress'] === 100) {
-                    dd('send notify');
+                Mail::to($student->emailForContact())->send(
+                    new PlanCompletion($student->nameFamiliar(),$student,$sequence,$affiliatedAccountService->rating_plan));
             }
         }
-        
+
         if ($moment['section_' . $section_id]) {
             $section = json_decode($moment['section_' . $section_id], true);
             $section_1 = json_decode($moment->section_1, true);

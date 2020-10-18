@@ -232,4 +232,29 @@ class AfiliadoEmpresa extends Model
    
 
     }
+
+    public function nameFamiliar()
+    {
+        $user_id = $this->id;
+        if ($this->hasRole('student')) {
+
+            $rol_id = AffiliatedCompanyRole::select('id')->where([
+                ['affiliated_company_id', $user_id],
+                ['rol_id', 1]//estudiante
+            ])->first()->id;
+
+            $parent_family = ConectionAffiliatedStudents::with(['parent_family.retrive_afiliado_empresa'])->where('student_company_id', $rol_id)->get()->first();
+
+            if($parent_family) {
+                return $parent_family->parent_family->retrive_afiliado_empresa->name.' '.$parent_family->parent_family->retrive_afiliado_empresa->last_name;
+            }
+            else return '';
+        }
+        else {
+            return $this->name.' '.$this->last_name;
+        }
+
+
+    }
+
 }
