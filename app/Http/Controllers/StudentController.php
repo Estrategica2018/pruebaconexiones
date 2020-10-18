@@ -597,8 +597,18 @@ class StudentController extends Controller
             ]
         );
         $item->save();
-        
+		
         $sequence = CompanySequence::where('id', $sequence_id)->get()->first();
+		
+		//Notificación al 100% de finalización de la guía
+		$student = auth('afiliadoempresa')->user();
+        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliatedAccountService, $student->id, $sequence);
+        if($result['sequence']['progress'] === 100) {
+				dd('send notify');
+		}
+        
+		
+		
         
         if ($moment['section_' . $section_id]) {
             $section = json_decode($moment['section_' . $section_id], true);
@@ -675,7 +685,8 @@ class StudentController extends Controller
                 }
             }
             $buttonNext = 'none';
-            if (isset($section['part_' . ($part_id + 1)]) && isset($section['part_' . ($part_id + 1)]['elements']) ) {
+			
+			if (isset($section['part_' . ($part_id + 1)]) && isset($section['part_' . ($part_id + 1)]['elements']) && count($section['part_' . ($part_id + 1)]['elements'])>0 ) {
                 $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                     'sequence_id' => $sequence_id,
                     'moment_id' => $moment_id,
