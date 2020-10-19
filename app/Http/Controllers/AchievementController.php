@@ -175,7 +175,7 @@ class AchievementController extends Controller
                         foreach($elements as $element) {
                             if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
                                 $questions[$element['id']] = ['element'=>$element];
-                                $questions[$element['id']]['evidences'] = $evidences->where('experience_id',$element['id'])->first();
+                                $questions[$element['id']]['evidences'] = $evidences->where('experience_id',$element['experience_id'])->first();
                                 if($questions[$element['id']]['evidences']) {
                                     //  ($rating[$element['id']]['evidences']);
                                 }

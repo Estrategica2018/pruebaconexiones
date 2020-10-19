@@ -668,7 +668,7 @@ class TutorController extends Controller
                             foreach($elements as $element) {
                                 if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
                                     $rating[$element['id']] = ['element'=>$element];
-                                    $rating[$element['id']]['evidences'] = $evidences->where('experience_id',$element['id'])->first();
+                                    $rating[$element['id']]['evidences'] = $evidences->where('experience_id',$element['experience_id'])->first();
                                     if($rating[$element['id']]['evidences']) {
                                         //dd($rating[$element['id']]['evidences']);
                                     }

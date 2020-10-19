@@ -122,7 +122,7 @@
                                            ng-style="{@if(isset($element['color'])) 'color': '{{$element['color']}}', @endif @if(isset($element['background_color'])) 'background-color': '{{$element['background_color']}}', @endif}" 
                                            style="@if(isset($element['style'])) {{$element['style']}} @endif"
                                            w="{{$element['w']}}" h="{{$element['h']}}" fs="{{$element['fs']}}"
-                                           ng-click="onClickEvidence('{{$sequence_id}}','{{$moment->id}}','{{$section_id}}','{{$element['id']}}','@if(isset($element['icon'])){{$element['icon']}}@endif','@if(isset($element['subtitle'])){{$element['subtitle']}}@endif','{{$part_id}}')">
+                                           ng-click="onClickEvidence('{{$sequence_id}}','{{$moment->id}}','{{$section_id}}','{{$element['experience_id']}}','@if(isset($element['icon'])){{$element['icon']}}@endif','@if(isset($element['subtitle'])){{$element['subtitle']}}@endif','{{$part_id}}')">
                                            @if(isset($element['icon']))
                                            <img src="{{asset($element['icon'])}}" width="auto" height="40px"/>
                                            @else 

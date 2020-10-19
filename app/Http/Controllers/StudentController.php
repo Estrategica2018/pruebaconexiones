@@ -543,7 +543,7 @@ class StudentController extends Controller
      */
     public function show_moment_section(Request $request, $empresa, $account_service_id, $sequence_id, $moment_id, $order_moment_id, $section_id = null, $part_id = 1)
     {
-
+		
         $affiliatedAccountService = 
             AffiliatedAccountService::with('affiliated_content_account_service')->
             where('init_date', '<=', Carbon::now())

@@ -446,7 +446,7 @@
                         </div>
                         <div ng-show="element.type==='evidence-element'" mt="@{{element.mt}}" ml="@{{element.ml}}"
                            class="conx-element">
-                           <div id="@{{element.type==='evidence-element' ? element.id : ''}}" style="@{{element.style}}"
+                           <div experience-id="@{{element.type==='evidence-element' ? element.experience_id : ''}}"" id="@{{element.type==='evidence-element' ? element.id : ''}}" style="@{{element.style}}"
                               class="@{{element.class}} conx-element position-absolute evidence-head"
                               ng-class="{'selected':element.selected}"
                               ng-style="{'color':element.color, 'background-color': element.background_color}"

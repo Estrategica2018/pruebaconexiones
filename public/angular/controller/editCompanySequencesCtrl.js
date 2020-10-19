@@ -35,6 +35,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
 
     $scope.mbDraggable = false;
     $scope.showDeleteButton = false;
+    $scope.deleteQuestionsIds = null;
  
     $scope.resizeWidth = function () {
         var card = $('.background-sequence-card');
@@ -399,7 +400,9 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 loadFolderImage($scope.sequence,'url_slider_images',$scope.sequence.url_slider_images);
                  
                 $scope.applyChangeEvidence = false;
+                $scope.deleteQuestionsIds = null;
                 $scope.showCopyButton = $scope.showDeleteButton = false;
+                
                 if (!$scope.sequence['section_1']) $scope.sequence['section_1'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
                 if (!$scope.sequence['section_2']) $scope.sequence['section_2'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
                 if (!$scope.sequence['section_3']) $scope.sequence['section_3'] = angular.toJson({ "section": findSectionSequenceEmpty($scope.sequence) });
@@ -590,6 +593,20 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     $scope.onDeleteSelectedElements = function() {
         
         var list = $scope.elementParentEdit.elements.filter(function(value){
+            
+            //validate if the element deleted is a evidence-element
+            if(value.selected && value.type === 'evidence-element') {
+                ;
+                if(typeof value.id !== 'undefined' && value.questions)
+                for(var i=0, question; i<value.questions.length;i++) {
+                    question = value.questions[i];
+                    if(typeof question.id !== 'undefined') {
+                        $scope.applyChangeEvidence = true
+                        $scope.deleteQuestionsIds = $scope.deleteQuestionsIds || [];
+                        $scope.deleteQuestionsIds.push(question.id);
+                    }
+                }
+            }
             return !value.selected;
         }) 
         refreshElements(list);
@@ -629,10 +646,17 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                  }
             }
             
-            $scope.elementParentEdit.elements.push(copyElement);
             if(copyElement.type === "evidence-element" ) {
+               copyElement.experience_id = copyElement.id;
                $scope.applyChangeEvidence = true;
+               for(var k=0, question = null; k<copyElement.questions.length;k++) {
+                   question = copyElement.questions[k];
+                   delete question.id;
+               }
             }
+            
+            $scope.elementParentEdit.elements.push(copyElement);
+            
         }
         
         for(var i=0, elem= null; i< $scope.elementParentEdit.elements.length; i++) {
@@ -807,7 +831,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             newElement = { 'id': id, 'type': typeItem, 'fs': 11, 'ml': 210, 'mt': 176, 'w': 130, 'h': 50, 'text': '--texto de guía--', 'class': 'btn-sm btn-primary' };
         }
         else if (typeItem === 'evidence-element') {
-            newElement = { 'id': id, 'type': typeItem, 'questionEditType': "1",'fs': 11, 'ml': 210, 'mt': 176, 'w': 277, 'h': 58, 'text': 'Abrir evidencias de aprendizaje', 'class': '', 'subtitle':'Evidencias de aprendizaje','icon': 'images/designerAdmin/icons/evidenciasAprendizajeIcono.png', 'questions': [] };
+            newElement = { 'experience_id': id, 'id': id, 'type': typeItem, 'questionEditType': "1",'fs': 11, 'ml': 210, 'mt': 176, 'w': 277, 'h': 58, 'text': 'Abrir evidencias de aprendizaje', 'class': '', 'subtitle':'Evidencias de aprendizaje','icon': 'images/designerAdmin/icons/evidenciasAprendizajeIcono.png', 'questions': [] };
         }
 
         for(var j=0, elm; j<$scope.elementParentEdit.elements.length; j++) {
@@ -822,7 +846,6 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         $timeout(function () {
             $scope.resizeWidth();
         }, 10);
-
     }
 
     $scope.onDeleteElement = function (parentElement, $index, mbDelete) {
@@ -832,6 +855,18 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             $scope.indexElement = null;
             $scope.typeEdit = '';
             $scope.applyChange = true;
+            var element = parentElement['elements'][$index];
+            if(element.type === 'evidence-element') {
+                if(typeof element.id !== 'undefined' && element.questions)
+                for(var i=0, question; i<element.questions.length;i++) {
+                    question = element.questions[i];
+                    if(typeof question.id !== 'undefined') {
+                        $scope.deleteQuestionsIds = $scope.deleteQuestionsIds || [];
+                        $scope.deleteQuestionsIds.push(question.id);
+                    }
+                }
+            }
+            
             var list = $scope.elementParentEdit.elements.filter(function(value,index){
                 return  (index !== $index)
             });
@@ -872,16 +907,11 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     
     function saveEvidence(sectionPart,callback){
         var countElements = sectionPart.elements? sectionPart.elements.length : 0;
-       
         var countElementsError = [];
+
         if($scope.applyChangeEvidence) {
-            var data = {
-                "sequence_id": $scope.sequence.id,
-                "moment_id":  $scope.moment ? $scope.moment.id : ''
-            }
-            /*$http.post('/remove_question/', data)
-            .then(function (response) {*/
-                
+            
+            function updateQuestions() {
                 sectionPart.elements = sectionPart.elements || [];
                 var element = null;
                 
@@ -901,12 +931,16 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 for(var i=0;i<sectionPart.elements.length;i++) {
                     element = sectionPart.elements[i];
                     if(element.type === 'evidence-element') {
+						
+						element.experience_id = element.experience_id || element.id;
+						
                         if(element.questions.length === 0) {
                             finishCallback();
                         }
                         else {
                             countElements--;
                             countElements += element.questions.length;
+							
                             for(var j=0;j<element.questions.length;j++) {
                                 var data = { 
                                     "id": element.questions[j].id,
@@ -918,7 +952,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                                     "concept":  element.questions[j].concept,
                                     "isHtml":  element.questions[j].isHtml,
                                     "order":   j + 1,
-                                    "experience_id":  element.id,
+                                    "experience_id":  element.experience_id,
                                     "options": removeHashKey(element.questions[j].options),
                                     "review": removeHashKey(element.questions[j].review),
                                     "type_answer": element.questionEditType
@@ -944,17 +978,38 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                         finishCallback();
                     }
                 }
-    
+
                 if(sectionPart.elements.length === 0) {
                     finishCallback();
-                } 
+                }
+            }
+            
+            if($scope.deleteQuestionsIds) {
+                $scope.deleteQuestionsIds
+                var data = {
+                    "sequence_id": $scope.sequence.id,
+                    "questions_ids":  $scope.deleteQuestionsIds
+                }
+                $http.post('/remove_questions/', data)
+                .then(function (response) {
+                    updateQuestions();
+                }, function (reason) {
+                    var message = (reason && reason.data) ? reason.data.message : '';
+                    var countElementsError = 'Error invocando el servicio remove_question:['+message+']';
+                    swal('Conexiones', 'Error al actualizar las preguntas en el servidor. Han ocurrido los siguientes errores : '+JSON.stringify(countElementsError), 'error');
+                });
+                    
+            }
+            else {
+                updateQuestions();
+            }
         }
         else {
             countElements = 0;
             countElementsError = [];
             finishCallback();
         }
-
+        
         function finishCallback(error) {
             countElements--;
             if(error) countElementsError.push(error);
@@ -1331,13 +1386,20 @@ MyApp.directive('conxEvidenceQuestions', function () {
             }
             
             $scope.deleteQuestion = function ($index) {
+                
                 $scope.applyChange = true;
                 $scope.applyChangeEvidence = true;
                 $scope.elementEdit.questions = $scope.elementEdit.questions || [];
                 var list = $scope.elementEdit.questions;
                 var newList = [];
                 for (var i = 0; i < list.length; i++) {
-                    if (i != $index) {
+                    if (i === $index) {
+                        if(typeof list[i].id !== 'undefined') {
+                            $scope.deleteQuestionsIds = $scope.deleteQuestionsIds || [];    
+                            $scope.deleteQuestionsIds.push(list[i].id);
+                        }
+                    }
+                    else {
                         newList.push(list[i]);
                     }
                 }

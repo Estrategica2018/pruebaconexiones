@@ -18,21 +18,42 @@ class QuestionController extends Controller
      */
     public function register_update_question(Request $request)
     {
-        //dd(@json_decode($request->options) , @json_decode($request->review));
         if (@json_decode($request->options) && @json_decode($request->review)) {
-            $question = Question::updateOrCreate(
-                ['sequence_id' => $request->sequence_id, 'moment_id' => $request->moment_id, 'experience_id' => $request->experience_id, 
-                'order' => $request->order, 'section' => $request->section],
-                ['title' => $request->title,'objective' => $request->objective,'concept' => $request->concept, 'options' => $request->options, 
-                 'isHtml' => $request->isHtml, 'review' => $request->review, 'type_answer' => $request->type_answer]
-            );
+            if(isset($request->id)) {
+                $question = Question::where([
+                    ['sequence_id', $request->sequence_id], 
+                    ['moment_id', $request->moment_id], 
+                    ['section', $request->section],
+                    ['id', $request->id]
+				])->first();
+            }
+            else {
+                $question = new Question();
+                $question->sequence_id = $request->sequence_id;
+                $question->moment_id = $request->moment_id;
+                $question->section = $request->section;
+            }
+            
+			$question->experience_id = $request->experience_id;
+            $question->order = $request->order;
+            $question->title = $request->title;
+            $question->objective = $request->objective;
+            $question->concept = $request->concept;
+            $question->options = $request->options;
+            $question->isHtml = $request->isHtml;
+            $question->review = $request->review;
+            $question->type_answer = $request->type_answer;
+            $question->save();
+            
+            return response()->json(['data' => $question, 'message', 'Pregunta registrada o actualizada'], 200);
             
         } else {
             if (!@json_decode($request->options))
                 return response()->json(['data' => '', 'message', 'El formato para registrar o actualizar los datos de preguntas no es el correcto'], 200);
             return response()->json(['data' => '', 'message', 'El formato para registrar o actualizar los datos de respuestas no es el correcto'], 200);
         }
-        return response()->json(['data' => $question, 'message', 'Pregunta registrada o actualizada'], 200);
+        
+
 
     }
     
@@ -40,13 +61,11 @@ class QuestionController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function remove_question(Request $request)
-    {
-        $question = Question::where(
-                ['sequence_id' => $request->sequence_id, 
-                 'moment_id' => $request->moment_id]
-            )->delete();
-        return response()->json(['data' => $question, 'message', 'Preguntas elimnadas correctamente'], 200);
+    public function remove_questions(Request $request)
+    {   $question = Question::whereIn('id', $request->questions_ids)
+                ->where('sequence_id',$request->sequence_id)
+                ->delete();
+        return response()->json(['data' => $question, 'message', '['.$question.'] Preguntas elimnadas correctamente'], 200);
     }
 
 
