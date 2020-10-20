@@ -284,9 +284,9 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
          return new Promise(resolve => {
             var mbControl = false; 
             var message = '';
-            if(activesPlan && activesPlan.affiliated_account_services) {
-                for(var i=0, account;i<activesPlan.affiliated_account_services.length; i++) {
-                    account = activesPlan.affiliated_account_services[i];
+            if(activesPlan) {
+                for(var i=0, account;i<activesPlan.length; i++) {
+                    account = activesPlan[i];
                     if(account.affiliated_content_account_service[0].sequence_id === sequence_id){
                         mbControl = true; 
                         message = 'Ya tienes contratada esta guía de aprendizaje, deseas adquirirla de nuevo?';

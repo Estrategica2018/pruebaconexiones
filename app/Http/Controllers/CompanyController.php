@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AfiliadoEmpresa;
+use App\Models\AffiliatedAccountService;
 use App\Models\Companies;
 use App\Models\CompanyGroup;
 use App\Models\CompanySequence;
@@ -40,20 +41,22 @@ class CompanyController extends Controller
     public function get_company_sequences(Request $request, $company_id, $sequence_id = 0)
     {
         $activesPlan = [];
+        
         if (auth('afiliadoempresa')->user()) {
+            
             $userId = auth('afiliadoempresa')->user()->id;
             
             //consulta planes activos
-            $activesPlan = AfiliadoEmpresa::
-            with('affiliated_account_services.affiliated_content_account_service')
-                ->whereHas('affiliated_account_services', function ($query) {
-                    $dt = new \DateTime();
-                    $end_date = date('Y-m-d', strtotime('+ 1 day'));
-                    $query->where([
-                        ['init_date', '<=', $dt->format('Y-m-d')],
-                        ['end_date', '>=', $end_date]
-                    ]);
-                })->find($userId);
+            $activesPlan = AffiliatedAccountService::with('affiliated_content_account_service')
+            ->where(function ($query) {
+                $dt = new \DateTime();
+                $query->where([
+                    ['init_date', '<=', $dt->format('Y-m-d')],
+                    ['end_date', '>=', $dt->format('Y-m-d')]
+                ]);
+            })->where('company_affiliated_id',$userId)
+            ->get();
+            
             //consulta carrito de compra activo
             $shoppingCarts = ShoppingCart::with('shopping_cart_product')->where([
                 ['company_affiliated_id', $userId],

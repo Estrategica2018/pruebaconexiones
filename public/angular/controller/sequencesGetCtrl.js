@@ -48,7 +48,13 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                         id: params[params.length - 1]
                     };
                     
-                    var madeInNy = new Vimeo.Player('vimeo-player', options);
+                    try { 
+                        var madeInNy = new Vimeo.Player('vimeo-player', options);
+                    }
+                    catch(e){
+                        $scope.errorMessageFilter = 'Error cargando video de situación generadora';
+                        swal('Conexiones',$scope.errorMessageFilter,'error').catch(swal.noop);
+                    }
                     
                     $('#loading').removeClass('show');
                     $('.d-none-result2').removeClass('d-none');
@@ -125,9 +131,9 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
          return new Promise(resolve => {
             var mbControl = false; 
             var message = '';
-            if(activesPlan && activesPlan.affiliated_account_services) {
-                for(var i=0, account;i<activesPlan.affiliated_account_services.length; i++) {
-                    account = activesPlan.affiliated_account_services[i];
+            if(activesPlan) {
+                for(var i=0, account;i<activesPlan.length; i++) {
+                    account = activesPlan[i];
                     if(account.affiliated_content_account_service[0].sequence_id === sequence_id){
                         mbControl = true; 
                         message = 'Ya tienes contratada esta guía de aprendizaje, deseas adquirirla de nuevo?';
