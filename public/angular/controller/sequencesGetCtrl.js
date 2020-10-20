@@ -42,18 +42,20 @@ MyApp.controller("sequencesGetCtrl", function ($scope, $http, $timeout) {
                 }
 
                 $timeout(function () {
-                    var params = $scope.sequence.url_vimeo.split('/');
-                    
-                    var options = {
-                        id: params[params.length - 1]
-                    };
-                    
-                    try { 
-                        var madeInNy = new Vimeo.Player('vimeo-player', options);
-                    }
-                    catch(e){
-                        $scope.errorMessageFilter = 'Error cargando video de situación generadora';
-                        swal('Conexiones',$scope.errorMessageFilter,'error').catch(swal.noop);
+                    if($scope.sequence.url_vimeo.indexOf('player.vimeo') > 0) {
+                        var params = $scope.sequence.url_vimeo.split('/');
+                        
+                        var options = {
+                            id: params[params.length - 1]
+                        };
+                        
+                        try { 
+                            var madeInNy = new Vimeo.Player('vimeo-player', options);
+                        }
+                        catch(e){
+                            $scope.errorMessageFilter = 'Error cargando video de situación generadora';
+                            swal('Conexiones',$scope.errorMessageFilter,'error').catch(swal.noop);
+                        }
                     }
                     
                     $('#loading').removeClass('show');
