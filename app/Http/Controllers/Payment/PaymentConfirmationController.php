@@ -36,11 +36,11 @@ class PaymentConfirmationController extends Controller
             ['payment_status_id', 2],
         ])->get();
 
-        $this->writeLog($log_path.'/'.$file,'-- Transacciones pendientes:' . count($shopping_carts));   
+        //$this->writeLog($log_path.'/'.$file,'-- Transacciones pendientes:' . count($shopping_carts));   
         
         foreach ($shopping_carts as $shoppingCart) {
-            $this->writeLog($log_path.'/'.$file,'');
-            $this->writeLog($log_path.'/'.$file,'* Buscando en el external references en mercadopago [ payment_transaction_id: '.$shoppingCart->payment_transaction_id.' ]');
+            //$this->writeLog($log_path.'/'.$file,'');
+            //$this->writeLog($log_path.'/'.$file,'* Buscando en el external references en mercadopago [ payment_transaction_id: '.$shoppingCart->payment_transaction_id.' ]');
             
             $filters = array(
                 "external_reference" => $shoppingCart->payment_transaction_id,
@@ -83,14 +83,14 @@ class PaymentConfirmationController extends Controller
                 return redirect()->route('tutor.products', ['empresa' => 'conexiones']);
             }
             else {
-                $this->writeLog($log_path.'/'.$file,'*  No se encontro aprobación para el ID ' . $shoppingCart->payment_transaction_id );   
-                $this->writeLog($log_path.'/'.$file,'-------  Shopping cart ID ['.$shoppingCart->id.']'   );  
-                $this->writeLog($log_path.'/'.$file,$shoppingCart); 
-                $this->writeLog($log_path.'/'.$file,'-------  Datos del afiliado');
-                $this->writeLog($log_path.'/'.$file,$shoppingCart->affiliate); 
-                 
                 $date = Carbon::now()->subMinutes(20);
                 if($shoppingCart->updated_at->lt($date)){
+                    $this->writeLog($log_path.'/'.$file,'*  No se encontro aprobación para el ID ' . $shoppingCart->payment_transaction_id );   
+                    $this->writeLog($log_path.'/'.$file,'-------  Shopping cart ID ['.$shoppingCart->id.']'   );  
+                    $this->writeLog($log_path.'/'.$file,$shoppingCart); 
+                    $this->writeLog($log_path.'/'.$file,'-------  Datos del afiliado');
+                    $this->writeLog($log_path.'/'.$file,$shoppingCart->affiliate); 
+                
                     $this->writeLog($log_path.'/'.$file,'-------  Fecha de inicio de transaccion fuera de Vigencia:  '. $shoppingCart->updated_at);
                     $this->writeLog($log_path.'/'.$file,'-------  Se marcaran como rechazados los registro  del shoppingCartId ' . $shoppingCart->id);
                  
