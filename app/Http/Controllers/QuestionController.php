@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 /**
@@ -25,7 +26,7 @@ class QuestionController extends Controller
                     ['moment_id', $request->moment_id], 
                     ['section', $request->section],
                     ['id', $request->id]
-				])->first();
+                ])->first();
             }
             else {
                 $question = new Question();
@@ -34,7 +35,7 @@ class QuestionController extends Controller
                 $question->section = $request->section;
             }
             
-			$question->experience_id = $request->experience_id;
+            $question->experience_id = $request->experience_id;
             $question->order = $request->order;
             $question->title = $request->title;
             $question->objective = $request->objective;
@@ -74,14 +75,21 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
      public function get_questions (Request $request){
-        //sin calificación
-        $question = Question::where('sequence_id',$request->sequence_id)
+       $question = Question::where('sequence_id',$request->sequence_id)
                    ->where('moment_id',$request->moment_id)
                    ->where('experience_id',$request->experience_id)
                    ->orderBy('order','ASC')
                    ->get();
-       // dd($question);
-        return response()->json(['data'=>$question],200);
+       $student = $request->user('afiliadoempresa');                
+       $rating = Rating::where([
+            ['affiliated_account_service_id',$request->accountServiceId],
+            ['sequence_id',$request->sequence_id],
+            ['moment_id',$request->moment_id],
+            ['experience_id',$request->experience_id],
+            ['student_id',$student->id],
+        ])->first();
+        
+        return response()->json(['rating'=>$rating,'data'=>$question],200);
 
     }
 

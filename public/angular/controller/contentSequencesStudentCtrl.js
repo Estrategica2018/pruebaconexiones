@@ -11,6 +11,9 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
     $scope.momentId = null;
     $scope.sectionId = null;
     $scope.onFinishEvidenceLoad = false;
+    $scope.maxAttempts = 3;
+    $scope.attempts = 1;
+    $scope.disabledEvidence = false;
     
 
     $scope.init = function (companyId, companyNick, sequenceId, accountServiceId) {
@@ -39,7 +42,7 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
         $('#' + $scope.experience_id + ' img').addClass('d-none');
         $('#' + $scope.experience_id + ' span').removeClass('d-none');
         $http({
-            url: "/get_questions/"+sequenceId+"/"+momentId+"/"+experience_id,
+            url: "/get_questions/"+sequenceId+"/"+momentId+"/"+experience_id+"/"+$scope.accountServiceId,
             method: "GET",
         }).
         then(function (response) {
@@ -51,6 +54,17 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
             }
             $('#' + $scope.experience_id + ' img').removeClass('d-none');
             $('#' + $scope.experience_id + ' span').addClass('d-none');
+            
+            $scope.attempts = response.data && response.data.rating && response.data.rating.attempts ? response.data.rating.attempts : 1;
+            if($scope.attempts > $scope.maxAttempts ) {
+                $scope.attempts = $scope.maxAttempts;
+                $scope.disabledEvidence = true;
+            }
+            else {
+                response.data.rating.attempts ++;
+                $scope.disabledEvidence = true;
+            }
+            
             
         }).catch(function (e) {
             $scope.errorMessage = 'Error consultando las preguntas';
@@ -80,6 +94,10 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
     }
     
     $scope.onFinishEvidence = function() {
+        if($scope.disabledEvidence) {
+            swal('Prueba concluida', 'Has alcanzado el número máximo de intentos para desarrollar esta prueba!!', 'error');
+            return;
+        }
         var questionsAnswers = [];
         var answer = null;
         $scope.onFinishEvidenceLoad = true;

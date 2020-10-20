@@ -259,7 +259,7 @@ Route::get('validate_user_name/{user_name}', 'AffiliatedCompanyController@valida
 Route::group([],function (){
     Route::post('register_update_question', 'QuestionController@register_update_question')->name('register_update_question')->middleware('role:admin');
     Route::post('remove_questions', 'QuestionController@remove_questions')->name('remove_questions')->middleware('role:admin');
-    Route::get('get_questions/{sequence_id}/{moment_id}/{experience_id}', 'QuestionController@get_questions')->name('get_questions');
+    Route::get('get_questions/{sequence_id}/{moment_id}/{experience_id}/{accountServiceId}', 'QuestionController@get_questions')->name('get_questions');
     Route::post('register_update_answer', 'AnswerController@register_update_answer')->name('register_update_answer')->middleware('role:student');
     Route::get('get_answers', 'AnswerController@get_answers')->name('get_answers');
 

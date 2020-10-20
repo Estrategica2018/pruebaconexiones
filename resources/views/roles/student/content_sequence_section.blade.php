@@ -22,7 +22,7 @@
                         <i class="far fa-caret-square-left" id="sidemenu-sequences-button"></i>
                     </div>
                 </div>
-                <div id="loading" class="modal-backdrop position-absolute w-100 background-white p-auto m-auto text-align card" style="padding: 25%; height: 0px;">
+                <div id="loading" class="modal-backdrop position-absolute h-100 w-100 background-white p-auto m-auto text-align card" style="padding: 25%; height: 0px;">
                     Cargando...
                 </div>
                 <div class="col-md-9" id="content-section-sequences">
@@ -164,10 +164,12 @@
         <div ng-show="evidenceOpened" class="d-result d-none position-absolute col-xl-9 col-lg-8 col-10" style="top: 10%;left:12%;">
             <div class="d-result d-none modal-backdrop fade show w-100"></div>
             
-            <div class="card ml-lg-6" style="z-index: 1040;">
+            <div class="card ml-lg-6" style="z-index: 1040;min-width: 658px;">
                 <div class="p-2">
                     <img class="ml-2" src="/@{{evidenceOpened.icon}}" width="auto" height="60px"/>
                     <span class="ml-4 mt-3 fs-1 font-weight-bold">@{{evidenceOpened.subtitle}}</span>
+                    <span ng-show="disabledEvidence" class="ml-10 ml-md-7 ml-lg-10 mt-3 fs-1 font-weight-bold">Prueba concluida</span>
+                    <span ng-hide="disabledEvidence" class="ml-10 ml-md-7 ml-lg-10 mt-3 fs-1 font-weight-bold">Intentos @{{attempts}} de @{{maxAttempts}}</span>
                     <button class="close mt-2 mr-2" ng-click="closeEvidence()">
                         <span class="font-weight-light" >&times;</span>
                     </button>
@@ -208,6 +210,8 @@
                                 ng-model="question.menu"
                                 ng-checked="@{{question.menu === $index}}"
                                 ng-change="onSelectOption(question,option)"
+                                ng-disabled="disabledEvidence"
+                                selected
                                 value="@{{$index}}" class="mr-2">
                             <div class="ml-4" style="margin-top:-25px" ng-bind-html="option.option"></div>
                         </div>
@@ -215,7 +219,7 @@
                     <div class="d-flex mt-6 ml-6">
                         <button class="btn btn-sm btn-outline-primary" ng-disabled="indexQuestion === 0" ng-class="{'opacity-0': indexQuestion === 0}" ng-click="backQuestion()">Atrás</button>
                         <button class="btn btn-sm btn-outline-primary ml-2" ng-disable="indexQuestion >= evidenceOpened.questions.length - 1 " ng-disabled="indexQuestion >= evidenceOpened.questions.length - 1 " ng-click="nextQuestion()">Siguiente</button>
-                        <button class="btn btn-sm btn-outline-success ml-2" style="right: 10%;" ng-disabled="" ng-show="indexQuestion === evidenceOpened.questions.length - 1" ng-click="onFinishEvidence()">
+                        <button class="btn btn-sm btn-outline-success ml-2" style="right: 10%;" ng-class="{'disabled': disabledEvidence}" ng-show="indexQuestion === evidenceOpened.questions.length - 1" ng-click="onFinishEvidence()">
                         <span ng-show="onFinishEvidenceLoad" ><i class="fa fa-spinner fa-spin"></i> </span>Finalizar</button>
                     </div>
                 </div>

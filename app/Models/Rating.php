@@ -19,15 +19,16 @@ class Rating extends Model
         'experience_id',
         'weighted',
         'letter',
-        'section'
+        'section',
+        'attempts'
     ];
-	
-	use \Awobaz\Compoships\Compoships;
+    
+    use \Awobaz\Compoships\Compoships;
 
     public function answers()
     {
         //return $this->hasMany(Answer::class, 'experience_id', 'experience_id');
-		return $this->hasMany(Answer::class, ['experience_id', 'student_affiliated_company_id','affiliated_account_service_id'], ['experience_id', 'student_id', 'affiliated_account_service_id']);
+        return $this->hasMany(Answer::class, ['experience_id', 'student_affiliated_company_id','affiliated_account_service_id'], ['experience_id', 'student_id', 'affiliated_account_service_id']);
 
     }
 }

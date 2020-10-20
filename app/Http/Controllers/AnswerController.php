@@ -25,14 +25,12 @@ class AnswerController extends Controller
      */
     public function register_update_answer(Request $request)
     {
-        if (true) {//@json_decode($request->questions_answers)) {
+        if (true) {
             $questions_answers = $request->questions_answers;
             $student = $request->user('afiliadoempresa');
 
             //$questions_answers = $request->questions_answers;
             foreach ($questions_answers as $question_answer) {
-                //if(@json_decode($question_answer->answer)){
-                //return response()->json(['data' => $question_answer['question_id'], 'message' => 'Respuestas registradas o actualizadas, se ha notificado al familiar las respuestas'], 200);
                 Answer::updateOrCreate(
                     [
                         'student_affiliated_company_id' => $student->id,
@@ -49,7 +47,6 @@ class AnswerController extends Controller
                         'date_evaluation' => Carbon::now()
                     ]
                 );
-                //}
             }
 
             $tutor = AfiliadoEmpresa::whereHas('affiliated_company', function ($query) use ($request, $student) {
@@ -136,7 +133,19 @@ class AnswerController extends Controller
                 }
             }
 
-            //registra el resumen de la evaluzación para la posterior generación de reportes
+            //incrementa la cantidad de intentos realizados
+            $rating = Rating::where([
+                ['affiliated_account_service_id' ,$request->affiliated_account_service_id],
+                ['student_id',$student->id],
+                ['company_id',$request->company_id],
+                ['sequence_id',$request->sequence_id],
+                ['moment_id',$request->moment_id],
+                ['section',$request->section]
+            ])->get();
+            
+            $attempts = count($rating)>0 ? $rating[0]->attempts + 1 : 1;
+            
+            //registra el resumen de la evaluación para la posterior generación de reportes
             Rating::updateOrCreate(
                 [
                     'affiliated_account_service_id' => $request->affiliated_account_service_id,
@@ -150,6 +159,7 @@ class AnswerController extends Controller
                     'weighted' => $performance, 
                     'letter' => $qualification,
                     'experience_id' => $request->experience_id,
+                    'attempts' => $attempts,
                 ]
             );
 

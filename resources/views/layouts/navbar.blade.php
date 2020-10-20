@@ -80,12 +80,12 @@
                   </div>
                   <div ng-show="item.type === 'Kit'">
                     <a href="/kit_de_laboratorio/@{{item.obj.id}}/@{{item.obj.name}}">
-                       <span class="font-weight-bold">@{{item.type}}</span>  @{{item.obj.name}} 
+                       <span class="font-weight-bold">@{{item.obj.name}} </span>
                      </a>
                   </div>
                   <div ng-show="item.type === 'Elemento'">
                     <a href="/elemento_de_laboratorio/@{{item.obj.id}}/@{{item.obj.name}}">
-                       <span class="font-weight-bold">@{{item.type}}</span>  @{{item.obj.name}} 
+                       <span class="font-weight-bold">  @{{item.obj.name}} </span>
                      </a>
                   </div>
                </li>
