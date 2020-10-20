@@ -45,7 +45,7 @@ class BackupController extends Controller
             
             $filePath = public_path() .'/backups/logs';
             $filename = $filePath . '/log_'.$strDate.'.txt';
-            $this->writeLog($filename,'finaliza mysqldump-php');
+            //$this->writeLog($filename,'finaliza mysqldump-php');
             
         } catch (\Exception $e) {
             echo 'mysqldump-php error: ' . $e->getMessage(). '\n';
