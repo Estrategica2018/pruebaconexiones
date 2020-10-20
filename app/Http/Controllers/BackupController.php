@@ -83,7 +83,8 @@ class BackupController extends Controller
         
 
         // Enter the name to creating zipped directory 
-        $pathdir = env('ADMIN_DESIGN_PATH').'/';
+        //$pathdir = env('ADMIN_DESIGN_PATH').'/';
+        $pathdir = '/home/educonexiones/public_html/images';
         
         $strDate = date('YmdHis');
         $backupDirectory = public_path() .'/backups/work/'.$folderName.'/';
