@@ -48,10 +48,19 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
         $scope.searchList = [];
         $http.get('/get_company_sequences/' + 1)
         .then(function (response) {
-            for(var i=0;i<response.data.companySequences.length;i++) {
+            for(var i=0, secuence = null;i<response.data.companySequences.length;i++) {
+                secuence = response.data.companySequences [i];
                 $scope.searchList.push({
                     type: 'Guía',  
-                    obj:response.data.companySequences[i]
+                    obj: { 
+                        'name': response.data.companySequences[i].name,
+                        'areas': response.data.companySequences[i].areas,
+                        'description': response.data.companySequences[i].description,
+                        'keywords': response.data.companySequences[i].keywords,
+                        'objectives': response.data.companySequences[i].objectives,
+                        'themes': response.data.companySequences[i].themes,
+                        'id': response.data.companySequences[i].id,
+                    }
                 })
             }
         }).catch(function(err){ 
@@ -59,29 +68,13 @@ MyApp.controller('navbarController', ['$scope','$http', function ($scope,$http) 
 
         $http.get('/get_kit_elements/')
         .then(function (response) {
-            var kit = element = elementTmp =null;
-            var mbControl = false;
-            var elements = [];
-            for(var i=0;i<response.data.length;i++) {
-                kit = response.data[i];
-                for(var j=0; j<kit.kit_elements.length; j++){
-                    element = kit.kit_elements[j].element;
-                    mbAditionControl = true;
-                    for(var k = 0; k<elements.length; k++) {
-                        elementTmp = elements[k];
-                        if(elementTmp.id===element.id){
-                            mbAditionControl = false;
-                        }
-                    }
-                    if(mbAditionControl) {
-                        elements.push(element);
-                    }
-                }
-                $scope.searchList.push({ type: 'Kit',  obj:response.data[i] });
+            for(var i=0, kit = null;i<response.data.kits.length;i++) {
+                kit = response.data.kits[i];
+                $scope.searchList.push({ type: 'Kit',  obj:kit });
             }
-            for(var j=0; j<elements.length; j++){
-                element = elements[j];
-                $scope.searchList.push({ type: 'Elemento', obj:element });
+            for(var j=0,element = null; j<response.data.elements.length; j++){
+                element = response.data.elements[j];
+                $scope.searchList.push({ type: 'Elemento', obj: element });
             }
             
         }).catch(function(err){ 

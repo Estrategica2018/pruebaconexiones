@@ -89,7 +89,10 @@ class KitElementController extends Controller
             }]);
             $query->select(['moment_kits.id','moment_kits.*']);
         }])
-        ->select('elements.*',DB::raw('(CASE WHEN elements.quantity = 0 THEN "sold-out" ELSE CASE WHEN elements.init_date < CURDATE() THEN "available" ELSE "no-available" END END) AS status'))
+        ->where(function($validateElement){
+            $validateElement->where('end_date', '>=', date('Y-m-d'))
+            ->orWhereNull('end_date');
+        })
         ->find($element_id);
     }
 
