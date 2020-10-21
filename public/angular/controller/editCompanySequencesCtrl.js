@@ -346,7 +346,14 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     $scope.PageName = $scope.momentSection.section.name;
                 
                     $scope.elementParentEdit = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] || {};
-                    $scope.elementParentEdit.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
+					$scope.elementParentEditObj = {};
+					for(obj in $scope.elementParentEdit) {
+						$scope.elementParentEditObj[obj] = $scope.elementParentEdit[obj];
+					}
+					
+					$scope.elementParentEdit = $scope.elementParentEditObj;
+					
+					$scope.elementParentEdit.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
                     if(!$scope.elementParentEdit.container) {
                         $scope.elementParentEdit.container = { "w": $scope.container.w, "h": 385 };
                     }
@@ -1079,6 +1086,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         //var sectionNumber = Number($scope.momentSectionPart.momentSectionPartIndex.replace('part_',''));
         var sectionNumber = Number($scope.momentSection.momentSectionIndex) + 1;
 
+		$scope.momentSection[$scope.momentSection.momentSectionPartIndex] = $scope.elementParentEdit;
+		
         saveEvidence($scope.elementParentEdit,function(){
             var data = {
                 'id': $scope.moment.id,
