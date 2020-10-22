@@ -1,6 +1,7 @@
 MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", function ($scope, $http, $timeout) {
 
     $scope.errorMessage = null;
+    
     $scope.sequence = null;
     $scope.sequenceSection = null;
     $scope.moment = null;
@@ -346,14 +347,14 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     $scope.PageName = $scope.momentSection.section.name;
                 
                     $scope.elementParentEdit = $scope.momentSection[$scope.dataJstree.momentSectionPartIndex] || {};
-					$scope.elementParentEditObj = {};
-					for(obj in $scope.elementParentEdit) {
-						$scope.elementParentEditObj[obj] = $scope.elementParentEdit[obj];
-					}
-					
-					$scope.elementParentEdit = $scope.elementParentEditObj;
-					
-					$scope.elementParentEdit.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
+                    $scope.elementParentEditObj = {};
+                    for(obj in $scope.elementParentEdit) {
+                        $scope.elementParentEditObj[obj] = $scope.elementParentEdit[obj];
+                    }
+                    
+                    $scope.elementParentEdit = $scope.elementParentEditObj;
+                    
+                    $scope.elementParentEdit.momentSectionPartIndex = $scope.dataJstree.momentSectionPartIndex;
                     if(!$scope.elementParentEdit.container) {
                         $scope.elementParentEdit.container = { "w": $scope.container.w, "h": 385 };
                     }
@@ -493,6 +494,13 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     $scope.deleteBackgroundSection = function () {
         $scope.elementParentEdit.background_image = '';
         $scope.applyChange = true;
+    }
+
+    $scope.onClickTitle = function(momentSection, element, title, type) {
+        $scope.typeEdit = type;
+        $scope.momentSection = momentSection;
+        $scope.elementEdit = element;
+        $scope.titleEdit = title;
     }
 
     $scope.onClickElement = function (parent, element, title, type) {
@@ -938,16 +946,16 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 for(var i=0;i<sectionPart.elements.length;i++) {
                     element = sectionPart.elements[i];
                     if(element.type === 'evidence-element') {
-						
-						element.experience_id = element.experience_id || element.id;
-						
+                        
+                        element.experience_id = element.experience_id || element.id;
+                        
                         if(element.questions.length === 0) {
                             finishCallback();
                         }
                         else {
                             countElements--;
                             countElements += element.questions.length;
-							
+                            
                             for(var j=0;j<element.questions.length;j++) {
                                 var data = { 
                                     "id": element.questions[j].id,
@@ -1086,8 +1094,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
         //var sectionNumber = Number($scope.momentSectionPart.momentSectionPartIndex.replace('part_',''));
         var sectionNumber = Number($scope.momentSection.momentSectionIndex) + 1;
 
-		$scope.momentSection[$scope.momentSection.momentSectionPartIndex] = $scope.elementParentEdit;
-		
+        $scope.momentSection[$scope.momentSection.momentSectionPartIndex] = $scope.elementParentEdit;
+        
         saveEvidence($scope.elementParentEdit,function(){
             var data = {
                 'id': $scope.moment.id,

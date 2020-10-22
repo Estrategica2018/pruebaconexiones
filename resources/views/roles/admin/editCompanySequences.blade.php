@@ -200,7 +200,7 @@
                <div class="card-header d-flex bg-light ">
                   <h5 class="">@{{PageName}}</h5>
                   <div ng-show="dataJstree.type==='openMomentSectionPart'" class="ml-3 pt-1 conx-element"
-                     ng-click="onClickElement(momentSection,'title','Título','text')">
+                     ng-click="onClickTitle(momentSection,'title','Título','momenTitle')">
                      <h6 type="text" class="">@{{momentSection.title || '---Título---'}} </h6>
                   </div>
                   <div ng-show="dataJstree.type==='openSequence'" class="ml-auto">
@@ -494,6 +494,9 @@
             </div>
          </div>
          <div class="bg-light card-body">
+            <input type="text" ng-show="typeEdit === 'momenTitle'" ng-change="onChangeInput(momentSection[elementEdit])"
+               ng-model="momentSection[elementEdit]" class="w-100" />
+            
             <input type="text" ng-show="typeEdit === 'text'" ng-change="onChangeInput(elementParentEdit[elementEdit])"
                ng-model="elementParentEdit[elementEdit]" class="w-100" />
             <textarea ng-change="onChangeInput(elementEdit.text)" ng-show="typeEdit === 'textArea'"
