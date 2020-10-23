@@ -24,7 +24,7 @@ class FileUploadLogsController extends Controller
             return view('roles.admin.fileUploadLogs', ['resultData' => $resultData]);
         } else {
             $resultData = [];
-            $filesNames = scandir(str_replace('/', '\\', $this->resultsDirectory));
+            $filesNames = scandir($this->resultsDirectory);
             for ($i = 0; $i < count($filesNames); ++$i) {
                 if ($filesNames[$i] !== '.' && $filesNames[$i] !== '..') {
                     array_push($resultData, $this->parseResult($filesNames[$i]));
