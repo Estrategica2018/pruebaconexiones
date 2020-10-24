@@ -1,41 +1,80 @@
-MyApp.controller("timelineSequencesStudentCtrl", ["$scope", "$http", function ($scope, $http) {
+MyApp.controller("timelineSequencesStudentCtrl", ["$scope", "$http","refresTimeLine", function ($scope, $http,refresTimeLine) {
     
     $scope.sequences = null;
     $scope.errorMessage = null;
     $scope.init = function(company_id,account_service_id,sequence_id)    {
+        refresTimeLine(company_id,account_service_id,sequence_id);
+    };    
+    
+}]);
+
+MyApp.factory('refresTimeLine', ['$http', function($http) {
+   
+   return function(company_id,account_service_id,sequence_id) {
         $http({
             url:"/get_advance_line/"+account_service_id+'/'+sequence_id,
             method: "GET",
         }).
         then(function (response) {
-            let data = response.data
-            let startOn = false;
-            let flag = false;
-            let moment , count = 1;
-            $(data.data).each(function (key, value) {
-                $(`.circle${value.moment_order}${value.moment_section_id}`).attr('fill', '#FFD400');
-                if(!flag){
-                    moment = value.moment_order;
-                    flag = true;
-                }else{
-                    if(moment == value.moment_order){
-                       if(++count == 4){
-                           $(`.star${value.moment_order}`).attr('fill', '#FFD400');
-                           $(`.star${value.moment_order}`).attr('stroke', '#FFD400');
-                           $(`.number${value.moment_order}`).attr('stroke', '#FFFFFF');
-                           count = 1;
-                           flag = false;
-                       }
-                    }else{
-                        count = 1;
-                        flag = false;
+            let moments = response.data.moments;
+            let complete = '#FFD400';
+            let partial = '#F9FAFD';
+            let none = '#494b9a';
+            let notAvailable = 'gray';
+            
+            //$(moments).each(function (key, moment) {
+            var moment = null;
+            for(moment_order in moments) { 
+                moment = moments[moment_order];
+                
+                let fill_color = none;
+                if(!moment.isAvailable) {
+                    fill_color = notAvailable;
+                    for(var section_id=1; section_id<=4; section_id++) {
+                        $(`.circle${moment.order}${section_id}`).attr('fill', fill_color);
+                        $(`.circle${moment.order}${section_id}`).attr('opacity', '0.5');
                     }
+                    $(`.star${moment.order}`).attr('fill', fill_color);
+                    $(`.star${moment.order}`).attr('stroke', fill_color);
+                    $(`.star${moment.order}`).attr('opacity', '0.5');
                 }
-            });
+                else if(moment.progress === 100) {
+                    fill_color = complete;
+                    for(var section_id=1; section_id<=4; section_id++) {
+                        $(`.circle${moment.order}${section_id}`).attr('fill', fill_color);
+                        $(`.circle${moment.order}${section_id}`).attr('opacity', '1');
+                    }
+                    $(`.star${moment.order}`).attr('fill', fill_color);
+                    $(`.star${moment.order}`).attr('stroke', fill_color);
+                    $(`.star${moment.order}`).attr('opacity', '1');
+                    $(`.number${moment.order}`).attr('stroke', '#FFFFFF');
+                    
+                }
+                else if(moment.progress > 0) {
+                    fill_color = complete;
+                    for(var section_id=1,section=null; section_id<=4; section_id++) {
+                        section = moment.sections[section_id];
+                        if(section.progress === 100 ){
+                            $(`.circle${moment.order}${section_id}`).attr('fill', fill_color);
+                            $(`.circle${moment.order}${section_id}`).attr('opacity', '1');
+                        }
+                        else if(section.progress > 0 ){
+                            $(`.circle${moment.order}${section_id}`).attr('fill', fill_color);
+                            $(`.circle${moment.order}${section_id}`).attr('opacity', '0.4');
+                        }
+                        else {
+                            fill_colo2 = none;
+                        }
+                        
+                    }
+                    $(`.star${moment.order}`).attr('fill', fill_color);
+                    $(`.star${moment.order}`).attr('stroke', fill_color);
+                    $(`.star${moment.order}`).attr('opacity', '0.4');
+                    $(`.number${moment.order}`).attr('stroke', '#FFFFFF');
+                }
+            }
         }).catch(function (e) {
             //$scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
         });
-
-    };    
-    
-}]);
+   };
+ }]);

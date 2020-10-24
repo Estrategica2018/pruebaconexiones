@@ -1,4 +1,4 @@
-MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($scope, $http) {
+MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http","refresTimeLine", function ($scope, $http,refresTimeLine) {
 
     $scope.errorMessage = null;
     $scope.sequences = null;
@@ -136,8 +136,10 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
             $scope.indexQuestion = 0;
             $scope.onFinishEvidenceLoad = false;
             
+            refresTimeLine($scope.companyId,$scope.accountServiceId,$scope.sequenceId);
+            
         }).catch(function (e) {
-            $scope.errorMessage = e.data.message || 'Error guardando las respuestas';
+            $scope.errorMessage = e.data && e.data.message ? e.data.message : 'Error guardando las respuestas';
             swal('Conexiones', $scope.errorMessage, 'error');
             $('#' + $scope.experience_id + ' img').removeClass('d-none');
             $('#' + $scope.experience_id + ' span').addClass('d-none');

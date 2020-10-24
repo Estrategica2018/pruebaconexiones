@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AdvanceLine;
+use App\Models\AffiliatedAccountService;
+use App\Models\CompanySequence;
+use App\Models\SequenceMoment;
+use Carbon\Carbon;
 
 /**
  * Class AdvanceLineController
@@ -20,11 +24,33 @@ class AdvanceLineController extends Controller
      */
     public function get(Request $request, $accountServiceId, $sequenceId)
     {
-        $advanceLine = AdvanceLine::where([
-            ['affiliated_company_id', auth('afiliadoempresa')->user()->id],
-            ['affiliated_account_service_id', $accountServiceId],
-            ['sequence_id', $sequenceId]
-        ])->orderBy('moment_order', 'ASC')->orderBy('moment_section_id', 'ASC')->get();
-        return response()->json(['data' => $advanceLine], 200);
+        $accountService = AffiliatedAccountService::with('affiliated_content_account_service')->
+                where('init_date', '<=', Carbon::now())
+                ->where('end_date', '>=', Carbon::now())
+                ->find($accountServiceId);
+        
+        $sequence = CompanySequence::where('id', $sequenceId)->get()->first();    
+        $student_id = auth('afiliadoempresa')->user()->id;
+        $moments = [];
+        foreach($sequence->moments as $sequenceMoment) {
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student_id, $sequence->id, $sequenceMoment);
+            
+            $sections = [];
+            if($result['moment']['isAvailable']) {
+                foreach([1,2,3,4] as $section_id) {
+                    $resultSection = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student_id, $sequence->id, $sequenceMoment, $section_id);
+                    $sections[$section_id] = $resultSection['section'];
+					$sections[$section_id]['nombre'] = json_decode($sequenceMoment['section_'.$section_id],true)['section']['name'];
+                }    
+            }
+            $moments[$sequenceMoment['order']] = [
+                'order'=> $sequenceMoment['order'],
+                'isAvailable'=> $result['moment']['isAvailable'],
+                'progress'=> $result['moment']['progress'],
+                'performance'=> $result['moment']['performance'],
+                'sections' => $sections
+            ];
+        }
+        return response()->json(['moments'=>$moments], 200);
     }
 }
