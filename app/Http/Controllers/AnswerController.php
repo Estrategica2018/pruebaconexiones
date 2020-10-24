@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PlanCompletion;
 use App\Mail\SendReportAnswerTutor;
 use App\Models\AdvanceLine;
 use App\Models\AfiliadoEmpresa;
+use App\Models\AffiliatedAccountService;
 use App\Models\Answer;
 use App\Models\Rating;
 use App\Models\CompanySequence;
@@ -132,7 +134,22 @@ class AnswerController extends Controller
                     }
                 }
             }
-
+            
+            $affiliatedAccountService = AffiliatedAccountService::with('affiliated_content_account_service')->
+                where('init_date', '<=', Carbon::now())
+                ->where('end_date', '>=', Carbon::now())
+                ->find($request->affiliated_account_service_id);
+                
+            $sequence = CompanySequence::where('id', $request->sequence_id)->get()->first();    
+            
+            //Notificación al 100% de finalización de la guía
+            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliatedAccountService, $student->id, $sequence);
+            
+            $mbControlSendEmail = false;
+            if($result['sequence']['progress'] < 100) {
+                $mbControlSendEmail = true;
+            }
+            
             //incrementa la cantidad de intentos realizados
             $rating = Rating::where([
                 ['affiliated_account_service_id' ,$request->affiliated_account_service_id],
@@ -163,8 +180,17 @@ class AnswerController extends Controller
                 ]
             );
 
-
             Mail::to($tutor->email)->send(new SendReportAnswerTutor($tutor, $student, $reportAnswers, $sequence, $moment, $level, $performance_comment,$color_performance,$performance,$place_advance_line));
+            
+            if($mbControlSendEmail) {
+                
+                $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliatedAccountService, $student->id, $sequence);
+                if($result['sequence']['progress'] === 100) {
+                    Mail::to($student->emailForContact())->send(
+                        new PlanCompletion($student->nameFamiliar(),$student,$sequence,$affiliatedAccountService->rating_plan));
+                }
+            }
+
             return response()->json(['data' => ['section'=>$request->section,'performance' => $performance, 'performance_comment' => $performance_comment, 'level' => $level, 'qualification' => $qualification], 'message' => 'Respuestas registradas o actualizadas, se ha notificado al familiar las respuestas'], 200);
         }
         return response()->json(['data' => '', 'message' => 'El formato para registrar o actualizar los datos de respuesta no es el correcto'], 401);
@@ -193,7 +219,7 @@ class AnswerController extends Controller
         foreach ($answers as $answer) {
             $data = $this->get_answer_student($answer->answer, $answer->question->options, $answer->question->review);
             $data['title'] = $answer->question->title;
-            $data['struct_concept'] = 'La respuesta esperada es: '.$data['type_numeral'].':'.$data['answer_question'].' Porque: '.$answer->question->concept;
+            $data['struct_concept'] = 'La respuesta esperada es: '.strtoupper($data['type_numeral']).':'.$data['answer_question'].' Porque: '.$answer->question->concept;
             $data['objective'] = $answer->question->objective;
             $data['concept'] = $answer->question->concept;
             array_push($questions, $data);

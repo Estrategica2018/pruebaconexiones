@@ -117,7 +117,7 @@
                                         @endif
                                     @endif
                                     @if($element['type'] == 'evidence-element')
-                                    <div ml="{{$element['ml']}}" mt="{{$element['mt']}}">
+                                    <div ml="{{$element['ml']}}" mt="{{$element['mt']}}" class="z-index-10">
                                         <div id="{{$element['id']}}" class="{{$element['class']}} evidence-head cursor-pointer" 
                                            ng-style="{@if(isset($element['color'])) 'color': '{{$element['color']}}', @endif @if(isset($element['background_color'])) 'background-color': '{{$element['background_color']}}', @endif}" 
                                            style="@if(isset($element['style'])) {{$element['style']}} @endif"
@@ -168,8 +168,8 @@
                 <div class="p-2">
                     <img class="ml-2" src="/@{{evidenceOpened.icon}}" width="auto" height="60px"/>
                     <span class="ml-4 mt-3 fs-1 font-weight-bold">@{{evidenceOpened.subtitle}}</span>
-                    <span ng-show="disabledEvidence" class="ml-10 ml-md-7 ml-lg-10 mt-3 fs-1 font-weight-bold">Prueba concluida</span>
-                    <span ng-hide="disabledEvidence" class="ml-10 ml-md-7 ml-lg-10 mt-3 fs-1 font-weight-bold">Intentos @{{attempts}} de @{{maxAttempts}}</span>
+                    <span ng-show="disabledEvidence && evidenceOpened.type_answer === 2" class="ml-10 ml-md-7 ml-lg-10 mt-3 fs-1 font-weight-bold">Prueba concluida</span>
+                    <span ng-hide="disabledEvidence || evidenceOpened.type_answer !== 2" class="ml-10 ml-md-7 ml-lg-10 mt-3 fs-1 font-weight-bold">Intentos @{{attempts}} de @{{maxAttempts}}</span>
                     <button class="close mt-2 mr-2" ng-click="closeEvidence()">
                         <span class="font-weight-light" >&times;</span>
                     </button>
@@ -212,7 +212,8 @@
                                 ng-change="onSelectOption(question,option)"
                                 ng-disabled="disabledEvidence"
                                 selected
-                                value="@{{$index}}" class="mr-2">
+                                value="@{{$index}}" class="mr-2 cursor-pointer">
+                            <span style="position: absolute;left: 86px;">@{{letters[$index]+'). '}}</span>
                             <div class="ml-4" style="margin-top:-25px" ng-bind-html="option.option"></div>
                         </div>
                     </div>

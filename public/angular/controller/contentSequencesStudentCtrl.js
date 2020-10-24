@@ -14,6 +14,7 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
     $scope.maxAttempts = 3;
     $scope.attempts = 1;
     $scope.disabledEvidence = false;
+    $scope.letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m'];
     
 
     $scope.init = function (companyId, companyNick, sequenceId, accountServiceId) {
@@ -55,14 +56,16 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http", function ($s
             $('#' + $scope.experience_id + ' img').removeClass('d-none');
             $('#' + $scope.experience_id + ' span').addClass('d-none');
             
-            $scope.attempts = response.data && response.data.rating && response.data.rating.attempts ? response.data.rating.attempts : 1;
-            if($scope.attempts > $scope.maxAttempts ) {
-                $scope.attempts = $scope.maxAttempts;
-                $scope.disabledEvidence = true;
-            }
-            else {
-                response.data.rating.attempts ++;
-                $scope.disabledEvidence = true;
+            if($scope.evidenceOpened.type_answer === 2) {
+                $scope.attempts = response.data && response.data.rating && response.data.rating.attempts ? response.data.rating.attempts : 0;
+                if($scope.attempts >= $scope.maxAttempts ) {
+                    $scope.attempts = $scope.maxAttempts;
+                    $scope.disabledEvidence = true;
+                }
+                else {
+                    $scope.attempts ++;
+                    $scope.disabledEvidence = false;
+                }
             }
             
             

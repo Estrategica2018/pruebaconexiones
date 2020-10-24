@@ -626,12 +626,12 @@ class StudentController extends Controller
             $section_3 = json_decode($moment->section_3, true);
             $section_4 = json_decode($moment->section_4, true);
             $part = json_decode($moment['section_' . $section_id], true)['part_' . $part_id];
-            if( !isset($part['elements']) || count($part['elements']) <= 0 ) {
-                return $this->finishValidate('Página no encontrada');    
-            }
             
             $buttonBack = 'none';
             if ($part_id > 1) {
+                if( !isset($part['elements']) || count($part['elements']) <= 0 ) {
+                    return $this->finishValidate('Página no encontrada');    
+                }
                 $buttonBack = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                     'sequence_id' => $sequence_id,
                     'moment_id' => $moment_id,
