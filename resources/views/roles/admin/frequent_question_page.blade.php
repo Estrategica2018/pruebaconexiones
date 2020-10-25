@@ -25,7 +25,9 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary btn-sm" type="button" ng-click="action=''">Cerrar</button>
-                        <button class="btn btn-primary btn-sm" type="button" ng-click="saveQuestion(questionEdit)"><i id="move" class=""></i>Guardar</button></div>
+                        <button class="btn btn-primary btn-sm" type="button" ng-click="saveQuestion(questionEdit)">
+                        <i id="spin_loader" class="fa fa-spinner fa-spin d-none"></i>
+                        Guardar</button></div>
                 </div>
             </div>
         </div>

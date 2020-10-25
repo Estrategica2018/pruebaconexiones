@@ -18,7 +18,7 @@
                     <div ng-hide="items.isShow" class="ml-auto">  <i ng-show="!items.isShow"  class="fas fa-arrow-right ml-auto"></i> </div>
                 </div>
                 <div ng-show="items.isShow" class="d-flex bg-secondary mt-1 mb-1 rounded bg-soft-light p-3">
-                    <label ng-bind-html="items.answer"></label> 
+                    <label ng-bind-html="trustAsHtml(items.answer)"></label> 
                 </div>
             </div>    
             <div class="position-absolute" style="bottom: 15px;  width: 92%;">

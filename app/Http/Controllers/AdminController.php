@@ -419,7 +419,7 @@ class AdminController extends Controller
     }
     
     public function show_all_transaction() {
-                $shoppingCarts = ShoppingCart::
+        $shoppingCarts = ShoppingCart::
             with('rating_plan', 'shopping_cart_product','affiliate','shopping_cart_product','payment_status')
             ->where('payment_status_id', '!=',1)
             ->whereNotNull('payment_transaction_id')
@@ -464,13 +464,25 @@ class AdminController extends Controller
         return view('roles.admin.all_transaction',['shoppingCarts'=>$groupShoppingCarts,'totalShoppingCarts'=>$totalShoppingCarts]);
     }
     
-    public function frequent_question_page() {
+    public function frequent_question_page() 
+    {
         return view('roles.admin.frequent_question_page');
     }
     
-    public function get_frequent_questions() {
-        $pages = ManagementPages::get();
-        return response()->json(['pages'=>$pages], 200);
+    public function update_or_crate_question(Request $request) 
+    {
+        $question = FrequentQuestion::updateOrCreate(
+            ['id' => $request->id],
+            [ 'answer' => $request->answer,
+              'question' => $request->question
+            ]
+        );
+        return response()->json(['question'=>$question], 200);
     }
 
+    public function delete_question(Request $request) 
+    {
+        $deleted = FrequentQuestion::where('id',$request->id)->delete();
+        return response()->json(['deleted'=>$deleted], 200);
+    }
 }

@@ -118,7 +118,9 @@ Route::group(['middleware' =>['auth:afiliadoempresa']],function (){
     Route::get('conexiones/admin/get_pages', 'AdminController@get_pages')->middleware('role:admin')->name('admin.get_pages');
     Route::post('conexiones/admin/update_page', 'AdminController@update_page')->middleware('role:admin')->name('update_page');
     Route::get('conexiones/admin/transacciones', 'AdminController@show_all_transaction')->middleware('role:admin')->name('admin.show_all_transaction');
-    Route::get('conexiones/admin/preguntas_frecuentes', 'AdminController@frequent_question_page')->middleware('role:admin')->name('frequent_question_page');    
+    Route::get('conexiones/admin/preguntas_frecuentes', 'AdminController@frequent_question_page')->middleware('role:admin')->name('frequent_question_page');
+    Route::post('conexiones/admin/update_or_crate_question', 'AdminController@update_or_crate_question')->middleware('role:admin')->name('admin.update_or_crate_question');
+    Route::post('conexiones/admin/delete_question', 'AdminController@delete_question')->middleware('role:admin')->name('admin.delete_question');
 });
 
 

@@ -69,8 +69,66 @@ MyApp.controller("managerFrequentQuestionsCtrl", function ($scope, $http, $timeo
     }
     
     $scope.saveQuestion = function(question) {
-        $scope.action='';
+        
         $scope.questionEdit.answer = $('#editorhtml_ifr').contents().find('#tinymce').html() || 'prueba';
         $scope.questionEdit.placeHolderHtml = $('#editorhtml_ifr').contents().find('#tinymce').text();
+        $('#spin_loader').removeClass('d-none');
+        
+        $http({
+            url: '/conexiones/admin/update_or_crate_question',
+            method: 'POST',
+            data: question
+        }).
+        then(function (response) {
+            $('#spin_loader').addClass('d-none');
+            $scope.action='';
+            swal({
+                title: 'Conexiones', 
+                html:'<h6>Pregunta guardada correctamente</h6>',
+                type: 'success',
+            }).catch(swal.noop);
+            $scope.init();
+            
+        }).catch(function (e) {
+            $scope.errorMessage = 'Error guardando la pregunta';
+            swal('Conexiones', $scope.errorMessage, 'error');
+            $('#spin_loader').addClass('d-none');
+        });
+        
+    }
+
+    $scope.deleteQuestion = function(question) {
+        
+        swal({
+            html: "<h6>Estás seguro de borrar esta pregunta? </h6>",
+            showCancelButton: true,
+            confirmButtonText: "Borrar",
+            cancelButtonText: "Cancelar", 
+        })
+        .then((result) => {
+            if (result) {
+                $http({
+                    url: '/conexiones/admin/delete_question',
+                    method: 'POST',
+                    data: question
+                }).
+                then(function (response) {
+                    $('#spin_del_loader').addClass('d-none');
+                    $scope.action='';
+                    swal({
+                        title: 'Conexiones', 
+                        html:'<h6>Pregunta borrada correctamente</h6>',
+                        type: 'success',
+                    }).catch(swal.noop);
+                    $scope.init();
+                    
+                }).catch(function (e) {
+                    $scope.errorMessage = 'Error borrando la pregunta';
+                    swal('Conexiones', $scope.errorMessage, 'error');
+                    $('#spin_del_loader').addClass('d-none');
+                });        
+            }
+        }).catch(swal.noop);
+        
     }
 });

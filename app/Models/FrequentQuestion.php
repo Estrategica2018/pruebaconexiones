@@ -8,4 +8,11 @@ class FrequentQuestion extends Model
 {
     //
     protected $table = "frequent_questions";
+    
+    protected $fillable = [
+        'id',
+        'question',
+        'answer'
+    ];
+
 }

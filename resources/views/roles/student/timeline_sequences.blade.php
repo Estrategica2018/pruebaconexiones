@@ -73,10 +73,12 @@
                             <rect width="12" fill="#494b9a" stroke="#494b9a" height="1" style="stroke-width:0.5;" />
                         </svg>
                     @endif
+                    <a href="http://localhost:8000/conexiones/student/momento/45/3/17/1">
                     <svg class="svgelem"  width="35px" height="40px" style="margin-right:-10px" xmlns="http://www.w3.org/2000/svg">
                         <circle class="circle{{$j}}{{$i}}" cx="25" cy="25" r="5" fill="#FFFFFF" stroke="#494b9a"
                                 stroke-width="2%"/>
                     </svg>
+                    </a>
                 @endfor
                 <svg class="svgelem2" width="14px" height="20px" style="margin-right: -21px">
                     <rect width="35" height="1" fill="#494b9a" stroke="#494b9a" style="stroke-width:0.5;" />

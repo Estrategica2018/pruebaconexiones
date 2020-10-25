@@ -1,4 +1,4 @@
-MyApp.controller("frequentQuestionCtrl", function ($scope, $http, $timeout) {
+MyApp.controller("frequentQuestionCtrl", function ($scope, $http, $timeout,$sce) {
     $scope.toogleChatPanel = false;
     $scope.frequentQuestions = [];
     $scope.email = null;
@@ -46,8 +46,10 @@ MyApp.controller("frequentQuestionCtrl", function ($scope, $http, $timeout) {
 
             }
         }
-        
-
+    };
+    
+    $scope.trustAsHtml = function(string) {
+        return $sce.trustAsHtml(string);
     };
 
 });
