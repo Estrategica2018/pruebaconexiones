@@ -16,6 +16,7 @@ use Yajra\DataTables\DataTables;
 use App\Traits\RelationRatingPlan;
 use DateTime;
 use App\Models\CompanySequence;
+use App\Models\FrequentQuestion;
 
 /**
  * Class AdminController
@@ -462,4 +463,14 @@ class AdminController extends Controller
         
         return view('roles.admin.all_transaction',['shoppingCarts'=>$groupShoppingCarts,'totalShoppingCarts'=>$totalShoppingCarts]);
     }
+    
+    public function frequent_question_page() {
+        return view('roles.admin.frequent_question_page');
+    }
+    
+    public function get_frequent_questions() {
+        $pages = ManagementPages::get();
+        return response()->json(['pages'=>$pages], 200);
+    }
+
 }

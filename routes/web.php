@@ -114,11 +114,11 @@ Route::group(['middleware' =>['auth:afiliadoempresa']],function (){
     Route::get('conexiones/admin/get_all_users/', 'AdminController@get_all_users')->middleware('role:admin')->name('admin.get_all_users');
     Route::get('conexiones/admin/get_user/{user_id}', 'AdminController@get_user')->middleware('role:admin')->name('admin.get_user');
     Route::get('conexiones/admin/get_user_shoppingCart/{idShoppingCart}', 'AdminController@get_user_shoppingCart')->middleware('role:admin')->name('admin.get_user_shoppingCart');
-    Route::get('conexiones/admin/management_pages', 'AdminController@management_pages')->middleware('role:admin')->name('management_pages');
+    Route::get('conexiones/admin/paginas', 'AdminController@management_pages')->middleware('role:admin')->name('management_pages');
     Route::get('conexiones/admin/get_pages', 'AdminController@get_pages')->middleware('role:admin')->name('admin.get_pages');
     Route::post('conexiones/admin/update_page', 'AdminController@update_page')->middleware('role:admin')->name('update_page');
     Route::get('conexiones/admin/transacciones', 'AdminController@show_all_transaction')->middleware('role:admin')->name('admin.show_all_transaction');
-    
+    Route::get('conexiones/admin/preguntas_frecuentes', 'AdminController@frequent_question_page')->middleware('role:admin')->name('frequent_question_page');    
 });
 
 

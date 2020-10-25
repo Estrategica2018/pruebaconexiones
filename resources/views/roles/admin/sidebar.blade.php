@@ -12,7 +12,8 @@
                     <li class="list-group-item btn text-align-left"><a href="{{route('get_users_contracted_products_view')}}">Usuarios con contenidos vigentes</a></li>
                     <li class="list-group-item btn text-align-left"><a href="{{route('plans_view')}}">Planes de acceso</a></li>
                     <li class="list-group-item btn text-align-left"><a href="{{route('management_kit_elements_view')}}">Gestión de kits y elementos</a></li>
-					<li class="list-group-item btn text-align-left"><a href="{{route('management_pages')}}">Páginas</a></li>
+                    <li class="list-group-item btn text-align-left"><a href="{{route('management_pages')}}">Páginas</a></li>
+                    <li class="list-group-item btn text-align-left"><a href="{{route('frequent_question_page')}}">Preguntas frecuentes</a></li>
                 </ul>
             </div>
         </div>
