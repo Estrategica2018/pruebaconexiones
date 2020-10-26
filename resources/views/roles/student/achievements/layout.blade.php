@@ -31,10 +31,10 @@
                 <div class="col-12 row m-0">
                     <div class="col-6 fs-lg-0 fs-md--1 fs-0 pl-0">
                         @if($firstAccess)
-						<span>{{$firstAccess}}</span>
-						@else 
-						<span>No iniciada</span>
-					    @endif
+                        <span>{{$firstAccess}}</span>
+                        @else 
+                        <span>No iniciada</span>
+                        @endif
                         <h6 class="mt-1 fs--1">Fecha del primer acceso</h6>
                     </div>
                     <div class="border-left col-6 fs-lg-0 fs-md--1 fs-0 pr-0" style="border-left: 1px solid grays;">

@@ -18,6 +18,7 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
         then(function (response) {
             let moments = response.data.moments;
             let complete = '#FFD400';
+            let incomplete = '#FFEE99';
             let partial = '#F9FAFD';
             let none = '#494b9a';
             let notAvailable = 'gray';
@@ -67,9 +68,9 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
                         }
                         
                     }
-                    $(`.star${moment.order}`).attr('fill', fill_color);
+                    $(`.star${moment.order}`).attr('fill', incomplete);
                     $(`.star${moment.order}`).attr('stroke', fill_color);
-                    $(`.star${moment.order}`).attr('opacity', '0.4');
+                    $(`.star${moment.order}`).attr('opacity', '1');
                     $(`.number${moment.order}`).attr('stroke', '#FFFFFF');
                 }
             }

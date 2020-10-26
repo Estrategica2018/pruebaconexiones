@@ -120,8 +120,21 @@ class MomentController extends Controller
             'moment_section_number' => $data['section_number'],
             'message' => 'seccion de momento modificada correctamente'
         ], 200);
-
-
     }
+    
+    /**
+     * Function to retrive specific moment
+     * @param $moments
+     * @param $order_moment
+     * @return SequenceMoment->id
+     */
+    public static function retriveMoment($moments, $order_moment) 
+    {   foreach($moments as $moment) {
+            if($moment->order == $order_moment) {
+                return $moment->id;
+            }
+        }
+        return ''; 
+    } 
 
 }

@@ -347,7 +347,7 @@ class StudentController extends Controller
                 $buttonNext = route('student.sequences_section_2', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
             }
     
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id,'section_part_id'=>$section_part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type], $section);
+            $data = array_merge(['empresa'=>$empresa,'sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id,'section_part_id'=>$section_part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
     }
@@ -402,7 +402,7 @@ class StudentController extends Controller
             } else {
                 $buttonNext = route('student.sequences_section_3', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
             }
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type], $section);
+            $data = array_merge(['empresa'=>$empresa,'sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
     }
@@ -458,7 +458,7 @@ class StudentController extends Controller
             } else {
                 $buttonNext = route('student.sequences_section_4', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
             }
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type], $section);
+            $data = array_merge(['empresa'=>$empresa,'sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type], $section);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
 
@@ -523,7 +523,7 @@ class StudentController extends Controller
                     }
                 }
             }
-            $data = array_merge(['sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type], $section);
+            $data = array_merge(['empresa'=>$empresa,'sequence' => $sequence, 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext,'sectionParts'=>$sections, 'part_id'=>$part_id, 'section_part_id'=>$section_part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type], $section);
              
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('sequence_id', $sequence_id);
         }
@@ -756,7 +756,7 @@ class StudentController extends Controller
                 }
             }
         
-            $data = array_merge(['sequence' => $moment->sequence, 'sequence_id' => $sequence_id,'section_id'=>$section_id,'part_id' => $part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type,
+            $data = array_merge(['empresa'=>$empresa,'sequence' => $moment->sequence, 'sequence_id' => $sequence_id,'section_id'=>$section_id,'part_id' => $part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type,
                 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext, 'moment' => $moment, 'sections' => [$section_1, $section_2, $section_3, $section_4]], $section, $part);
             return view('roles.student.content_sequence_section', $data)->with('account_service_id', $account_service_id)->with('order_moment_id', $order_moment_id);
         }
@@ -1084,5 +1084,6 @@ class StudentController extends Controller
     {    
             return view('page404',['message'=>$message]);    
     }
+    
 
 }
