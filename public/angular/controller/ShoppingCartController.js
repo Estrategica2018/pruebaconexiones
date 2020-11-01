@@ -99,7 +99,7 @@ MyApp.controller('shoppingCartController', function ($scope, $http, $timeout) {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "/user_mail_validation/",
+            url: window.location.protocol + "//" + window.location.host + "/user_mail_validation/",
             cache: false,
             contentType: false,
             processData: false,
