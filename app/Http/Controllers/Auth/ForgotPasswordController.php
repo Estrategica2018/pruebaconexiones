@@ -37,14 +37,14 @@ class ForgotPasswordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLinkRequestForm($empresa, $rol)
+    public function showLinkRequestForm($empresa, $rol, $email=null)
     {
         //dd($empresa);
         $empresa = Companies::where('nick_name', $empresa)->first();
         session(['rol' => $rol]);
         // dd($empresa,$rol);
         return strtolower($empresa->name) === 'conexiones' ?
-            view('auth.passwords.email', ['company' => $empresa, 'rol' => $rol]) :
+            view('auth.passwords.email', ['company' => $empresa, 'rol' => $rol, 'email'=>$email]) :
             view('auth.passwords.emailCompany', ['company' => $empresa]);
     }
 

@@ -155,14 +155,14 @@
                                     <div class="col-12 col-lg-6 mt-2" id="formFacebook" action="{{ route('user.redirectfacebook',[encrypt(3),'register']) }}" style="height:43px">
                                         <button type="button" class="btn btn-primary btn-block d-flex h-100" ng-click="goToFacebook()">
                                             <i class="fab fa-facebook fs-3 mr-2"></i>
-                                            <span class="fs--1">Registrar con Facebook</span>
+                                            <span class="fs--1" style="margin-top: 5px;">Registrar con Facebook</span>
                                         </button>
                                     </div>
                                     <div class="col-12 col-lg-6" id="formGmail" action="{{ route('user.redirectgmail',[encrypt(3),'register']) }}" style="height:43px">
                                         <button type="button" class="btn btn-primary btn-block  d-flex mt-2 h-100" 
                                         style="background-color: #dd4b39;border-color: rgb(221, 75, 57);" ng-click="goToGmail()">
                                           <i class="fab fa-google fs-2 mr-2"></i>
-                                          <span class="fs--1">Registrar con Gmail</span>
+                                          <span class="fs--1" style="margin-top: 5px;">Registrar con Gmail</span>
                                         </button>
                                     </div>
                                  </div>
@@ -204,10 +204,9 @@
         <div class="mt-5 modal-menu" style="min-height:264px;">
            
            <div style="z-index:1041;" class="col-12 col-lg-6 ml-auto mr-auto mt-2"  style="height:43px">
-                <button type="button" class="btn btn-secondary btn-block d-flex h-100" ng-click="registrer_ini=false">
+                <button type="button" class="btn btn-secondary btn-block d-flex h-100" ng-click="registrer_ini=false" style="min-height: 43px;">
                     <i class="far fa-edit fs-2 mr-2"></i>
-                    <span class="fs--1">Formulario de ingreso</span>
-                     
+                    <span class="fs--1" style="margin-top: 5px;">Formulario de ingreso</span>
                 </button>
             </div>
             <div style="z-index:1041;"  id="formFacebook" 
@@ -215,18 +214,18 @@
             class="col-12 col-lg-6 ml-auto mr-auto mt-2"  style="height:43px">
                 <button type="button" class="btn btn-primary btn-block d-flex h-100" ng-click="goToFacebook()">
                     <i class="fab fa-facebook fs-3 mr-2"></i>
-                    <span class="fs--1">Registrar con Facebook</span>
+                    <span class="fs--1" style="margin-top: 5px;">Registrar con Facebook</span>
                 </button>
             </div>
             <div style="z-index:1041; height:43px"  id="formGmail" action="{{ route('user.redirectgmail',[encrypt(3),'register']) }}" class="col-12 col-lg-6 ml-auto mr-auto mt-2">
                 <button type="button" class="btn btn-primary btn-block  d-flex mt-2 h-100" 
                        style="background-color: #dd4b39;border-color: rgb(221, 75, 57);z-index:1041;" ng-click="goToGmail()">
                   <i class="fab fa-google fs-2 mr-2"></i>
-                  <span class="fs--1">Registrar con Gmail</span>
+                  <span class="fs--1" style="margin-top: 5px;">Registrar con Gmail</span>
                 </button>
             </div>
 
-			@if(old('free_rating_plan_id') || isset($free_rating_plan_id))
+            @if(old('free_rating_plan_id') || isset($free_rating_plan_id))
             <div class="line-separator"></div>
             <div class="p-4 mb-4" style="padding-bottom: 0px!important;">
             <div class="p-4" style="padding-bottom: 0px!important;">

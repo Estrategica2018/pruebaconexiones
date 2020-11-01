@@ -60,10 +60,15 @@
                             
                             <div class="mt-2 custom-control">
                                 @if (Route::has('password.sendlink'))
-                                <label class="label"><a ng-click="notifyStudent()">¿ Olvidó sus datos ?</a></label>
+                                <label class="label"><a href="#" ng-click="notifyStudent()">¿ Olvidaste tus datos ?</a></label>
                                 @endif
                             </div>
                         </form>
+                        
+                        <form id="form-send-link" method="POST" action="{{ route('password.sendlink',['empresa'=>$company->nick_name,'rol'=>3]) }}" class="d-none">
+                            @csrf
+                        </form>
+                        
                     </div>
                 </div>
             </div>
@@ -121,7 +126,7 @@
                             <div class="form-group row mb-0">
                                 <div class="mt-2 custom-control">
                                     @if (Route::has('password.sendlink'))
-                                    <label class="label"><a href="{{route('password.sendlink',[$company->nick_name,3])}}">¿ Olvidó sus datos ?</a></label>
+                                    <label class="label"><a href="{{route('password.sendlink',[$company->nick_name,3])}}">¿ Olvidaste tus datos ?</a></label>
                                     @endif
                                 </div>
 
@@ -135,14 +140,14 @@
                             class="col-12 mt-2"  style="height:43px">
                                 <button type="button" class="btn btn-primary btn-block d-flex h-100" ng-click="goToFacebook()">
                                     <i class="fab fa-facebook fs-3 mr-2"></i>
-                                    <span class="fs--1">Entrar con Facebook</span>
+                                    <span class="fs--1" style="margin-top: 5px;">Entrar con Facebook</span>
                                 </button>
                             </div>
                             <div style="z-index:0; height:43px"  id="formGmail" action="{{ route('user.redirectgmail',[encrypt(3),'register']) }}" class="col-12">
                                 <button type="button" class="btn btn-primary btn-block  d-flex mt-2 h-100" 
                                        style="background-color: #dd4b39;border-color: rgb(221, 75, 57);z-index:1041;" ng-click="goToGmail()">
                                   <i class="fab fa-google fs-2 mr-2"></i>
-                                  <span class="fs--1">Entrar con Gmail</span>
+                                  <span class="fs--1" style="margin-top: 5px;">Entrar con Gmail</span>
                                 </button>
                             </div>
                         </div>

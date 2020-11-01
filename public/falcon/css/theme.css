@@ -20950,6 +20950,7 @@ button.bg-soft-dark:focus {
 }
 
 @media(min-width:1055px) {
+    
     .fs-lg--2 {
         font-size: .55444rem;
     }
@@ -23267,5 +23268,37 @@ div[class*="card-rating-id-"]  {
 
     .conx-page.video {
         min-height: 509px;
+    }
+}
+
+
+.badge-pill {
+  min-width: 111px;
+}
+
+@media(min-width: 1054px) { 
+    .badge-pill {
+      min-width: 76px;
+    }
+}
+@media(min-width: 1300px) { 
+    .badge-pill {
+      min-width: 111px;
+    }
+}
+
+.fs-12px {
+   font-size: 12px;
+}
+
+@media(min-width:1240px) {
+    .fs-lg-14px {
+        font-size: 14px;
+    }
+}
+
+@media(max-width:1199px) {
+    .fs-md--2 {
+        font-size: .69444rem !important
     }
 }

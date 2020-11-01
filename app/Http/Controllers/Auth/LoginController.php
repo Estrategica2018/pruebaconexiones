@@ -188,11 +188,11 @@ class LoginController extends Controller
                 if (session_id() == "") {
                     session_start();
                 }
-                ShoppingCart:: where('session_id', session_id())
+                $updates = ShoppingCart:: where('session_id', session_id())
                     ->where('payment_status_id', 1)
                     ->update(['company_affiliated_id' => $afiliadoempresa->id, 'session_id' => 'NULL']);
 
-                if ($redirect_shoppingcart) {
+                if ($updates > 0) {
                     return redirect()->route('shoppingCart');
                 } else {
 

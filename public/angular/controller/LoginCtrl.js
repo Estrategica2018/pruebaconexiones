@@ -17,9 +17,21 @@ MyApp.controller("LoginCtrl", ["$scope", "$http", function($scope, $http) {
         swal({
             text: "Para recuperar tus datos de ingreso, por favor ingresa el correo del familiar que realizó la inscripción ",
             type: "warning",
-            showCancelButton: false,
-            showConfirmButton: false
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonText: 'Enviar Link',
+            input: 'email',
+            showLoaderOnConfirm: true
+        }).then((result) => {
+          if (result) {
+            var form = $('#form-send-link');
+            var input = form.find('#email');
+            var action = form.attr('action');
+            window.location = action + '/' + result;
+          }
         }).catch(swal.noop);
+        
+        
     }
 }]);
 
