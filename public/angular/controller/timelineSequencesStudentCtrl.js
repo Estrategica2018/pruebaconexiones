@@ -2,10 +2,41 @@ MyApp.controller("timelineSequencesStudentCtrl", ["$scope", "$http","refresTimeL
     
     $scope.sequences = null;
     $scope.errorMessage = null;
+    $scope.alertProgress = []
     $scope.init = function(company_id,account_service_id,sequence_id)    {
         refresTimeLine(company_id,account_service_id,sequence_id);
-    };    
-    
+        $http({
+            url:"/get_advance_line/"+account_service_id+'/'+sequence_id,
+            method: "GET",
+        }).
+        then(function (response) {
+            let moments = response.data.moments;
+
+            var moment = null;
+            var items =[]
+            for(moment_orderAx in moments) {
+                moment = moments[moment_orderAx];
+                if(moment.progress > 0){
+                    for (section_orderAx in moment.sections){
+                        if(moment.sections[section_orderAx].progress > 0 && moment.sections[section_orderAx].progress < 100 ){
+                            items.push({
+                                name:moment.sections[section_orderAx].nombre,
+                                moment:moment.order,
+                                section:section_orderAx
+                            })
+                        }
+
+                    }
+
+                }
+            }
+            $scope.alertProgress = items
+        }).catch(function (e) {
+            //$scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
+        });
+    };
+
+
 }]);
 
 MyApp.factory('refresTimeLine', ['$http', function($http) {
@@ -16,13 +47,39 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
             method: "GET",
         }).
         then(function (response) {
+
+
             let moments = response.data.moments;
             let complete = '#FFD400';
             let incomplete = '#FFEE99';
             let partial = '#F9FAFD';
             let none = '#494b9a';
             let notAvailable = 'gray';
-            
+
+            var moment = null;
+var items =[]
+            for(moment_orderAx in moments) {
+                moment = moments[moment_orderAx];
+                if(moment.progress > 0){
+                    //console.log(1,section_progressAx)
+                    for (section_orderAx in moment.sections){
+                        //console.log(1,section_progressAx)
+                        if(moment.sections[section_orderAx].progress > 0 && moment.sections[section_orderAx].progress < 100 ){
+                            //items.push('',moment.sections[section_orderAx].nombre)
+                            items.push({
+                                name:moment.sections[section_orderAx].nombre,
+                                moment:moment.order,
+                                section:section_orderAx
+                            })
+                        }
+
+                    }
+
+                }
+               // console.log()
+            }
+            //$scope.alertProgress = items
+console.log(items)
             //$(moments).each(function (key, moment) {
             var moment = null;
             for(moment_order in moments) { 
