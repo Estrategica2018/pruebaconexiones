@@ -7,8 +7,15 @@
          @include('roles.admin.sidebar')
          <div class="col-md-8">
             <div class="mb-3 card">
-               <div class="card-header">
-                  <h5 class="mb-0">Carga Masiva</h5>
+            
+               <div class="card-header row no-gutters">
+                  <h5 class="mb-0 col">Carga Masiva</h5>
+                  <div class="text-right cursor-pointer image-tooltip">
+                     <a href="{{route('fileupload')}}">
+                        <i class="fas fa-plus"></i>
+                        <span class="fs--1"> Nueva Carga </span>
+                     </a>
+                  </div>
                </div>
                <div class="bg-light card-body">
                   <div class="container" ng-controller="FileUploadLogsController">
@@ -20,9 +27,11 @@
                                     <h5 class="mb-0">Mis cargas</h5>
                                  </div>
                                  <div class="text-right col-auto">
+                                 @if(count($resultData)==1)
                                     <div class="fs--1">
                                        <a class="text-sans-serif" href="{{route('fileuploadlogs')}}">Ver Todos</a>
                                     </div>
+                                 @endif    
                                  </div>
                               </div>
                            </div>
@@ -39,9 +48,11 @@
                                     <p class="mb-1">Cantidad de registros: <strong>{{$fileData['total']}}</strong></p>
                                     <p class="mb-1">Registros exitosos: <strong>{{$fileData['successfullRecords']}}</strong></p>
                                     <p class="mb-1">Registros erroneos: <strong>{{$fileData['errorRecords']}}</strong></p>
-                                    <span class="notification-time">
-                                    <span ng-click="showerror('#logDetailButton-{{$index}}')" class="mr-1" role="img" aria-label="Emoji">📄</span> Errores >
+                                    @if($fileData['errorRecords']>0)
+                                    <span class="notification-time cursor-pointer btn-link" ng-click="showerror('#logDetailButton-{{$index}}')">
+                                    📄 Errores >
                                     </span>
+                                    @endif
                                     <br/>
                                     <div id="logDetailButton-{{$index}}" class="d-none">
                                        @foreach( $fileData['errors'] as $error )

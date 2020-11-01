@@ -8,3 +8,6 @@ composer.lock
 public/images/users_images/*
 public/payments-logs/*
 public/backups/*
+public/fileUploadDirectory/results/*
+public/fileUploadDirectory/pendings/*
+

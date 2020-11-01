@@ -24,7 +24,8 @@ class FileUploadLogsController extends Controller
             return view('roles.admin.fileUploadLogs', ['resultData' => $resultData]);
         } else {
             $resultData = [];
-            $filesNames = scandir($this->resultsDirectory);
+            $filesNames = $this->scan_dir($this->resultsDirectory);
+            
             for ($i = 0; $i < count($filesNames); ++$i) {
                 if ($filesNames[$i] !== '.' && $filesNames[$i] !== '..') {
                     array_push($resultData, $this->parseResult($filesNames[$i]));
@@ -74,5 +75,20 @@ class FileUploadLogsController extends Controller
         fclose($myfile);
 
         return $resultData;
+    }
+    
+    function scan_dir($dir) {
+        $ignored = array('.', '..', '.svn', '.htaccess');
+
+        $files = array();    
+        foreach (scandir($dir) as $file) {
+            if (in_array($file, $ignored)) continue;
+            $files[$file] = filemtime($dir . '/' . $file);
+        }
+
+        arsort($files);
+        $files = array_keys($files);
+
+        return ($files) ? $files : false;
     }
 }

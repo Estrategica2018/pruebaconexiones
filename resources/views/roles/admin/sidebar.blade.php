@@ -6,8 +6,7 @@
             <div class="mb-3">
                 <ul class="list-group">
                     <li class="list-group-item btn text-align-left"><a href="{{route('admin','conexiones')}}">Inicio</a></li>
-                    <li class="list-group-item btn text-align-left"><a href="{{route('fileupload')}}">Carga masiva</a></li>
-                    <li class="list-group-item btn text-align-left"><a href="{{route('fileuploadlogs')}}">Lista carga masiva</a></li>
+                    <li class="list-group-item btn text-align-left"><a href="{{route('fileuploadlogs')}}">Carga masiva</a></li>
                     <li class="list-group-item btn text-align-left"><a href="{{route('admin.get_sequences_list')}}">Diseño de Guías de aprendizaje</a></li>
                     <li class="list-group-item btn text-align-left"><a href="{{route('get_users_contracted_products_view')}}">Usuarios con contenidos vigentes</a></li>
                     <li class="list-group-item btn text-align-left"><a href="{{route('plans_view')}}">Planes de acceso</a></li>

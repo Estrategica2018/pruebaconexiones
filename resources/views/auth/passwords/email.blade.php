@@ -21,15 +21,15 @@
                         @csrf
                         <div class="form-group p-4">
                             @if(strlen($email)==0)
-							<input autocomplete='off' placeholder="Correo electrónico" name="email" id="email" type="text"
+                            <input autocomplete='off' placeholder="Correo electrónico" name="email" id="email" type="text"
                                 class="form-control @error('email') is-invalid @enderror"
                                 value="{{old('email')}}" required autocomplete="name" autofocus>
-							@else
-							<input autocomplete='off' placeholder="Correo electrónico" name="email" id="email" type="text"
+                            @else
+                            <input autocomplete='off' placeholder="Correo electrónico" name="email" id="email" type="text"
                                 class="form-control @error('email') is-invalid @enderror"
                                 value="{{$email}}" required autocomplete="name" autofocus>
-							@endif
-								
+                            @endif
+                                
                             @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

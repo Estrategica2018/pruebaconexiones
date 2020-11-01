@@ -37,29 +37,49 @@ class UsersImport implements ToModel, WithValidation, SkipsOnFailure
     public function model(array $row)
     {
         ++$this->rows;
-        $user = new AfiliadoEmpresa();
-        $user->user_name = $row[0];
-        $user->name = $row[1];
-        $user->last_name = $row[2];
-        $user->email = $row[3];
-        $user->save();
-        DB::commit();
-        $userRole = new AffiliatedCompanyRole([
-            'affiliated_company_id' => $user->id,
-            'rol_id' => 1,
-            'company_id' => $this->request->companySelect,
-        ]);
-        $userRole->save();
-        DB::commit();
-        $userAssigment = new CompanyAffiliatedAssignmentUser([
-            'student_company_id' => $userRole->id,
-            'teacher_company_id' => $this->request->teacherSelect,
-            'company_sequence_id' => $this->request->sequenceSelect,
-            'company_group_id' => $this->request->groupSelect,
-        ]);
-
-        //dd($this->request, $userRole);
-        return $userAssigment;
+        
+        if($this->rows>1) {
+            $user = AfiliadoEmpresa::where('email')->first();
+            if($user == null) {
+                $user = new AfiliadoEmpresa();
+            }
+            $user->user_name = $row[0];
+            $user->name = $row[1];
+            $user->last_name = $row[2];
+            $user->email = $row[3];
+            $user->save();
+            DB::commit();
+            
+            $userRole = AffiliatedCompanyRole::
+                where([['affiliated_company_id',$user->id],
+                       ['company_id',$this->request->companySelect],
+                       ['rol_id',1]])->first();
+            if($userRole == null) {
+                $userRole = new AffiliatedCompanyRole();
+                $userRole->affiliated_company_id = $user->id;
+                $userRole->rol_id = 1;
+                $userRole->company_id = $this->request->companySelect;
+                $userRole->save();
+                DB::commit();
+            }
+            $userAssigment = CompanyAffiliatedAssignmentUser::
+                where([['student_company_id',$userRole->id],
+                       ['teacher_company_id',$this->request->teacherSelect],
+                       ['company_sequence_id',$this->request->sequenceSelect],
+                       ['company_group_id',$this->request->groupSelect]])->first();
+                       
+            if($userAssigment == null) {
+                $userAssigment = new CompanyAffiliatedAssignmentUser();
+            }
+            
+            $userAssigment->student_company_id = $userRole->id;
+            $userAssigment->teacher_company_id = $this->request->teacherSelect;
+            $userAssigment->company_sequence_id = $this->request->sequenceSelect;
+            $userAssigment->company_group_id = $this->request->groupSelect;
+            $userAssigment->save();
+            DB::commit();
+            return $userAssigment;
+        }
     }
 
     public function onFailure(Failure...$failures)
@@ -91,10 +111,10 @@ class UsersImport implements ToModel, WithValidation, SkipsOnFailure
     public function customValidationAttributes()
     {
         return [
-            '0' => 'Usuario vacio para la columna user_name',
-            '1' => 'Usuario vacio para la columna name',
-            '2' => 'Usuario vacio para la columna last_name',
-            '3' => 'Usuario vacio para la columna email',
+            '0' => 'Usuario vacio para la columna Usuario',
+            '1' => 'Usuario vacio para la columna Nombre',
+            '2' => 'Usuario vacio para la columna Apellido',
+            '3' => 'Usuario vacio para la columna Email',
         ];
     }
 

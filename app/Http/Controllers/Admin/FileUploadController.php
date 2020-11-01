@@ -36,17 +36,18 @@ class FileUploadController extends Controller
 
             //if (move_uploaded_file($fileInput['tmp_name'], $uploadDirectory . $fileName)) {
             if (move_uploaded_file($_FILES['fileInput']['tmp_name'], $uploadDirectory . $fileName)) {
-
-                $resultFile = $resultsDirectory . $fileName . '.info';
-                $myfile = fopen($resultFile, "w");
+                $date = date("Ymd_His");
+                $resultFile = $fileName .'_'. $date .'.info';
+                $resultFilePath = $resultsDirectory . '/' . $resultFile;
+                $myfile = fopen($resultFilePath, "w");
 
                 //dd( $fileName, $companyName, $teacherName);
                 //invoca la carga del archivo a la base de datos
 
-                $import = new UsersImport($request, $resultFile);
+                $import = new UsersImport($request, $resultFilePath);
                 ($import)->import($uploadDirectory . $fileName, null, Excel::XLS);
                 //dd($import->getRowCount());
-                $myfile = fopen($resultFile, "a+");
+                $myfile = fopen($resultFilePath, "a+");
 
                 fwrite($myfile, "fileName -> " . $fileName . "\n");
                 fwrite($myfile, "fileSize -> " . $fileSize . "\n");
@@ -55,16 +56,16 @@ class FileUploadController extends Controller
                 fwrite($myfile, "sequenceName -> " . $sequenceName . "\n");
                 fwrite($myfile, "gradeName -> " . $gradeName . "\n");
                 fwrite($myfile, "teacherName -> " . $teacherName . "\n");
-                fwrite($myfile, "successfullRecords -> " . $import->getRowCount() . "\n");
+                fwrite($myfile, "successfullRecords -> " . ($import->getRowCount() - 1)  . "\n");
                 fwrite($myfile, "errorRecords -> " . $import->getErrorCount() . "\n");
-                fwrite($myfile, "total -> " . ($import->getErrorCount() + $import->getRowCount()) . "\n");
+                fwrite($myfile, "total -> " . ($import->getErrorCount() + $import->getRowCount() - 1) . "\n");
 
                 fwrite($myfile, "\n");
                 fwrite($myfile, "initProcess -> " . date("Y-m-d H:i:s") . "\n");
                 fclose($myfile);
 
                 return redirect()->action('Admin\FileUploadLogsController@index', [
-                    'resultFile' => $fileName . '.info',
+                    'resultFile' => $resultFile,
                 ]);
 
             } else {
