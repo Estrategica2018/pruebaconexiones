@@ -55,7 +55,7 @@ class MyResetPassword extends Notification
             ->subject(' contraseña')
             ->greeting('Hola ' . $notifiable->name . ' ' . $notifiable->last_name)
             ->line('Estás recibiendo este correo porque hiciste una solicitud de recuperación de contraseña para tu cuenta.')
-            ->action('Recuperar contraseña', route('password.reset', ['empresa' => $this->company_name, 'token' => $this->token, 'rol' => $this->rol, 'email' => $notifiable->email]))
+            ->action('Recuperar contraseña', route('password.reset', ['empresa' => $users[0]->company_name, 'token' => $this->token, 'rol' => $this->rol, 'email' => $notifiable->email]))
             ->line('Si no realizaste esta solicitud, no es necesario realizar ninguna acción.')
             ->line('Saludos,')
             ->line('Equipo técnico')
