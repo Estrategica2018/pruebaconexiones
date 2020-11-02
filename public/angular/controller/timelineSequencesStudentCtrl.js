@@ -4,50 +4,21 @@ MyApp.controller("timelineSequencesStudentCtrl", ["$scope", "$http","refresTimeL
     $scope.errorMessage = null;
     $scope.alertProgress = []
     $scope.init = function(company_id,account_service_id,sequence_id)    {
-        refresTimeLine(company_id,account_service_id,sequence_id);
-        $http({
-            url:"/get_advance_line/"+account_service_id+'/'+sequence_id,
-            method: "GET",
-        }).
-        then(function (response) {
-            let moments = response.data.moments;
-
-            var moment = null;
-            var items =[]
-            for(moment_orderAx in moments) {
-                moment = moments[moment_orderAx];
-                if(moment.progress > 0){
-                    for (section_orderAx in moment.sections){
-                        if(moment.sections[section_orderAx].progress > 0 && moment.sections[section_orderAx].progress < 100 ){
-                            items.push({
-                                name:moment.sections[section_orderAx].nombre,
-                                moment:moment.order,
-                                section:section_orderAx
-                            })
-                        }
-
-                    }
-
-                }
-            }
-            $scope.alertProgress = items
-        }).catch(function (e) {
-            //$scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
-        });
-    };
-
+        
+        refresTimeLine(company_id,account_service_id,sequence_id,$scope);
+        
+    }
 
 }]);
 
 MyApp.factory('refresTimeLine', ['$http', function($http) {
    
-   return function(company_id,account_service_id,sequence_id) {
+   return function(company_id,account_service_id,sequence_id,$scope) {
         $http({
             url:"/get_advance_line/"+account_service_id+'/'+sequence_id,
             method: "GET",
         }).
         then(function (response) {
-
 
             let moments = response.data.moments;
             let complete = '#FFD400';
@@ -57,30 +28,32 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
             let notAvailable = 'gray';
 
             var moment = null;
-var items =[]
+            var items = [];
             for(moment_orderAx in moments) {
                 moment = moments[moment_orderAx];
-                if(moment.progress > 0){
-                    //console.log(1,section_progressAx)
-                    for (section_orderAx in moment.sections){
-                        //console.log(1,section_progressAx)
-                        if(moment.sections[section_orderAx].progress > 0 && moment.sections[section_orderAx].progress < 100 ){
-                            //items.push('',moment.sections[section_orderAx].nombre)
+                if(moment.progress >= 75){
+                    for (section_orderAx in moment.sections) {
+                        if(moment.sections[section_orderAx].progress === 89 ){
                             items.push({
+                                text: 'Prueba saber '+ moment.sections[section_orderAx].nombre + ' del momento ' +moment.order,
                                 name:moment.sections[section_orderAx].nombre,
                                 moment:moment.order,
                                 section:section_orderAx
                             })
                         }
-
+                        else if(moment.sections[section_orderAx].progress === -1 ){
+                            items.push({
+                                text: 'Cursar por '+ moment.sections[section_orderAx].nombre + ' del momento ' +moment.order,
+                                name:moment.sections[section_orderAx].nombre,
+                                moment:moment.order,
+                                section:section_orderAx
+                            })
+                        }
                     }
-
                 }
-               // console.log()
             }
-            //$scope.alertProgress = items
-console.log(items)
-            //$(moments).each(function (key, moment) {
+            $scope.alertProgress = items;
+            
             var moment = null;
             for(moment_order in moments) { 
                 moment = moments[moment_order];

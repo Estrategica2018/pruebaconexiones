@@ -31,7 +31,7 @@
         -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
-        background: inherit;
+        background-color: #f9fafd;
         border-radius: .125rem;
         border-width: 1px 0 0 1px;
         border-style: solid;
@@ -43,12 +43,10 @@
         top: 41px;
     }
     
-    .help:hover ~ .leyend {
-        display: block;
-    }
-    
-    .help .item {
+    .dropdown-item {
         color: #5e6e82;
+        white-space: normal;
+
     }
 
 </style>
@@ -119,13 +117,15 @@
        </div-->
        <i class="far fa-bell help-icon cursor-pointer"></i>
        <div class="help-arrow d-none"  ng-class="{'d-block':showLeyend || showLeyendHover}"></div>
-       <div class="leyend dropdown-menu dropdown-menu-right py-0" aria-labelledby="navbarDropdownUser" ng-class="{'d-block':showLeyend || showLeyendHover}">
-           <div class="bg-white rounded-soft py-2">
-              <div class="font-weight-bold text-warning text-align">
+       <div class="leyend p-0 dropdown-menu dropdown-menu-right py-0" aria-labelledby="navbarDropdownUser" ng-class="{'d-block':showLeyend || showLeyendHover}">
+           <div class="bg-white rounded-soft p-0">
+              <div class=" bg-light font-weight-bold text-warning text-align p-2">
                 <span>Secciones por completar</span>
               </div>
-              <div class="dropdown-divider"></div>
-                <a class="dropdown-item p-0" href="#!" ng-repeat="alert in alertProgress">@{{alert.name}} del momento @{{alert.moment}}</a>
+              <div ng-repeat="alert in alertProgress">
+              <a class="dropdown-item pl-4" href="#!" >@{{alert.text}}</a>
+              <div class="dropdown-divider mt-0"></div>
+              </div>
               <div class="dropdown-divider"></div>
            </div>
        </div>
