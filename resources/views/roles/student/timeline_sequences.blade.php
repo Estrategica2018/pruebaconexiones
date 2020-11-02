@@ -123,10 +123,9 @@
                 <span>Secciones por completar</span>
               </div>
               <div ng-repeat="alert in alertProgress">
-              <a class="dropdown-item pl-4" href="#!" >@{{alert.text}}</a>
-              <div class="dropdown-divider mt-0"></div>
+                <a class="dropdown-item pl-4" href="#!" >@{{alert.text}}</a>
+                <div class="dropdown-divider mt-0"></div>
               </div>
-              <div class="dropdown-divider"></div>
            </div>
        </div>
     </div>
