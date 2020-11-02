@@ -1,3 +1,58 @@
+<!-- Demo styles -->
+<style type="text/css">
+    .help {
+        position: absolute;
+        width: 39px;
+        height: 37px;
+        right: 20px;
+    }
+    .help-icon {
+        font-size: 35px;
+    }    
+    
+    .help .leyend {
+        position: absolute;
+        width: 270px;
+        min-height: 143px;
+        right: 0px;
+        top: 47px;
+        z-index: 10;
+        padding: 10px;
+        display: none;
+    }
+    
+    .help-arrow {
+        position: absolute;
+        z-index: -1;
+        width: 1rem;
+        height: 1rem;
+        top: -.375rem;
+        left: 1.8rem;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        background: inherit;
+        border-radius: .125rem;
+        border-width: 1px 0 0 1px;
+        border-style: solid;
+        border-color: #e9eaed;
+        -webkit-box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+        right: .95rem;
+        left: auto;
+        top: 41px;
+    }
+    
+    .help:hover ~ .leyend {
+        display: block;
+    }
+    
+    .help .item {
+        color: #5e6e82;
+    }
+
+</style>
+
 <div ng-controller="timelineSequencesStudentCtrl" ng-init=init(1,"{{$account_service_id}}","{{$sequence_id}}") class="row">
     <div ng-controller="navbarController" class="col-5 pr-0" style="height: 106px;">
         <a href="{{asset('/')}}"><img href="" class="mr-2 avatar-logo" src="{{ asset('images/icons/iconosoloConexiones-01.png') }}" alt="Logo" width="40"></a>
@@ -11,7 +66,6 @@
         
         <span class="nameTimeLine fs--1">{{auth('afiliadoempresa')->user()->name}}</span>
         <div class="position-absolute d-flex" style="top: 12px;left: 220px;">
-
             <a class="ml-8 cursor-pointer image-tooltip" href="{{route('student','conexiones')}}">
                 <img src="{{asset('images/icons/portal-estudiante/home_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
                 <span class="tooltiptext">inicio</span>
@@ -54,49 +108,27 @@
                 <img src="{{asset('images/icons/portal-estudiante/salir_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
                 <span class="tooltiptext">salir</span>
             </a>
-
-            <a class="ml-11 -align-right cursor-pointer image-tooltip" href="{{route('student','conexiones')}}">
-                <img src="{{asset('images/icons/portal-estudiante/perfil_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
-                <span class="tooltiptext">perf&iacute;l</span>
-            </a>
-            <ul class="navbar-nav navbar-nav-icons ml-auto flex-row align-items-center">
-                <li class="nav-item dropdown dropdown-on-hover">
-                    <a class="nav-link notification-indicator notification-indicator-primary px-0 icon-indicator show" id="navbarDropdownNotification" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="svg-inline--fa fa-bell fa-w-14 fs-4" data-fa-transform="shrink-6" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bell" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.5em;"><g transform="translate(224 256)"><g transform="translate(0, 0)  scale(0.625, 0.625)  rotate(0 0 0)"><path fill="currentColor" d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z" transform="translate(-224 -256)"></path></g></g></svg><!-- <span class="fas fa-bell fs-4" data-fa-transform="shrink-6"></span> --></a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-card show" aria-labelledby="navbarDropdownNotification">
-                        <div class="card card-notification shadow-none" style="z-index: 2;border: 1px solid">
-                            <div class="card-header">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <h6 class="card-header-title mb-0">Secciones incompletas</h6>
-                                    </div>
-                                    <div class="col-auto"><a class="card-link font-weight-normal" href="#"></a></div>
-                                </div>
-                            </div>
-                            <div class="list-group list-group-flush font-weight-normal fs--1">
-                                <div class="list-group-title border-bottom">Lista</div>
-                                <div class="list-group-item" ng-repeat="alert in alertProgress" >
-                                    <a class="notification notification-flush notification-unread" href="#!">
-                                        <div class="notification-avatar">
-                                            <div class="avatar avatar-2xl mr-3">
-                                                <img class="rounded-circle" src="assets/img/team/1-thumb.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="notification-body">
-                                            <p class="mb-1">Esta incompleta la sección <strong>@{{alert.name}} </strong>punto número <strong> @{{alert.section}} </strong> del momento número <strong> @{{alert.moment}} </strong> 😍</p>
-                                            <span class="notification-time"><span class="mr-1" role="img" aria-label="Emoji">💬</span>Verificalo y completalo</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-footer text-center border-top"><a class="card-link d-block" href="pages/notifications.html"></a></div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
             <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
-           @csrf
-        </form>
+             @csrf
+            </form>
         </div>
+    </div>
+    <div class="help" ng-show="alertProgress.length > 0" ng-click="showLeyend=!showLeyend; showLeyendHover=false">
+       <!--div ng-mouseenter="showLeyendHover=true" ng-mouseleave="showLeyendHover=false">
+          <i class="far fa-bell help-icon cursor-pointer"></i>
+       </div-->
+       <i class="far fa-bell help-icon cursor-pointer"></i>
+       <div class="help-arrow d-none"  ng-class="{'d-block':showLeyend || showLeyendHover}"></div>
+       <div class="leyend dropdown-menu dropdown-menu-right py-0" aria-labelledby="navbarDropdownUser" ng-class="{'d-block':showLeyend || showLeyendHover}">
+           <div class="bg-white rounded-soft py-2">
+              <div class="font-weight-bold text-warning text-align">
+                <span>Secciones por completar</span>
+              </div>
+              <div class="dropdown-divider"></div>
+                <a class="dropdown-item p-0" href="#!" ng-repeat="alert in alertProgress">@{{alert.name}} del momento @{{alert.moment}}</a>
+              <div class="dropdown-divider"></div>
+           </div>
+       </div>
     </div>
     <div class="col-auto d-none d-lg-block lineTimeLine">
         @if($rating_plan_type != 3)
