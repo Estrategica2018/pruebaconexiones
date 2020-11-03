@@ -25,9 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        
-        /*Lanza tarea de consulta de notificaciones pendientes*/
-        app(\App\Http\Controllers\Payment\PaymentConfirmationController::class)->payment_confirmation();
+        //
     }
 
     /**
