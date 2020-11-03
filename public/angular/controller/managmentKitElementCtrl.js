@@ -304,10 +304,11 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
         $scope.arraySequenceMomentEdit= []
         if(action === 'Crear'){
             $scope.actionKit = 'Crear'
-            $scope.cover = response.data.data.url_image
+            $scope.cover = ''
             $('#exampleModalKit').modal('show');
         }else{
-            $http.get('/conexiones/admin/get_kit/'+id, { 'id': id }).then(function (response) {
+            $http.get('/conexiones/admin/get_kit/'+id, { 'id': id })
+            .then(function (response) {
                 $scope.directoryPath = response.data.data.url_image
                 $scope.directoryPath2 = response.data.data.url_slider_images
                 $scope.kit.id = response.data.data.id
