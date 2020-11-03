@@ -54,7 +54,7 @@
                                         </span>
                                         <span style="color:#999999">Compra Educonexiones<br>
 									        Valor de la Transacción: {{$price_callback}} USD<br>
-                                            Fecha de Transacción: {{$transaction_date->payment_process_date}}<br>
+                                            Fecha de Transacción: {{$transaction_date}}<br>
                                         </span>
                                     </span>
                                 </td>
