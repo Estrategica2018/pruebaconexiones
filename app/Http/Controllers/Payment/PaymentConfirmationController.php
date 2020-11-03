@@ -52,10 +52,12 @@ class PaymentConfirmationController extends Controller
             
             if ($payment && $payment->status == "approved") {
                 // LOG
-                $this->writeLog($log_path.'/'.$file,'---- Transacción Aprobada: payment_transaction_id ['.$shoppingCart->payment_transaction_id.']');  
-                $this->writeLog($log_path.'/'.$file,$payment);
+                $this->writeLog($log_path.'/'.$file,'---- Transaccion Aprobada: payment_transaction_id ['.$shoppingCart->payment_transaction_id.']');  
+                
                 $this->writeLog($log_path.'/'.$file,'--- Datos del afiliado');
                 $this->writeLog($log_path.'/'.$file,$shoppingCart->affiliate);
+				$this->writeLog($log_path.'/'.$file,'--- payment');
+                $this->writeLog($log_path.'/'.$file,$payment);
                 // LOG
 
                 $update = ShoppingCart::where([['id', $shoppingCart->id],
@@ -86,7 +88,7 @@ class PaymentConfirmationController extends Controller
             else {
                 $date = Carbon::now()->subMinutes(20);
                 if($shoppingCart->updated_at->lt($date)){
-                    $this->writeLog($log_path.'/'.$file,'*  No se encontro aprobación para el ID ' . $shoppingCart->payment_transaction_id );   
+                    $this->writeLog($log_path.'/'.$file,'*  No se encontro aprobacion para el ID ' . $shoppingCart->payment_transaction_id );   
                     $this->writeLog($log_path.'/'.$file,'-------  Shopping cart ID ['.$shoppingCart->id.']'   );  
                     $this->writeLog($log_path.'/'.$file,$shoppingCart); 
                     $this->writeLog($log_path.'/'.$file,'-------  Datos del afiliado');
@@ -148,6 +150,9 @@ class PaymentConfirmationController extends Controller
 
         if (!file_exists($filename)) {
             touch($filename, strtotime('-1 days'));
+        }
+        if(gettype($string) == "object") {
+            $string = json_encode ($string,true);
         }
         if(gettype($string) == "array") {
             $string = json_encode($string);
