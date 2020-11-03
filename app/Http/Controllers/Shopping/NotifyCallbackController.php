@@ -61,7 +61,7 @@ class NotifyCallbackController extends Controller
                 'payment_method' => 'TC'
             ));
 
-            if ($request->user('afiliadoempresa')) {
+            if ($request->user('afiliadoempresa') && $update > 0) {
 
                 $afiliado_empresa = $request->user('afiliadoempresa');
                 $shoppingCarts = ShoppingCart::
@@ -79,11 +79,13 @@ class NotifyCallbackController extends Controller
                         $this->addRatingPlanPaid($shoppingCart, $ratingPlan, $afiliado_empresa);
                     }
                 }
+                
+                $transaction_date = ShoppingCart::select('payment_process_date')->where('payment_transaction_id', $request->external_reference)->first();
+                
+                //Envío correo de pago exitoso
+                Mail::to($request->user('afiliadoempresa')->email)->send(
+                     new SendSuccessfulPaymentNotification($shoppingCart, $request, $afiliado_empresa, $price_callback, $transaction_date));
             }
-            $transaction_date = ShoppingCart::select('payment_process_date')->where('payment_transaction_id', $request->external_reference)->first();
-            //Envío correo de pago exitoso
-            Mail::to($request->user('afiliadoempresa')->email)->send(
-                new SendSuccessfulPaymentNotification($shoppingCart, $request, $afiliado_empresa, $price_callback, $transaction_date));
             return redirect()->route('tutor.products', ['empresa' => 'conexiones']);
 
         } else if ($request->collection_status == 'rejected' || isset($request->collection_status)) {
