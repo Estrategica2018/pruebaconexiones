@@ -36,11 +36,12 @@ class PaymentConfirmationController extends Controller
             ['payment_status_id', 2],
         ])->get();
 
-        //$this->writeLog($log_path.'/'.$file,'-- Transacciones pendientes:' . count($shopping_carts));   
+        if(count($shopping_carts) > 0 ) { 
+            $this->writeLog($log_path.'/'.$file,'-- Transacciones pendientes:' . count($shopping_carts));   
+        }
         
         foreach ($shopping_carts as $shoppingCart) {
-            //$this->writeLog($log_path.'/'.$file,'');
-            //$this->writeLog($log_path.'/'.$file,'* Buscando en el external references en mercadopago [ payment_transaction_id: '.$shoppingCart->payment_transaction_id.' ]');
+            $this->writeLog($log_path.'/'.$file,'* Buscando en el external references en mercadopago [ payment_transaction_id: '.$shoppingCart->payment_transaction_id.' ]');
             
             $filters = array(
                 "external_reference" => $shoppingCart->payment_transaction_id,
