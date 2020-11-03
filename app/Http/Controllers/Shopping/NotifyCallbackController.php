@@ -209,7 +209,7 @@ class NotifyCallbackController extends Controller
                 }
                 //Envío correo de pago exitoso
                 Mail::to($request->user('afiliadoempresa')->email)->send(
-                    new SendSuccessfulPaymentNotification($shoppingCart, $request, $afiliado_empresa, $price_callback, $transaction_date));
+                    new SendSuccessfulPaymentNotification($shoppingCart, $request, $afiliado_empresa, $price_callback, $transaction_date->payment_process_date));
                 return redirect()->route('tutor.products', ['empresa' => 'conexiones']);
 
             } else {
