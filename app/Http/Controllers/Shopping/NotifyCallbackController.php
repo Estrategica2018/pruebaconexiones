@@ -26,8 +26,6 @@ class NotifyCallbackController extends Controller
         if(isset($request->isSimulador)) {
             $file = 'simulator-'.$file;
         }
-        
-        
         ///LOG
         
         $this->writeLog($log_path.'/'.$file,'--------------User-------------------');    
@@ -40,7 +38,6 @@ class NotifyCallbackController extends Controller
         $this->writeLog($log_path.'/'.$file,'--------------User-------------------');    
         $this->writeLog($log_path.'/'.$file,'--------------Request-------------------');    
         $this->writeLog($log_path.'/'.$file,$request);
-        
         ///LOG
 
 
@@ -133,20 +130,23 @@ class NotifyCallbackController extends Controller
         } else {
 
             // Flujo PSE
-            //dd('Entra a flujo PSE');
-            
             ///LOG
-            $this->writeLog($log_path.'/'.$file,'--------------PSE-------------------');
+            $this->writeLog($log_path.'/'.$file,'--------------Pago por PSE-------------------');
+            $this->writeLog($log_path.'/'.$file,'--------------> headers');
             $this->writeLog($log_path.'/'.$file, request()->headers);
             ///LOG
             
 
             //obtiene el referer
             $referer = request()->headers->get('referer');
+            $this->writeLog($log_path.'/'.$file,'--------------> referer');
+            $this->writeLog($log_path.'/'.$file, $referer);
+            
             //Se realiza proceso de split para obtener el paymentId
             parse_str(parse_url($referer, PHP_URL_QUERY), $queries);
             
             ///LOG
+            $this->writeLog($log_path.'/'.$file,'--------------> queries');
             $this->writeLog($log_path.'/'.$file, $queries);
             ///LOG
             
@@ -169,6 +169,7 @@ class NotifyCallbackController extends Controller
             
             
             ///LOG
+            $this->writeLog($log_path.'/'.$file,'--------------> data');
             $this->writeLog($log_path.'/'.$file, $data);
             ///LOG
             
@@ -297,7 +298,16 @@ class NotifyCallbackController extends Controller
         if (!file_exists($filename)) {
             touch($filename, strtotime('-1 days'));
         }
-        //file_put_contents($filename, file_get_contents($filename) .'\n' . $string);        
-        //file_put_contents($filename, $string . PHP_EOL, FILE_APPEND);
+        
+        try {
+            if(gettype ($string) == 'array') {
+                file_put_contents($filename, 'Error escribiendo en el archivo: Tipo de variable array'  . PHP_EOL, FILE_APPEND);
+            }
+            else {    
+                file_put_contents($filename, $string. PHP_EOL, FILE_APPEND );
+            }
+        } catch (Exception $e) {
+            file_put_contents($filename, 'Error escribiendo en el archivo: ' . $e->getMessage() . PHP_EOL, FILE_APPEND);
+        }
     }
 }
