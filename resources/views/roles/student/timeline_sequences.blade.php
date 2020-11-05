@@ -123,7 +123,9 @@
                 <span>Secciones por completar</span>
               </div>
               <div ng-repeat="alert in alertProgress">
-                <a class="dropdown-item pl-4" href="#!" >@{{alert.text}}</a>
+                <a class="dropdown-item pl-4"
+                   ng-href="/conexiones/student/momento/@{{alert.account_service_id}}/@{{alert.sequence_id}}/@{{alert.moment_id}}/@{{alert.moment}}/@{{alert.section}}" >
+                    @{{alert.text}}</a>
                 <div class="dropdown-divider mt-0"></div>
               </div>
            </div>

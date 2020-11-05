@@ -44,6 +44,7 @@ class AdvanceLineController extends Controller
                 }    
             }
             $moments[$sequenceMoment['order']] = [
+                'moment_id'=> $sequenceMoment['id'],
                 'order'=> $sequenceMoment['order'],
                 'isAvailable'=> $result['moment']['isAvailable'],
                 'progress'=> $result['moment']['progress'],

@@ -38,7 +38,10 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
                                 text: 'Prueba saber '+ moment.sections[section_orderAx].nombre + ' del momento ' +moment.order,
                                 name:moment.sections[section_orderAx].nombre,
                                 moment:moment.order,
-                                section:section_orderAx
+                                section:section_orderAx,
+                                moment_id:moment.moment_id,
+                                account_service_id:account_service_id,
+                                sequence_id:sequence_id
                             })
                         }
                         else if(moment.sections[section_orderAx].progress === -1 ){
@@ -46,14 +49,16 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
                                 text: 'Cursar por '+ moment.sections[section_orderAx].nombre + ' del momento ' +moment.order,
                                 name:moment.sections[section_orderAx].nombre,
                                 moment:moment.order,
-                                section:section_orderAx
+                                section:section_orderAx,
+                                moment_id:moment.moment_id,
+                                account_service_id:account_service_id,
+                                sequence_id:sequence_id
                             })
                         }
                     }
                 }
             }
             $scope.alertProgress = items;
-            
             var moment = null;
             for(moment_order in moments) { 
                 moment = moments[moment_order];
