@@ -69,6 +69,9 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
                     for(var section_id=1; section_id<=4; section_id++) {
                         $(`.circle${moment.order}${section_id}`).attr('fill', fill_color);
                         $(`.circle${moment.order}${section_id}`).attr('opacity', '0.5');
+                        $(`.circle${moment.order}${section_id}`).parent().parent().css('cursor', 'not-allowed');
+                        $(`.circle${moment.order}${section_id}`).parent().find('text').css('cursor', 'not-allowed');
+                        $(`.circle${moment.order}${section_id}`).parent().find('a').attr('href', '#');
                     }
                     $(`.star${moment.order}`).attr('fill', fill_color);
                     $(`.star${moment.order}`).attr('stroke', fill_color);

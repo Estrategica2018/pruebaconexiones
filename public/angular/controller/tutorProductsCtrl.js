@@ -70,8 +70,8 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
         for(var i=0, accountService = null, is_free = null, rating_plan_type = null; i < data.length; i++ ) {
            accountService = data[i];
            rating_plan_type = accountService.rating_plan_type;
-		   is_free = accountService.rating_plan.is_free;
-		   
+           is_free = accountService.rating_plan.is_free;
+           
            
            for(var j=0, content=null, product = null; j<accountService.affiliated_content_account_service.length; j++) {
                content = accountService.affiliated_content_account_service[j];
@@ -79,10 +79,10 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
                if(!product) {
                    product = { 
                        "rating_plan_type": rating_plan_type,
-					   "is_free": is_free,
+                       "is_free": is_free,
                        "sequence": content.sequence,
                        "affiliated_content_account_service": [],
-					   
+                       
                    };
                }
                listSequences[content.sequence.id+'_'+rating_plan_type] = product;
