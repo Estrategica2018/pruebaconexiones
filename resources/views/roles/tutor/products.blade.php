@@ -46,7 +46,7 @@
                     </div>
                 </div>
              
-                <div ng-show="product.rating_plan.is_free" class="position-absolute label_free">
+                <div ng-show="product.is_free" class="position-absolute label_free">
                        Prueba gratuita
                 </div>
               </div>
