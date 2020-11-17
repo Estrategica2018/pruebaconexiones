@@ -13,7 +13,9 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
         }).
         then(function (response) {
             if(response.data) {
-                $scope.products = response.data; 
+                
+                $scope.products = setProduct(response.data);
+                
                 if( $scope.products.length > 0 ) { 
                     swal({
                     text: "Recuerda que para poder visualizar los contenidos, debes ingresar con una inscripción del rol de estudiante!",
@@ -61,8 +63,34 @@ MyApp.controller("tutorProductsCtrl", ["$scope", "$http", function($scope, $http
         }).catch(function (e) {
             $scope.errorMessageFilter = 'Error consultando las secuencias, compruebe su conexión a internet';
         });
-
     };
+    
+    function setProduct(data) {
+        var listSequences = {};
+        for(var i=0, accountService = null, rating_plan_type = null; i < data.length; i++ ) {
+           accountService = data[i];
+           rating_plan_type = accountService.rating_plan_type;
+           
+           for(var j=0, content=null, product = null; j<accountService.affiliated_content_account_service.length; j++) {
+               content = accountService.affiliated_content_account_service[j];
+               product = listSequences[content.sequence.id+'_'+rating_plan_type];
+               if(!product) {
+                   product = { 
+                       "rating_plan_type": rating_plan_type,
+                       "sequence": content.sequence,
+                       "affiliated_content_account_service": [],
+                   };
+               }
+               listSequences[content.sequence.id+'_'+rating_plan_type] = product;
+               product.affiliated_content_account_service.push(content);
+           }
+        }
+        var list = [];
+        for(var indx in listSequences) {
+           list.push(listSequences[indx]);
+        }
+        return list;
+    }
 }]);
 
 

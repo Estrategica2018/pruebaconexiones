@@ -287,10 +287,13 @@ MyApp.controller("ratingPlanDetailCtrl", ["$scope", "$http", "$timeout", functio
             if(activesPlan) {
                 for(var i=0, account;i<activesPlan.length; i++) {
                     account = activesPlan[i];
-                    if(account.affiliated_content_account_service[0].sequence_id === sequence_id){
-                        mbControl = true; 
-                        message = 'Ya tienes contratada esta guía de aprendizaje, deseas adquirirla de nuevo?';
-                        break;
+                    for(var j=0, seq = null; j<account.affiliated_content_account_service.length; j++) {
+                        seq = account.affiliated_content_account_service[j].sequence_id;
+                        if(seq === sequence_id){
+                            mbControl = true; 
+                            message = 'Ya tienes contratada esta guía de aprendizaje, deseas adquirirla de nuevo?';
+                            break;
+                        }
                     }
                 }
             }

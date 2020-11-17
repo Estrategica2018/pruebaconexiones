@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class=" card col-12 col-lg-4 row card-body shadow-none d-result d-none">
+                    <div class=" card col-12 col-lg-4 row card-body shadow-none d-result d-none panel-experience">
                         <div class="card-body bg-light mb-1" ng-repeat = "moment in moments">
                             <div class="row " style="min-height: 100px;">
                                 <div class="col-2-3 col-lg-5">

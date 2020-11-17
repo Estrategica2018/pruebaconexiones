@@ -23302,3 +23302,14 @@ div[class*="card-rating-id-"]  {
         font-size: .69444rem !important
     }
 }
+
+
+.panel-experience {
+   
+}
+
+@media(min-width: 1054px) { 
+    .panel-experience {
+        min-height: 683px;   
+    }
+}

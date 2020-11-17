@@ -13,7 +13,24 @@ MyApp.controller("availableSequencesStudentCtrl", ["$scope", "$http", function (
             method: "GET",
         }).
         then(function (response) {
-            $scope.accountServices = response.data;
+            $scope.accountServices = [];
+            var listSequences = {};
+            for(var i=0, accountService = null; i < response.data.length; i++) {
+                accountService = response.data[i];
+                for(var j=0, seq = null; j < accountService.affiliated_content_account_service.length; j++) {
+                    seq = accountService.affiliated_content_account_service[j].sequence;
+                    listSequences[accountService.id+'_'+seq.id] = {
+                        "id": accountService.id,
+                        "sequence": seq,
+                        "rating_plan": accountService.rating_plan
+                    }
+                }
+            }
+            
+            for(var indx in listSequences) {
+                $scope.accountServices.push(listSequences[indx]);
+            }
+
         }).catch(function (e) {
             $scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
             swal('Conexiones',$scope.errorMessage,'error');
