@@ -277,6 +277,10 @@ Route::post('user-logout', 'Auth\LogoutController@close_session')->name('user.lo
 Route::get('user_mail_validation/', 'AffiliatedCompanyController@user_mail_validation')->name('user_mail_validation');
 Route::get('confirm_mail/{user_id}', 'AffiliatedCompanyController@confirm_mail')->name('confirm_mail');
 
+Route::get('corpoboyaca', 'corpo\CorpoboyacaController@show')->name('corpoboyaca_show');
+Route::post('corpoboyaca/upload', 'corpo\CorpoboyacaController@upload')->name('corpoboyaca_upload');
+Route::get('corpoboyaca/search/{code_in}/{doc_number}', 'corpo\CorpoboyacaController@search')->name('corpoboyaca_search');
+
 /*
 
 Route::get('registryWithPendingShoppingCart2', function(){
