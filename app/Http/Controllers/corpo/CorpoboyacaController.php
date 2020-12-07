@@ -70,7 +70,9 @@ class CorpoboyacaController extends Controller
 			->get();
         }
         else {
-             $corpo = Corpo::where('remetente_doc_number', $request->doc_number )->get();
+             $corpo = Corpo::where('remetente_doc_number', $request->doc_number )
+			 ->where('request_at', 'like', $request->year . '%')
+			 ->get();
         }
         
         return response()->json([
