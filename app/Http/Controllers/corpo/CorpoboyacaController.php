@@ -66,7 +66,7 @@ class CorpoboyacaController extends Controller
         }
         else if(isset($request->code_in) && $request->code_in != 'NoAply' ) {
             $corpo = Corpo::where('code_in', $request->code_in )
-			->where('request_at', 'like', $request->year+'%')
+			->where('request_at', 'like', $request->year . '%')
 			->get();
         }
         else {
