@@ -59,10 +59,15 @@ class CorpoboyacaController extends Controller
     public function search(Request $request)
     {
         if(isset($request->doc_number) && isset($request->code_in) && $request->doc_number != 'NoAply' && $request->code_in != 'NoAply') {
-            $corpo = Corpo::where('code_in', $request->code_in )->where('remetente_doc_number', $request->doc_number )->get();
+            $corpo = Corpo::
+			where('code_in', $request->code_in )
+			->where('request_at', 'like', $request->year+'%')
+			->where('remetente_doc_number', $request->doc_number )->get();
         }
         else if(isset($request->code_in) && $request->code_in != 'NoAply' ) {
-            $corpo = Corpo::where('code_in', $request->code_in )->get();
+            $corpo = Corpo::where('code_in', $request->code_in )
+			->where('request_at', 'like', $request->year+'%')
+			->get();
         }
         else {
              $corpo = Corpo::where('remetente_doc_number', $request->doc_number )->get();

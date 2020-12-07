@@ -279,7 +279,7 @@ Route::get('confirm_mail/{user_id}', 'AffiliatedCompanyController@confirm_mail')
 
 Route::get('corpoboyaca', 'corpo\CorpoboyacaController@show')->name('corpoboyaca_show');
 Route::post('corpoboyaca/upload', 'corpo\CorpoboyacaController@upload')->name('corpoboyaca_upload');
-Route::get('corpoboyaca/search/{code_in}/{doc_number}', 'corpo\CorpoboyacaController@search')->name('corpoboyaca_search');
+Route::get('corpoboyaca/search/{code_in}/{doc_number}/{year}', 'corpo\CorpoboyacaController@search')->name('corpoboyaca_search');
 
 /*
 
