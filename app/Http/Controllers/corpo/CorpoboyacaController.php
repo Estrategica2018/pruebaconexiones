@@ -60,12 +60,12 @@ class CorpoboyacaController extends Controller
     {
         if(isset($request->doc_number) && isset($request->code_in) && $request->doc_number != 'NoAply' && $request->code_in != 'NoAply') {
             $corpo = Corpo::
-			where('code_in', $request->code_in )
+			whereRaw('LPAD(code_in,7,"0") = ?', array($request->code_in) )
 			->where('request_at', 'like', $request->year+'%')
 			->where('remetente_doc_number', $request->doc_number )->get();
         }
         else if(isset($request->code_in) && $request->code_in != 'NoAply' ) {
-            $corpo = Corpo::where('code_in', $request->code_in )
+            $corpo = Corpo::whereRaw('LPAD(code_in,7,"0") = ?', array($request->code_in) )
 			->where('request_at', 'like', $request->year . '%')
 			->get();
         }
