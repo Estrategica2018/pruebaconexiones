@@ -35,7 +35,6 @@ class QuestionController extends Controller
                 $question->section = $request->section;
             }
             
-            $question->experience_id = $request->experience_id;
             $question->order = $request->order;
             $question->title = $request->title;
             $question->objective = $request->objective;
@@ -44,6 +43,7 @@ class QuestionController extends Controller
             $question->isHtml = $request->isHtml;
             $question->review = $request->review;
             $question->type_answer = $request->type_answer;
+            $question->experience_id = $request->experience_id;
             $question->save();
             
             return response()->json(['data' => $question, 'message', 'Pregunta registrada o actualizada'], 200);
