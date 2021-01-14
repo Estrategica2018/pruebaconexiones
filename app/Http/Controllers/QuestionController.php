@@ -20,13 +20,15 @@ class QuestionController extends Controller
     public function register_update_question(Request $request)
     {
         if (@json_decode($request->options) && @json_decode($request->review)) {
-            if(isset($request->id)) {
+            //if(isset($request->id) && $request->id > 0) {
+            if(false) {
                 $question = Question::where([
                     ['sequence_id', $request->sequence_id], 
                     ['moment_id', $request->moment_id], 
                     ['section', $request->section],
                     ['id', $request->id]
                 ])->first();
+				
             }
             else {
                 $question = new Question();
