@@ -942,6 +942,18 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                         }
                     }
                 }
+				
+				for(var i=0;i<sectionPart.elements.length;i++) {
+                    element = sectionPart.elements[i];
+                    if(element.type === 'evidence-element') {
+                        element.experience_id = element.experience_id || element.id;
+                        $http.post('/remove_questions_experiencie/', {
+							"sequence_id": $scope.sequence.id,
+							"experience_id": element.experience_id
+						});
+					}
+				}
+				$timeout(function () {
                  
                 for(var i=0;i<sectionPart.elements.length;i++) {
                     element = sectionPart.elements[i];
@@ -955,12 +967,6 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                         else {
                             countElements--;
                             countElements += element.questions.length;
-                            
-   
-                            $http.post('/remove_questions_experiencie/', {
-                                "sequence_id": $scope.sequence.id,
-                                "experience_id": element.experience_id
-                            });
                             
                             for(var j=0;j<element.questions.length;j++) {
                                 var data = { 
@@ -1003,6 +1009,8 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 if(sectionPart.elements.length === 0) {
                     finishCallback();
                 }
+				
+                }, 1000);
             }
             
             if($scope.deleteQuestionsIds) {
