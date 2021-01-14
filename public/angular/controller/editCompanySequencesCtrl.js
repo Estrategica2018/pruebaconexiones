@@ -973,7 +973,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                                     "concept":  element.questions[j].concept,
                                     "isHtml":  element.questions[j].isHtml,
                                     "order":   j + 1,
-                                    "experience_id":  element.experience_id,
+                                    "experience_id":  element.experience_id + '',
                                     "options": removeHashKey(element.questions[j].options),
                                     "review": removeHashKey(element.questions[j].review),
                                     "type_answer": element.questionEditType
