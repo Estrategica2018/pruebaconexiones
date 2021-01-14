@@ -69,6 +69,19 @@ class QuestionController extends Controller
         return response()->json(['data' => $question, 'message', '['.$question.'] Preguntas elimnadas correctamente'], 200);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function remove_questions_experiencie(Request $request)
+    {   $question = Question:: 
+                where([
+                    ['sequence_id',$request->sequence_id],
+					['experience_id',$request->experience_id]
+                ])->delete();
+        return response()->json(['data' => $question, 'message', '['.$question.'] Preguntas elimnadas correctamente'], 200);
+    }
+
 
     /**
      * @param Request $request

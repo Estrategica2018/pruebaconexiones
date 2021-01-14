@@ -956,37 +956,52 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                             countElements--;
                             countElements += element.questions.length;
                             
-                            for(var j=0;j<element.questions.length;j++) {
-                                var data = { 
-                                    "id": element.questions[j].id,
-                                    "title": element.questions[j].title,
-                                    "sequence_id": $scope.sequence.id,
-                                    "moment_id":  $scope.moment ? $scope.moment.id : '',
-                                    "section":  Number($scope.momentSection.momentSectionIndex)+ 1, 
-                                    "objective":  element.questions[j].objective,
-                                    "concept":  element.questions[j].concept,
-                                    "isHtml":  element.questions[j].isHtml,
-                                    "order":   j + 1,
-                                    "experience_id":  element.experience_id,
-                                    "options": removeHashKey(element.questions[j].options),
-                                    "review": removeHashKey(element.questions[j].review),
-                                    "type_answer": element.questionEditType
-                                }
-                                $http.post('/register_update_question/', data)
-                                .then(function (response) {
-                                    if (response && response.status === 200) {
-                                        refreshQuestion(response.data.data);
-                                        finishCallback();
+                            $http.post('/remove_questions_experiencie/', {
+                                "sequence_id": $scope.sequence.id,
+                                "experience_id": element.experience_id
+                            })
+                            .then(function (response) {
+                                
+                                 for(var j=0;j<element.questions.length;j++) {
+                                    var data = { 
+                                        "id": element.questions[j].id,
+                                        "title": element.questions[j].title,
+                                        "sequence_id": $scope.sequence.id,
+                                        "moment_id":  $scope.moment ? $scope.moment.id : '',
+                                        "section":  Number($scope.momentSection.momentSectionIndex)+ 1, 
+                                        "objective":  element.questions[j].objective,
+                                        "concept":  element.questions[j].concept,
+                                        "isHtml":  element.questions[j].isHtml,
+                                        "order":   j + 1,
+                                        "experience_id":  element.experience_id,
+                                        "options": removeHashKey(element.questions[j].options),
+                                        "review": removeHashKey(element.questions[j].review),
+                                        "type_answer": element.questionEditType
                                     }
-                                    else {
+                                    $http.post('/register_update_question/', data)
+                                    .then(function (response) {
+                                        if (response && response.status === 200) {
+                                            refreshQuestion(response.data.data);
+                                            finishCallback();
+                                        }
+                                        else {
+                                            var message = (reason && reason.data) ? reason.data.message : '';
+                                            finishCallback('Error invocando el servicio register_update_question:['+message+']');
+                                        }
+                                    }, function (reason) {
                                         var message = (reason && reason.data) ? reason.data.message : '';
                                         finishCallback('Error invocando el servicio register_update_question:['+message+']');
-                                    }
-                                }, function (reason) {
-                                    var message = (reason && reason.data) ? reason.data.message : '';
-                                    finishCallback('Error invocando el servicio register_update_question:['+message+']');
-                                });
-                            }
+                                    });
+                                }
+                            }, function (reason) {
+                                var message = (reason && reason.data) ? reason.data.message : '';
+                                var countElementsError = 'Error invocando el servicio remove_question:['+message+']';
+                                swal('Conexiones', 'Error al actualizar las preguntas en el servidor. Han ocurrido los siguientes errores : '+JSON.stringify(countElementsError), 'error');
+                            });
+                            
+                            
+                            
+                           
                         }
                     }
                     else {
