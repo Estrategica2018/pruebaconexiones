@@ -800,7 +800,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             var item = null;
             for (indx in list) {
                 item = list[indx];
-                if (item.includes('.png') || item.includes('.jpg') || item.includes('.jpeg')) {
+                if (item.toUpperCase().includes('.PNG') || item.toUpperCase().includes('.JPG') || item.toUpperCase().includes('.JPEG')) {
                     var filedir = $scope.directoryPath + '/' + item;
                     $scope.filesImages.push({ 'type': 'img', 'url_image': filedir });
                 }
