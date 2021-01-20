@@ -37,16 +37,17 @@ class CorpoImport implements ToModel, WithValidation, SkipsOnFailure {
 
             $register->code_in = $row[3];
             $register->request_at = $row[4] . ' : '.$row[5];
-            $register->remetente_name = $row[30];
-            $register->remetente_doc_type = $row[31];
-            $register->remetente_doc_number = $row[32];
-            $register->remetente_email = $row[33];
-            $register->subject_to = $row[45];
             $register->status = $row[7];
             $register->response_date = $row[11];
             $register->response_hour = $row[12];
             $register->code_out = $row[17];
-            $register->serie = $row[21];
+            $register->remetente_name = $row[30];
+            $register->remetente_doc_type = $row[31];
+            $register->remetente_doc_number = $row[32];
+            $register->remetente_email = $row[33];
+            //$register->serie = $row[21];
+            $register->subject_to = $row[45];
+			$register->serie = $row[46];
             
             $register->save();
             DB::commit();
