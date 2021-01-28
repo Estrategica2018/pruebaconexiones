@@ -22,6 +22,7 @@ class LogoutController extends Controller
             $redirectTo = route('loginform',$nickCompany);  
             Auth::guard('afiliadoempresa')->logout();
             $request->session()->flush();
+            session(['name_company' => $nickCompany]);
             return response()->json(['url'=> $redirectTo], 200);
         } else {
             return response()->json(['message', 'Usuario sin sesión activa'], 200);
