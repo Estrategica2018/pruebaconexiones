@@ -253,6 +253,7 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
                 $scope.element.description = response.data.data.description
                 $scope.cover = response.data.data.url_image
                 $scope.element.url_slider_images = response.data.data.url_slider_images
+                if(response.data.data.end_date!=null)
                 $scope.element.end_date = new Date(response.data.data.end_date+' 00:00:00');
                 angular.forEach(response.data.data.element_in_moment, function (keyword, key) {
                     $scope.arraySequenceMomentEdit.push({
@@ -318,6 +319,7 @@ MyApp.controller("managmentKitElementCtrl", ["$scope", "$http","$compile",'$time
                 $scope.kit.description = response.data.data.description
                 $scope.cover = response.data.data.url_image
                 $scope.kit.url_slider_images = response.data.data.url_slider_images
+                if(response.data.data.end_date!=null)
                 $scope.kit.end_date = new Date(response.data.data.end_date+' 00:00:00');
                 angular.forEach(response.data.data.moment_kits, function (keyword, key) {
                     $scope.arraySequenceMomentEdit.push({
