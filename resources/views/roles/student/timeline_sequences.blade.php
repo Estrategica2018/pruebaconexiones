@@ -137,7 +137,7 @@
             @for($j = 1; $j < 9 ; $j++)
                 @for($i = 1; $i < 5 ; $i++)
                     @if($i ===1)
-                        <svg class="svgelem2" width="10px" height="20px" style="margin-right: -6px; margin-left: -12px;">
+                        <svg class="svgelem2" width="10px" height="20px" style="margin-right: -8px; margin-left: -12px;">
                             <rect width="35" fill="#494b9a" stroke="#494b9a" height="1" style="stroke-width:0.5;" />
                         </svg>
                     @else
@@ -187,18 +187,34 @@
             @for($j = 1; $j < 9 ; $j++)
                 @for($i = 1; $i < 5 ; $i++)
                     @if($i ===1)
-                        <svg class="svgelem2" width="10px" height="20px" style="margin-right: -21px; margin-left: -18px;">
+                        <svg class="svgelem2" width="10px" height="20px" style="margin-right: -13px; margin-left: -18px;">
                             <rect width="25" height="1"  fill="#494b9a" stroke="#494b9a" style="stroke-width:0.5;" />
                         </svg>
                     @else
-                        <svg class="svgelem2" width="10px" height="20px" style="margin-right: -24px;">
+                        <svg class="svgelem2" width="10px" height="20px" style="margin-right: -12px;">
                             <rect width="10" height="1" fill="#494b9a" stroke="#494b9a" style="stroke-width:0.5;" />
                         </svg>
                     @endif
-                    <svg class="svgelem"  width="33px" height="40px" style="margin-right:-12px" xmlns="http://www.w3.org/2000/svg">
-                        <circle class="circle{{$j}}{{$i}}" cx="21" cy="25" r="4" fill="#FFFFFF" stroke="#494b9a"
-                                stroke-width="2%"/>
-                    </svg>
+					
+					
+					<svg class="svgelem"  width="33px" height="40px" style="margin-right:-20px" xmlns="http://www.w3.org/2000/svg">
+						<g> 
+						  <circle class="circle{{$j}}{{$i}}" cx="13" cy="25" r="4" fill="#FFFFFF" stroke="#494b9a" stroke-width="2%"/>
+
+						  <a xlink:href="{{route('student.show_moment_section',[
+							'empresa' => $empresa,
+							'account_service_id'=>$account_service_id,
+							'sequence_id'=>$sequence_id,
+							'moment_id'=> App\Http\Controllers\MomentController::retriveMoment($sequence->moments,$j),
+							'order_moment_id'=>$j,
+							'section_id'=>$i
+						])}}" target="_top">
+							<text x="40%" y="83%" style="text-anchor: middle; opacity: 0;">.</text>
+						  </a>
+						  
+						</g>
+					</svg>
+					
                 @endfor
                 <svg class="svgelem2" width="10px" height="20px" style="margin-right: -10px">
                     <rect width="16" height="1" fill="#494b9a" stroke="#494b9a" style="stroke-width:0.5;" />
@@ -211,7 +227,7 @@
                               2.566 1.181.978 0 2.064-.324 3.259-.977l36.58-19.229 36.583 19.229c1.142.652 2.228.977 3.258.977 1.089 0
                               1.916-.392 2.486-1.181.569-.788.854-1.752.854-2.893 0-.706-.027-1.249-.082-1.63l-7.01-40.736 29.574-28.841c1.414-1.412
                               2.119-2.716 2.119-3.911"/>
-                    <text class="number{{$j}}" x="50%" y="53%" text-anchor="middle" stroke="#494b9a" stroke-width="1px" dy=".08em" dx=".05em" style="text-anchor: middle;">{{$j}}</text>
+                    <text class="number{{$j}}" x="53%" y="53%" text-anchor="middle" stroke="#494b9a" stroke-width="1px" dy=".08em" dx=".05em" style="text-anchor: middle;">{{$j}}</text>
                 </svg>
             @endfor
         </div>
