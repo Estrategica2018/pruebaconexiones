@@ -49,6 +49,7 @@ class AdvanceLineController extends Controller
                 'isAvailable'=> $result['moment']['isAvailable'],
                 'progress'=> $result['moment']['progress'],
                 'performance'=> $result['moment']['performance'],
+				'exclude_experience'=> $result['moment']['exclude_experience'],
                 'sections' => $sections
             ];
         }

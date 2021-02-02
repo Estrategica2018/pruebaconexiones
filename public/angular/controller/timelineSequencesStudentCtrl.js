@@ -31,6 +31,7 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
             var items = [];
             for(moment_orderAx in moments) {
                 moment = moments[moment_orderAx];
+				
                 if(moment.progress >= 75){
                     for (section_orderAx in moment.sections) {
                         if(moment.sections[section_orderAx].progress === 89 ){
@@ -111,6 +112,20 @@ MyApp.factory('refresTimeLine', ['$http', function($http) {
                     $(`.star${moment.order}`).attr('opacity', '1');
                     $(`.number${moment.order}`).attr('stroke', '#FFFFFF');
                 }
+				if(moment.exclude_experience === 1) {
+					fill_color = notAvailable;
+                    for(var section_id=1, sel = null; section_id<=4; section_id++) {
+						sel = moment.sections[section_id];
+						if(sel.nombre.indexOf('Experiencia') === 0 ) {
+							$(`.circle${moment.order}${section_id}`).attr('fill', fill_color);
+							$(`.circle${moment.order}${section_id}`).attr('opacity', '0.5');
+							$(`.circle${moment.order}${section_id}`).parent().css('cursor', 'not-allowed');
+							$(`.circle${moment.order}${section_id}`).parent().find('text').css('cursor', 'not-allowed');
+							$(`.circle${moment.order}${section_id}`).parent().find('a').attr('href', '#');
+							break;
+						}
+                    }
+				}
             }
         }).catch(function (e) {
             //$scope.errorMessage = 'Error consultando las secuencias, compruebe su conexión a internet';
