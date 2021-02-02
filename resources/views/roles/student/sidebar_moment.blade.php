@@ -46,7 +46,6 @@
                 <div class="fs--1 text-align-left ml-3 mb-auto mt-auto">Pregunta central:
                     <span class="fs--2 ml-2">@if(isset($section['title'])){{$section['title']}} @endif</span>
                 </div>
-                
             </a>
             <div class="text-align-left ml-5">
                 @if(isset($section['part_2']) && count($section['part_2'])>0 && isset($section['part_2']['elements']) && count($section['part_2']['elements'])>0)
@@ -92,7 +91,7 @@
                 @endif
             </div>    
         @endif
-        @if($section['section']['type'] == 3)
+        @if($section['section']['type'] == 3 && $moment->exclude_experience == 0)
             <a class="cursor-pointer d-flex color-gray-dark mt-2" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id])}}">
                 <img src="{{asset('/images/icons/iconoExperiencia.png')}}" height= "auto" width="45px">
                 <div class="fs--1 text-align-left ml-3 mb-auto mt-auto">Experiencia científica:<span class="fs--2 ml-2">@if(isset($section['title'])){{$section['title']}} @endif</span></div>

@@ -66,6 +66,8 @@ class MomentController extends Controller
             $moment->section_3 = $data['section_3'];
         if (isset($data['section_4']))
             $moment->section_4 = $data['section_4'];
+        if (isset($data['exclude_experience']))
+            $moment->exclude_experience = $data['exclude_experience'];
         $moment->save();
         cache()->tags('connection_moments_redis')->flush();
         return response()->json([

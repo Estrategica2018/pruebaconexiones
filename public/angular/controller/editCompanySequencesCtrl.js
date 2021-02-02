@@ -325,6 +325,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                     break;
                 case 'openMoment':
                     $scope.moment = findMoment($scope.dataJstree.momentIndex);
+                    $('#exclude_experience').prop('checked', $scope.moment.exclude_experience === 1 ? true : false );
                     $scope.PageName = 'Momento ' + $scope.moment.order;
                     $scope.elementParentEdit = $scope.moment;
                     $('#sidemenu-sequences .overflow-auto').addClass('height_337').removeClass('height_235');
@@ -371,6 +372,11 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 "animation": 0
             }
         });
+		
+		if($scope.dataJstree.type === 'openMoment') {
+			$scope.moment = findMoment($scope.dataJstree.momentIndex);
+			$('#exclude_experience').prop('checked', $scope.moment.exclude_experience === 1 ? true : false );
+		}
 
     }
 
@@ -480,7 +486,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                         refreshElements($scope.elementParentEdit.elements);
                         break;
                 }
-                if($scope.dataJstree.type === 'openSequence') {
+                if($scope.dataJstree.type === 'openSequence' || $scope.dataJstree.type === 'openMoment') {
                     $timeout(function () {
                         InitializeJstree();
                     }, 10);
@@ -772,6 +778,11 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
             $scope.resizeWidth();
         }, 10);
     }
+
+    $scope.onChangeExcludeExperience = function () {
+		$scope.moment.exclude_experience = $scope.moment.exclude_experience === 1 ? 0 : 1;
+        $scope.applyChange = true;
+    }
     
     $scope.onChangeFolderSlideImage = function (path,callback) {
         $scope.onChangeFolderImage(path,function(data){
@@ -942,18 +953,18 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                         }
                     }
                 }
-				
-				for(var i=0;i<sectionPart.elements.length;i++) {
+                
+                for(var i=0;i<sectionPart.elements.length;i++) {
                     element = sectionPart.elements[i];
                     if(element.type === 'evidence-element') {
                         element.experience_id = element.experience_id || element.id;
                         $http.post('/remove_questions_experiencie/', {
-							"sequence_id": $scope.sequence.id,
-							"experience_id": element.experience_id
-						});
-					}
-				}
-				$timeout(function () {
+                            "sequence_id": $scope.sequence.id,
+                            "experience_id": element.experience_id
+                        });
+                    }
+                }
+                $timeout(function () {
                  
                 for(var i=0;i<sectionPart.elements.length;i++) {
                     element = sectionPart.elements[i];
@@ -1009,7 +1020,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 if(sectionPart.elements.length === 0) {
                     finishCallback();
                 }
-				
+                
                 }, 1000);
             }
             
@@ -1085,6 +1096,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     }
 
     $scope.onSaveMoment = function () {
+        
         $http.post('/update_moment/', $scope.moment)
             .then(function (response) {
                 if (response && response.status === 200) {

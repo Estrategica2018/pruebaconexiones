@@ -1,6 +1,12 @@
 @extends('layouts.app_side')
 @section('content')
 <link rel="stylesheet" href="../../../jstree/themes/default/style.min.css">
+<style>
+.selected {
+    background-color: #e7f4f9 !important;
+}
+
+</style>
 <div class="container" ng-controller="editCompanySequencesCtrl" ng-init="hidePublicateBtn = true;initSequence({{$sequence->id}})">
    <div class="content">
       <div class="row">
@@ -51,30 +57,38 @@
                               }'>
                               Momento @{{jsMoment.order}}
                               <ul>
-                                 <li ng-repeat="jsSectionMoment in jsMoment.sections" data-jstree='{ "type":"openSectionMoment", "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_1",
+                                 <li ng-repeat="jsSectionMoment in jsMoment.sections" 
+                                     ng-class="{'selected': jsSectionMoment.section.type === 3 && jsMoment.exclude_experience}"
+                                    data-jstree='{ "type":"openSectionMoment", "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_1",
                                     "opened" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type ? true : false}},
+                                    "disabled" : @{{jsSectionMoment.section.type === 3 && jsMoment.exclude_experience}},
                                     "selected" : false, "icon": "jstree-file" }'>
                                     @{{jsSectionMoment.section.name}}
                                     <ul>
                                        <li data-jstree='{ "type":"openMomentSectionPart", 
                                           "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_1",
                                           "selected" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type && elementParentEdit.momentSectionPartIndex === "part_1" ? true : false}}, 
+                                          "disabled" : @{{jsSectionMoment.section.type === 3 && jsMoment.exclude_experience}},
                                           "icon": "jstree-file"}'>Parte 1</li>
                                        <li data-jstree='{ "type":"openMomentSectionPart", 
                                           "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_2",
                                           "selected" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type && elementParentEdit.momentSectionPartIndex === "part_2" ? true : false}}, 
+                                          "disabled" : @{{jsSectionMoment.section.type === 3 && jsMoment.exclude_experience}},
                                           "icon": "jstree-file"}'>Parte 2</li>
                                        <li data-jstree='{ "type":"openMomentSectionPart", 
                                           "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_3",
                                           "selected" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type && elementParentEdit.momentSectionPartIndex === "part_3" ? true : false}}, 
+                                          "disabled" : @{{jsSectionMoment.section.type === 3 && jsMoment.exclude_experience}},
                                           "icon": "jstree-file"}'>Parte 3</li>
                                        <li data-jstree='{ "type":"openMomentSectionPart", 
                                           "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_4",
                                           "selected" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type && elementParentEdit.momentSectionPartIndex === "part_4" ? true : false}}, 
+                                          "disabled" : @{{jsSectionMoment.section.type === 3 && jsMoment.exclude_experience}},
                                           "icon": "jstree-file"}'>Parte 4</li>
                                        <li data-jstree='{ "type":"openMomentSectionPart", 
                                           "momentIndex": "@{{jsMoment.order}}", "momentSectionIndex": "@{{jsSectionMoment.momentSectionIndex}}", "momentSectionPartIndex": "part_5",
                                           "selected" : @{{ dataJstree.type === "openMomentSectionPart" && jsMoment.order === moment.order && jsSectionMoment.section.type === momentSection.section.type && elementParentEdit.momentSectionPartIndex === "part_5" ? true : false}}, 
+                                          "disabled" : @{{jsSectionMoment.section.type === 3 && jsMoment.exclude_experience}},
                                           "icon": "jstree-file"}'>Parte 5</li>
                                     </ul>
                                  </li>
@@ -199,6 +213,13 @@
             <div class="mb-3 card z-index-0">
                <div class="card-header d-flex bg-light ">
                   <h5 class="">@{{PageName}}</h5>
+                  <div ng-show="dataJstree.type==='openMoment'" class="ml-3">
+                     <input type="checkbox" id="exclude_experience"
+					  ng-model="moment.exclude_experience"
+                      ng-click="onChangeExcludeExperience()"
+                     /> <small>Excluir Experiencia científica</small>
+                  </div>
+
                   <div ng-show="dataJstree.type==='openMomentSectionPart'" class="ml-3 pt-1 conx-element"
                      ng-click="onClickTitle(momentSection,'title','Título','momenTitle')">
                      <h6 type="text" class="">@{{momentSection.title || '---Título---'}} </h6>
@@ -215,6 +236,7 @@
                               size="2" styletype="number" ng-model="container.h" ng-change="onChangeHeight()" />
                      </div>
                   </div>
+                  
                   <div ng-show="dataJstree.type==='openMoment'" class="ml-auto">
                      <button ng-disabled="!applyChange" class="btn btn-sm btn-outline-primary"
                         ng-click="onSaveMoment()">Guardar</button>
