@@ -569,7 +569,15 @@ class StudentController extends Controller
             if($affiliatedAccountService->rating_plan_type == 3){
                 $section_id = $this->sectionExperiencesInMoment($moment);
             }
-            else { $section_id = 1; }
+            else { 
+				if($moment->exclude_experience == 1) {
+					$section_id = $this->sectionExperiencesInMoment($moment);
+					$section_id = $section_id === 1 ||  $section_id == null ? 2 : 1;
+				}
+				else {
+					$section_id = 1;
+				}
+			}
         }
 
         $section = json_decode($moment['section_'.$section_id],true);
@@ -640,13 +648,21 @@ class StudentController extends Controller
                     'order_moment_id' => $order_moment_id,
                     'part_id' => ($part_id - 1)]);
             } else {
-                if($section_id > 1 && $affiliatedAccountService->rating_plan_type != 3) { 
-                    $last_part_id = $this->lastPartInSection($moment, ($section_id - 1));
-                     
+				$back_section_id = $section_id - 1;
+			
+				if($moment->exclude_experience == 1) {
+					
+					if($back_section_id == $this->sectionExperiencesInMoment($moment)) {
+						$back_section_id --;
+					}
+				}
+					
+                if($back_section_id >= 1 && $affiliatedAccountService->rating_plan_type != 3) {
+					$last_part_id = $this->lastPartInSection($moment, $back_section_id);
                     $buttonBack = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                         'sequence_id' => $sequence_id,
                         'moment_id' => $moment_id,
-                        'section_id' => ( $section_id - 1 ),
+                        'section_id' => $back_section_id ,
                         'account_service_id' => $account_service_id,
                         'order_moment_id' => $order_moment_id,
                         'part_id' => $last_part_id]); 
@@ -656,7 +672,7 @@ class StudentController extends Controller
                         $buttonBack = route('student.sequences_section_4', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id, 'sequence_id' => $sequence_id]);
                     }
                     else {
-                          
+						
                         $has_moment = false;
                         if($affiliatedAccountService->rating_plan_type == 3){
                             for($i = $order_moment_id - 1; $i >= 1; $i--) {
@@ -679,6 +695,12 @@ class StudentController extends Controller
                              
                             $last_section =  $affiliatedAccountService->rating_plan_type == 3  ? 
                                 $this->sectionExperiencesInMoment($last_moment) : $last_section = 4;
+							
+							if($moment->exclude_experience == 1 ) {
+								if($this->sectionExperiencesInMoment($last_moment) == $last_section) {
+									$last_section --;
+								}
+							}
                               
                             $last_part_id = $this->lastPartInSection($last_moment, $last_section);
                                  
@@ -716,29 +738,35 @@ class StudentController extends Controller
 
                             if($has_moment){
 
-                                $next_section = $this->sectionExperiencesInMoment($next_moment); 
+                                $nex_section_id = $this->sectionExperiencesInMoment($next_moment); 
 
                                 $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                                     'sequence_id' => $sequence_id,
                                     'moment_id' => $next_moment->id,
                                     'order_moment_id' => $next_moment->order,
-                                    'section_id' => $next_section,
+                                    'section_id' => $nex_section_id,
                                     'part_id' => 1]);
                                 break;
                             }
 
                         }
                     }else{
+						$nex_section_id = $section_id + 1;
+						if($moment->exclude_experience == 1) {
+							$experience_section_id = $this->sectionExperiencesInMoment($moment); 
+							if($experience_section_id == $nex_section_id ) {
+								$next_section = $nex_section_id + 1;
+							}
+						}
+						
                         $buttonNext = route('student.show_moment_section', ['empresa' => 'conexiones', 'account_service_id' => $account_service_id,
                             'sequence_id' => $sequence_id,
                             'moment_id' => $moment_id,
-                            'section_id' => $section_id + 1,
+                            'section_id' => $nex_section_id,
                             'account_service_id' => $account_service_id,
                             'order_moment_id' => $order_moment_id,
                             'part_id' => 1]);
                     }
-
-
                 }
                 else {
                     for($i = $order_moment_id + 1; $i <= count($sequence->moments); $i++) {
