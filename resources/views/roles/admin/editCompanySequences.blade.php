@@ -215,7 +215,7 @@
                   <h5 class="">@{{PageName}}</h5>
                   <div ng-show="dataJstree.type==='openMoment'" class="ml-3">
                      <input type="checkbox" id="exclude_experience"
-					  ng-model="moment.exclude_experience"
+                      ng-model="moment.exclude_experience"
                       ng-click="onChangeExcludeExperience()"
                      /> <small>Excluir Experiencia científica</small>
                   </div>

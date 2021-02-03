@@ -164,7 +164,7 @@
                     @if($moment['isAvailable'])
                     <div class="row mt-3 ml-auto mr-auto w-md-90 ml-auto mr-auto">
                         @foreach ($moment['sections'] as $section)
-                        @if($section['isAvailable'])
+                        @if($section['isAvailable'] && $section['isShow'])
                         <div class="col-12 row border-1000 border-bottom p-0">
                             <div class="col-6 p-0 fs-0">
                                 <span class="fs--1"><strong>{{$section['name']}} : </strong> {{$section['title']}}</span>

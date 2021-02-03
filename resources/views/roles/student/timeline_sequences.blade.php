@@ -195,26 +195,26 @@
                             <rect width="10" height="1" fill="#494b9a" stroke="#494b9a" style="stroke-width:0.5;" />
                         </svg>
                     @endif
-					
-					
-					<svg class="svgelem"  width="33px" height="40px" style="margin-right:-20px" xmlns="http://www.w3.org/2000/svg">
-						<g> 
-						  <circle class="circle{{$j}}{{$i}}" cx="13" cy="25" r="4" fill="#FFFFFF" stroke="#494b9a" stroke-width="2%"/>
+                    
+                    
+                    <svg class="svgelem"  width="33px" height="40px" style="margin-right:-20px" xmlns="http://www.w3.org/2000/svg">
+                        <g> 
+                          <circle class="circle{{$j}}{{$i}}" cx="13" cy="25" r="4" fill="#FFFFFF" stroke="#494b9a" stroke-width="2%"/>
 
-						  <a xlink:href="{{route('student.show_moment_section',[
-							'empresa' => $empresa,
-							'account_service_id'=>$account_service_id,
-							'sequence_id'=>$sequence_id,
-							'moment_id'=> App\Http\Controllers\MomentController::retriveMoment($sequence->moments,$j),
-							'order_moment_id'=>$j,
-							'section_id'=>$i
-						])}}" target="_top">
-							<text x="40%" y="83%" style="text-anchor: middle; opacity: 0;">.</text>
-						  </a>
-						  
-						</g>
-					</svg>
-					
+                          <a xlink:href="{{route('student.show_moment_section',[
+                            'empresa' => $empresa,
+                            'account_service_id'=>$account_service_id,
+                            'sequence_id'=>$sequence_id,
+                            'moment_id'=> App\Http\Controllers\MomentController::retriveMoment($sequence->moments,$j),
+                            'order_moment_id'=>$j,
+                            'section_id'=>$i
+                        ])}}" target="_top">
+                            <text x="40%" y="83%" style="text-anchor: middle; opacity: 0;">.</text>
+                          </a>
+                          
+                        </g>
+                    </svg>
+                    
                 @endfor
                 <svg class="svgelem2" width="10px" height="20px" style="margin-right: -10px">
                     <rect width="16" height="1" fill="#494b9a" stroke="#494b9a" style="stroke-width:0.5;" />

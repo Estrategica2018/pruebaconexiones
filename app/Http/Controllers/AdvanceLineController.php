@@ -40,7 +40,7 @@ class AdvanceLineController extends Controller
                 foreach([1,2,3,4] as $section_id) {
                     $resultSection = app('App\Http\Controllers\AchievementController')->retriveProgressSection($accountService, $student_id, $sequence->id, $sequenceMoment, $section_id);
                     $sections[$section_id] = $resultSection['section'];
-					$sections[$section_id]['nombre'] = json_decode($sequenceMoment['section_'.$section_id],true)['section']['name'];
+                    $sections[$section_id]['nombre'] = json_decode($sequenceMoment['section_'.$section_id],true)['section']['name'];
                 }    
             }
             $moments[$sequenceMoment['order']] = [
@@ -49,7 +49,7 @@ class AdvanceLineController extends Controller
                 'isAvailable'=> $result['moment']['isAvailable'],
                 'progress'=> $result['moment']['progress'],
                 'performance'=> $result['moment']['performance'],
-				'exclude_experience'=> $result['moment']['exclude_experience'],
+                'exclude_experience'=> $result['moment']['exclude_experience'],
                 'sections' => $sections
             ];
         }

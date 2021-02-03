@@ -372,11 +372,11 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
                 "animation": 0
             }
         });
-		
-		if($scope.dataJstree.type === 'openMoment') {
-			$scope.moment = findMoment($scope.dataJstree.momentIndex);
-			$('#exclude_experience').prop('checked', $scope.moment.exclude_experience === 1 ? true : false );
-		}
+        
+        if($scope.dataJstree.type === 'openMoment') {
+            $scope.moment = findMoment($scope.dataJstree.momentIndex);
+            $('#exclude_experience').prop('checked', $scope.moment.exclude_experience === 1 ? true : false );
+        }
 
     }
 
@@ -780,7 +780,7 @@ MyApp.controller("editCompanySequencesCtrl", ["$scope", "$http", "$timeout", fun
     }
 
     $scope.onChangeExcludeExperience = function () {
-		$scope.moment.exclude_experience = $scope.moment.exclude_experience === 1 ? 0 : 1;
+        $scope.moment.exclude_experience = $scope.moment.exclude_experience === 1 ? 0 : 1;
         $scope.applyChange = true;
     }
     

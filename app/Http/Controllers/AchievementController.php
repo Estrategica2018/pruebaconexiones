@@ -139,9 +139,20 @@ class AchievementController extends Controller
         $sequenceMoment['isAvailable'] = true; 
        
         //Si es plan por secuencia o  momento tiene acceso a las 4 secciones del momento
-        $momentSectionCount = 
-            ($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2) ?
-             4 : 1;
+        $momentSectionCount = null;
+        if($accountService->rating_plan_type == 1 || $accountService->rating_plan_type == 2) {
+            
+            if($sequenceMoment['exclude_experience'] == 1) {
+                $momentSectionCount = 3;
+            }
+            else { 
+                $momentSectionCount = 4;
+            }
+        }
+        else {
+            $momentSectionCount = 1;
+        }
+        
         
         //calculando el progreso de la linea de avance        
         $advanceLine = AdvanceLine::where([
@@ -195,6 +206,9 @@ class AchievementController extends Controller
         ])->get();  
             
         $sequenceMoment['progress'] = (count($advanceLine) / $momentSectionCount) * 100;
+        if($sequenceMoment['progress'] > 100) {
+            $sequenceMoment['progress'] = 100;
+        }
  
         if( count($questions) > 0 && $sequenceMoment['progress'] == 100) {
             if(count($ratings) == count($questions) ) {
@@ -204,6 +218,7 @@ class AchievementController extends Controller
                 $sequenceMoment['progress'] = 89;
             }
         }  
+        
         if( count($questions) > 0) {
             if(count($ratings)>0) { 
                 $performance = $ratings->avg('weighted');
