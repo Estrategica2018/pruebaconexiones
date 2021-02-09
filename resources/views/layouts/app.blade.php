@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#2c7be5">
     <link rel="stylesheet" type="text/css" href="{{ asset('falcon/css/falcon.css') }}">
     <!-- Add icon library -->
-    <link rel="stylesheet" href="{{ asset('font-awesome/v5.12.1/css/all.min.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
     <link href="{{ asset('falcon/css/theme.css') }}" type="text/css" rel="stylesheet" class="theme-stylesheet">
     <!-- select2 CSS -->
