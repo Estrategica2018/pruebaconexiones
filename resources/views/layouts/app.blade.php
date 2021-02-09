@@ -15,11 +15,13 @@
     <link rel="shortcut icon" href="{{ asset('images/icons/educonexiones.ico') }}">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#2c7be5">
-    <link rel="stylesheet" type="text/css" href="{{ asset('falcon/css/falcon.css') }}">
     <!-- Add icon library -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
-    <link href="{{ asset('falcon/css/theme.css') }}" type="text/css" rel="stylesheet" class="theme-stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('falcon/css/falcon.css') }}">
+    <!--link href="{{ asset('falcon/css/theme.css') }}" type="text/css" rel="stylesheet" class="theme-stylesheet"-->
+	<link type="text/css" rel="stylesheet" class="theme-stylesheet" href="https://res.cloudinary.com/dfxkgtknu/raw/upload/v1612842034/samples/conexiones/theme.min_cyfngb.css">
+	
     <!-- select2 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js" integrity="sha512-RtZU3AyMVArmHLiW0suEZ9McadTdegwbgtiQl5Qqo9kunkVg1ofwueXD8/8wv3Af8jkME3DDe3yLfR8HSJfT2g==" crossorigin="anonymous"></script>
@@ -40,12 +42,16 @@
     <script src="{{ asset('js/sweetalert2.min.js') }}"></script>
     
     <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="{{ asset('falcon/css/swiper.min.css') }}">
-    <script src="{{ asset('/falcon/js/swiper.min.js') }}" defer></script>
+    <!--link rel="stylesheet" href="{{ asset('falcon/css/swiper.min.css') }}"-->
+    <!--script src="{{ asset('/falcon/js/swiper.min.js') }}" defer></script-->
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swipejs/2.2.18/style.min.css" integrity="sha512-+0rLxf9GysTpzDehJJr15kUn2zvyF/Sl3HH+/YBvloZbUUIq7zP6YHInKsRTmF82Bezez0O68DvNqCr8WopvXg==" crossorigin="anonymous" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/swipejs/2.2.18/swipe.min.js" integrity="sha512-N1p/ou8WbK7r0EYPz1g8MWGVvdn3UihwAnCseYFMlNL3o96uJoLNIdKNeZknV3Aiy9+crKmV+aiAZFRrDHsmnQ==" crossorigin="anonymous"></script>
    
    <!-- Moment JS -->
-   <script src="{{ asset('js/moment.js') }}" type="text/javascript"></script>
-    @yield('plugins')
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+   
+   @yield('plugins')
 
 </head>
 
