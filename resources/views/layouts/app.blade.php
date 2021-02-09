@@ -42,12 +42,10 @@
     <script src="{{ asset('js/sweetalert2.min.js') }}"></script>
     
     <!-- Link Swiper's CSS -->
-    <!--link rel="stylesheet" href="{{ asset('falcon/css/swiper.min.css') }}"-->
-    <!--script src="{{ asset('/falcon/js/swiper.min.js') }}" defer></script-->
+    <link rel="stylesheet" href="{{ asset('falcon/css/swiper.min.css') }}">
+    <script src="{{ asset('/falcon/js/swiper.min.js') }}" defer></script>
 	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swipejs/2.2.18/style.min.css" integrity="sha512-+0rLxf9GysTpzDehJJr15kUn2zvyF/Sl3HH+/YBvloZbUUIq7zP6YHInKsRTmF82Bezez0O68DvNqCr8WopvXg==" crossorigin="anonymous" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/swipejs/2.2.18/swipe.min.js" integrity="sha512-N1p/ou8WbK7r0EYPz1g8MWGVvdn3UihwAnCseYFMlNL3o96uJoLNIdKNeZknV3Aiy9+crKmV+aiAZFRrDHsmnQ==" crossorigin="anonymous"></script>
-   
+	
    <!-- Moment JS -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
    
