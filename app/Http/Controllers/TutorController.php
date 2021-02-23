@@ -413,14 +413,38 @@ class TutorController extends Controller
             $student['lastMoment'] = $date->format("Y-m-d H:i");
         }
         
-        foreach($accountServices as $accountService) {  
-            $accountService['sequence'] = clone $accountService->affiliated_content_account_service[0]->sequence;
-            $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService['sequence']);
-            $accountService['sequence']['progress'] = $result['sequence']['progress'];
-            $accountService['sequence']['performance'] = $result['sequence']['performance'];
-        } 
+		$countSequences = 0;
+		$sequence_id_tmp = 0;
+		$accountServiceTmp = null;
+		$accountServicesList = [];
+		foreach($accountServices as $accountService) {
+			foreach($accountService->affiliated_content_account_service as $seq) {
+				if($sequence_id_tmp != $seq->sequence_id) {
+					if($accountService->is_active == 1) {
+					  $countSequences = $countSequences + 1;
+					}
+					$accountServiceTmp = clone $accountService;
+					$accountServiceTmp->sequence = clone $seq->sequence;
+					array_push($accountServicesList,$accountServiceTmp);
+					$sequence_id_tmp = $seq->sequence_id;
+					
+					$result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountServiceTmp->sequence);
+					$accountServiceTmp->sequence['progress'] = $result['sequence']['progress'];
+					if(isset($result['sequence']['performance'])) {
+						$accountServiceTmp->sequence['performance'] = $result['sequence']['performance']; 
+					}
+				}
+			}
+		}
+		
+        //foreach($accountServices as $accountService) {  
+        //    $accountService['sequence'] = clone $accountService->affiliated_content_account_service[0]->sequence;
+        //    $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountService['sequence']);
+        //    $accountService['sequence']['progress'] = $result['sequence']['progress'];
+        //    $accountService['sequence']['performance'] = $result['sequence']['performance'];
+        //} 
         
-        return view('roles.tutor.achievements.student', ['student'=>$student, 'accountServices'=>$accountServices]);
+        return view('roles.tutor.achievements.student', ['student'=>$student, 'accountServices'=>$accountServicesList]);
     }
     
     /**
@@ -445,8 +469,20 @@ class TutorController extends Controller
         if( $student == null) {
             return $this->finishValidate('Error relacionando al estudiante');
         }
+        
+        $firstAccess = $student->first_last_access()['first'];
+        $lastAccess = $student->first_last_access()['last'];
         $accountService = $accountServices[0];
-        $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
+        foreach($accountService->affiliated_content_account_service as $acc) {
+			if($acc->sequence->id == $sequence_id) {
+			  $sequence = clone $acc->sequence;
+			}
+		}
+		
+		if($sequence == null ) {
+			return $this->finishValidate('Plan de accceso o secuencia no válidas');
+		}
+        //$sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
  
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
@@ -510,8 +546,16 @@ class TutorController extends Controller
         }
         
         $accountService = $accountServices[0];
-        $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
- 
+		foreach($accountService->affiliated_content_account_service as $acc) {
+			if($acc->sequence->id == $sequence_id) {
+			  $sequence = clone $acc->sequence;
+			}
+		}
+		
+		if($sequence == null ) {
+			return $this->finishValidate('Plan de accceso o secuencia no válidas');
+		}
+        
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student_id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
@@ -617,11 +661,21 @@ class TutorController extends Controller
         }
         
         $accountService = $accountServices[0];
-        $sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
- 
-
-        $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
-        $sequence['progress'] = $result['sequence']['progress'];
+        //$sequence = clone $accountService->affiliated_content_account_service[0]->sequence; 
+		
+		foreach($accountService->affiliated_content_account_service as $acc) {
+			if($acc->sequence->id == $sequence_id) {
+			  $sequence = clone $acc->sequence;
+			}
+		}
+		
+		if($sequence == null ) {
+			dd($sequence);
+			return $this->finishValidate('Plan de accceso o secuencia no válidas');
+		}
+		
+		$result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
+		$sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
        
         
@@ -657,15 +711,16 @@ class TutorController extends Controller
         
         foreach($sequence->moments as $moment) {
             $rating = [];
-            
+        
             foreach([1,2,3,4] as $section_id) {
-                
+					
                 $section = json_decode($moment['section_'.$section_id], true);
+				
                 foreach([1,2,3,4,5] as $part_id) {
                     if(isset($section['part_'.$part_id]) && count($section['part_'.$part_id])>0) {
                         if(isset($section['part_'.$part_id]) && isset($section['part_'.$part_id]['elements'])) {
                             $elements = $section['part_'.$part_id]['elements'];
-                            foreach($elements as $element) {
+							foreach($elements as $element) {
                                 if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
                                     $rating[$element['id']] = ['element'=>$element];
                                     $rating[$element['id']]['evidences'] = $evidences->where('experience_id',$element['experience_id'])->first();

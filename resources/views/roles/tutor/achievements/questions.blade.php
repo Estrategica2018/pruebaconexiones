@@ -245,10 +245,16 @@
                <div class="col-3 p-0">Comentario</div>
             </div>
             @foreach ($rating['evidences']['answers'] as $indexA=>$answer)
-            <div class="row mt-3 @if($indexA%2==0) bg-soft-dark @endif rounded-sm pl-3 pb-3 pt-3 fs--1">
-               <div class="col-3 p-0 border-left-blue">{!!$answer['question']['order'] . '. ' .$answer['question']['title']!!}</div>
+			<div class="row mt-3 @if($indexA%2==0) bg-soft-dark @endif rounded-sm pl-3 pb-3 pt-3 fs--1">
+               <div class="col-3 p-0 border-left-blue">
+			   @if($answer['question'] != null ) 
+			      {!!$answer['question']['order'] . '. ' .$answer['question']['title']!!}
+		       @endif
+			   </div>
                <div class="col-3 pl-3 border-left-blue">
+			   @if($answer['question'] != null ) 
                   {!!App\Http\Controllers\AchievementController::retriveAnswer($answer['question'],$answer['answer'])!!}
+			   @endif 
                </div>
                <div class="col-3 p-0 border-left-blue text-center">
                   @if($answer['feedback'] == 0)
