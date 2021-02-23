@@ -196,7 +196,7 @@
                   @endif
                </div>
                <div class="col-7 col-md-6 p-0">  
-                  <span>Preguntas de {{json_encode($rating['element'],true)}}
+                  <span>Preguntas de 
                   @if(isset($rating['element']['subtitle']))
                   {{$rating['element']['subtitle']}}  
                   @endif
@@ -237,7 +237,7 @@
             </div>
          </div>
          @if(isset($rating['evidences']['answers']))
-         <div class="col-12 mt-3" ng-show="mbShowEvidence{{$rating['element']['id']}}">
+         <div class="col-12 mt-3 evidences-answers" ng-show="mbShowEvidence{{$rating['element']['id']}}">
             <div class="row  bg-blue rounded-sm pl-3 pb-3 pt-3 text-center font-weight-bold" style="color:white">
                <div class="col-3 p-0 border-left-white">Pregunta</div>
                <div class="col-3 p-0 border-left-white">Respuesta</div>
@@ -248,7 +248,7 @@
             <div class="row mt-3 @if($indexA%2==0) bg-soft-dark @endif rounded-sm pl-3 pb-3 pt-3 fs--1">
                <div class="col-3 p-0 border-left-blue">{!!$answer['question']['order'] . '. ' .$answer['question']['title']!!}</div>
                <div class="col-3 pl-3 border-left-blue">
-                  {{App\Http\Controllers\AchievementController::retriveAnswer($answer['question'],$answer['answer'])}}
+                  {!!App\Http\Controllers\AchievementController::retriveAnswer($answer['question'],$answer['answer'])!!}
                </div>
                <div class="col-3 p-0 border-left-blue text-center">
                   @if($answer['feedback'] == 0)

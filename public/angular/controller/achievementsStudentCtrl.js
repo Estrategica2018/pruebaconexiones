@@ -9,6 +9,8 @@ MyApp.controller("achievementsStudentCtrl", ["$scope", "$http", "$timeout", func
     $scope.initSequences = function(companyId) {
         $('.d-none-result').removeClass('d-none'); 
         $scope.loadFinish = true;
+		$('.evidences-answers').find('img').css("width", "100%");
+		$('.evidences-answers').find('img').css("height", "auto");
             
         // $http({
         //     url:"/conexiones/get_available_sequences/" + companyId,

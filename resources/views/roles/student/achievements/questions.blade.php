@@ -224,7 +224,7 @@
                          </div>
                     </div>
                     @if(isset($rating['evidences']['answers']))
-                    <div class="col-12 mt-3" ng-show="mbShowEvidence{{$rating['element']['id']}}">
+                    <div class="col-12 mt-3 evidences-answers" ng-show="mbShowEvidence{{$rating['element']['id']}}">
                         <div class="row  bg-blue rounded-sm pl-3 pb-3 pt-3 text-center font-weight-bold" style="color:white">
                             <div class="col-3 p-0 border-left-white">Pregunta</div>
                             <div class="col-3 p-0 border-left-white">Respuesta</div>
