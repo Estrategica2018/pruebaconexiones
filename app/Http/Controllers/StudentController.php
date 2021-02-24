@@ -96,29 +96,29 @@ class StudentController extends Controller
         $accountServices = $this->get_available_sequences($request, $empresa, $company_id, null, false);
         
         $countSequences = 0;
-		$sequence_id_tmp = 0;
-		$accountServiceTmp = null;
-		$accountServicesList = [];
-		foreach($accountServices as $accountService) {
-			foreach($accountService->affiliated_content_account_service as $seq) {
-				if($sequence_id_tmp != $seq->sequence_id) {
-					if($accountService->is_active == 1) {
-					  $countSequences = $countSequences + 1;
-					}
-					$accountServiceTmp = clone $accountService;
-					$accountServiceTmp->sequence = clone $seq->sequence;
-					array_push($accountServicesList,$accountServiceTmp);
-					$sequence_id_tmp = $seq->sequence_id;
-					
-					$result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountServiceTmp->sequence);
-					$accountServiceTmp->sequence['progress'] = $result['sequence']['progress'];
-					if(isset($result['sequence']['performance'])) {
-						$accountServiceTmp->sequence['performance'] = $result['sequence']['performance']; 
-					}
-				}
-			}
-		}
-		
+        $sequence_id_tmp = 0;
+        $accountServiceTmp = null;
+        $accountServicesList = [];
+        foreach($accountServices as $accountService) {
+            foreach($accountService->affiliated_content_account_service as $seq) {
+                if($sequence_id_tmp != $seq->sequence_id) {
+                    if($accountService->is_active == 1) {
+                      $countSequences = $countSequences + 1;
+                    }
+                    $accountServiceTmp = clone $accountService;
+                    $accountServiceTmp->sequence = clone $seq->sequence;
+                    array_push($accountServicesList,$accountServiceTmp);
+                    $sequence_id_tmp = $seq->sequence_id;
+                    
+                    $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $accountServiceTmp->sequence);
+                    $accountServiceTmp->sequence['progress'] = $result['sequence']['progress'];
+                    if(isset($result['sequence']['performance'])) {
+                        $accountServiceTmp->sequence['performance'] = $result['sequence']['performance']; 
+                    }
+                }
+            }
+        }
+        
         $firstAccess = $student->first_last_access()['first'];
         $lastAccess = $student->first_last_access()['last'];
   
@@ -149,14 +149,14 @@ class StudentController extends Controller
         $lastAccess = $student->first_last_access()['last'];
         $accountService = $accountServices[0];
         foreach($accountService->affiliated_content_account_service as $acc) {
-			if($acc->sequence->id == $sequence_id) {
-			  $sequence = clone $acc->sequence;
-			}
-		}
-		
-		if($sequence == null ) {
-			return $this->finishValidate('Plan de accceso o secuencia no válidas');
-		}
+            if($acc->sequence->id == $sequence_id) {
+              $sequence = clone $acc->sequence;
+            }
+        }
+        
+        if($sequence == null ) {
+            return $this->finishValidate('Plan de accceso o secuencia no válidas');
+        }
     
  
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
@@ -205,16 +205,16 @@ class StudentController extends Controller
         $lastAccess = $student->first_last_access()['last'];
         
         $accountService = $accountServices[0];
-		foreach($accountService->affiliated_content_account_service as $acc) {
-			if($acc->sequence->id == $sequence_id) {
-			  $sequence = clone $acc->sequence;
-			}
-		}
-		
-		if($sequence == null ) {
-			return $this->finishValidate('Plan de accceso o secuencia no válidas');
-		}
-		
+        foreach($accountService->affiliated_content_account_service as $acc) {
+            if($acc->sequence->id == $sequence_id) {
+              $sequence = clone $acc->sequence;
+            }
+        }
+        
+        if($sequence == null ) {
+            return $this->finishValidate('Plan de accceso o secuencia no válidas');
+        }
+        
         //$sequence = CompanySequence::with('moments')->find($sequence_id);
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);
         $sequence['progress'] = $result['sequence']['progress'];
@@ -303,15 +303,15 @@ class StudentController extends Controller
         $lastAccess = $student->first_last_access()['last'];  
 
         $accountService = $accountServices[0];
-		foreach($accountService->affiliated_content_account_service as $acc) {
-			if($acc->sequence->id == $sequence_id) {
-			  $sequence = clone $acc->sequence;
-			}
-		}
-		
-		if($sequence == null ) {
-			return $this->finishValidate('Plan de accceso o secuencia no válidas');
-		}
+        foreach($accountService->affiliated_content_account_service as $acc) {
+            if($acc->sequence->id == $sequence_id) {
+              $sequence = clone $acc->sequence;
+            }
+        }
+        
+        if($sequence == null ) {
+            return $this->finishValidate('Plan de accceso o secuencia no válidas');
+        }
         
         $sequence = CompanySequence::with('moments')->find($sequence_id);
         $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($accountService, $student->id, $sequence);

@@ -32,8 +32,9 @@ class AnswerController extends Controller
             $student = $request->user('afiliadoempresa');
 
             //$questions_answers = $request->questions_answers;
+            $answers = [];
             foreach ($questions_answers as $question_answer) {
-                Answer::updateOrCreate(
+                $answer = Answer::updateOrCreate(
                     [
                         'student_affiliated_company_id' => $student->id,
                         'company_id' => $request->company_id,
@@ -49,6 +50,7 @@ class AnswerController extends Controller
                         'date_evaluation' => Carbon::now()
                     ]
                 );
+                array_push($answers,$answer);
             }
 
             $tutor = AfiliadoEmpresa::whereHas('affiliated_company', function ($query) use ($request, $student) {
@@ -163,7 +165,7 @@ class AnswerController extends Controller
             $attempts = count($rating)>0 ? $rating[0]->attempts + 1 : 1;
             
             //registra el resumen de la evaluación para la posterior generación de reportes
-            Rating::updateOrCreate(
+            $rating = Rating::updateOrCreate(
                 [
                     'affiliated_account_service_id' => $request->affiliated_account_service_id,
                     'student_id' => $student->id,
@@ -179,9 +181,13 @@ class AnswerController extends Controller
                     'attempts' => $attempts,
                 ]
             );
+            
+            foreach($answers as $answertmp){
+                $answertmp->rating_id = $rating->id;
+                $answertmp->save();
+            }
 
             Mail::to($tutor->email)->send(new SendReportAnswerTutor($tutor, $student, $reportAnswers, $sequence, $moment, $level, $performance_comment,$color_performance,$performance,$place_advance_line));
-            
             if($mbControlSendEmail) {
                 
                 $result = app('App\Http\Controllers\AchievementController')->retriveProgressSequence($affiliatedAccountService, $student->id, $sequence);
