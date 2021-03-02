@@ -1,6 +1,6 @@
 <div class="float result-finish-done d-none col-10 col-md-6 col-xl-4 text-align-right w-auto"  ng-controller="frequentQuestionCtrl" ng-init="init()" style="z-index: 103;">
-    <img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/chat.png')}}" width="80px" height="auto" ng-click="toogleChatPanel=true">
-    <a href="{{route('help_platform')}}"><img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/help_icon.png')}}" width="80px" height="auto"></a>
+    <img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/faq_icon.png')}}" width="80px" height="auto" ng-click="toogleChatPanel=true">
+    <a href="{{route('help_platform')}}"><img ng-hide="toogleChatPanel" class="cursor-pointer" src="{{asset('images/icons/tutorial_icon.png')}}" width="80px" height="auto"></a>
     <div class="card text-align-justify" ng-show="toogleChatPanel">
         <div class="card-header fs--1 pr-5">
             <div ng-click="toogleChatPanel= false" class="position-absolute fs-2 cursor-pointer" style="top: 3px;right: 16px;text-align: right;"> 
