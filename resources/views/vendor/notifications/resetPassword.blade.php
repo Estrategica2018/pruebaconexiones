@@ -16,7 +16,6 @@
 @endforeach
 @foreach($data as $user)
 <h2>{!!'Usuario:' .$user->user_name !!}</h2>
-<h2>{!!'Contraseña:' .$user->user_name !!}</h2>
 @foreach($user->affiliated_company as $company_rol)
 {{'Empresa: '.$company_rol->company->name.' rol: '.$company_rol->rol->description}}
 <br>
