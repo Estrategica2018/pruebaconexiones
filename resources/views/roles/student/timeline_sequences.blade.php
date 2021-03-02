@@ -63,7 +63,7 @@
         
         
         <span class="nameTimeLine fs--1">{{auth('afiliadoempresa')->user()->name}}</span>
-        <div class="position-absolute d-flex" style="top: 12px;left: 220px;">
+        <div class="position-absolute d-flex" style="top: 12px;left: 220px; z-index: 10">
             <a class="ml-8 cursor-pointer image-tooltip" href="{{route('student','conexiones')}}">
                 <img src="{{asset('images/icons/portal-estudiante/home_Mesa de trabajo 1.png')}}" width="32" height="auto"/>
                 <span class="tooltiptext">inicio</span>
