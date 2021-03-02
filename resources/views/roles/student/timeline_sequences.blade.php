@@ -6,6 +6,11 @@
         height: 37px;
         right: 20px;
     }
+	@media(max-width:700px) {
+      .help {
+        right: -200px;
+      }
+	}
     .help-icon {
         font-size: 35px;
     }    
