@@ -19,8 +19,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
     <link rel="stylesheet" type="text/css" href="{{ asset('falcon/css/falcon.css') }}">
-    <!--link href="{{ asset('falcon/css/theme.css') }}" type="text/css" rel="stylesheet" class="theme-stylesheet"-->
-	<link type="text/css" rel="stylesheet" class="theme-stylesheet" href="https://res.cloudinary.com/dfxkgtknu/raw/upload/v1612842034/samples/conexiones/theme.min_cyfngb.css">
+    <link href="{{ asset('falcon/css/theme.css') }}" type="text/css" rel="stylesheet" class="theme-stylesheet">
+	<!--link type="text/css" rel="stylesheet" class="theme-stylesheet" href="https://res.cloudinary.com/dfxkgtknu/raw/upload/v1612842034/samples/conexiones/theme.min_cyfngb.css"-->
 	
     <!-- Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>

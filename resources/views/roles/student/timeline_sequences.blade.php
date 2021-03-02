@@ -183,7 +183,7 @@
         @endif
     </div>
     <div class="col-auto d-md-block d-lg-none lineTimeLine small">
-        <div>
+        <div style="width: 808px;">
             @for($j = 1; $j < 9 ; $j++)
                 @for($i = 1; $i < 5 ; $i++)
                     @if($i ===1)
