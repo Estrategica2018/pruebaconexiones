@@ -769,6 +769,7 @@ class StudentController extends Controller
                     'part_id' => $part_id + 1]);
             } else {
                 if($section_id < 4) {
+                    
                     $affiliatedAccountService = AffiliatedAccountService::with('affiliated_content_account_service')->
                     where('init_date', '<=', Carbon::now())
                         ->where('end_date', '>=', Carbon::now())->find($account_service_id);
@@ -797,7 +798,7 @@ class StudentController extends Controller
                         if($moment->exclude_experience == 1) {
                             $experience_section_id = $this->sectionExperiencesInMoment($moment); 
                             if($experience_section_id == $nex_section_id ) {
-                                $next_section = $nex_section_id + 1;
+                                $nex_section_id = $nex_section_id + 1;
                             }
                         }
                         
@@ -825,6 +826,8 @@ class StudentController extends Controller
                     }
                 }
             }
+            
+            
         
             $data = array_merge(['empresa'=>$empresa,'sequence' => $moment->sequence, 'sequence_id' => $sequence_id,'section_id'=>$section_id,'part_id' => $part_id, 'rating_plan_type' => $affiliatedAccountService->rating_plan_type,
                 'buttonBack' => $buttonBack, 'buttonNext' => $buttonNext, 'moment' => $moment, 'sections' => [$section_1, $section_2, $section_3, $section_4]], $section, $part);
