@@ -225,7 +225,7 @@ class AnswerController extends Controller
         foreach ($answers as $answer) {
             $data = $this->get_answer_student($answer->answer, $answer->question->options, $answer->question->review);
             $data['title'] = $answer->question->title;
-            $data['struct_concept'] = 'La respuesta esperada es: '.strtoupper($data['type_numeral']).':'.$data['answer_question'].' Porque: '.$answer->question->concept;
+            $data['struct_concept'] = $answer->question->concept;
             $data['objective'] = $answer->question->objective;
             $data['concept'] = $answer->question->concept;
             array_push($questions, $data);
