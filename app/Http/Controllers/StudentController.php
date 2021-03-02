@@ -318,14 +318,7 @@ class StudentController extends Controller
         $sequence['progress'] = $result['sequence']['progress'];
         $sequence['performance'] = $result['sequence']['performance'];
         
-        $moments = [];
-        $evidences = Rating::with('answers.question')
-        ->where([
-            ['sequence_id',$sequence->id],
-            ['student_id',$student->id],
-            ['affiliated_account_service_id',$accountService->id],
-        ])->get();
-        
+        $moments = []; 
         foreach($sequence->moments as $sequenceMoment) {
            
             $result = app('App\Http\Controllers\AchievementController')->retriveProgressMoment($accountService, $student->id, $sequence->id, $sequenceMoment);
