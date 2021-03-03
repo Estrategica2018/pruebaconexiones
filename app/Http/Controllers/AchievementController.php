@@ -187,19 +187,19 @@ class AchievementController extends Controller
                             if($element['type'] =='evidence-element' && $element['questionEditType'] != 1 ) {
                                 $questions[$element['id']] = ['element'=>$element];
                                 $questions[$element['id']]['evidences'] = $evidences->where('experience_id',$element['experience_id'])->first();
-                                if($questions[$element['id']]['evidences']) {
-                                $temp = [];
-                                   for ($i = 0; $i < count($questions[$element['id']]['evidences']['answers']); $i = $i+1) {
-                                      foreach($questions[$element['id']]['evidences']['answers'] as $answ) {
-                                          if(($i + 1) == $answ->question->order) {
-                                            array_push($temp, $answ);
-                                            break;
-                                          }
-                                      }                          
-                                   }
-                                   //  ($rating[$element['id']]['evidences']);
-                                   $questions[$element['id']]['evidences']['answers'] = $temp; 
-                                }
+                                //if($questions[$element['id']]['evidences']) {
+                                //$temp = [];
+                                //   for ($i = 0; $i < count($questions[$element['id']]['evidences']['answers']); $i = $i+1) {
+                                //      foreach($questions[$element['id']]['evidences']['answers'] as $answ) {
+                                //          if(($i + 1) == $answ->question->order) {
+                                //            array_push($temp, $answ);
+                                //            break;
+                                //          }
+                                //      }                          
+                                //   }
+                                //   //  ($rating[$element['id']]['evidences']);
+                                //   $questions[$element['id']]['evidences']['answers'] = $temp; 
+                                //}
                             }
                         }
                     }

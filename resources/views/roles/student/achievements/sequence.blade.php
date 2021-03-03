@@ -43,7 +43,7 @@
                             <i class="fa fa-circle  mr-2 fs-1" style="color:#6CB249" aria-hidden="true"></i><label class="font-weight-bold ">Alto 70% - 89% </label>
                             @endif
                             @if($sequence['performance']>=60 && $sequence['performance']<=69)
-                            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold ">Bajo 60% - 69% </label>
+                            <i class="fa fa-circle mr-2 fs-1" style="color:#F9E538" aria-hidden="true"></i><label class="font-weight-bold ">Básico 60% - 69% </label>
                             @endif
                             @if($sequence['performance']>=40 && $sequence['performance']<=59)
                             <i class="fa fa-circle mr-2 fs-1" style="color:#AC312A" aria-hidden="true"></i><label class="font-weight-bold ">Bajo 60% - 69% </label>
