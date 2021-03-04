@@ -22,7 +22,7 @@
                         <i class="far fa-caret-square-left" id="sidemenu-sequences-button"></i>
                     </div>
                 </div>
-                <div id="loading" class="modal-backdrop position-absolute h-100 w-100 background-white p-auto m-auto text-align card" style="padding: 25%; height: 0px;">
+                <div id="loading" class="modal-backdrop position-absolute h-100 w-100 background-white p-auto m-auto text-align card" style="height: 100vh; width: 100vw; padding: 25%; height: 0px;">
                     Cargando...
                 </div>
                 <div class="col-md-9" id="content-section-sequences">
@@ -175,6 +175,19 @@
                     </button>
                 </div>
                 <div class="card-body p-5" ng-show="evidenceOpened.type_answer===1">
+				    <div class="ml-auto mr-auto row mb-3">
+                        <div class="col-6"> 
+                            <h6 class="fs-2" style="color:#E15433;font-weight: 700;">
+                                Preguntas/Actividades
+                            </h6>
+                        </div>
+                        <div class="col-6"> 
+                            <h6  class="fs-2" style="color:#402F73;font-weight: 700;">
+                                Desempeños
+                            </h6>
+                        </div>
+                        
+                    </div>
                     <div ng-repeat="question in evidenceOpened.questions track by $index" class="ml-auto mr-auto row mb-3">
                         <div class="col-6"> 
                             <h6 ng-show="question.title" style="color:#E15433;">
