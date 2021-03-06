@@ -6,8 +6,7 @@
             <div ng-controller="availableExperiencesStudentCtrl" ng-init="init({{auth('afiliadoempresa')->user()->company_id()}},
                 {{$sequence_id}}, {{$account_service_id}})">
                 <div class="row conx-page">
-                    <div id="loading" class="z-index-10 position-absolute card card-body p-10 w-100 text-align" ng-hide="sequence"
-                      style="min-height: 100%;" >
+                    <div id="loading" class="loading-div z-index-10 position-absolute card card-body p-10 w-100 text-align" ng-hide="sequence">
                       cargando...
                     </div>
                     <div class="col-12 col-lg-8 row d-result d-none" ng-show="sequence">

@@ -22,8 +22,8 @@
                         <i class="far fa-caret-square-left" id="sidemenu-sequences-button"></i>
                     </div>
                 </div>
-                <div id="loading" class="modal-backdrop position-absolute h-100 w-100 background-white p-auto m-auto text-align card" style="height: 100vh; width: 100vw; padding: 25%; height: 0px;">
-                    Cargando...
+                <div id="loading" class="modal-backdrop position-absolute h-100 w-100 background-white p-auto m-auto text-align card loading-div" style="padding: 25%;">
+                    <span> Cargando...</span>
                 </div>
                 <div class="col-md-9" id="content-section-sequences">
                     

@@ -11,6 +11,12 @@
         right: -200px;
       }
 	}
+	@media(max-width:492px) {
+      .help {
+        right: -432px;
+      }
+	}
+
     .help-icon {
         font-size: 35px;
     }    

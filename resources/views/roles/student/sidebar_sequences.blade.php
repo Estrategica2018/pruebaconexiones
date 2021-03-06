@@ -24,7 +24,7 @@
         </a>
         <a class="cursor-pointer" href="{{route('student.sequences_section_2',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence->id,'account_service_id'=>$account_service_id])}}">
             <img src="{{asset('/images/icons/rutaViaje.png')}}" height= "auto" width="50px">
-            <span class="d-flex" style="top: 69px;width: 45px;">Mapa de ruta</span>
+            <span class="d-flex" style="top: 69px;width: 45px;">Ruta de viaje</span>
         </a>
         <a class="cursor-pointer" href="{{route('student.sequences_section_3',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence->id,'account_service_id'=>$account_service_id])}}">
             <img src="{{asset('/images/icons/GuiaSaberes.png')}}" height= "auto" width="50px">

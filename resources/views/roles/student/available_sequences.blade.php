@@ -28,7 +28,7 @@
                          <span class="col-auto"><a ng-click="errorMessage = null"><i class="far fa-times-circle"></a></i></span>
                         </div>
 
-                        <div class="p-10 card card-body text-align" style="min-height: 13vw;" ng-hide="accountServices">
+                        <div class="p-10 card card-body text-align loading-div"  ng-hide="accountServices">
                            cargando...
                         </div>
 
