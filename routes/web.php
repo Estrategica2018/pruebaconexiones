@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/', 'WelcomeController@index')->name('/');
 Route::get('/login', 'WelcomeController@index')->name('login');
-Route::get('/test/{url}', 'WelcomeController@test')->name('login');
+
 
 Route::get('/inicio', 'WelcomeController@index')->name('home');
 Route::get('/home', 'WelcomeController@index')->name('home');

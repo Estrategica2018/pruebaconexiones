@@ -22,8 +22,5 @@ class WelcomeController extends Controller
         return view('welcome', ['rating_plan_id_free' => $rating_plan_id_free->id]);
     }
 	
-	public function test(Request $request,$url)
-    {
-     return view('test',['url'=>$url]);
-    }
+	
 }
