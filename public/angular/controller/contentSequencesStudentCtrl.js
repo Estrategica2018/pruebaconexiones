@@ -256,9 +256,11 @@ MyApp.controller("contentSequencesStudentCtrl", ["$scope", "$http","refresTimeLi
 
         if ($('#sidemenu-sequences-button').hasClass('fa-caret-square-left')) {
             hiddenSideMenu();
+			$('#sidemenu-sequences').css('min-width', '0px');
         }
         else if ($('#sidemenu-sequences-button').hasClass('fa-caret-square-right')) {
             showSideMenu();
+			$('#sidemenu-sequences').css('min-width', '283px');
         }
         resizeSequenceCard();
     };

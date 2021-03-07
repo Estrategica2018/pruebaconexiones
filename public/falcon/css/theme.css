@@ -22337,6 +22337,9 @@ footer .navbar-light {
 .avatar-student-timeline {
     width:70px; 
     height:auto;
+    min-width: 51px;
+    position: absolute;
+    top: -9px;
 }
 
 @media(max-width:393px) {
