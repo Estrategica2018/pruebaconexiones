@@ -23313,3 +23313,11 @@ div[class*="card-rating-id-"]  {
         min-height: 683px;   
     }
 }
+
+.bottom-selected {
+    border: 1px solid #d8e2ef !important;
+    border-radius: 18px;
+    background-color: rgba(237, 242, 249, 0.6);
+    opacity: 6;
+    padding: 0px;
+}

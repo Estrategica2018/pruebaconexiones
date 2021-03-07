@@ -59,6 +59,7 @@
                               <div class="col-7 col-md-4 col-lg-4">
                                  <div ng-show="avatar" style="width: 75%;">
                                     <img class="shadow-sm rounded-circle" width="100%" height="auto" src="@{{avatar.urlImage}}">
+                                    <h6 class="text-align mt-2 font-weight-extra-bold">¿Sabes quien es éste personaje?</h6>
                                     <h6 class="text-align mt-2">@{{avatar.name}}</h6>
                                     <h5 class="text-align mt-2">@{{avatar.job}}</h5>
                                  </div>
