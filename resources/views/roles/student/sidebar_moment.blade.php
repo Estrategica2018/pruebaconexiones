@@ -49,16 +49,21 @@
             </a>
             <div class="text-align-left ml-5">
                 @if(isset($section['part_2']) && count($section['part_2'])>0 && isset($section['part_2']['elements']) && count($section['part_2']['elements'])>0)
-                <a class="mr-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>1])}}"> Parte 1 </a>
-                | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>2])}}"> Parte 2 </a>
+                <a style="@if($section_type == 1 && (!isset($part_id) || isset($part_id) && $part_id == 1) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                class="mr-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>1])}}"> Parte 1 </a>
+                | <a style="@if($section_type == 1 && (!isset($part_id) || isset($part_id) && $part_id == 2) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                     class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>2])}}"> Parte 2 </a>
                 @if(isset($section['part_3']) && count($section['part_3'])>0 && isset($section['part_3']['elements']) && count($section['part_3']['elements'])>0)
-                | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>3])}}"> Parte 3 </a>
+                | <a style="@if($section_type == 1 && (!isset($part_id) || isset($part_id) && $part_id == 3) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                     class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>3])}}"> Parte 3 </a>
                 @endif
                 @if(isset($section['part_4']) && count($section['part_4'])>0 && isset($section['part_4']['elements']) && count($section['part_4']['elements'])>0)
-                | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>4])}}"> Parte 4 </a>
+                | <a style="@if($section_type == 1 && (!isset($part_id) || isset($part_id) && $part_id == 4) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                     class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>4])}}"> Parte 4 </a>
                 @endif
                 @if(isset($section['part_5']) && count($section['part_5'])>0 && isset($section['part_5']['elements']) && count($section['part_5']['elements'])>0)
-                | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>5])}}"> Parte 5 </a>
+                | <a style="@if($section_type == 1 && (!isset($part_id) || isset($part_id) && $part_id == 5) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                     class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>5])}}"> Parte 5 </a>
                 @endif
                 @else
                     <div class="mt-2"></div>
@@ -75,16 +80,21 @@
             </a>
             <div class="text-align-left ml-5">    
                 @if(isset($section['part_2']) && count($section['part_2'])>0 && isset($section['part_2']['elements']) && count($section['part_2']['elements'])>0)
-                    <a class="mr-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>1])}}"> Parte 1 </a>
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>2])}}"> Parte 2 </a>
+                    <a style="@if($section_type == 2 && (!isset($part_id) || isset($part_id) && $part_id == 1) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                       class="mr-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>1])}}"> Parte 1 </a>
+                    | <a style="@if($section_type == 2 && (!isset($part_id) || isset($part_id) && $part_id == 2) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>2])}}"> Parte 2 </a>
                     @if(isset($section['part_3']) && count($section['part_3'])>0 && isset($section['part_3']['elements']) && count($section['part_3']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>3])}}"> Parte 3 </a>
+                    | <a style="@if($section_type == 2 && (!isset($part_id) || isset($part_id) && $part_id == 3) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>3])}}"> Parte 3 </a>
                     @endif
                     @if(isset($section['part_4']) && count($section['part_4'])>0 && isset($section['part_4']['elements']) && count($section['part_4']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>4])}}"> Parte 4 </a>
+                    | <a style="@if($section_type == 2 && (!isset($part_id) || isset($part_id) && $part_id == 4) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>4])}}"> Parte 4 </a>
                     @endif
                     @if(isset($section['part_5']) && count($section['part_5'])>0 && isset($section['part_5']['elements']) && count($section['part_5']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>5])}}"> Parte 5 </a>
+                    | <a style="@if($section_type == 2 && (!isset($part_id) || isset($part_id) && $part_id == 5) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>5])}}"> Parte 5 </a>
                     @endif
                 @else
                     <div class="mt-2"></div>
@@ -98,16 +108,21 @@
             </a>
             <div class="text-align-left ml-5">    
                 @if(isset($section['part_2']) && count($section['part_2'])>0 && isset($section['part_2']['elements']) && count($section['part_2']['elements'])>0)
-                    <a class="mr-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>1])}}"> Parte 1 </a>
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>2])}}"> Parte 2 </a>
+                    <a style="@if($section_type == 3 && (!isset($part_id) || isset($part_id) && $part_id == 1) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                       class="mr-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>1])}}"> Parte 1 </a>
+                    | <a style="@if($section_type == 3 && (!isset($part_id) || isset($part_id) && $part_id == 2) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>2])}}"> Parte 2 </a>
                     @if(isset($section['part_3']) && count($section['part_3'])>0 && isset($section['part_3']['elements']) && count($section['part_3']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>3])}}"> Parte 3 </a>
+                    | <a style="@if($section_type == 3 && (!isset($part_id) || isset($part_id) && $part_id == 3) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>3])}}"> Parte 3 </a>
                     @endif
                     @if(isset($section['part_4']) && count($section['part_4'])>0 && isset($section['part_4']['elements']) && count($section['part_4']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>4])}}"> Parte 4 </a>
+                    | <a style="@if($section_type == 3 && (!isset($part_id) || isset($part_id) && $part_id == 4) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>4])}}"> Parte 4 </a>
                     @endif
                     @if(isset($section['part_5']) && count($section['part_5'])>0 && isset($section['part_5']['elements']) && count($section['part_5']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>5])}}"> Parte 5 </a>
+                    | <a style="@if($section_type == 3 && (!isset($part_id) || isset($part_id) && $part_id == 5) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>5])}}"> Parte 5 </a>
                     @endif
                 @else
                     <div class="mt-2"></div>
@@ -122,16 +137,21 @@
             </a>
             <div class="text-align-left ml-5">    
                 @if(isset($section['part_2']) && count($section['part_2'])>0 && isset($section['part_2']['elements']) && count($section['part_2']['elements'])>0)
-                    <a class="mr-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>1])}}"> Parte 1 </a>
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>2])}}"> Parte 2 </a>
+                    <a style="@if($section_type == 4 && (!isset($part_id) || isset($part_id) && $part_id == 1) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                       class="mr-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>1])}}"> Parte 1 </a>
+                    | <a style="@if($section_type == 4 && (!isset($part_id) || isset($part_id) && $part_id == 2) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>2])}}"> Parte 2 </a>
                     @if(isset($section['part_3']) && count($section['part_3'])>0 && isset($section['part_3']['elements']) && count($section['part_3']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>3])}}"> Parte 3 </a>
+                    | <a style="@if($section_type == 4 && (!isset($part_id) || isset($part_id) && $part_id == 3) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>3])}}"> Parte 3 </a>
                     @endif
                     @if(isset($section['part_4']) && count($section['part_4'])>0 && isset($section['part_4']['elements']) && count($section['part_4']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>4])}}"> Parte 4 </a>
+                    | <a style="@if($section_type == 4 && (!isset($part_id) || isset($part_id) && $part_id == 4) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>4])}}"> Parte 4 </a>
                     @endif
                     @if(isset($section['part_5']) && count($section['part_5'])>0 && isset($section['part_5']['elements']) && count($section['part_5']['elements'])>0)
-                    | <a class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>5])}}"> Parte 5 </a>
+                    | <a style="@if($section_type == 4 && (!isset($part_id) || isset($part_id) && $part_id == 5) ) border-bottom: 2px solid #d8e2ef !important; @endif"
+                         class="mr-1 ml-1" href="{{route('student.show_moment_section',['empresa'=>auth('afiliadoempresa')->user()->company_name(), 'sequence_id' => $sequence_id, 'moment_id' => $moment->id, 'section_id' => ($index+1),'account_service_id'=>$account_service_id,'order_moment_id'=>$order_moment_id,'part_id'=>5])}}"> Parte 5 </a>
                     @endif
                 @else
                     <div class="mt-2"></div>
