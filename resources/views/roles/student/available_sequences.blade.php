@@ -39,7 +39,7 @@
                                     <h5 ng-show="experience==true" class="ml-2">Experiencias científicas</h5>
                                </div>
                                <a ng-init="guide = true; experience = false"></a>
-                                <div ng-show="guide==true" class="d-none-result d-none position-relative card-body pr-1 row" style="min-height: 301px;">
+                                <div ng-show="accountServices && accountServices.length > 0 && guide==true" class="d-none-result d-none position-relative card-body pr-1 row" style="min-height: 301px;">
                                    <a class="mt-3 col-lg-2 col-md-3 col-sm-4 col-6" ng-repeat="accountService in accountServices"
                                         href="./secuencia/@{{accountService.sequence.id}}/situacion_generadora/@{{accountService.id}}">
                                     <img width="132px" height="auto" src="{{asset('/')}}@{{accountService.sequence.url_image}}" />
@@ -49,7 +49,7 @@
                                     </div>
                                    </a> 
                                 </div>
-                                <div ng-show="experience==true" class="d-none-result d-none position-relative card-body pr-1 row" style="min-height: 301px;">
+                                <div ng-show="accountServices && accountServices.length > 0 && experience==true" class="d-none-result d-none position-relative card-body pr-1 row" style="min-height: 301px;">
                                    <a class="mt-3 col-lg-2 col-md-3 col-sm-4 col-6" ng-repeat="accountService in accountServices"
                                         href="./secuencia/@{{accountService.sequence.id}}/experiencia_cientifica/@{{accountService.id}}">
                                     <img width="132px" height="auto" src="{{asset('/')}}@{{accountService.sequence.url_image}}" />

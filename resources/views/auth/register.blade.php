@@ -155,7 +155,7 @@
                                     <div class="col-12 col-lg-6 mt-2" id="formFacebook" action="{{ route('user.redirectfacebook',[encrypt(3),'register']) }}" style="height:43px">
                                         <button type="button" class="btn btn-primary btn-block d-flex h-100" ng-click="goToFacebook()">
                                             <i class="fab fa-facebook fs-3 mr-2"></i>
-                                            <span class="fs--1" style="margin-top: 5px;">Registrar con Facebook</span>
+                                            <span class="fs--1" style="margin-top: 0px;">Registrar con Facebook</span>
                                         </button>
                                     </div>
                                     <div class="col-12 col-lg-6" id="formGmail" action="{{ route('user.redirectgmail',[encrypt(3),'register']) }}" style="height:43px">

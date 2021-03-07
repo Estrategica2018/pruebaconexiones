@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     @include('roles/student/timeline_sequences')
                 </div>
-                <div class="col-md-3 open" id="sidemenu-sequences"  >
+                <div class="col-md-3 open" id="sidemenu-sequences" style="min-width: 283px;" >
                     <div class="mb-3 card fade show" id="sidemenu-sequences-content">
                         @if(isset($order_moment_id))
                             @include('roles/student/sidebar_moment')
@@ -22,7 +22,7 @@
                         <i class="far fa-caret-square-left" id="sidemenu-sequences-button"></i>
                     </div>
                 </div>
-                <div id="loading" class="modal-backdrop position-absolute h-100 w-100 background-white p-auto m-auto text-align card loading-div" style="padding: 25%;">
+                <div id="loading" class="modal-backdrop position-absolute h-100 w-100 background-white p-auto m-auto text-align-left card loading-div" style="padding: 25%; min-width: 392vw !important; ">
                     <span> Cargando...</span>
                 </div>
                 <div class="col-md-9" id="content-section-sequences">

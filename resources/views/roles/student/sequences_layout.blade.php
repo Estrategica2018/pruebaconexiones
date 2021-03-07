@@ -9,7 +9,7 @@ body { background-color: white }
             @yield('content')
         </div>
 
-        <footer class="w-100">
+        <footer class="w-100" style="min-width: 775px;">
             @include('layouts/footer')
         </footer>
     </div>

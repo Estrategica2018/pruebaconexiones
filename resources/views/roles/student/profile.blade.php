@@ -21,8 +21,8 @@
                             <a class="btn btn-sm btn-primary mt-2" href="{{route('student.avatar',['empresa'=>auth('afiliadoempresa')->user()->company_name()])}}">Editar Avatar</a>
                         </div>
                         <div class="col-lg-7 mt-3 mb-auto">
-                            <div class="col-12 text-align-right">
-                                <a class="btn btn-sm btn-primary mt-2" href="#" ng-click="editRegisterForm=true">Editar perfíl</a>
+                            <div class="col-12 text-align">
+                                <a class="btn mb-4 btn-sm btn-primary mt-2" href="#" ng-click="editRegisterForm=true">Editar perfíl</a>
                             </div>
                             <h5> Nombres </h5>
                             <h5 class="mt-2 mb-4 border-bottom border-dark_opacity"><small> {{$student->name}}</small></h5>

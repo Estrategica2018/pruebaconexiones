@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class=" card col-12 col-lg-4 row card-body shadow-none d-result d-none panel-experience">
-                        <div class="card-body bg-light mb-1" ng-repeat = "moment in moments">
+                        <div class="card-body bg-light mb-1" ng-repeat = "moment in moments" style="padding: 16px 0px 0px 18px;">
                             <div class="row " style="min-height: 100px;">
                                 <div class="col-2-3 col-lg-5">
                                     <img src="/@{{moment.url_image_experience || 'images/icons/NoImageAvailable.jpeg'}}" width="100%" height="auto" style="min-width: 90px;">
