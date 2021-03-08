@@ -41,7 +41,7 @@
     avanza en el proceso de aprendizaje, las fortalezas y aspectos susceptibles de mejora.
 </p>
 <p>
-    Si tienes preguntas o sugerencias, puedes contactarnos dando click <a href="{{route('contactus')}}">aqui</a>
+    Si tienes preguntas o sugerencias, puedes contactarnos dando click <a href="{{route('contactus')}}">aquí</a>
 </p>
 <hr>
 @else
