@@ -5,7 +5,15 @@
     <div class="justify-content-center" ng-controller="LoginCtrl">
     <div class=" row">
         <div style="margin-top: 15px" class="border-top-4 col-md-6 col-sm-12">
+			
             <div class="col-md-12">
+			    @if(request()->get('sessionExpired'))
+				<div class="col-md-12">
+				<div class="alert alert-warning" role="alert">
+				   La sesión ha caducado !!
+				</div>
+				</div>
+				@endif
                 <div class="card">
                     <div class="card-header">
                     <img class="ml-8" src="{{asset('images/icons/register-student.png')}}" width="auto" height="70px" />
@@ -14,7 +22,7 @@
                     
                     <div class="card-body pt-0">
                         <form method="POST" action="{{ route('user.login','1') }}">
-                            @csrf
+                             @csrf
 
                             <div class="form-group">
                                 <input autocomplete='off' placeholder="Usuario" name="user_name" id="user_name" type="text" 
@@ -33,13 +41,13 @@
                                 name="password" required autocomplete="current-password">
 
                                 @error('user_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                <span class="font-weight-extra-bold invalid-feedback" role="alert">
+                                    {{ $message }}
                                 </span>
                                 @enderror
                                 @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                <span class="font-weight-extra-bold invalid-feedback" role="alert">
+                                    {{ $message }}
                                 </span>
                                 @enderror
                             </div>
@@ -98,13 +106,13 @@
                                 @endif
                                 " name="password" required autocomplete="current-password">
                                 @error('user_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                <span class="invalid-feedback font-weight-extra-bold" role="alert">
+                                    {{ $message }}
                                 </span>
                                 @enderror
                                 @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                <span class="font-weight-extra-bold invalid-feedback" role="alert">
+                                    {{ $message }}
                                 </span>
                                 @enderror
                             </div>
