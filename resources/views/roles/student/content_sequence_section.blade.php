@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     @include('roles/student/timeline_sequences')
                 </div>
-                <div class="col-md-3 open" id="sidemenu-sequences" style="min-width: 283px;" >
+                <div class="col-md-3 open" id="sidemenu-sequences">
                     <div class="mb-3 card fade show" id="sidemenu-sequences-content">
                         @if(isset($order_moment_id))
                             @include('roles/student/sidebar_moment')
