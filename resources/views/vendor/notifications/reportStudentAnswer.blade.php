@@ -11,9 +11,9 @@
 
 <p>A continuación, presentamos el reporte detallado de desempeño en las preguntas:</p>
 <hr>
-<>
+ 
 @foreach($data as $questionAnswer)
-<strong>Pregunta: </strong>
+<strong>Pregunta: {{ $questionAnswer['order'] }}</strong>
 {{ Illuminate\Mail\Markdown::parse($questionAnswer['title']) }}
 <br>
 <strong>Repuesta: </strong>

@@ -210,7 +210,6 @@ class AnswerController extends Controller
     public function get_answers(Request $request)
     {
         $student = $request->user('afiliadoempresa');
-
         $answers = Answer::with('question')->whereHas('question', function ($query) use ($request) {
             $query->where([
                 ['sequence_id', '=', $request->sequence_id],
@@ -221,13 +220,26 @@ class AnswerController extends Controller
             ['student_affiliated_company_id', $student->id],
             ['company_id', $request->company_id]
         ])->get();
+        
+        $tempAnswer = array();
+        
+        for ($i = 0; $i < count($answers); $i = $i+1) {
+            foreach($answers as $answ) {
+              if(($i + 1) == $answ->question->order) {
+                array_push($tempAnswer, $answ);
+                break;
+              }
+            }   
+        } 
+
         $questions = [];
-        foreach ($answers as $answer) {
+        foreach ($tempAnswer as $answer) {
             $data = $this->get_answer_student($answer->answer, $answer->question->options, $answer->question->review);
             $data['title'] = $answer->question->title;
             $data['struct_concept'] = $answer->question->concept;
             $data['objective'] = $answer->question->objective;
             $data['concept'] = $answer->question->concept;
+            $data['order'] = $answer->question->order;
             array_push($questions, $data);
             Answer::where('id', $answer->id)->update([
                 'feedback' => $data['review_student'],
