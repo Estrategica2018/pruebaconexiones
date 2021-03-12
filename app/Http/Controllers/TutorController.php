@@ -340,7 +340,9 @@ class TutorController extends Controller
             list($type, $data) = explode(';', $data);
             list(, $data)      = explode(',', $data);
             $data = base64_decode($data);
-            $extension = 'jpeg';
+
+			$date = date("Ymd_His");
+            $extension = $date.'.jpeg';
             $fileName = 'tutor-' . auth('afiliadoempresa')->user()->id . '.' . $extension;
             $afiliadoempresa = AfiliadoEmpresa::find(auth('afiliadoempresa')->user()->id);
             $afiliadoempresa->url_image ='/images/users_images/' . $fileName;
